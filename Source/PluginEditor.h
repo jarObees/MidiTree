@@ -12,14 +12,11 @@
 #include "PluginProcessor.h"
 
 //==============================================================================
-/**
-*/
 class MidiArpeggiatorAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
     MidiArpeggiatorAudioProcessorEditor (MidiArpeggiatorAudioProcessor&);
     ~MidiArpeggiatorAudioProcessorEditor() override;
-
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
@@ -28,6 +25,9 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     MidiArpeggiatorAudioProcessor& audioProcessor;
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidiArpeggiatorAudioProcessorEditor)
+    juce::TextEditor userRulesetInput;
+    juce::TextButton inputUserRulesetButton{ "Generate!" };
+    void handleUserRulesetClick();
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiArpeggiatorAudioProcessorEditor)
 };

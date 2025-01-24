@@ -24,6 +24,7 @@ public:
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
+
     MidiArpeggiatorAudioProcessor& audioProcessor;
     juce::TextEditor inputUserRuleset;
     juce::TextEditor inputUserAxiom;

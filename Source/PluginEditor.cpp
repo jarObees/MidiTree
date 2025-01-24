@@ -78,11 +78,12 @@ void MidiArpeggiatorAudioProcessorEditor::generateButtonClick()
 
     if (addUserRuleset(userRuleset) == true && checkUserAxiom(userAxiom) == true)
     {
+        //DO THE THING.
         DBG("OVERALL SUCCESS---");
     }
     else
     {
-        DBG("OVERALL FAILURE");
+        DBG("OVERALL FAILURE---");
     }
 }
 //==============================================================================
@@ -99,11 +100,30 @@ MidiArpeggiatorAudioProcessorEditor::MidiArpeggiatorAudioProcessorEditor (MidiAr
     inputUserRuleset.setColour(juce::TextEditor::backgroundColourId, juce::Colours::darkgrey);
     inputUserRuleset.setColour(juce::TextEditor::textColourId, juce::Colours::white);
     inputUserRuleset.setColour(juce::TextEditor::outlineColourId, juce::Colours::black);
+    // On text change, sends data to value tree.
+    inputUserRuleset.onTextChange = [this]()
+        {
+            audioProcessor.userRulesetNode.setProperty("userRulesetNode", inputUserRuleset.getText(), nullptr);
+            DBG("Text changed: rulesetNode set to text...");
+        };
+    // Sets text to data from value tree.
+    if (audioProcessor.userRulesetNode.hasProperty("userRulesetNode"))
+    {
+        inputUserRuleset.setText(audioProcessor.userRulesetNode.getProperty("userRulesetNode"));
+        DBG("Retrieving text from rulesetNode...");
+    }
 
     inputUserAxiom.setFont(juce::Font(15.0));
     inputUserAxiom.setTextToShowWhenEmpty("Axiom", juce::Colours::black);
     inputUserAxiom.setInputRestrictions(1);
-
+    inputUserAxiom.onTextChange = [this]()
+        {
+            audioProcessor.userAxiomNode.setProperty("userAxiomNode", inputUserAxiom.getText(), nullptr);
+        };
+    if (audioProcessor.userAxiomNode.hasProperty("userAxiomNode"))
+    {
+        inputUserAxiom.setText(audioProcessor.userAxiomNode.getProperty("userAxiomNode"));
+    }
 
     generateButton.onClick = [this]() {generateButtonClick(); };
 

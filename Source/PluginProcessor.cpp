@@ -215,33 +215,35 @@ void MidiArpeggiatorAudioProcessor::getStateInformation(juce::MemoryBlock& destD
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
     
-    juce::MemoryOutputStream mos(destData, true);
-
+    juce::MemoryOutputStream mos(destData, true); // TODO: Should this be true or not?
+    userRulesetNode.writeToStream(mos);
+    userAxiomNode.writeToStream(mos);
 }
 
 void MidiArpeggiatorAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+
+    //WARNING: This is NOT thread safe. BUT. If it ain't broke...
+    auto tree = juce::ValueTree::readFromData(data, size_t(sizeInBytes));
+    if (tree.isValid())
+    {
+        userRulesetNode.copyPropertiesAndChildrenFrom(tree, nullptr);
+        userAxiomNode.copyPropertiesAndChildrenFrom(tree, nullptr);
+    }
 }
-//juce::AudioProcessorValueTreeState::ParameterLayout 
-//    MidiArpeggiatorAudioProcessor::createParameterLayout()
-//{
-//    juce::AudioProcessorValueTreeState::ParameterLayout params;
-//
-//    // Global Generation Variables
-//    params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 4));
-//
-//    // L-System Variables
-//    juce::StringArray relnotes = { "1", "2", "3", "4", "5", "6", "7" };
-//    const int numlhs = 3;
-//    for (int i = 1; i <= numlhs; i++)
-//    {
-//        params.add(std::make_unique<juce::AudioParameterChoice>("relnotes" + juce::String(i), "Note Number", relnotes, 0));
-//    }
-//
-//    return params;
-// }
+
+juce::AudioProcessorValueTreeState::ParameterLayout 
+    MidiArpeggiatorAudioProcessor::createParameterLayout()
+{
+    juce::AudioProcessorValueTreeState::ParameterLayout params;
+
+    // Global Generation Variables
+    params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 4));
+
+    return params;
+ }
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()

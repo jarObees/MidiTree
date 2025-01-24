@@ -52,12 +52,18 @@ public:
     void setStateInformation(const void* data, int sizeInBytes) override;
 
     float sampleNoteDivision;
-    //static juce::AudioProcessorValueTreeState::ParameterLayout
-    //    createParameterLayout();
-    //juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout()};
+    static juce::AudioProcessorValueTreeState::ParameterLayout
+        createParameterLayout();
+    juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout()};
+    
+    // Defining Value Trees for non numerical parameters.
+    static const inline juce::Identifier userRulesetNodeType{"userRulesetNode"};
+    juce::ValueTree userRulesetNode{ userRulesetNodeType };
+
+    static const inline juce::Identifier userAxiomNodeType{ "userAxiomNode" };
+    juce::ValueTree userAxiomNode{ userAxiomNodeType };
+
 private:
-
-
     float rate;
     int currentNote, lastNoteValue; // Indexes into notes sorted set.
     int time; // Representts the time that has elapsed since the start of the note on output. 

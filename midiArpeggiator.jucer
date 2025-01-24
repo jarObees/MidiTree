@@ -5,8 +5,10 @@
               pluginFormats="buildStandalone,buildVST3">
   <MAINGROUP id="tMID8o" name="midiArpeggiator">
     <GROUP id="{968718A0-7025-4E85-0A48-8A9854BC5E9F}" name="Source">
-      <FILE id="rgsAHT" name="LSystemProcessor.h" compile="0" resource="0"
+      <FILE id="f11Wcw" name="LSystemProcessor.h" compile="0" resource="0"
             file="Source/LSystemProcessor.h"/>
+      <FILE id="RdT4aY" name="LSystemProcessor.cpp" compile="1" resource="0"
+            file="Source/LSystemProcessor.cpp"/>
       <FILE id="Ll35bX" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="qMuWqj" name="PluginProcessor.h" compile="0" resource="0"

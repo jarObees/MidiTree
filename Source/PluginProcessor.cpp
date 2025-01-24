@@ -137,6 +137,8 @@ bool MidiArpeggiatorAudioProcessor::isBusesLayoutSupported(const BusesLayout& la
 // TO:DO DEBUG AN SHITTERING THAT MAY OCCUR. 
 void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+    float gens = apvts.getRawParameterValue("gens")->load(); // USE THIS FOR ACTUAL SHIT
+
     buffer.clear();
 
     auto* playHead = getPlayHead();
@@ -205,7 +207,7 @@ bool MidiArpeggiatorAudioProcessor::hasEditor() const
 juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 {
     return new MidiArpeggiatorAudioProcessorEditor(*this);
-    //return new juce::GenericAudioProcessorEditor(*this);
+    // return new juce::GenericAudioProcessorEditor(*this);
 }
 
 //==============================================================================
@@ -216,6 +218,7 @@ void MidiArpeggiatorAudioProcessor::getStateInformation(juce::MemoryBlock& destD
     // as intermediaries to make it easy to save and load complex data.
     
     juce::MemoryOutputStream mos(destData, true); // TODO: Should this be true or not?
+    apvts.state.writeToStream(mos);
     userRulesetNode.writeToStream(mos);
     userAxiomNode.writeToStream(mos);
 }
@@ -229,6 +232,7 @@ void MidiArpeggiatorAudioProcessor::setStateInformation(const void* data, int si
     auto tree = juce::ValueTree::readFromData(data, size_t(sizeInBytes));
     if (tree.isValid())
     {
+        apvts.replaceState(tree);
         userRulesetNode.copyPropertiesAndChildrenFrom(tree, nullptr);
         userAxiomNode.copyPropertiesAndChildrenFrom(tree, nullptr);
     }
@@ -240,7 +244,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout
     juce::AudioProcessorValueTreeState::ParameterLayout params;
 
     // Global Generation Variables
-    params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 4));
+    params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 1));
 
     return params;
  }

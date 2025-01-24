@@ -29,8 +29,10 @@ private:
     juce::TextEditor inputUserRuleset;
     juce::TextEditor inputUserAxiom;
     std::unique_ptr<juce::AlertWindow> alertWindow;
-
     juce::TextButton generateButton{ "Generate!" };
+    
+    juce::Slider genSlider;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> genAttachment;
     
     void generateButtonClick();
     bool addUserRuleset(std::string ruleSet);

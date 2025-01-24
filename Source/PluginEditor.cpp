@@ -78,7 +78,6 @@ void MidiArpeggiatorAudioProcessorEditor::generateButtonClick()
 
     if (addUserRuleset(userRuleset) == true && checkUserAxiom(userAxiom) == true)
     {
-        //DO THE THING.
         DBG("OVERALL SUCCESS---");
     }
     else
@@ -125,14 +124,18 @@ MidiArpeggiatorAudioProcessorEditor::MidiArpeggiatorAudioProcessorEditor (MidiAr
         inputUserAxiom.setText(audioProcessor.userAxiomNode.getProperty("userAxiomNode"));
     }
 
-    generateButton.onClick = [this]() {generateButtonClick(); };
+    genSlider.setSliderStyle(juce::Slider::LinearHorizontal);
+    genSlider.setTextBoxStyle(juce::Slider::TextBoxAbove, false, 50, 20);
+    genAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>
+        (audioProcessor.apvts, "gens", genSlider);
 
+    generateButton.onClick = [this]() {generateButtonClick(); };
 
     addAndMakeVisible(inputUserRuleset);
     addAndMakeVisible(generateButton);
     addAndMakeVisible(inputUserAxiom);
+    addAndMakeVisible(genSlider); // TODO: Slider is linked to NOTHIN currently. 
 }
-
 MidiArpeggiatorAudioProcessorEditor::~MidiArpeggiatorAudioProcessorEditor()
 {
 
@@ -155,4 +158,5 @@ void MidiArpeggiatorAudioProcessorEditor::resized()
     inputUserRuleset.setBounds(10, 10, getWidth() - 300, getHeight() - 100);
     generateButton.setBounds(100, 10, 100, 40);
     inputUserAxiom.setBounds(100, 80, 100, 40);
+    genSlider.setBounds(130, 160, 100, 40);
 }

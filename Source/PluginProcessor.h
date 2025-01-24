@@ -52,9 +52,9 @@ public:
     void setStateInformation(const void* data, int sizeInBytes) override;
 
     float sampleNoteDivision;
-    static juce::AudioProcessorValueTreeState::ParameterLayout
-        createParameterLayout();
-    juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout()};
+
+    static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout() };
     
     // Defining Value Trees for non numerical parameters.
     static const inline juce::Identifier userRulesetNodeType{"userRulesetNode"};
@@ -62,13 +62,13 @@ public:
 
     static const inline juce::Identifier userAxiomNodeType{ "userAxiomNode" };
     juce::ValueTree userAxiomNode{ userAxiomNodeType };
-
 private:
     float rate;
     int currentNote, lastNoteValue; // Indexes into notes sorted set.
     int time; // Representts the time that has elapsed since the start of the note on output. 
+    juce::SortedSet<int> notes;
+    std::atomic<float> genParam;
 
-    juce::SortedSet<int> notes; 
     // LSystemProcessor lsysproc
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiArpeggiatorAudioProcessor)

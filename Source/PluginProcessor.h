@@ -9,6 +9,7 @@
 #pragma once
 // Testing the thing out so that it actually copies it over.
 #include <JuceHeader.h>
+#include "LSystemProcessor.h"
 
 //==============================================================================
 class MidiArpeggiatorAudioProcessor : public juce::AudioProcessor
@@ -62,14 +63,21 @@ public:
 
     static const inline juce::Identifier userAxiomNodeType{ "userAxiomNode" };
     juce::ValueTree userAxiomNode{ userAxiomNodeType };
+
+    static const inline juce::Identifier lSystemListNodeType{ "lSystemList" };
+    juce::ValueTree lSystemList{ lSystemListNodeType };
+
+    std::atomic<float> genParam;
+    
+    std::set<LSystem> lSystems;
+
+    LSystemProcessor lsysProcessor{ genParam };
+
 private:
     float rate;
     int currentNote, lastNoteValue; // Indexes into notes sorted set.
     int time; // Representts the time that has elapsed since the start of the note on output. 
     juce::SortedSet<int> notes;
-    std::atomic<float> genParam;
-
-    // LSystemProcessor lsysproc
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiArpeggiatorAudioProcessor)
 };

@@ -22,6 +22,7 @@ void MidiArpeggiatorAudioProcessorEditor::throwCustomError(std::string errorMess
     alertWindow->showMessageBoxAsync(juce::MessageBoxIconType::WarningIcon,"Alert!!",errorMessage,"ok",nullptr);
 }
 
+// TODO: Prevent conflicting rules. Such as 1=21, 1=32
 // Checks each line to make sure that it follows correct format and adds. 
 bool MidiArpeggiatorAudioProcessorEditor::addUserRuleset(std::string ruleSetInput)
 {
@@ -52,17 +53,21 @@ bool MidiArpeggiatorAudioProcessorEditor::addUserRuleset(std::string ruleSetInpu
             return false;
         }
     }
-    lsysVariables = tempLsysVariables;
-    lsysRulesets = tempLsysRulesets;
+    lsysVariablesDisplay = tempLsysVariables;
+    lsysRulesetsDisplay = tempLsysRulesets;
     return true;
 }
 
 // Checks if axiom is in the variables, and returns appropriate bool if match is found.
 bool MidiArpeggiatorAudioProcessorEditor::checkUserAxiom(std::string axiomInput)
 {
-    for (auto it = lsysVariables.begin(); it != lsysVariables.end(); ++it)
+    for (auto it = lsysVariablesDisplay.begin(); it != lsysVariablesDisplay.end(); ++it)
     {
-        if (*it == axiomInput) return true;
+        if (*it == axiomInput)
+        {
+            lsysAxiomDisplay = axiomInput;
+            return true;
+        }
     }
     throwCustomError("Axiom is not a valid variable!");
     return false;
@@ -70,15 +75,17 @@ bool MidiArpeggiatorAudioProcessorEditor::checkUserAxiom(std::string axiomInput)
 
 void MidiArpeggiatorAudioProcessorEditor::generateButtonClick()
 {
-    auto juceStringRuleset = inputUserRuleset.getText();
-    auto juceStringAxiom = inputUserAxiom.getText();
+    std::string userRuleset = inputUserRuleset.getText().toStdString();
+    std::string userAxiom = inputUserAxiom.getText().toStdString();
 
-    std::string userRuleset = juceStringRuleset.toStdString();
-    std::string userAxiom = juceStringAxiom.toStdString();
-
+    // TODO: Rename variables better?
+    // Attempts to store user ruleset and axiom
     if (addUserRuleset(userRuleset) == true && checkUserAxiom(userAxiom) == true)
     {
-        DBG("OVERALL SUCCESS---");
+        audioProcessor.lsysProcessor.current_lsysVars = lsysVariablesDisplay;
+        audioProcessor.lsysProcessor.current_lsysRulesets = lsysRulesetsDisplay;
+        audioProcessor.lsysProcessor.current_axiom = lsysAxiomDisplay;
+        audioProcessor.lsysProcessor.generateLSystem(static_cast<uint8_t>(audioProcessor.genParam.load()));
     }
     else
     {
@@ -103,13 +110,11 @@ MidiArpeggiatorAudioProcessorEditor::MidiArpeggiatorAudioProcessorEditor (MidiAr
     inputUserRuleset.onTextChange = [this]()
         {
             audioProcessor.userRulesetNode.setProperty("userRulesetNode", inputUserRuleset.getText(), nullptr);
-            DBG("Text changed: rulesetNode set to text...");
         };
     // Sets text to data from value tree.
     if (audioProcessor.userRulesetNode.hasProperty("userRulesetNode"))
     {
         inputUserRuleset.setText(audioProcessor.userRulesetNode.getProperty("userRulesetNode"));
-        DBG("Retrieving text from rulesetNode...");
     }
 
     inputUserAxiom.setFont(juce::Font(15.0));
@@ -134,7 +139,7 @@ MidiArpeggiatorAudioProcessorEditor::MidiArpeggiatorAudioProcessorEditor (MidiAr
     addAndMakeVisible(inputUserRuleset);
     addAndMakeVisible(generateButton);
     addAndMakeVisible(inputUserAxiom);
-    addAndMakeVisible(genSlider); // TODO: Slider is linked to NOTHIN currently. 
+    addAndMakeVisible(genSlider);
 }
 MidiArpeggiatorAudioProcessorEditor::~MidiArpeggiatorAudioProcessorEditor()
 {

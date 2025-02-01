@@ -137,7 +137,7 @@ bool MidiArpeggiatorAudioProcessor::isBusesLayoutSupported(const BusesLayout& la
 // TO:DO DEBUG AN SHITTERING THAT MAY OCCUR. 
 void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    float gens = apvts.getRawParameterValue("gens")->load(); // USE THIS FOR ACTUAL SHIT
+    genParam = apvts.getRawParameterValue("gens")->load(); // USE THIS FOR ACTUAL SHIT
 
     buffer.clear();
 

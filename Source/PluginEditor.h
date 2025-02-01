@@ -30,7 +30,6 @@ private:
     juce::TextEditor inputUserAxiom;
     std::unique_ptr<juce::AlertWindow> alertWindow;
     juce::TextButton generateButton{ "Generate!" };
-    
     juce::Slider genSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> genAttachment;
     
@@ -39,7 +38,9 @@ private:
     bool checkUserAxiom(std::string axiomInput);
     void throwCustomError(std::string errorMessage);
     
-    juce::SortedSet<std::string> lsysVariables;
-    juce::SortedSet<std::string> lsysRulesets;
+    // Should these live in LSystemProcessor?lsys
+    juce::SortedSet<std::string> lsysVariablesDisplay;
+    juce::SortedSet<std::string> lsysRulesetsDisplay;
+    std::string lsysAxiomDisplay;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiArpeggiatorAudioProcessorEditor)
 };

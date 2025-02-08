@@ -1,16 +1,14 @@
 #pragma once
 #include "JuceHeader.h"
 
-// Used to store generated L systems 
+// Used to store generated L systems and execute l system generation comands.
 class LSystem
 {
 private:
 	std::unordered_map<std::string, std::string> lSysRulemap;
-	std::string axiom;
-	std::string genString;
 public:
-	LSystem(std::string axiom, std::unordered_map<std::string, std::string> lsysRulesets)
-		: axiom(axiom), lSysRulemap(lsysRulesets)
+	LSystem(std::string axiom, std::unordered_map<std::string, std::string> lsysRulesets, std::string genString = "")
+		: axiom(axiom), lSysRulemap(lsysRulesets), genString(genString)
 	{
 		DBG("Created lSystem");
 		DBG("Initial Axiom: " << axiom);
@@ -21,10 +19,14 @@ public:
 		}
 		DBG("--------");
 	}
+	//TODO: For future use.
+	bool isGenerated = false;
+	std::string name;
+	std::string axiom;
+	std::string genString;
+
 	// For N generations, will go through each character and if it matches a key, appends value to string stream.
 	// If no match found, just adds the same character. At the end, 'moves' the value to genString.
-	
-	// TODO: gens is always 0 for some reason.
 	void generate(const std::atomic<float>& gens)
 	{
 		DBG("GENERATING L STRING");
@@ -42,7 +44,7 @@ public:
 				DBG("Checking: " << c);
 				if (lSysRulemap.find(std::string(1, c)) != lSysRulemap.end())
 				{
-					DBG("Found " << c << " in ruleMap. Replacing with: " << lSysRulemap[std::string(1,c)]);
+					DBG("Found " << c << " in ruleMap. Replacing with: " << lSysRulemap[std::string(1, c)]);
 					nextGen << lSysRulemap.at(std::string(1, c));
 				}
 				else
@@ -55,5 +57,6 @@ public:
 			}
 		}
 		DBG("Final String: " << genString << "<----");
+		isGenerated = true;
 	}
 };

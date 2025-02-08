@@ -134,14 +134,13 @@ bool MidiArpeggiatorAudioProcessor::isBusesLayoutSupported(const BusesLayout& la
 }
 #endif
 
-// TO:DO DEBUG AN SHITTERING THAT MAY OCCUR. 
 void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+
     genParam = apvts.getRawParameterValue("gens")->load(); // USE THIS FOR ACTUAL SHIT
-
     buffer.clear();
-
     auto* playHead = getPlayHead();
+    ///TODO: Connect the notesPool here so that we can begin modifying shit based on the axiom.
     if (playHead != nullptr)
     {
         auto numSamples = buffer.getNumSamples(); // Number of samples per block.

@@ -56,21 +56,21 @@ public:
 
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout() };
-    
+
     // Defining Value Trees for non numerical parameters.
-    static const inline juce::Identifier userRulesetNodeType{"userRulesetNode"};
+    static const inline juce::Identifier userRulesetNodeType{ "userRulesetNode" };
     juce::ValueTree userRulesetNode{ userRulesetNodeType };
 
     static const inline juce::Identifier userAxiomNodeType{ "userAxiomNode" };
     juce::ValueTree userAxiomNode{ userAxiomNodeType };
 
+    //TODO: No use anywhere else.
+    // Original purpose was to store a list of l systems created. But new idea is different.
+    // Store lsystems as simply presets (store the inputs n shit instead of generating some new shit.)
     static const inline juce::Identifier lSystemListNodeType{ "lSystemList" };
     juce::ValueTree lSystemList{ lSystemListNodeType };
 
     std::atomic<float> genParam;
-    
-    std::set<LSystem> lSystems;
-
     LSystemProcessor lsysProcessor{ genParam };
 
 private:

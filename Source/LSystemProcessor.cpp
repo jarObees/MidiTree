@@ -24,7 +24,15 @@ LSystemProcessor::LSystemProcessor(std::atomic<float>& generations)
         {"5", 7}, {"e", 10},
         {"6", 9}, {"7", 11}
         // Enter the new key value pairs here.
-                       }) {}
+                       }),
+    noteRateMap({
+        {"32/1", 32.0f}, {"16/1", 16.0f}, 
+        {"8/1", 8.0f}, {"4/1", 4.0f}, 
+        {"2/1", 2.0f}, {"1/1", 1.0f},
+        {"1/2", 0.5f}, {"1/4", 0.25f}, 
+        {"1/8", 0.125f}, {"1/16", 0.0625f},
+        {"1/32", 0.03125f}, {"1/64", 0.015625f}
+            }) {}
 // Main function to generate and run everything necessary to produce an L system.
 void LSystemProcessor::generateLSystem(const uint8_t& gens)
 {

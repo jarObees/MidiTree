@@ -151,19 +151,16 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
     
     if (playHead != nullptr)
     {
-        auto numSamples = buffer.getNumSamples(); // Number of samples per block.
-
+        auto numSamples = buffer.getNumSamples(); // Number of samples per block
         auto posInfoOpt = playHead->getPosition();
-        
         auto ppqPosOpt = posInfoOpt->getPpqPosition();
         auto bpmOpt = posInfoOpt->getBpm();
 
         // Convert the ppq to samples.
-        double bpm = *bpmOpt;
-        double secondsPerBeat = 60.0 / bpm;
-        double samplesPerBeat = rate * secondsPerBeat; // Or also samples per quarter note if it's 4/4.
-        
-        auto noteDuration = static_cast<int> (std::ceil(samplesPerBeat * sampleNoteDivision));
+        double bpm = *bpmOpt;   
+        double secondsPerQuarterNote = 60.0 / bpm;
+        double samplesPerQuarter = rate * secondsPerQuarterNote;
+        auto noteDuration = static_cast<int> (std::ceil(samplesPerQuarter * sampleNoteDivision));
         // Checks for user midi input, to see if we add/remove notes from the set. 
         for (const auto meta : midiMessages)
         {
@@ -249,11 +246,17 @@ juce::AudioProcessorValueTreeState::ParameterLayout
     MidiArpeggiatorAudioProcessor::createParameterLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout params;
-
     // Global Generation Variables
     params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 1));
-    juce::StringArray noteDivs{ "2/1", "1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/16", "1/32" };
-    params.add(std::make_unique<juce::AudioParameterChoice>("rate", "Rate", noteDivs, 0));
+
+    //TODO IMPLEMENT THIS
+    // To show the user the key stuff for the note Rates.
+    //juce::StringArray noteRates;
+    //for (const auto& [key, value] : lsysProcessor.noteRateMap)
+    //{
+    //    DBG(key);
+    //}
+    //params.add(std::make_unique<juce::AudioParameterChoice>("noteRate", "Rate", noteRates, 0));
     return params;
  }
 //==============================================================================

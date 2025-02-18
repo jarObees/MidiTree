@@ -140,8 +140,8 @@ MidiArpeggiatorAudioProcessorEditor::MidiArpeggiatorAudioProcessorEditor (MidiAr
     //NOTE DIVISION SLIDER
     noteDivSlider.setSliderStyle(juce::Slider::LinearHorizontal);
     noteDivSlider.setTextBoxStyle(juce::Slider::TextBoxAbove, false, 70, 40);
-    noteDivAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>
-        (audioProcessor.apvts, "rate", noteDivSlider);
+    // noteDivAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>
+        // (audioProcessor.apvts, "noteRate", noteDivSlider);
     addAndMakeVisible(noteDivSlider);
     
     addAndMakeVisible(inputUserRuleset);

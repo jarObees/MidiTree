@@ -22,8 +22,10 @@ public:
     // APVTS Processor
     std::vector<int> generateNotesPool(const std::string& genString);
     // l-string generated notes relative to the axiom. 
+    // Currently used for storing the actual note pool.
+    //TODO: Fix how note pools are stored. They should be stored as a saved parameter or something. 
     std::vector<int> notesPool;
-
+    std::unordered_map<std::string, float> noteRateMap;
 
 private:
     std::atomic<float>& generations;

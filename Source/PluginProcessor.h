@@ -54,7 +54,7 @@ public:
 
     float sampleNoteDivision;
 
-    static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout() };
 
     // Defining Value Trees for non numerical parameters.
@@ -72,6 +72,7 @@ public:
 
     std::atomic<float> genParam;
     LSystemProcessor lsysProcessor{ genParam };
+    float noteRate;
 
 private:
     float rate;

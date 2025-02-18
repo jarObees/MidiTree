@@ -141,6 +141,14 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
     buffer.clear();
     auto* playHead = getPlayHead();
     ///TODO: Connect the notesPool here so that we can begin modifying shit based on the axiom.
+    /*
+    User selects whether quarter, sixteenth, etc.
+    Grab midi input and put into some variable of notes currently being played.
+    For now, look at only the first note.
+    Add that midi value to the notesPool (store this in a new value?)
+    For arpeggiator, loop through this. 
+    */
+    
     if (playHead != nullptr)
     {
         auto numSamples = buffer.getNumSamples(); // Number of samples per block.
@@ -244,7 +252,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout
 
     // Global Generation Variables
     params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 1));
-
+    juce::StringArray noteDivs{ "2/1", "1/1", "1/2", "1/3", "1/4", "1/6", "1/8", "1/16", "1/32" };
+    params.add(std::make_unique<juce::AudioParameterChoice>("rate", "Rate", noteDivs, 0));
     return params;
  }
 //==============================================================================

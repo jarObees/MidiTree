@@ -129,17 +129,24 @@ MidiArpeggiatorAudioProcessorEditor::MidiArpeggiatorAudioProcessorEditor (MidiAr
         inputUserAxiom.setText(audioProcessor.userAxiomNode.getProperty("userAxiomNode"));
     }
 
+    // GEN SLIDERS
     genSlider.setSliderStyle(juce::Slider::LinearHorizontal);
     genSlider.setTextBoxStyle(juce::Slider::TextBoxAbove, false, 50, 20);
     genAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>
         (audioProcessor.apvts, "gens", genSlider);
-
     generateButton.onClick = [this]() {generateButtonClick(); };
+    addAndMakeVisible(genSlider);
 
+    //NOTE DIVISION SLIDER
+    noteDivSlider.setSliderStyle(juce::Slider::LinearHorizontal);
+    noteDivSlider.setTextBoxStyle(juce::Slider::TextBoxAbove, false, 70, 40);
+    noteDivAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>
+        (audioProcessor.apvts, "rate", noteDivSlider);
+    addAndMakeVisible(noteDivSlider);
+    
     addAndMakeVisible(inputUserRuleset);
     addAndMakeVisible(generateButton);
     addAndMakeVisible(inputUserAxiom);
-    addAndMakeVisible(genSlider);
 }
 MidiArpeggiatorAudioProcessorEditor::~MidiArpeggiatorAudioProcessorEditor()
 {
@@ -153,7 +160,6 @@ void MidiArpeggiatorAudioProcessorEditor::paint (juce::Graphics& g)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
     g.setColour (juce::Colours::white);
     g.setFont (juce::FontOptions (15.0f));
-    g.drawFittedText ("Hello World!!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void MidiArpeggiatorAudioProcessorEditor::resized()
@@ -164,4 +170,5 @@ void MidiArpeggiatorAudioProcessorEditor::resized()
     generateButton.setBounds(100, 10, 100, 40);
     inputUserAxiom.setBounds(100, 80, 100, 40);
     genSlider.setBounds(130, 160, 100, 40);
+    noteDivSlider.setBounds(230, 260, 100, 40);
 }

@@ -20,7 +20,8 @@ public:
     void generateLSystem(const uint8_t& gens);
     // ========================================================
     // APVTS Processor
-    std::vector<int> generateNotePool(const std::string& genString);
+    std::vector<int> generateNotesPool(const std::string& genString);
+    // l-string generated notes relative to the axiom. 
     std::vector<int> notesPool;
 
 

@@ -3,36 +3,7 @@
 // Map containing illegal strings as keys, and their corrosponding legal string as values.
 // // For use in correcting lsys variables and rulesets.
 LSystemProcessor::LSystemProcessor(std::atomic<float>& generations)
-    : generations(generations), 
-    replacementRulesToChar({
-        {"#1", "a"}, {"b2", "a"},
-        {"#2", "b"}, {"b3", "b"},
-        {"#4", "c"}, {"b5", "c"},
-        {"#5", "d"}, {"b6", "d"},
-        {"#6", "e"}, {"b7", "e"},
-        {"b4", "3"}, {"#3", "4"}
-                     }),
-    // TODO: Realizing a big issue. What about notes that are octaves.
-    // Might need to rethink this hol unordered map shit.
-    // Or at least. Let's think. if a character goes beyond an octave. We have to adjust our rule maps.
-    // Because ultimately, each interval does indeed require a unique symbol.
-    replacementRulesToInt({
-        {"1", 0}, {"a", 1},
-        {"2", 2}, {"b", 3},
-        {"3", 4}, {"c", 6},
-        {"4", 5}, {"d", 8},
-        {"5", 7}, {"e", 10},
-        {"6", 9}, {"7", 11}
-        // Enter the new key value pairs here.
-                       }),
-    noteRateMap({
-        {"32/1", 32.0f}, {"16/1", 16.0f}, 
-        {"8/1", 8.0f}, {"4/1", 4.0f}, 
-        {"2/1", 2.0f}, {"1/1", 1.0f},
-        {"1/2", 0.5f}, {"1/4", 0.25f}, 
-        {"1/8", 0.125f}, {"1/16", 0.0625f},
-        {"1/32", 0.03125f}, {"1/64", 0.015625f}
-            }) {}
+    : generations(generations) {}
 // Main function to generate and run everything necessary to produce an L system.
 void LSystemProcessor::generateLSystem(const uint8_t& gens)
 {

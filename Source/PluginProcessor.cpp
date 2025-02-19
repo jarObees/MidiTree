@@ -250,13 +250,14 @@ juce::AudioProcessorValueTreeState::ParameterLayout
     params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 1));
 
     //TODO IMPLEMENT THIS
-    // To show the user the key stuff for the note Rates.
-    //juce::StringArray noteRates;
-    //for (const auto& [key, value] : lsysProcessor.noteRateMap)
-    //{
-    //    DBG(key);
-    //}
-    //params.add(std::make_unique<juce::AudioParameterChoice>("noteRate", "Rate", noteRates, 0));
+    // Takes each note rate, "1/4", "1/18", etc. and creates a list for the param display.
+    juce::StringArray noteRates;
+     for (const auto& pair : lsysProcessor.noteRateMap)
+     {
+         DBG("Added" << pair.first << "to noteRates string array.");
+        noteRates.add(pair.first);
+     }
+    // params.add(std::make_unique<juce::AudioParameterChoice>("noteRate", "Rate", noteRates, 0));
     return params;
  }
 //==============================================================================

@@ -33,7 +33,7 @@ public:
         {"1/8", 0.125f}, {"1/16", 0.0625f},
         {"1/32", 0.03125f}, {"1/64", 0.015625f}
     };
-
+    std::vector<std::string> noteRateKeys;
 private:
     std::atomic<float>& generations;
     // Used for replacing user input (keys), to single char strings to be used in l-sys computation (values).

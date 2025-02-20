@@ -138,6 +138,23 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
 {
 
     genParam = apvts.getRawParameterValue("gens")->load(); // USE THIS FOR ACTUAL SHIT
+    
+    // Converts the rawParamValue to to the correct float one.
+    auto noteRateIndex = apvts.getRawParameterValue("noteRate")->load();
+    std::string& noteRateKey = lsysProcessor.noteRateKeys[noteRateIndex];
+    DBG("Going to find " << noteRateKey);
+    auto umap_it = lsysProcessor.noteRateMap.find(noteRateKey);
+    if (umap_it != lsysProcessor.noteRateMap.end())
+    {
+        DBG("Found!");
+        DBG(umap_it->first << "is equal to " << umap_it->second);
+        noteRate = umap_it->second;
+    }
+    else
+    {
+        DBG("COULD NOT FIND" << noteRateKey);
+    }
+
     buffer.clear();
     auto* playHead = getPlayHead();
     ///TODO: Connect the notesPool here so that we can begin modifying shit based on the axiom.
@@ -249,15 +266,20 @@ juce::AudioProcessorValueTreeState::ParameterLayout
     // Global Generation Variables
     params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 1));
 
-    //TODO IMPLEMENT THIS
-    // Takes each note rate, "1/4", "1/18", etc. and creates a list for the param display.
-    juce::StringArray noteRates;
-     for (const auto& pair : lsysProcessor.noteRateMap)
-     {
-         DBG("Added" << pair.first << "to noteRates string array.");
-        noteRates.add(pair.first);
-     }
-    // params.add(std::make_unique<juce::AudioParameterChoice>("noteRate", "Rate", noteRates, 0));
+    // Takes each note rate, "1/4", "1/18", etc. and creates an array for the param display.
+    for (const auto& pair : LSystemProcessor::noteRateMap)
+    {
+        std::string thingy = pair.first;
+        lsysProcessor.noteRateKeys.push_back(pair.first);
+    }
+    
+    // Converts the noteRateKeys to a juce::stringArray.
+    juce::StringArray _noteRateKeys;
+    for (std::string element : lsysProcessor.noteRateKeys)
+    {
+        _noteRateKeys.add(element);
+    }
+    params.add(std::make_unique<juce::AudioParameterChoice>("noteRate", "Rate", _noteRateKeys, 5));
     return params;
  }
 //==============================================================================

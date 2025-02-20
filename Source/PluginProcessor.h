@@ -52,6 +52,8 @@ public:
     void getStateInformation(juce::MemoryBlock& destData) override;
     void setStateInformation(const void* data, int sizeInBytes) override;
 
+    std::atomic<float> genParam;
+    LSystemProcessor lsysProcessor{ genParam };
     float sampleNoteDivision;
 
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
@@ -70,8 +72,6 @@ public:
     static const inline juce::Identifier lSystemListNodeType{ "lSystemList" };
     juce::ValueTree lSystemList{ lSystemListNodeType };
 
-    std::atomic<float> genParam;
-    LSystemProcessor lsysProcessor{ genParam };
     float noteRate;
 
 private:

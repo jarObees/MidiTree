@@ -95,7 +95,6 @@ void MidiArpeggiatorAudioProcessor::changeProgramName(int index, const juce::Str
 void MidiArpeggiatorAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     rate = static_cast<float> (sampleRate); // Get samplerate
-    notes.clear();
     currentNote = 0;
     lastNoteValue = -1;
     time = 0;
@@ -183,18 +182,19 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
         double samplesPerQuarter = rate * secondsPerQuarterNote;
         auto noteDuration = static_cast<int> (std::ceil(samplesPerQuarter * noteRate));
         
-        // Checks for user midi input, to see if we add/remove notes from the set. 
+        // Checks for user midi input. 
         for (const auto meta : midiMessages)
         {
             // Sets midiAxiom to note that was played.
             const auto currentMessage = meta.getMessage();
             if (currentMessage.isNoteOn())
             {
+                DBG("Message: " << currentMessage.getNoteNumber());
                 midiAxiom = currentMessage.getNoteNumber();
             }
             else if (currentMessage.isNoteOff())
             {
-                midiAxiom = -1;
+				midiAxiom = -1; // Setting to -1 to indicate no note is being played.
             }
         }
         midiMessages.clear();
@@ -202,6 +202,8 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
 		if (midiAxiom != -1)
 		{
             // Temporarily add midiAxiom to each element in notesPool
+            // TODO: FIX THIS.
+            DBG("Creating tempNotes...");
             std::vector<int> tempNotesPool = lsysProcessor.notesPool;
             for (auto& note : tempNotesPool)
             {
@@ -216,16 +218,15 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
                 if (lastNoteValue > 0) // If there has been a previous note played.
                 {
                     midiMessages.addEvent(juce::MidiMessage::noteOff(1, lastNoteValue), offset); // Turn note off.
-                    DBG("Turning off" << lastNoteValue << " at offset: " << offset);
+                    DBG("Turned off" << lastNoteValue << " at offset: " << offset);
                     lastNoteValue = -1;
                 }
-
-                if (notes.size() > 0) // If there's still notes to be played...
+                else // If we need to play a note...
                 {
-                    currentNote = (currentNote + 1) % notes.size(); // Goes to the next note, and loops over to the start once we get to end of sequence.   
+                    currentNote = (currentNote + 1) % tempNotesPool.size(); // Goes to the next note, and loops over to the start once we get to end of sequence.   
                     lastNoteValue = tempNotesPool[currentNote]; // Gets the note...
                     midiMessages.addEvent(juce::MidiMessage::noteOn(1, lastNoteValue, (juce::uint8)127), offset); // Plays the note.
-                    DBG("Turning note on: " << lastNoteValue << " at offset: " << offset);
+                    DBG("Turned note on: " << lastNoteValue << " at offset: " << offset);
                 }
             }
             time = (time + numSamples) % noteDuration;

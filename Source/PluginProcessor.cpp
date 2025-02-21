@@ -134,29 +134,30 @@ bool MidiArpeggiatorAudioProcessor::isBusesLayoutSupported(const BusesLayout& la
 }
 #endif
 
-void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
-{
 
-    genParam = apvts.getRawParameterValue("gens")->load(); // USE THIS FOR ACTUAL SHIT
+// Gets the parameters from the AudioProcessorValueTreeState to use in the processBlock. 
+void MidiArpeggiatorAudioProcessor::getParams()
+{
+    genParam = apvts.getRawParameterValue("gens")->load();
     
     // Converts the rawParamValue to to the correct float one.
     auto noteRateIndex = apvts.getRawParameterValue("noteRate")->load();
     std::string& noteRateKey = lsysProcessor.noteRateKeys[noteRateIndex];
-    DBG("Going to find " << noteRateKey);
     auto umap_it = lsysProcessor.noteRateMap.find(noteRateKey);
     if (umap_it != lsysProcessor.noteRateMap.end())
     {
-        DBG("Found!");
-        DBG(umap_it->first << "is equal to " << umap_it->second);
-        noteRate = umap_it->second;
+        noteRate = umap_it->second; // Updates the param here.
     }
     else
     {
         DBG("COULD NOT FIND" << noteRateKey);
     }
+}
 
+void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+{
+    getParams();
     buffer.clear();
-    auto* playHead = getPlayHead();
     ///TODO: Connect the notesPool here so that we can begin modifying shit based on the axiom.
     /*
     User selects whether quarter, sixteenth, etc.
@@ -165,6 +166,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
     Add that midi value to the notesPool (store this in a new value?)
     For arpeggiator, loop through this. 
     */
+    auto* playHead = getPlayHead();
     
     if (playHead != nullptr)
     {

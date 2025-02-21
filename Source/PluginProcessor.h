@@ -27,6 +27,8 @@ public:
     bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
 #endif
 
+    void getParams();
+
     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
     //==============================================================================
@@ -72,7 +74,7 @@ public:
     static const inline juce::Identifier lSystemListNodeType{ "lSystemList" };
     juce::ValueTree lSystemList{ lSystemListNodeType };
 
-    float noteRate;
+    float noteRate; // Contains float value of note fraction. (E.g 1/4 is stored as 0.25f with noteRate)
 
 private:
     float rate;

@@ -4,6 +4,7 @@
 // // For use in correcting lsys variables and rulesets.
 LSystemProcessor::LSystemProcessor(std::atomic<float>& generations)
     : generations(generations) {}
+
 // Main function to generate and run everything necessary to produce an L system.
 void LSystemProcessor::generateLSystem(const uint8_t& gens)
 {
@@ -12,7 +13,7 @@ void LSystemProcessor::generateLSystem(const uint8_t& gens)
     translateSet(current_lsysRulesets);
     translateSet(current_lsysVars);
     std::unordered_map<std::string, std::string> newLsysRulemap = generateRuleset();
-    LSystem lsystem(current_axiom, newLsysRulemap);
+    LSystem lsystem(lsysAxiom, newLsysRulemap);
     lSystems.push_back(lsystem);
     lsystem.generate(generations);
 

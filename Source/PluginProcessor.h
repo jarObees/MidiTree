@@ -56,7 +56,6 @@ public:
 
     std::atomic<float> genParam;
     LSystemProcessor lsysProcessor{ genParam };
-    float sampleNoteDivision;
 
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout() };
@@ -75,10 +74,10 @@ public:
     juce::ValueTree lSystemList{ lSystemListNodeType };
 
     float noteRate; // Contains float value of note fraction. (E.g 1/4 is stored as 0.25f with noteRate)
-
+    int midiAxiom;
 private:
     float rate;
-    int currentNote, lastNoteValue; // Indexes into notes sorted set.
+    int currentNote, lastNoteValue; // Indexes into notePool.
     int time; // Representts the time that has elapsed since the start of the note on output. 
     juce::SortedSet<int> notes;
     //==============================================================================

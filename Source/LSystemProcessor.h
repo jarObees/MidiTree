@@ -12,14 +12,13 @@ class LSystemProcessor
 {
 public:
     LSystemProcessor(std::atomic<float>& generations);
-    // L System Generation ====================================
+    // L System Generation ====================================================
     juce::SortedSet<std::string> current_lsysVars;
     juce::SortedSet<std::string> current_lsysRulesets;
-    std::string current_axiom;
+    std::string lsysAxiom;
     std::vector<LSystem> lSystems;
     void generateLSystem(const uint8_t& gens);
-    // ========================================================
-    // APVTS Processor
+    // APVTS Processor ========================================================
     std::vector<int> generateNotesPool(const std::string& genString);
     // l-string generated notes relative to the axiom. 
     // Currently used for storing the actual note pool.

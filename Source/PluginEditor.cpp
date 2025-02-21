@@ -84,7 +84,7 @@ void MidiArpeggiatorAudioProcessorEditor::generateButtonClick()
     {
         audioProcessor.lsysProcessor.current_lsysVars = lsysVariablesDisplay;
         audioProcessor.lsysProcessor.current_lsysRulesets = lsysRulesetsDisplay;
-        audioProcessor.lsysProcessor.current_axiom = lsysAxiomDisplay;
+        audioProcessor.lsysProcessor.lsysAxiom = lsysAxiomDisplay;
         audioProcessor.lsysProcessor.generateLSystem(static_cast<uint8_t>(audioProcessor.genParam.load()));
     }
     else
@@ -147,6 +147,10 @@ MidiArpeggiatorAudioProcessorEditor::MidiArpeggiatorAudioProcessorEditor (MidiAr
     addAndMakeVisible(inputUserRuleset);
     addAndMakeVisible(generateButton);
     addAndMakeVisible(inputUserAxiom);
+
+    // FOR TESTING PURPOSES
+    inputUserRuleset.setText("1=12\n2=1");
+	inputUserAxiom.setText("1");
 }
 MidiArpeggiatorAudioProcessorEditor::~MidiArpeggiatorAudioProcessorEditor()
 {

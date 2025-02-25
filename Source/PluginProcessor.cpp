@@ -179,17 +179,21 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
         const auto currentMessage = meta.getMessage();
         if (currentMessage.isNoteOn())
         {
+			currentNote = 0; // Resets the note to first note in notePool, so that each midi triggers a new stream of lsys notes.
             midiAxiom = currentMessage.getNoteNumber();
 			midiLocalPos = currentMessage.getTimeStamp();
+            DBG("Midi Note On Received");
         }
         else if (currentMessage.isNoteOff())
         {
 			midiAxiom = -1; // Setting to -1 to indicate no note is being played.
+            lastNoteValue = -1; // Resetting note value to -1 to ignore any previous notes.
+            DBG("Midi Note Off Received");
         }
     }
     midiMessages.clear();
-    
-    // If theres user input detected.
+
+    /// TODO: Distinguish from whether the playhead is active or not so that user can use this in real time. 
 	if (midiAxiom != -1)
 	{
         // Quantize note =====================
@@ -206,21 +210,22 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
         // Working through all the notes in the notePool.
         if (samplesToNextQuantizedNote < samplesPerBlock || samplesIntoQuantizedNote == 0) // If a quantized note should be turned on/off within this block...
         {
-                
+            DBG("Last note value is currently: " << lastNoteValue);
             //DBG("Offset: " << offset);
             if (lastNoteValue > 0) // If there has been a previous note played.
             {
+                DBG("*** Turning off" << lastNoteValue << " at sample: " << samplesToNextQuantizedNote);
                 midiMessages.addEvent(juce::MidiMessage::noteOff(1, lastNoteValue), samplesToNextQuantizedNote); // Turn note off.
-                DBG("*** Turned off" << lastNoteValue << " at offset: " << samplesToNextQuantizedNote);
                 lastNoteValue = -1;
             }
             else // If we need to play a note...
-            {
-                currentNote = (currentNote + 1) % lsysProcessor.notesPool.size(); // Goes to the next note, and loops over to the start once we get to end of sequence.   
+            {   
                 const int noteNum = lsysProcessor.notesPool[currentNote] + midiAxiom;
                 lastNoteValue = noteNum;
+                DBG("*** Turning note on: " << lastNoteValue << " at sample: " << samplesToNextQuantizedNote);
                 midiMessages.addEvent(juce::MidiMessage::noteOn(1, lastNoteValue, (juce::uint8)127), samplesToNextQuantizedNote); // Plays the note.
-                DBG("*** Turned note on: " << lastNoteValue << " at offset: " << samplesToNextQuantizedNote);
+                currentNote = (currentNote + 1) % lsysProcessor.notesPool.size(); // Goes to the next note, and loops over to the start once we get to end of sequence.
+                DBG("Last note value after note on = " << lastNoteValue);
             }
         }
 	}

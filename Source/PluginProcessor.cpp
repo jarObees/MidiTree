@@ -94,7 +94,8 @@ void MidiArpeggiatorAudioProcessor::changeProgramName(int index, const juce::Str
 //==============================================================================
 void MidiArpeggiatorAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
-    rate = static_cast<float> (sampleRate); // Get samplerate
+    sampRate = static_cast<float> (sampleRate); // Get samplerate
+	DBG("INIT Sample Rate: " << sampleRate << "<<<<");
     currentNote = 0;
     lastNoteValue = -1;
     time = 0;
@@ -156,82 +157,73 @@ void MidiArpeggiatorAudioProcessor::getParams()
 // FOR NOW, WE WILL ASSUME THAT WE ARE NOT GOING TO CHANGE THE L SYSTEM DURING PLAY.
 void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+	DBG("Processing Block==============");
     getParams();
     buffer.clear();
-    ///TODO: Connect the notesPool here so that we can begin modifying shit based on the axiom.
-    /*
-    User selects whether quarter, sixteenth, etc.
-    Grab midi input and put into some variable of note currently being played.
-    For now, look at only the first note.
-    Add that midi value to the notesPool (store this in a new value?)
-    For arpeggiator, loop through this. 
-    */
-    auto* playHead = getPlayHead();
     
-    if (playHead != nullptr)
-    {
-        // Get all our goodies.
-        auto numSamples = buffer.getNumSamples(); // Number of samples per block
-        auto posInfoOpt = playHead->getPosition();
-        auto ppqPosOpt = posInfoOpt->getPpqPosition();
-        auto bpmOpt = posInfoOpt->getBpm();
+    auto* playHead = getPlayHead();
+    const int samplesPerBlock = buffer.getNumSamples(); // Number of samples per block
 
-        // Convert the ppq to samples.
-        double bpm = *bpmOpt;
-        double secondsPerQuarterNote = 60.0 / bpm;
-        double samplesPerQuarter = rate * secondsPerQuarterNote;
-        auto noteDuration = static_cast<int> (std::ceil(samplesPerQuarter * noteRate));
+    // Sample Position
+    auto posInfoOpt = playHead->getPosition();
+    auto bpm = *posInfoOpt->getBpm();
+    const double secondsPerQuarterNote = 60.0 / bpm;
+    const double samplesPerQuarter = sampRate * secondsPerQuarterNote;
+    const int samplesPerNote = static_cast<int> (std::ceil(samplesPerQuarter * noteRate));
         
-        // Checks for user midi input. 
-        for (const auto meta : midiMessages)
+    // Checks for user midi input.
+    int midiLocalPos = 0;
+    for (const auto meta : midiMessages)
+    {
+        // Sets midiAxiom to note that was played.
+        const auto currentMessage = meta.getMessage();
+        if (currentMessage.isNoteOn())
         {
-            // Sets midiAxiom to note that was played.
-            const auto currentMessage = meta.getMessage();
-            if (currentMessage.isNoteOn())
+            midiAxiom = currentMessage.getNoteNumber();
+			midiLocalPos = currentMessage.getTimeStamp();
+        }
+        else if (currentMessage.isNoteOff())
+        {
+			midiAxiom = -1; // Setting to -1 to indicate no note is being played.
+        }
+    }
+    midiMessages.clear();
+    
+    // If theres user input detected.
+	if (midiAxiom != -1)
+	{
+        // Quantize note =====================
+        // Grab Global Position.
+        const int blockSamplePos = static_cast<int>(*posInfoOpt->getTimeInSamples()); 
+        const int globalSamplePos = blockSamplePos + midiLocalPos;
+        DBG("Block Sample Position: " << blockSamplePos);
+        DBG("Global Sample Position: " << globalSamplePos);
+
+        // Find nearest future quantized sample pos.
+        const int samplesIntoQuantizedNote = globalSamplePos % samplesPerNote; // If 0, then we are at the quantized note.
+        const int samplesToNextQuantizedNote = (samplesIntoQuantizedNote == 0) ? 0 : (samplesPerNote - samplesIntoQuantizedNote);
+
+        // Working through all the notes in the notePool.
+        if (samplesToNextQuantizedNote < samplesPerBlock || samplesIntoQuantizedNote == 0) // If a quantized note should be turned on/off within this block...
+        {
+                
+            //DBG("Offset: " << offset);
+            if (lastNoteValue > 0) // If there has been a previous note played.
             {
-                DBG("Message: " << currentMessage.getNoteNumber());
-                midiAxiom = currentMessage.getNoteNumber();
+                midiMessages.addEvent(juce::MidiMessage::noteOff(1, lastNoteValue), samplesToNextQuantizedNote); // Turn note off.
+                DBG("*** Turned off" << lastNoteValue << " at offset: " << samplesToNextQuantizedNote);
+                lastNoteValue = -1;
             }
-            else if (currentMessage.isNoteOff())
+            else // If we need to play a note...
             {
-				midiAxiom = -1; // Setting to -1 to indicate no note is being played.
+                currentNote = (currentNote + 1) % lsysProcessor.notesPool.size(); // Goes to the next note, and loops over to the start once we get to end of sequence.   
+                const int noteNum = lsysProcessor.notesPool[currentNote] + midiAxiom;
+                lastNoteValue = noteNum;
+                midiMessages.addEvent(juce::MidiMessage::noteOn(1, lastNoteValue, (juce::uint8)127), samplesToNextQuantizedNote); // Plays the note.
+                DBG("*** Turned note on: " << lastNoteValue << " at offset: " << samplesToNextQuantizedNote);
             }
         }
-        midiMessages.clear();
-        // If theres a note being played...
-		if (midiAxiom != -1)
-		{
-            // Temporarily add midiAxiom to each element in notesPool
-            // TODO: FIX THIS.
-            DBG("Creating tempNotes...");
-            std::vector<int> tempNotesPool = lsysProcessor.notesPool;
-            for (auto& note : tempNotesPool)
-            {
-                note += midiAxiom;
-            }
-
-            // Working through all the notes in the notePool.
-            if ((time + numSamples) >= noteDuration) // If the note ends within this block. 
-            {
-                auto offset = juce::jmax(0, juce::jmin((int)(noteDuration - time), numSamples - 1)); // Represents the number of samples from the start of the block.
-                //DBG("Offset: " << offset);
-                if (lastNoteValue > 0) // If there has been a previous note played.
-                {
-                    midiMessages.addEvent(juce::MidiMessage::noteOff(1, lastNoteValue), offset); // Turn note off.
-                    DBG("Turned off" << lastNoteValue << " at offset: " << offset);
-                    lastNoteValue = -1;
-                }
-                else // If we need to play a note...
-                {
-                    currentNote = (currentNote + 1) % tempNotesPool.size(); // Goes to the next note, and loops over to the start once we get to end of sequence.   
-                    lastNoteValue = tempNotesPool[currentNote]; // Gets the note...
-                    midiMessages.addEvent(juce::MidiMessage::noteOn(1, lastNoteValue, (juce::uint8)127), offset); // Plays the note.
-                    DBG("Turned note on: " << lastNoteValue << " at offset: " << offset);
-                }
-            }
-            time = (time + numSamples) % noteDuration;
-		}
-    }
+	}
 }
 
 //==============================================================================

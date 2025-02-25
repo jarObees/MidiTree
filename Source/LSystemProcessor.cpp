@@ -14,8 +14,8 @@ void LSystemProcessor::generateLSystem(const uint8_t& gens)
     translateSet(current_lsysVars);
     std::unordered_map<std::string, std::string> newLsysRulemap = generateRuleset();
     LSystem lsystem(lsysAxiom, newLsysRulemap);
-    lSystems.push_back(lsystem);
     lsystem.generate(generations);
+    lSystems.push_back(lsystem);
 
     //FOR TESTING PURPOSES=============================================================
     const LSystem& testLSystem = lSystems[0];
@@ -54,10 +54,12 @@ std::vector<int> LSystemProcessor::generateNotesPool(const std::string& genStrin
     std::vector<int> notesPlus;
     for (char c : genString)
     {
+        DBG("Char: " << c);
         std::string s{ c };
         auto it = replacementRulesToInt.find(s);
         if (it != replacementRulesToInt.end())
         {
+			DBG("Adding " << it->second);
             notesPlus.push_back(it->second);
         }
         else
@@ -66,6 +68,7 @@ std::vector<int> LSystemProcessor::generateNotesPool(const std::string& genStrin
             return notesPlus;
         }
     }
+    DBG("Done generating. Returning notesPlus");
     return notesPlus;
 }
 

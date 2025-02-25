@@ -73,10 +73,10 @@ public:
     static const inline juce::Identifier lSystemListNodeType{ "lSystemList" };
     juce::ValueTree lSystemList{ lSystemListNodeType };
 
-    float noteRate; // Contains float value of note fraction. (E.g 1/4 is stored as 0.25f with noteRate)
-    int midiAxiom;
+    float noteRate; // Contains float value of note fraction. (E.g 1/4 is stored as 0.25f)
+    int midiAxiom; // Value representing the initial midi input by user. Should be set to -1 if no user input.
 private:
-    float rate;
+    float sampRate;
     int currentNote, lastNoteValue; // Indexes into notePool.
     int time; // Representts the time that has elapsed since the start of the note on output. 
     juce::SortedSet<int> notes;

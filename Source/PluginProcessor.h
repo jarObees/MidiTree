@@ -75,10 +75,14 @@ public:
 
     float noteRate; // Contains float value of note fraction. (E.g 1/4 is stored as 0.25f)
     int midiAxiom; // Value representing the initial midi input by user. Should be set to -1 if no user input.
+
 private:
+    bool isFirstNote;
+    bool isMidiHeldDown;
     float sampRate;
-    int currentNote, lastNoteValue; // Indexes into notePool.
-    int time; // Representts the time that has elapsed since the start of the note on output. 
+    int currentNote; // Index into note that is played in notesPool
+    int midiNoteToPlay; // Note number of note to-be-played
+    int timer; // Representts the time that has elapsed since the start of the note on output. 
     juce::SortedSet<int> notes;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiArpeggiatorAudioProcessor)

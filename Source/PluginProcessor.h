@@ -79,6 +79,7 @@ public:
 private:
     bool isFirstNote;
     bool isMidiHeldDown;
+    bool mustTurnOff;
     float sampRate;
     int currentNote; // Index into note that is played in notesPool
     int midiNoteToPlay; // Note number of note to-be-played

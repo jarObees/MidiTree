@@ -97,9 +97,11 @@ void MidiArpeggiatorAudioProcessor::prepareToPlay(double sampleRate, int samples
     sampRate = static_cast<float> (sampleRate); // Get samplerate
     currentNote = 0;
     midiNoteToPlay = -1;
-    midiAxiom = -1; // Default state is set to -1.
+    // midiAxiom = -1; // Default state is set to -1.
+
     isFirstNote = false;
     isMidiHeldDown = false;
+    mustTurnOff = false;
 }
 
 void MidiArpeggiatorAudioProcessor::releaseResources()
@@ -173,6 +175,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
         
     // Checks for user midi input.
     int midiLocalPos = 0;
+    bool ismidiTurnedOffInThisBlock = false;
     for (const auto meta : midiMessages)
     {
         // Sets midiAxiom to note that was played.
@@ -186,16 +189,20 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
 			isMidiHeldDown = true;
             DBG("Midi Note On Received");
         }
+        /// TODO: Currently, since isMidiHeldDown is set to false, the main timer logic is skipped over, and as such the final note is not turned off.
+        /// We need to make sure that once we get a note off within the block, we 'cleanup' as in turn off any remaining notes that might be playing.
         else if (currentMessage.isNoteOff())
         {
 			isMidiHeldDown = false;
-            midiNoteToPlay = -1; // Resetting note value to -1 to ignore any previous notes.
-            DBG("Midi Note Off Received");
+            mustTurnOff = true;
+            DBG("midiNoteToPlay= " << midiNoteToPlay);
+            DBG("isMiiHeldDown = FALSE");
+            DBG("Midi Note Off Received.");
         }
     }
     midiMessages.clear();
 
-    // We treat the first note differently to set the timer and quantize appropriately.
+    // Handles the quantization for the first note and triggers a timer for all future notes.
     if (isFirstNote)
     {
         // If the playhead is running...
@@ -219,7 +226,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
             DBG("FN Last note value after note on = " << midiNoteToPlay);
             timer = 0;
         }
-        // Else if the user hasn't started the playhead.
+        // Else if the user hasn't started the playhead (say in a live performance).
         else
         {
             midiNoteToPlay = lsysProcessor.notesPool[currentNote] + midiAxiom;
@@ -232,8 +239,8 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
         timer += samplesPerBlock;
     }
 
-    // Otherwise, we iterate through notes as such.
-	if (isMidiHeldDown == true && isFirstNote == false)
+    // Handles all note arpeggiation besides the first note based on the timer.
+	if (isMidiHeldDown == true && isFirstNote == false || mustTurnOff)
 	{
         // Find nearest future quantized sample pos.
         const int samplesIntoQuantizedNote = timer % samplesPerNote; // If 0, then we are at the quantized note.
@@ -242,21 +249,22 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
         // Working through all the notes in the notePool.
         if (samplesToNextQuantizedNote < samplesPerBlock || samplesIntoQuantizedNote == 0) // If a quantized note should be turned on/off within this block...
         {
+            // We will always turn a note off...
             DBG("Last note value is currently: " << midiNoteToPlay);
-            //DBG("Offset: " << offset);
-            if (midiNoteToPlay > 0) // If there has been a previous note played.
+            DBG("*** Turning off" << midiNoteToPlay << " at sample: " << samplesToNextQuantizedNote);
+            midiMessages.addEvent(juce::MidiMessage::noteOff(1, midiNoteToPlay), samplesToNextQuantizedNote); // Turn note off.
+
+            if (mustTurnOff != true) // If we need to play a note...
             {
-                DBG("*** Turning off" << midiNoteToPlay << " at sample: " << samplesToNextQuantizedNote);
-                midiMessages.addEvent(juce::MidiMessage::noteOff(1, midiNoteToPlay), samplesToNextQuantizedNote); // Turn note off.
-                midiNoteToPlay = -1;
-            }
-            else // If we need to play a note...
-            {   
                 midiNoteToPlay = lsysProcessor.notesPool[currentNote] + midiAxiom;
                 DBG("*** Turning note on: " << midiNoteToPlay << " at sample: " << samplesToNextQuantizedNote);
                 midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)127), samplesToNextQuantizedNote); // Plays the note.
                 currentNote = (currentNote + 1) % lsysProcessor.notesPool.size(); // Goes to the next note, and loops over to the start once we get to end of sequence.
                 DBG("Last note value after note on = " << midiNoteToPlay);
+            }
+            else
+            {
+                mustTurnOff = false;
             }
         }
 		timer += samplesPerBlock;

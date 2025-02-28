@@ -80,17 +80,37 @@ public:
     // JIVE STUFF
     juce::ValueTree topLevel(const juce::String& greeting)
     {
+        static constexpr auto style = []{
+                return new jive::Object{
+                    {"background", "#00FF00"},
+                    {"foreground", "#CDD9E5"},
+                    {"font-family", "Verdana"},
+                    {"font-size", 15},
+                    {
+                        "#greeting",
+                        new jive::Object{
+                            {"font-size", 25},
+                        },
+                    }
+                };
+            };
+
         return juce::ValueTree{
             "Editor", // Change this to "Editor" for plugin projects
             {
-                { "width", 640 },
-                { "height", 400 },
+                { "width", 600 },
+                { "height", 600 },
+                {"justify-content", "centre"},
+                {"align-items", "centre"},
+                {"style", style()},
             },
             {
                 juce::ValueTree {
                     "Text",
                     {
+                        {"id", "greeting"},
                         { "text", greeting },
+                        {"margin", "0 0 20 0"},
                     },
                 },
             },
@@ -108,6 +128,7 @@ private:
     juce::SortedSet<int> notes;
 
     jive::Interpreter viewInterpreter;
+    juce::ValueTree view;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiArpeggiatorAudioProcessor)
 };

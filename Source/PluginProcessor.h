@@ -12,7 +12,7 @@
 #include "LSystemProcessor.h"
 
 //==============================================================================
-class MidiArpeggiatorAudioProcessor : public juce::AudioProcessor
+class MidiArpeggiatorAudioProcessor : public foleys::MagicProcessor
 {
 public:
     //==============================================================================
@@ -32,8 +32,8 @@ public:
     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
     //==============================================================================
-    juce::AudioProcessorEditor* createEditor() override;
-    bool hasEditor() const override;
+    // juce::AudioProcessorEditor* createEditor() override;
+    // bool hasEditor() const override;
 
     //==============================================================================
     const juce::String getName() const override;

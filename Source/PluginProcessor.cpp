@@ -11,17 +11,8 @@
 
 //==============================================================================
 MidiArpeggiatorAudioProcessor::MidiArpeggiatorAudioProcessor()
-#ifndef JucePlugin_PreferredChannelConfigurations
-    : AudioProcessor(BusesProperties()
-#if ! JucePlugin_IsMidiEffect
-#if ! JucePlugin_IsSynth
-        .withInput("Input", juce::AudioChannelSet::stereo(), true)
-#endif
-        .withOutput("Output", juce::AudioChannelSet::stereo(), true)
-#endif
-    )
-#endif
 {
+    FOLEYS_SET_SOURCE_PATH(__FILE__);
 }
 
 MidiArpeggiatorAudioProcessor::~MidiArpeggiatorAudioProcessor()
@@ -273,16 +264,16 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
 }
 
 //==============================================================================
-bool MidiArpeggiatorAudioProcessor::hasEditor() const
-{
-    return true; // (change this to false if you choose to not supply an editor)
-}
-
-juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
-{
-    return new MidiArpeggiatorAudioProcessorEditor(*this);
-    // return new juce::GenericAudioProcessorEditor(*this);
-}
+//bool MidiArpeggiatorAudioProcessor::hasEditor() const
+//{
+//    return true; // (change this to false if you choose to not supply an editor)
+//}
+//
+//juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
+//{
+//    return new MidiArpeggiatorAudioProcessorEditor(*this);
+//    // return new juce::GenericAudioProcessorEditor(*this);
+//}
 
 //==============================================================================
 void MidiArpeggiatorAudioProcessor::getStateInformation(juce::MemoryBlock& destData)

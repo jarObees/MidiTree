@@ -280,8 +280,30 @@ bool MidiArpeggiatorAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 {
-    return new MidiArpeggiatorAudioProcessorEditor(*this);
-    // return new juce::GenericAudioProcessorEditor(*this);
+    jassert(JIVE_IS_PLUGIN_PROJECT);
+    auto view = topLevel("Hello, World!!!");
+
+    // interpret() needs a juce::AudioProcessor* when interpreting "Editor"
+    // types in order to construct the juce::AudioProcessorEditor
+    if (auto editor = viewInterpreter.interpret(view, this))
+    {
+        // When interpreting an "Editor" type, the top-level item will be a
+        // jive::GuiItem AND a juce::AudioProcessorEditor. So we can do a
+        // dynamic-cast here to check that the editor was created successfully.
+        if (dynamic_cast<juce::AudioProcessorEditor*>(editor.get()) != nullptr)
+        {
+            viewInterpreter.listenTo(*editor);
+
+            // Release ownership to the caller.
+            return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
+        }
+    }
+
+    // Fallback in case the editor wasn't constructed for some reason
+    return new juce::GenericAudioProcessorEditor{ *this };
+
+    // If you're 100% sure your interpreted view is correct, you could just do:
+    // return dynamic_cast<juce::AudioProcessorEditor*>(interpreter.interpret(view, this).release());
 }
 
 //==============================================================================

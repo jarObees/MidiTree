@@ -281,24 +281,17 @@ bool MidiArpeggiatorAudioProcessor::hasEditor() const
 juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 {
     jassert(JIVE_IS_PLUGIN_PROJECT);
-    view = topLevel("Hello, World!!!");
-    // Append a button to our view after 2 seconds
-    view.appendChild(juce::ValueTree{
-            "Button",
-            {},
-            {
-                juce::ValueTree {
-                    "Text",
-                    {
-                        { "text", "Click me!" },
-                    },
-                },
-            },
-                     }, nullptr);
-
-
-
-    return dynamic_cast<juce::AudioProcessorEditor*>(viewInterpreter.interpret(view, this).release());
+    auto view = jiveUI::getView();
+    if (auto editor = viewInterpreter.interpret(view, this))
+    {
+        if (dynamic_cast<juce::AudioProcessorEditor*>(editor.get()))
+        {
+            viewInterpreter.listenTo(*editor);
+            //TODO: FIND THE PARAMETERS HERE
+            return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
+        }
+    }
+    // return dynamic_cast<juce::AudioProcessorEditor*>(viewInterpreter.interpret(view, this).release());
 }
 
 //==============================================================================
@@ -335,7 +328,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout
     juce::AudioProcessorValueTreeState::ParameterLayout params;
     // Global Generation Variables
     params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 1));
-
     // Takes each note rate, "1/4", "1/18", etc. and creates an array for the param display.
     for (const auto& pair : LSystemProcessor::noteRateMap)
     {

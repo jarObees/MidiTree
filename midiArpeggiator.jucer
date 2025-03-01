@@ -4,6 +4,9 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginCharacteristicsValue="pluginProducesMidiOut,pluginWantsMidiIn"
               pluginFormats="buildStandalone,buildVST3" cppLanguageStandard="20">
   <MAINGROUP id="tMID8o" name="midiArpeggiator">
+    <GROUP id="{364A534D-7CD2-809C-2196-30E80E3205D4}" name="GUI">
+      <FILE id="rsk38a" name="view.h" compile="0" resource="0" file="Source/view.h"/>
+    </GROUP>
     <GROUP id="{968718A0-7025-4E85-0A48-8A9854BC5E9F}" name="Source">
       <FILE id="IJAVLp" name="LSystem.h" compile="0" resource="0" file="Source/LSystem.h"/>
       <FILE id="Bl64sn" name="LSystemProcessor.cpp" compile="1" resource="0"
@@ -20,6 +23,7 @@
     </GROUP>
   </MAINGROUP>
   <MODULES>
+    <MODULE id="foleys_gui_magic" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="jive_components" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="jive_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="jive_layouts" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
@@ -69,6 +73,7 @@
         <MODULEPATH id="jive_core" path="../JIVE/JIVE"/>
         <MODULEPATH id="jive_layouts" path="../JIVE/JIVE"/>
         <MODULEPATH id="jive_style_sheets" path="../JIVE/JIVE"/>
+        <MODULEPATH id="foleys_gui_magic" path="../guiMagic/foleys_gui_magic/modules"/>
       </MODULEPATHS>
     </VS2022>
   </EXPORTFORMATS>

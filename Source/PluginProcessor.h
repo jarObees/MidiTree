@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include <juce_data_structures/juce_data_structures.h>
 #include "LSystemProcessor.h"
+#include "view.h"
 
 //==============================================================================
 class MidiArpeggiatorAudioProcessor : public juce::AudioProcessor
@@ -77,46 +78,7 @@ public:
     float noteRate; // Contains float value of note fraction. (E.g 1/4 is stored as 0.25f)
     int midiAxiom; // Value representing the initial midi input by user. Should be set to -1 if no user input.
 
-    // JIVE STUFF
-    juce::ValueTree topLevel(const juce::String& greeting)
-    {
-        static constexpr auto style = []{
-                return new jive::Object{
-                    {"background", "#00FF00"},
-                    {"foreground", "#CDD9E5"},
-                    {"font-family", "Verdana"},
-                    {"font-size", 15},
-                    {
-                        "#greeting",
-                        new jive::Object{
-                            {"font-size", 25},
-                        },
-                    }
-                };
-            };
-
-        return juce::ValueTree{
-            "Editor", // Change this to "Editor" for plugin projects
-            {
-                { "width", 600 },
-                { "height", 600 },
-                {"justify-content", "centre"},
-                {"align-items", "centre"},
-                {"style", style()},
-            },
-            {
-                juce::ValueTree {
-                    "Text",
-                    {
-                        {"id", "greeting"},
-                        { "text", greeting },
-                        {"margin", "0 0 20 0"},
-                    },
-                },
-            },
-        };
-    }
-
+    
 private:
     bool isFirstNote;
     bool isMidiHeldDown;
@@ -128,7 +90,8 @@ private:
     juce::SortedSet<int> notes;
 
     jive::Interpreter viewInterpreter;
-    juce::ValueTree view;
+    juce::UndoManager undoManager;
+    //TODO: Should I also include the audioparameterfloats stuff?
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiArpeggiatorAudioProcessor)
 };

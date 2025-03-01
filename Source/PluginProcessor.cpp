@@ -141,7 +141,7 @@ bool MidiArpeggiatorAudioProcessor::isBusesLayoutSupported(const BusesLayout& la
 void MidiArpeggiatorAudioProcessor::getParams()
 {
     genParam = apvts.getRawParameterValue("gens")->load();
-    
+    velParam = apvts.getRawParameterValue("vel")->load();
     // Converts the rawParamValue to to the correct float one.
     const auto noteRateIndex = apvts.getRawParameterValue("noteRate")->load();
     const std::string& noteRateKey = lsysProcessor.noteRateKeys[noteRateIndex];
@@ -221,7 +221,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
 
             midiNoteToPlay = lsysProcessor.notesPool[currentNote] + midiAxiom;
             DBG("FN*** Turning note on: " << midiNoteToPlay);
-            midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)127), samplesToNextQuantizedNote); // Plays the note.
+            midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)velParam), samplesToNextQuantizedNote); // Plays the note.
             currentNote = (currentNote + 1) % lsysProcessor.notesPool.size(); // Goes to the next note, and loops over to the start once we get to end of sequence.
             DBG("FN Last note value after note on = " << midiNoteToPlay);
             timer = 0;
@@ -231,7 +231,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
         {
             midiNoteToPlay = lsysProcessor.notesPool[currentNote] + midiAxiom;
             DBG("FN *** Turning note on: " << midiNoteToPlay << " at sample: " << midiLocalPos);
-            midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)127), midiLocalPos); // Plays the note.
+            midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)velParam), midiLocalPos); // Plays the note.
             currentNote = (currentNote + 1) % lsysProcessor.notesPool.size(); // Goes to the next note, and loops over to the start once we get to end of sequence.
             DBG("FN Last note value after note on = " << midiNoteToPlay);
             timer = 0;
@@ -258,7 +258,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
             {
                 midiNoteToPlay = lsysProcessor.notesPool[currentNote] + midiAxiom;
                 DBG("*** Turning note on: " << midiNoteToPlay << " at sample: " << samplesToNextQuantizedNote);
-                midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)127), samplesToNextQuantizedNote); // Plays the note.
+                midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)velParam), samplesToNextQuantizedNote); // Plays the note.
                 currentNote = (currentNote + 1) % lsysProcessor.notesPool.size(); // Goes to the next note, and loops over to the start once we get to end of sequence.
                 DBG("Last note value after note on = " << midiNoteToPlay);
             }
@@ -281,7 +281,7 @@ bool MidiArpeggiatorAudioProcessor::hasEditor() const
 juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 {
     return new MidiArpeggiatorAudioProcessorEditor(*this);
-    // return new juce::GenericAudioProcessorEditor(*this);
+    //return new juce::GenericAudioProcessorEditor(*this);
 }
 
 //==============================================================================
@@ -318,7 +318,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout
     juce::AudioProcessorValueTreeState::ParameterLayout params;
     // Global Generation Variables
     params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 1));
-
+    params.add(std::make_unique<juce::AudioParameterInt>("vel", "Velocity", 1, 127, 100));
     // Takes each note rate, "1/4", "1/18", etc. and creates an array for the param display.
     for (const auto& pair : LSystemProcessor::noteRateMap)
     {

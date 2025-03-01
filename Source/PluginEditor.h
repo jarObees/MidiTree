@@ -32,8 +32,11 @@ private:
     juce::TextButton generateButton{ "Generate!" };
     juce::Slider genSlider;
     juce::Slider noteDivSlider;
+    juce::Slider velSlider;
+
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> genAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> noteDivAttachment;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> velAttachment;
     
     void generateButtonClick();
     bool addUserRuleset(std::string ruleSet);

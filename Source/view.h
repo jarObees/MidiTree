@@ -3,14 +3,96 @@
 
 namespace jiveUI
 {
-	// Used in plugin editor for the view.
+	// SUB-COMPONENTS ===========================================================
+	[[nodiscard]] inline auto midiVelocityKnob()
+	{
+		return juce::ValueTree{
+			"Knob",
+			{
+				{"id", "velocity-knob"},
+				{"width", 80},
+				{"height", 80}
+			},
+		};
+	}
+	[[nodiscard]] inline auto noteRateKnob()
+	{
+		return juce::ValueTree{
+			"Knob",
+			{
+				{"id", "noteRate-knob"},
+				{"width", 80},
+				{"height", 80}
+			},
+		};
+	}
+	[[nodiscard]] inline auto noteTypeComboBox()
+	{
+		return juce::ValueTree{
+			"ComboBox",
+			{
+				{"id", "noteType-comboBox"},
+				{"width", 80},
+				{"height", 80}
+			},
+		};
+	}
+
+	// MAIN COMPONENTS ==========================================================
+	[[nodiscard]] inline auto getCrown()
+	{
+		return juce::ValueTree{
+			"Component",
+			{
+				{"id", "crown"},
+				{"align-items", "centre"},
+				{"justify-content", "centre"},
+			},
+			{
+				// Get Crown components.
+			}
+		};
+	}
+	[[nodiscard]] inline auto getTrunk()
+	{
+		return juce::ValueTree{
+			"Component",
+			{
+				{"id", "trunk"},
+				{"align-items", "centre"},
+				{"justify-content", "centre"},
+			},
+			{
+				//Get Trunk Components
+			}
+		};
+	}
+	[[nodiscard]] inline auto getGround()
+	{
+		return juce::ValueTree{
+			"Component",
+			{
+				{"id", "ground"},
+				{"flex-direction", "row"},
+				{"align-content", "space-around"},
+				{"justify-content", "centre"},
+			},
+			{
+				midiVelocityKnob(),
+				noteRateKnob(),
+				noteTypeComboBox(),
+			}
+		};
+	}
+
+	// Top Level View =========================================================
 	[[nodiscard]] inline auto getView()
 	{
 		return juce::ValueTree{
 			"Editor",
 			{
-				{"width", 800},
-				{"height", 250},
+				{"width", 300},
+				{"height", 600},
 				{"align-items", "centre"},
 				{"justify-content", "centre"},
 				{
@@ -21,7 +103,9 @@ namespace jiveUI
 				},
 			},
 			{
-				// TODO: Create other objects here throuhg functions that can be defined earlier.
+				getGround(),
+				getTrunk(),
+				getCrown(),
 			}
 		};
 	}

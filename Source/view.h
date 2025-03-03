@@ -4,6 +4,26 @@
 namespace jiveUI
 {
 	// SUB-COMPONENTS ===========================================================
+	
+	[[nodiscard]] inline auto midiVelocityLabel()
+	{
+		return juce::ValueTree{
+			"Text",
+			{
+				{"id", "midiVelocity-label"},
+
+			},
+			{
+				juce::ValueTree{
+					"Text",
+					{
+						{"text", " velocity"},
+					},
+				},
+			},
+		};
+	}
+
 	[[nodiscard]] inline auto midiVelocityKnob()
 	{
 		return juce::ValueTree{
@@ -15,6 +35,26 @@ namespace jiveUI
 			},
 		};
 	}
+
+	//[[nodiscard]] inline auto noteRateLabel()
+	//{
+	//	return juce::ValueTree{
+	//		"Text",
+	//		{
+	//			{"id", "noteRate-label"},
+
+	//		},
+	//		{
+	//			juce::ValueTree{
+	//				"Text",
+	//				{
+	//					{"text", " rate"},
+	//				},
+	//			},
+	//		},
+	//	};
+	//}
+
 	[[nodiscard]] inline auto noteRateKnob()
 	{
 		return juce::ValueTree{
@@ -79,7 +119,10 @@ namespace jiveUI
 			},
 			{
 				midiVelocityKnob(),
+				midiVelocityLabel(),
+				
 				noteRateKnob(),
+
 				noteTypeComboBox(),
 			}
 		};

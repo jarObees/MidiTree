@@ -29,31 +29,31 @@ namespace jiveUI
 		return juce::ValueTree{
 			"Knob",
 			{
-				{"id", "velocity-knob"},
+				{"id", "midiVelocity-knob"},
 				{"width", 80},
 				{"height", 80}
 			},
 		};
 	}
+	[[nodiscard]] inline auto 
+	[[nodiscard]] inline auto noteRateLabel()
+	{
+		return juce::ValueTree{
+			"Text",
+			{
+				{"id", "noteRate-label"},
 
-	//[[nodiscard]] inline auto noteRateLabel()
-	//{
-	//	return juce::ValueTree{
-	//		"Text",
-	//		{
-	//			{"id", "noteRate-label"},
-
-	//		},
-	//		{
-	//			juce::ValueTree{
-	//				"Text",
-	//				{
-	//					{"text", " rate"},
-	//				},
-	//			},
-	//		},
-	//	};
-	//}
+			},
+			{
+				juce::ValueTree{
+					"Text",
+					{
+						{"text", " rate"},
+					},
+				},
+			},
+		};
+	}
 
 	[[nodiscard]] inline auto noteRateKnob()
 	{

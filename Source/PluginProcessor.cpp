@@ -289,7 +289,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             viewInterpreter.listenTo(*editor);
             //TODO: FIND THE PARAMETERS HERE
             jive::findItemWithID(*editor, "noteRate-knob")->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
-            jive::findItemWithID(*editor, "midiVelocity-knob")->attachToParameter(apvts.getParameter("midiVelocity"), &undoManager);
+            jive::findItemWithID(*editor, "midiVelocity-knob")->attachToParameter(apvts.getParameter("vel"), &undoManager);
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
         }
     }
@@ -330,6 +330,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout
     juce::AudioProcessorValueTreeState::ParameterLayout params;
     // Global Generation Variables
     params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 1));
+    params.add(std::make_unique<juce::AudioParameterInt>("vel", "Midi Velocity", 1, 127, 100));
     // Takes each note rate, "1/4", "1/18", etc. and creates an array for the param display.
     for (const auto& pair : LSystemProcessor::noteRateMap)
     {

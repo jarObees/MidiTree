@@ -144,6 +144,13 @@ MidiArpeggiatorAudioProcessorEditor::MidiArpeggiatorAudioProcessorEditor (MidiAr
         (audioProcessor.apvts, "noteRate", noteDivSlider);
     addAndMakeVisible(noteDivSlider);
     
+    // VEL SLIDER
+    velSlider.setSliderStyle(juce::Slider::LinearHorizontal);
+    velSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
+    velAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>
+        (audioProcessor.apvts, "vel", velSlider);
+    addAndMakeVisible(velSlider);
+
     addAndMakeVisible(inputUserRuleset);
     addAndMakeVisible(generateButton);
     addAndMakeVisible(inputUserAxiom);
@@ -175,4 +182,5 @@ void MidiArpeggiatorAudioProcessorEditor::resized()
     inputUserAxiom.setBounds(100, 80, 100, 40);
     genSlider.setBounds(130, 160, 100, 40);
     noteDivSlider.setBounds(230, 260, 100, 40);
+    velSlider.setBounds(230, 160, 100, 40);
 }

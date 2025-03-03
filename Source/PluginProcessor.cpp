@@ -141,7 +141,7 @@ bool MidiArpeggiatorAudioProcessor::isBusesLayoutSupported(const BusesLayout& la
 void MidiArpeggiatorAudioProcessor::getParams()
 {
     genParam = apvts.getRawParameterValue("gens")->load();
-    
+    velParam = apvts.getRawParameterValue("vel")->load();
     // Converts the rawParamValue to to the correct float one.
     const auto noteRateIndex = apvts.getRawParameterValue("noteRate")->load();
     const std::string& noteRateKey = lsysProcessor.noteRateKeys[noteRateIndex];

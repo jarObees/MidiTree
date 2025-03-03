@@ -57,6 +57,8 @@ public:
     void setStateInformation(const void* data, int sizeInBytes) override;
 
     std::atomic<float> genParam;
+    std::atomic<float> velParam;
+
     LSystemProcessor lsysProcessor{ genParam };
 
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();

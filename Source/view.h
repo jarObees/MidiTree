@@ -1,41 +1,10 @@
 #pragma once
 #include <jive_core/jive_core.h>
+#include "knob_view.h"  
 
 namespace jiveUI
 {
 	// SUB-COMPONENTS ===========================================================
-	
-	[[nodiscard]] inline auto midiVelocityLabel()
-	{
-		return juce::ValueTree{
-			"Text",
-			{
-				{"id", "midiVelocity-label"},
-
-			},
-			{
-				juce::ValueTree{
-					"Text",
-					{
-						{"text", " velocity"},
-					},
-				},
-			},
-		};
-	}
-
-	[[nodiscard]] inline auto midiVelocityKnob()
-	{
-		return juce::ValueTree{
-			"Knob",
-			{
-				{"id", "midiVelocity-knob"},
-				{"width", 80},
-				{"height", 80}
-			},
-		};
-	}
-	[[nodiscard]] inline auto 
 	[[nodiscard]] inline auto noteRateLabel()
 	{
 		return juce::ValueTree{
@@ -118,12 +87,11 @@ namespace jiveUI
 				{"justify-content", "centre"},
 			},
 			{
-				midiVelocityKnob(),
-				midiVelocityLabel(),
-				
-				noteRateKnob(),
-
-				noteTypeComboBox(),
+				// Midi Velocity Knob
+				KnobWithLabel{}
+				.withId("midiVelocity-knob")
+				.withLabelId("midiVelocity-label")
+				.withLabel(" velocity")()
 			}
 		};
 	}

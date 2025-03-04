@@ -56,13 +56,22 @@ namespace jiveUI
 				{"id", "crown"},
 				{"align-items", "centre"},
 				{"justify-content", "centre"},
+				{"width", "100%"},
+				{"height", "70%"},
+				{
+					"style",
+						new jive::Object{
+							{ "background", jive::toVar(colors::crown_primary)},
+						},
+				},
+
 			},
 			{
 				// Get Crown components.
 			}
 		};
 	}
-	[[nodiscard]] inline auto getTrunk()
+	[[nodiscard]] inline auto getSky()
 	{
 		return juce::ValueTree{
 			"Component",
@@ -70,6 +79,14 @@ namespace jiveUI
 				{"id", "trunk"},
 				{"align-items", "centre"},
 				{"justify-content", "centre"},
+				{"width", "100%"},
+				{"height", "10%"},
+				{
+					"style",
+						new jive::Object{
+							{ "background", jive::toVar(colors::sky_primary)},
+						},
+				},
 			},
 			{
 				//Get Trunk Components
@@ -83,10 +100,9 @@ namespace jiveUI
 			{
 				{"id", "ground"},
 				{"flex-direction", "row"},
-				{"align-content", "space-around"},
 				{"justify-content", "centre"},
 				{"width", "100%"},
-				{"height", "10%"},
+				{"height", "20%"},
 				{
 					"style",
 						new jive::Object{
@@ -112,8 +128,9 @@ namespace jiveUI
 			{
 				{"width", 300},
 				{"height", 600},
-				{"align-items", "centre"},
+				{"align-items", "flex-start"},
 				{"justify-content", "centre"},
+				{"flex-direction", "column"},
 				{
 					"style",
 					new jive::Object{
@@ -123,9 +140,9 @@ namespace jiveUI
 				},
 			},
 			{
-				getGround(),
-				getTrunk(),
 				getCrown(),
+				getSky(),
+				getGround(),
 			}
 		};
 	}

@@ -282,7 +282,7 @@ bool MidiArpeggiatorAudioProcessor::hasEditor() const
 juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 {
     jassert(JIVE_IS_PLUGIN_PROJECT);
-    auto view = jiveUI::getView();
+    view = jiveUI::getView();
     if (auto editor = viewInterpreter.interpret(view, this))
     {
         if (dynamic_cast<juce::AudioProcessorEditor*>(editor.get()))

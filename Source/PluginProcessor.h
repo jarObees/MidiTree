@@ -91,6 +91,7 @@ private:
     int timer; // Representts the time that has elapsed since the start of the note on output. 
     juce::SortedSet<int> notes;
 
+    juce::ValueTree view;
     jive::Interpreter viewInterpreter;
     juce::UndoManager undoManager;
     //TODO: Should I also include the audioparameterfloats stuff?

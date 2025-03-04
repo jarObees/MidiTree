@@ -86,7 +86,7 @@ namespace jiveUI
 				{"align-content", "space-around"},
 				{"justify-content", "centre"},
 				{"width", "100%"},
-				{"height", "5%"},
+				{"height", "10%"},
 				{
 					"style",
 						new jive::Object{

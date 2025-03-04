@@ -1,7 +1,7 @@
 #pragma once
 #include <jive_core/jive_core.h>
 #include "knob_view.h"  
-
+#include "Colors.h"
 namespace jiveUI
 {
 	// SUB-COMPONENTS ===========================================================
@@ -88,7 +88,7 @@ namespace jiveUI
 				{
 					"style",
 						new jive::Object{
-							{ "background", "#000000" },
+							{ "background", jive::toVar(colors::ground_primary)},
 						},
 				},
 			},

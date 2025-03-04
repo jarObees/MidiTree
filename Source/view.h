@@ -85,6 +85,12 @@ namespace jiveUI
 				{"flex-direction", "row"},
 				{"align-content", "space-around"},
 				{"justify-content", "centre"},
+				{
+					"style",
+						new jive::Object{
+							{ "background", "#000000" },
+						},
+				},
 			},
 			{
 				// Midi Velocity Knob
@@ -110,7 +116,7 @@ namespace jiveUI
 					"style",
 					new jive::Object{
 						{ "background", "#000000" },
-						{"foreground", "#FFFFFF"},
+						{ "foreground", "#FFFFFF"},
 					},
 				},
 			},

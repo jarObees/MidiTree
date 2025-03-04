@@ -6,6 +6,7 @@
               defines="JIVE_GUI_ITEMS_HAVE_STYLE_SHEETS=1&#10;">
   <MAINGROUP id="tMID8o" name="midiArpeggiator">
     <GROUP id="{364A534D-7CD2-809C-2196-30E80E3205D4}" name="GUI">
+      <FILE id="nxoI6Q" name="Colors.h" compile="0" resource="0" file="Source/Colors.h"/>
       <FILE id="aWjzb1" name="knob_view.h" compile="0" resource="0" file="Source/knob_view.h"/>
       <FILE id="rsk38a" name="view.h" compile="0" resource="0" file="Source/view.h"/>
     </GROUP>

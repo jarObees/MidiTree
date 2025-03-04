@@ -85,6 +85,8 @@ namespace jiveUI
 				{"flex-direction", "row"},
 				{"align-content", "space-around"},
 				{"justify-content", "centre"},
+				{"width", "100%"},
+				{"height", "5%"},
 				{
 					"style",
 						new jive::Object{

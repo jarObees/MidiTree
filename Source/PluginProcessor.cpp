@@ -290,8 +290,8 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             viewInterpreter.listenTo(*editor);
             //TODO: FIND THE PARAMETERS HERE
             // jive::findItemWithID(*editor, "noteRate-knob")->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
-            jive::findItemWithID(*editor, "midiVelocity-knob")->attachToParameter(apvts.getParameter("vel"), &undoManager);
-            jive::findItemWithID(*editor, "midiVelocity-label")->attachToParameter(apvts.getParameter("vel"), &undoManager);
+            //jive::findItemWithID(*editor, "midiVelocity-knob")->attachToParameter(apvts.getParameter("vel"), &undoManager);
+            //jive::findItemWithID(*editor, "midiVelocity-label")->attachToParameter(apvts.getParameter("vel"), &undoManager);
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
         }
     }

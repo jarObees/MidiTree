@@ -2,7 +2,8 @@
 
 <JUCERPROJECT id="uXyLlP" name="midiArpeggiator" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginCharacteristicsValue="pluginProducesMidiOut,pluginWantsMidiIn"
-              pluginFormats="buildStandalone,buildVST3" cppLanguageStandard="20">
+              pluginFormats="buildStandalone,buildVST3" cppLanguageStandard="20"
+              defines="JIVE_GUI_ITEMS_HAVE_STYLE_SHEETS=1&#10;">
   <MAINGROUP id="tMID8o" name="midiArpeggiator">
     <GROUP id="{364A534D-7CD2-809C-2196-30E80E3205D4}" name="GUI">
       <FILE id="aWjzb1" name="knob_view.h" compile="0" resource="0" file="Source/knob_view.h"/>

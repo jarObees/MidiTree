@@ -109,7 +109,8 @@ namespace jiveUI
 				{
 					"style",
 					new jive::Object{
-						{ "background", "#FFFFFF" },
+						{ "background", "#000000" },
+						{"foreground", "#FFFFFF"},
 					},
 				},
 			},

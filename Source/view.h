@@ -1,6 +1,7 @@
 #pragma once
 #include <jive_core/jive_core.h>
 #include "Colors.h"
+#include "Images.h"
 #include "FilmstripKnobView.h"
 
 namespace jiveUI
@@ -116,7 +117,7 @@ namespace jiveUI
 			},
 			{
 				// Midi Velocity Knob
-
+				// jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "midiVelocity-knob"),
 			}
 		};
 	}

@@ -5,15 +5,16 @@
               pluginFormats="buildStandalone,buildVST3" cppLanguageStandard="20"
               defines="JIVE_GUI_ITEMS_HAVE_STYLE_SHEETS=1&#10;">
   <MAINGROUP id="tMID8o" name="midiArpeggiator">
-    <GROUP id="{4F6AE0DC-7317-E987-87C8-0634CB03A0F6}" name="Assets">
-      <FILE id="UaQApk" name="knobTestWhite.png" compile="0" resource="1"
-            file="../../KnobMan/knobTestWhite.png"/>
-    </GROUP>
     <GROUP id="{364A534D-7CD2-809C-2196-30E80E3205D4}" name="GUI">
+      <GROUP id="{4F6AE0DC-7317-E987-87C8-0634CB03A0F6}" name="Assets">
+        <FILE id="UaQApk" name="knobTestWhite.png" compile="0" resource="1"
+              file="../../KnobMan/knobTestWhite.png"/>
+      </GROUP>
+      <FILE id="rsk38a" name="View.h" compile="0" resource="0" file="Source/View.h"/>
+      <FILE id="nxoI6Q" name="Colors.h" compile="0" resource="0" file="Source/Colors.h"/>
+      <FILE id="pCuRGP" name="Images.h" compile="0" resource="0" file="Source/Images.h"/>
       <FILE id="iuvDUn" name="FilmstripKnobView.h" compile="0" resource="0"
             file="Source/FilmstripKnobView.h"/>
-      <FILE id="nxoI6Q" name="Colors.h" compile="0" resource="0" file="Source/Colors.h"/>
-      <FILE id="rsk38a" name="view.h" compile="0" resource="0" file="Source/view.h"/>
     </GROUP>
     <GROUP id="{968718A0-7025-4E85-0A48-8A9854BC5E9F}" name="Source">
       <FILE id="IJAVLp" name="LSystem.h" compile="0" resource="0" file="Source/LSystem.h"/>

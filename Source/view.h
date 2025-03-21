@@ -2,8 +2,8 @@
 #include <jive_core/jive_core.h>
 #include "Colors.h"
 #include "Images.h"
-#include "FilmstripKnobView.h"
 #include "ComboBoxView.h"
+#include "FilmstripKnobView.h"
 
 
 namespace jiveUI

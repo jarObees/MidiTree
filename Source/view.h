@@ -55,6 +55,7 @@ namespace jiveUI
 	// MAIN COMPONENTS ==========================================================
 	[[nodiscard]] inline auto getCrown()
 	{
+		juce::StringArray comboBoxTypes = { "Quarter", "Dotted" };
 		return juce::ValueTree{
 			"Component",
 			{
@@ -72,6 +73,7 @@ namespace jiveUI
 			},
 			{
 				jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "generations-knob"),
+				jive::makeView<ComboBoxView>(comboBoxTypes, "noteType-comboBox"), // Note Type ComboBox
 				// Get Crown components.
 			}
 		};

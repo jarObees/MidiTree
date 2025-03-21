@@ -3,11 +3,12 @@
 class ComboBoxView :
 	public jive::View
 {
-	ComboBoxView(std::string rawId, juce::StringArray rawComboBoxItems)
-		: comboBoxId(rawId), comboBoxItems(rawComboBoxItems)
+public:
+	ComboBoxView(juce::StringArray rawComboBoxItems, std::string rawComboBoxId)
+		: comboBoxId(rawComboBoxId), comboBoxItems(rawComboBoxItems)
 	{
 	}
-public:
+
 	juce::ValueTree initialise() final
 	{
 		return juce::ValueTree{
@@ -25,7 +26,7 @@ public:
 		// We confirm access to the comboBox itself.
 		if (auto* comboBox = dynamic_cast<juce::ComboBox*>(item.getComponent().get()))
 		{
-			comboBox->addItemList(comboBoxItems, 0); // Adds the items to the comboBox.
+			comboBox->addItemList(comboBoxItems, 1); // Adds the items to the comboBox.
 		}
 		else
 		{

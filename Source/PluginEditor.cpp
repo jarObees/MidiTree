@@ -151,6 +151,9 @@ MidiArpeggiatorAudioProcessorEditor::MidiArpeggiatorAudioProcessorEditor (MidiAr
         (audioProcessor.apvts, "vel", velSlider);
     addAndMakeVisible(velSlider);
 
+	 // NOTE TYPE COMBOBOX
+	 // noteTypeComboBox.addItemList(audioProcessor.comboBoxNoteTypes, 0);    
+
     addAndMakeVisible(inputUserRuleset);
     addAndMakeVisible(generateButton);
     addAndMakeVisible(inputUserAxiom);

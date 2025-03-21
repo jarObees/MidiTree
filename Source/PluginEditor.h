@@ -32,10 +32,12 @@ private:
     juce::Slider genSlider;
     juce::Slider noteDivSlider;
     juce::Slider velSlider;
+	juce::ComboBox noteTypeComboBox;
 
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> genAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> noteDivAttachment;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> velAttachment;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> noteTypeAttachment;
     
     void generateButtonClick();
     bool addUserRuleset(std::string ruleSet);

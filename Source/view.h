@@ -3,6 +3,8 @@
 #include "Colors.h"
 #include "Images.h"
 #include "FilmstripKnobView.h"
+#include "ComboBoxView.h"
+
 
 namespace jiveUI
 {

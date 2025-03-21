@@ -344,6 +344,7 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
                                                                                           return text.getIntValue();
                                                                                       })
                                                          .withAutomatable(true)));
+    params.add(std::make_unique<juce::AudioParameterChoice>("noteType", "Note Type", comboBoxNoteTypes, 0));
 
     // Takes each note rate, "1/4", "1/18", etc. and creates an array for the param display.
     for (const auto& pair : LSystemProcessor::noteRateMap)

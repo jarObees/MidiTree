@@ -2,7 +2,7 @@
 #include <JuceHeader.h>
 
 // Args: (juce::Image filmstrip, std::string Id)
-// Don't forget to attach the knob to the parameter in the editor!
+// Don't forget to attach the knob to the parameter in the editor if needed!
 class FilmstripKnobView : public jive::View
 {
 public:

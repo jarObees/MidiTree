@@ -67,7 +67,6 @@ namespace jiveUI
 							{ "background", jive::toVar(colors::crown_primary)},
 						},
 				},
-
 			},
 			{
 				jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "generations-knob"),

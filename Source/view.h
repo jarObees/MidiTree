@@ -1,7 +1,8 @@
 #pragma once
 #include <jive_core/jive_core.h>
-#include "knob_view.h"  
 #include "Colors.h"
+#include "FilmstripKnobView.h"
+
 namespace jiveUI
 {
 	// SUB-COMPONENTS ===========================================================
@@ -35,6 +36,7 @@ namespace jiveUI
 			},
 		};
 	}
+	
 	[[nodiscard]] inline auto noteTypeComboBox()
 	{
 		return juce::ValueTree{
@@ -71,6 +73,7 @@ namespace jiveUI
 			}
 		};
 	}
+	
 	[[nodiscard]] inline auto getSky()
 	{
 		return juce::ValueTree{
@@ -93,6 +96,7 @@ namespace jiveUI
 			}
 		};
 	}
+	
 	[[nodiscard]] inline auto getGround()
 	{
 		return juce::ValueTree{
@@ -112,15 +116,12 @@ namespace jiveUI
 			},
 			{
 				// Midi Velocity Knob
-				KnobWithLabel{}
-				.withId("midiVelocity-knob")
-				.withLabelId("midiVelocity-label")
-				.withLabel(" velocity")()
+
 			}
 		};
 	}
 
-	// Top Level View =========================================================
+	// TOP LEVEL VIEW =========================================================
 	[[nodiscard]] inline auto getView()
 	{
 		return juce::ValueTree{

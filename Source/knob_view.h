@@ -6,6 +6,7 @@ namespace jiveUI
 	{
 	public:
         // Customization =========================================================================
+        
         // Set parameter ID
         [[nodiscard]] auto& withId(const juce::String& paramID) noexcept
         {

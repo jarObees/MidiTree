@@ -72,7 +72,7 @@ namespace jiveUI
 			},
 			{
 				jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "generations-knob"),
-				// Get Crown components.
+				jive::makeView<TextEditorView>(80, 80, "textEditor"),
 			}
 		};
 	}

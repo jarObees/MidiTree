@@ -8,7 +8,7 @@
     <GROUP id="{364A534D-7CD2-809C-2196-30E80E3205D4}" name="GUI">
       <GROUP id="{483EDA95-BB1B-8D9C-B965-108436522E99}" name="Components">
         <FILE id="OluRou" name="Button.h" compile="0" resource="0" file="Source/Button.h"/>
-        <FILE id="vU4EUM" name="TextBox.h" compile="0" resource="0" file="Source/TextBox.h"/>
+        <FILE id="vU4EUM" name="TextEditor.h" compile="0" resource="0" file="Source/TextEditor.h"/>
         <FILE id="gZpKKp" name="ComboBoxView.h" compile="0" resource="0" file="Source/ComboBoxView.h"/>
         <FILE id="iuvDUn" name="FilmstripKnobView.h" compile="0" resource="0"
               file="Source/FilmstripKnobView.h"/>

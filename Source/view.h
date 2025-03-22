@@ -4,7 +4,7 @@
 #include "Images.h"
 #include "ComboBoxView.h"
 #include "FilmstripKnobView.h"
-
+#include "TextEditor.h"
 
 namespace jiveUI
 {
@@ -55,7 +55,6 @@ namespace jiveUI
 	// MAIN COMPONENTS ==========================================================
 	[[nodiscard]] inline auto getCrown()
 	{
-		juce::StringArray comboBoxTypes = { "Quarter", "Dotted" };
 		return juce::ValueTree{
 			"Component",
 			{
@@ -73,7 +72,6 @@ namespace jiveUI
 			},
 			{
 				jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "generations-knob"),
-				jive::makeView<ComboBoxView>(comboBoxTypes, "noteType-comboBox"), // Note Type ComboBox
 				// Get Crown components.
 			}
 		};
@@ -104,6 +102,7 @@ namespace jiveUI
 	
 	[[nodiscard]] inline auto getGround()
 	{
+		juce::StringArray comboBoxTypes = { "Quarter", "Dotted" };
 		return juce::ValueTree{
 			"Component",
 			{
@@ -123,6 +122,7 @@ namespace jiveUI
 				// Midi Velocity Knob
 				jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "midiVelocity-knob"),
 				jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "noteRate-knob"),
+				jive::makeView<ComboBoxView>(comboBoxTypes, "noteType-comboBox"), // TODO: Attach to parameters. Why it invisible.
 			}
 		};
 	}

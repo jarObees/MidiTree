@@ -1,11 +1,13 @@
 #pragma once
 
+// Args: (int width, int height, juce::StringArray comboBoxItems, std::string comboBoxId)
+//TODO: Why is this shit invisible.
 class ComboBoxView :
 	public jive::View
 {
 public:
-	ComboBoxView(juce::StringArray rawComboBoxItems, std::string rawComboBoxId)
-		: comboBoxId(rawComboBoxId), comboBoxItems(rawComboBoxItems)
+	ComboBoxView(int rawWidth, int rawHeight, juce::StringArray rawComboBoxItems, std::string rawComboBoxId)
+		: width(rawWidth), height(rawHeight), comboBoxId(rawComboBoxId), comboBoxItems(rawComboBoxItems)
 	{
 	}
 
@@ -15,8 +17,26 @@ public:
 			"ComboBox",
 			{
 				{"id", comboBoxId},
+				{"width", width},
+				{"height", height},
 			},
 			{
+				// Placeholder block of color.
+				juce::ValueTree{
+					"Component",
+					{
+						{"align-items", "centre"},
+						{"justify-content", "centre"},
+						{"width", "100%"},
+						{"height", "100%"},
+						{
+							"style",
+								new jive::Object{
+									{"background", jive::toVar(jiveUI::colors::ground_highlight)},
+								}
+						}
+					}
+				},
 			},
 		};
 	}
@@ -36,6 +56,7 @@ public:
 	}
 
 private:
+	int width, height;
 	const juce::String comboBoxId;
 	const juce::StringArray comboBoxItems;
 };

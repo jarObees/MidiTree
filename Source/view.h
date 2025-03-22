@@ -122,7 +122,7 @@ namespace jiveUI
 				// Midi Velocity Knob
 				jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "midiVelocity-knob"),
 				jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "noteRate-knob"),
-				jive::makeView<ComboBoxView>(comboBoxTypes, "noteType-comboBox"), // TODO: Attach to parameters. Why it invisible.
+				jive::makeView<ComboBoxView>(80, 20, comboBoxTypes, "noteType-comboBox"), // TODO: Attach to parameters. Why it invisible.
 			}
 		};
 	}

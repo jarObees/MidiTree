@@ -6,6 +6,7 @@
 #include "FilmstripKnobView.h"
 #include "TextEditor.h"
 
+
 namespace jiveUI
 {
 	// SUB-COMPONENTS ===========================================================
@@ -72,7 +73,7 @@ namespace jiveUI
 			},
 			{
 				jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "generations-knob"),
-				jive::makeView<TextEditorView>(80, 80, "textEditor"),
+				jive::makeView<TextEditorView>(80, 160, "textEditor"),
 			}
 		};
 	}
@@ -122,7 +123,7 @@ namespace jiveUI
 				// Midi Velocity Knob
 				jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "midiVelocity-knob"),
 				jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "noteRate-knob"),
-				jive::makeView<ComboBoxView>(80, 20, comboBoxTypes, "noteType-comboBox"), // TODO: Attach to parameters. Why it invisible.
+				jive::makeView<ComboBoxView>(80, 20, comboBoxTypes, "noteType-comboBox"), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
 			}
 		};
 	}

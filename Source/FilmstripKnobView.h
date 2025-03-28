@@ -18,9 +18,26 @@ public:
 			"Knob",
 			{
 				{"id", sliderId},
+				{"width", 80},
+				{"height", 80},
 			},
 			{
-				juce::ValueTree{"Image"},
+				// juce::ValueTree{"Image"},
+				juce::ValueTree{
+					"Component",
+					{
+						{"align-items", "centre"},
+						{"justify-content", "centre"},
+						{"width", "100%"},
+						{"height", "100%"},
+						{
+							"style",
+								new jive::Object{
+									{"background", jive::toVar(jiveUI::colors::sky_primary)},
+								}
+						}
+					}
+				},
 			},
 		};
 	}
@@ -30,6 +47,7 @@ public:
 		// We confirm access to the slider itself.
 		if (auto* stripSlider = dynamic_cast<juce::Slider*>(item.getComponent().get()))
 		{
+			DBG("THIS IS A SLIDER/KNOB");
 			onValueChange = std::make_unique<jive::Event>(item.state, "on-change");
 			filmstripSource = std::make_unique<jive::Property<juce::Image>>(item.state.getChild(0), "src"); // Creates the "src" property for the Image value tree(?)
 			filmstripSource->set(rawFilmstripImage);

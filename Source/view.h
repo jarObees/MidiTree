@@ -81,6 +81,7 @@ namespace jiveUI
 					{
 						{"align-items", "centre"},
 						{"flex-grow", 1.25},
+						{"flex-direction", "column"},
 						{"height", "100%"},
 						{"padding", "10px"},
 						{
@@ -92,7 +93,7 @@ namespace jiveUI
 						},
 					},
 					{
-						jive::makeView<TextEditorView>(80, 160, "textEditor"),
+						jive::makeView<TextEditorView>(80, 160, "textEditor", "100%", "100%"),
 					},
 				},
 

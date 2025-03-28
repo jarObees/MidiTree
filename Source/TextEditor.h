@@ -7,20 +7,29 @@ class TextEditorView :
 	private juce::TextEditor::Listener
 {
 public:
-	TextEditorView(int rawWidth, int rawHeight, juce::String rawId)
-		: width(rawWidth), height(rawHeight), id(rawId)
-	{
-	}
+	TextEditorView(int rawWidth, int rawHeight, juce::String rawId, juce::String rawWidthPercentage = "0%", juce::String rawHeightPercentage = "0%")
+		: width(rawWidth), widthPercentage(rawWidthPercentage), height(rawHeight), heightPercentage(rawHeightPercentage), id(rawId)
+	{}
 
 	juce::ValueTree initialise() final
 	{
+		DBG("width percentage: " << widthPercentage);
+		auto _width = (widthPercentage == "0%") ? jive::toVar(width) : jive::toVar(widthPercentage);
+		auto _height = (heightPercentage == "0%") ? jive::toVar(height) : jive::toVar(heightPercentage);
 		return juce::ValueTree
 		{
 			"TextEditor",
 			{
 				{"id", id},
-				{"width", width},
-				{"height", height},
+				{"width", _width},
+				{"height", _height},
+										{
+							"style",
+								new jive::Object
+								{
+									{ "background", jive::toVar(jiveUI::colors::ground_tertiary)},
+								},
+						},
 			},
 		};
 	}
@@ -71,6 +80,7 @@ private:
 
 	juce::String id;
 	int width, height;
+	juce::String widthPercentage, heightPercentage;
 	std::unique_ptr<jive::Event> onValueChange;
 	std::unique_ptr<jive::Property<juce::String>> textValue;
 };

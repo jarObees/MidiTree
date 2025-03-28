@@ -1,11 +1,11 @@
 #pragma once
 
-// Args: (int width, int height, juce::Image filmstrip, std::string id)
+// Args: (int width, int height, juce::Image filmstrip, std::string id, bool isSlider=false)
 class FilmstripKnobView : public jive::View
 {
 public:
-	FilmstripKnobView(int rawWidth, int rawheight, juce::Image rawTing2, std::string rawId)
-		: width(rawWidth), height(rawheight), rawFilmstripImage(rawTing2), sliderId(rawId)
+	FilmstripKnobView(int rawWidth, int rawheight, juce::Image rawTing2, std::string rawId, bool rawIsSlider = false)
+		: width(rawWidth), height(rawheight), rawFilmstripImage(rawTing2), sliderId(rawId), isSlider(rawIsSlider)
 	{
 		sideLength = rawFilmstripImage.getWidth();
 		numFrames = rawFilmstripImage.getHeight() / sideLength;
@@ -13,8 +13,9 @@ public:
 
 	juce::ValueTree initialise() final
 	{
+		juce::String componentType = isSlider ? "Slider" : "Knob";
 		return juce::ValueTree{
-			"Knob",
+			componentType,
 			{
 				{"id", sliderId},
 				{"width", width},
@@ -59,6 +60,7 @@ public:
 	}
 
 private:
+	bool isSlider;
 	int width, height;
 	juce::String sliderId;
 	size_t numFrames, sideLength;

@@ -62,6 +62,7 @@ namespace jiveUI
 				{"id", "crown"},
 				{"align-items", "centre"},
 				{"justify-content", "centre"},
+				{"flex-direction", "row"},
 				{"width", "100%"},
 				{"height", "70%"},
 				{
@@ -71,13 +72,51 @@ namespace jiveUI
 						},
 				},
 			},
+
+			// LEFT CONTAINER
 			{
 				juce::ValueTree
 				{
-					
-				}		
-				jive::makeView<FilmstripKnobView>(64, 64, jiveUI::images::knobTestWhiteFilmstrip, "generations"),
-				jive::makeView<TextEditorView>(80, 160, "textEditor"),
+					"Component",
+					{
+						{"align-items", "centre"},
+						{"flex-grow", 1.25},
+						{"height", "100%"},
+						{"padding", "10px"},
+						{
+							"style",
+								new jive::Object
+								{
+									{ "background", jive::toVar(colors::crown_highlight)},
+								},
+						},
+					},
+					{
+						jive::makeView<TextEditorView>(80, 160, "textEditor"),
+					},
+				},
+
+				// RIGHT CONTAINER
+				juce::ValueTree
+				{
+					"Component",
+					{
+						{"align-items", "centre"},
+						{"flex-grow", 1},
+						{"height", "100%"},
+						{"padding", "10px"},
+						{
+							"style",
+								new jive::Object
+								{
+									{ "background", jive::toVar(colors::crown_secondary)},
+								},
+						},
+					},
+					{
+						jive::makeView<FilmstripKnobView>(64, 64, jiveUI::images::knobTestWhiteFilmstrip, "generations"),
+					},
+				},
 			}
 		};
 	}

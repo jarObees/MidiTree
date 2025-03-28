@@ -93,7 +93,7 @@ namespace jiveUI
 						},
 					},
 					{
-						jive::makeView<TextEditorView>(80, 160, "textEditor", "100%", "100%"),
+						jive::makeView<TextEditorView>(80, 160, "textEditor", "100%", "50%"),
 					},
 				},
 

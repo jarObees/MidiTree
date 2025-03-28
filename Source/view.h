@@ -72,7 +72,11 @@ namespace jiveUI
 				},
 			},
 			{
-				jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "generations-knob"),
+				juce::ValueTree
+				{
+					
+				}		
+				jive::makeView<FilmstripKnobView>(64, 64, jiveUI::images::knobTestWhiteFilmstrip, "generations"),
 				jive::makeView<TextEditorView>(80, 160, "textEditor"),
 			}
 		};
@@ -121,8 +125,8 @@ namespace jiveUI
 			},
 			{
 				// Midi Velocity Knob
-				jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "midiVelocity-knob"),
-				jive::makeView<FilmstripKnobView>(images::knobTestWhiteFilmstrip, "noteRate-knob"),
+				jive::makeView<FilmstripKnobView>(64, 64, jiveUI::images::knobTestWhiteFilmstrip, "midiVelocity-knob"),
+				jive::makeView<FilmstripKnobView>(64, 64, jiveUI::images::knobTestWhiteFilmstrip, "noteRate-knob"),
 				jive::makeView<ComboBoxView>(80, 20, comboBoxTypes, "noteType-comboBox"), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
 			}
 		};

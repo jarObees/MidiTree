@@ -1,6 +1,7 @@
 #pragma once
 
 // Args: (int width, int height, juce::Image filmstrip, std::string id, bool isSlider=false)
+// TODO: Refactor for method chaining and operator overloading.
 class FilmstripKnobView : public jive::View
 {
 public:
@@ -41,7 +42,6 @@ public:
 			// Defucks the image component.
 			auto* imageComponent = item.getChildren().getFirst()->getComponent().get();
 			imageComponent->setInterceptsMouseClicks(false, false);
-
 			onValueChange = std::make_unique<jive::Event>(item.state, "on-change");
 			filmstripSource = std::make_unique<jive::Property<juce::Image>>(item.state.getChild(0), "source"); // We can interact with the "source" property of "Image" through this.
 

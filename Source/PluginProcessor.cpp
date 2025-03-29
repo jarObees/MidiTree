@@ -291,6 +291,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             //TODO: FIND THE PARAMETERS HERE
             jive::findItemWithID(*editor, "noteRate-knob")->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
             jive::findItemWithID(*editor, "midiVelocity-knob")->attachToParameter(apvts.getParameter("vel"), &undoManager);
+            jive::findItemWithID(*editor, "forest-slider")->attachToParameter(apvts.getParameter("forest"), &undoManager);
             //jive::findItemWithID(*editor, "midiVelocity-label")->attachToParameter(apvts.getParameter("vel"), &undoManager);
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
         }
@@ -345,6 +346,7 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
                                                                                       })
                                                          .withAutomatable(true)));
     params.add(std::make_unique<juce::AudioParameterChoice>("noteType", "Note Type", comboBoxNoteTypes, 0));
+    params.add(std::make_unique<juce::AudioParameterInt>("forest", "Forest Selection", 1, 7, 1));
 
     // Takes each note rate, "1/4", "1/18", etc. and creates an array for the param display.
     for (const auto& pair : LSystemProcessor::noteRateMap)

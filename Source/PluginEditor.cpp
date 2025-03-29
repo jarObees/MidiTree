@@ -122,6 +122,7 @@ MidiArpeggiatorAudioProcessorEditor::MidiArpeggiatorAudioProcessorEditor (MidiAr
     inputUserAxiom.setInputRestrictions(1);
     inputUserAxiom.onTextChange = [this]()
         {
+            // Stores the text into the valueTree
             audioProcessor.userAxiomNode.setProperty("userAxiomNode", inputUserAxiom.getText(), nullptr);
         };
     if (audioProcessor.userAxiomNode.hasProperty("userAxiomNode"))

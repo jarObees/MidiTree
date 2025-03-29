@@ -80,7 +80,7 @@ namespace jiveUI
 					"Component",
 					{
 						{"align-items", "centre"},
-						{"flex-grow", 1.25},
+						{"flex-grow", 1.5}, //TODO: Adjust flex grow so that it's more fixed.
 						{"flex-direction", "column"},
 						{"height", "100%"},
 						{"padding", "10px"},
@@ -93,6 +93,7 @@ namespace jiveUI
 						},
 					},
 					{
+						jive::makeView<FilmstripKnobView>(224, 32, jiveUI::images::horiSliderWhiteFilmstrip, "forest-slider", true),
 						jive::makeView<TextEditorView>(80, 160, "textEditor", "100%", "50%"),
 					},
 				},
@@ -164,7 +165,6 @@ namespace jiveUI
 				},
 			},
 			{
-				// Midi Velocity Knob
 				jive::makeView<FilmstripKnobView>(64, 64, jiveUI::images::knobTestWhiteFilmstrip, "midiVelocity-knob"),
 				jive::makeView<FilmstripKnobView>(64, 64, jiveUI::images::knobTestWhiteFilmstrip, "noteRate-knob"),
 				jive::makeView<ComboBoxView>(80, 20, comboBoxTypes, "noteType-comboBox"), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp

@@ -64,6 +64,7 @@ public:
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout() };
 
+    // Non-Automatable Values =======================================================================================
     // Defining Value Trees for non numerical parameters.
     static const inline juce::Identifier userRulesetNodeType{ "userRulesetNode" };
     juce::ValueTree userRulesetNode{ userRulesetNodeType };

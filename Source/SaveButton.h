@@ -18,15 +18,30 @@ namespace jive_gui
 					{"width", width},
 					{"height", height},
 					{"justify-content", "centre"},
+					{
+						"style",
+							new jive::Object
+							{
+								{ "background", jive::toVar(jive_gui::colors::ground_tertiary)},
+							},
+					},
 				},
 				{
 					juce::ValueTree{
-						"Image",
+						"Text",
 						{
-							{"source", jive::toVar(imageSource)},
+							{"text", "save"},
 						}
 					},
 				},
+				//{
+				//	juce::ValueTree{
+				//		"Image",
+				//		{
+				//			{"source", jive::toVar(imageSource)},
+				//		}
+				//	},
+				//},
 			};
 		}
 		void setup(jive::GuiItem& item) final

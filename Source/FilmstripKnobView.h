@@ -7,7 +7,7 @@ namespace jive_gui
 	class FilmstripKnobView : public jive::View
 	{
 	public:
-		FilmstripKnobView(int rawWidth, int rawheight, juce::Image rawTing2, std::string rawId, bool rawIsSlider = false)
+		FilmstripKnobView(int rawWidth, int rawheight, juce::Image rawTing2, juce::String rawId, bool rawIsSlider = false)
 			: width(rawWidth), height(rawheight), rawFilmstripImage(rawTing2), sliderId(rawId), isSlider(rawIsSlider)
 		{
 			sideLength = rawFilmstripImage.getWidth();

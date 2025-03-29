@@ -289,16 +289,23 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
         {
             viewInterpreter.listenTo(*editor);
             //TODO: FIND THE PARAMETERS HERE
-            jive::findItemWithID(*editor, "noteRate-knob")->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
-            jive::findItemWithID(*editor, "midiVelocity-knob")->attachToParameter(apvts.getParameter("vel"), &undoManager);
-            jive::findItemWithID(*editor, "forest-slider")->attachToParameter(apvts.getParameter("forest"), &undoManager);
-            jive::findItemWithID(*editor, "generations-knob")->attachToParameter(apvts.getParameter("gens"), &undoManager);
+            jive::findItemWithID(*editor, jive_gui::stringIds::noteRateKnob)->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
+            jive::findItemWithID(*editor, jive_gui::stringIds::midiVelocityKnob)->attachToParameter(apvts.getParameter("vel"), &undoManager);
+            jive::findItemWithID(*editor, jive_gui::stringIds::forestSlider)->attachToParameter(apvts.getParameter("forest"), &undoManager);
+            jive::findItemWithID(*editor, jive_gui::stringIds::generationsKnob)->attachToParameter(apvts.getParameter("gens"), &undoManager);
 
-            auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, "save-button")->getComponent().get());
+            auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::stringIds::saveButton)->getComponent().get());
             saveButtonTingy->onClick = [this]()
-                {
-                    lsysProcessor.saveLSystem();
-                };
+            {
+                lsysProcessor.saveLSystem();
+            };
+			
+            auto* loadButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::stringIds::loadButton)->getComponent().get());
+            loadButtonTingy->onClick = [this]()
+            {
+				//TODO: LOAD DA FOREST
+			};
+
 
             //jive::findItemWithID(*editor, "midiVelocity-label")->attachToParameter(apvts.getParameter("vel"), &undoManager);
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());

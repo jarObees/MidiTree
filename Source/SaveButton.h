@@ -5,7 +5,7 @@ namespace jive_gui
 	class SaveButton : public jive::View
 	{
 	public:
-		SaveButton(int rawWidth, int rawHeight, juce::Image rawImage, std::string rawText, std::string rawId)
+		SaveButton(int rawWidth, int rawHeight, juce::Image rawImage, std::string rawText, juce::String rawId)
 			: width(rawWidth), height(rawHeight), imageSource(rawImage), text(rawText), id(rawId)
 		{}
 

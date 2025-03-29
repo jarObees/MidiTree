@@ -5,7 +5,7 @@
 class ComboBoxView : public jive::View
 {
 public:
-	ComboBoxView(int rawWidth, int rawHeight, juce::StringArray rawComboBoxItems, std::string rawComboBoxId)
+	ComboBoxView(int rawWidth, int rawHeight, juce::StringArray rawComboBoxItems, juce::String rawComboBoxId)
 		: width(rawWidth), height(rawHeight), comboBoxId(rawComboBoxId), comboBoxItems(rawComboBoxItems)
 	{
 	}

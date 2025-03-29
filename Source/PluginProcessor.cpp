@@ -282,7 +282,7 @@ bool MidiArpeggiatorAudioProcessor::hasEditor() const
 juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 {
     jassert(JIVE_IS_PLUGIN_PROJECT);
-    view = jiveUI::getView();
+    view = jive_gui::getView();
     if (auto editor = viewInterpreter.interpret(view, this))
     {
         if (dynamic_cast<juce::AudioProcessorEditor*>(editor.get()))
@@ -292,6 +292,14 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             jive::findItemWithID(*editor, "noteRate-knob")->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
             jive::findItemWithID(*editor, "midiVelocity-knob")->attachToParameter(apvts.getParameter("vel"), &undoManager);
             jive::findItemWithID(*editor, "forest-slider")->attachToParameter(apvts.getParameter("forest"), &undoManager);
+            
+            auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, "save-button")->getComponent().get());
+            saveButtonTingy->onClick = [this]()
+                {
+                    // When button is clicked.
+                    // Save state of all non-automatable parameters.
+                };
+
             //jive::findItemWithID(*editor, "midiVelocity-label")->attachToParameter(apvts.getParameter("vel"), &undoManager);
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
         }

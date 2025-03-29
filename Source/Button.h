@@ -1,6 +1,6 @@
 #pragma once
 // TODO: Finish implementing juce stuf.
-namespace jiveUI
+namespace jive_gui
 {
 	class Button
 	{
@@ -66,7 +66,7 @@ namespace jiveUI
 						"style",
 							new jive::Object
 							{
-								{ "background", jive::toVar(jiveUI::colors::ground_tertiary)},
+								{ "background", jive::toVar(jive_gui::colors::ground_tertiary)},
 							},
 					},
 				},

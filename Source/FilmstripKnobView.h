@@ -2,7 +2,7 @@
 
 // Args: (int width, int height, juce::Image filmstrip, std::string id, bool isSlider=false)
 // TODO: Refactor for method chaining and operator overloading.
-namespace jiveUI
+namespace jive_gui
 {
 	class FilmstripKnobView : public jive::View
 	{

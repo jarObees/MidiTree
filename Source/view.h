@@ -6,8 +6,9 @@
 #include "FilmstripKnobView.h"
 #include "TextEditor.h"
 #include "Button.h"
+#include "SaveButton.h"
 
-namespace jiveUI
+namespace jive_gui
 {
 	// SUB-COMPONENTS ===========================================================
 	[[nodiscard]] inline auto noteRateLabel()
@@ -93,7 +94,7 @@ namespace jiveUI
 						},
 					},
 					{
-						jive::makeView<FilmstripKnobView>(224, 32, jiveUI::images::horiSliderWhiteFilmstrip, "forest-slider", true),
+						jive::makeView<FilmstripKnobView>(224, 32, jive_gui::images::horiSliderWhiteFilmstrip, "forest-slider", true),
 						jive::makeView<TextEditorView>(80, 160, "textEditor", "100%", "50%"),
 					},
 				},
@@ -116,8 +117,9 @@ namespace jiveUI
 						},
 					},
 					{
-						// Button{}.withHeight(20).withWidth(40).withId("save-button").withText("save")();
-						jive::makeView<FilmstripKnobView>(64, 64, jiveUI::images::knobTestWhiteFilmstrip, "generations"),
+						// Button{}.withHeight(20).withWidth(40).withId("save-button").withText("save")(),
+						jive::makeView<SaveButton>(20, 40, jive_gui::images::knobTestWhiteFilmstrip, "save-button"),
+						jive::makeView<FilmstripKnobView>(64, 64, jive_gui::images::knobTestWhiteFilmstrip, "generations"),
 					},
 				},
 			}
@@ -166,8 +168,8 @@ namespace jiveUI
 				},
 			},
 			{
-				jive::makeView<FilmstripKnobView>(64, 64, jiveUI::images::knobTestWhiteFilmstrip, "midiVelocity-knob"),
-				jive::makeView<FilmstripKnobView>(64, 64, jiveUI::images::knobTestWhiteFilmstrip, "noteRate-knob"),
+				jive::makeView<FilmstripKnobView>(64, 64, jive_gui::images::knobTestWhiteFilmstrip, "midiVelocity-knob"),
+				jive::makeView<FilmstripKnobView>(64, 64, jive_gui::images::knobTestWhiteFilmstrip, "noteRate-knob"),
 				jive::makeView<ComboBoxView>(80, 20, comboBoxTypes, "noteType-comboBox"), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
 			}
 		};

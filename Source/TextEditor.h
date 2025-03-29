@@ -1,7 +1,7 @@
 #pragma once
 #include <jive_core/jive_core.h>
 
-namespace jiveUI
+namespace jive_gui
 {
 	// View is used to generate a juce::TextEditor component.
 	class TextEditorView :
@@ -31,7 +31,7 @@ namespace jiveUI
 						"style",
 							new jive::Object
 							{
-								{ "background", jive::toVar(jiveUI::colors::ground_tertiary)},
+								{ "background", jive::toVar(jive_gui::colors::ground_tertiary)},
 							},
 					},
 				},

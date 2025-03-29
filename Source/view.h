@@ -5,7 +5,7 @@
 #include "ComboBoxView.h"
 #include "FilmstripKnobView.h"
 #include "TextEditor.h"
-
+#include "Button.h"
 
 namespace jiveUI
 {
@@ -116,6 +116,7 @@ namespace jiveUI
 						},
 					},
 					{
+						// Button{}.withHeight(20).withWidth(40).withId("save-button").withText("save")();
 						jive::makeView<FilmstripKnobView>(64, 64, jiveUI::images::knobTestWhiteFilmstrip, "generations"),
 					},
 				},

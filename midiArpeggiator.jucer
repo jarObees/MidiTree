@@ -42,7 +42,6 @@
     </GROUP>
   </MAINGROUP>
   <MODULES>
-    <MODULE id="foleys_gui_magic" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="jive_components" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="jive_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="jive_layouts" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
@@ -92,7 +91,6 @@
         <MODULEPATH id="jive_core" path="../JIVE/JIVE"/>
         <MODULEPATH id="jive_layouts" path="../JIVE/JIVE"/>
         <MODULEPATH id="jive_style_sheets" path="../JIVE/JIVE"/>
-        <MODULEPATH id="foleys_gui_magic" path="../guiMagic/foleys_gui_magic/modules"/>
       </MODULEPATHS>
     </VS2022>
   </EXPORTFORMATS>

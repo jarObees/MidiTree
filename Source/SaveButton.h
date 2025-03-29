@@ -5,8 +5,8 @@ namespace jive_gui
 	class SaveButton : public jive::View
 	{
 	public:
-		SaveButton(int rawWidth, int rawHeight, juce::Image rawImage, std::string rawId)
-			: width(rawWidth), height(rawHeight), imageSource(rawImage), id(rawId) 
+		SaveButton(int rawWidth, int rawHeight, juce::Image rawImage, std::string rawText, std::string rawId)
+			: width(rawWidth), height(rawHeight), imageSource(rawImage), text(rawText), id(rawId)
 		{}
 
 		juce::ValueTree initialise() final
@@ -30,7 +30,7 @@ namespace jive_gui
 					juce::ValueTree{
 						"Text",
 						{
-							{"text", "save"},
+							{"text", jive::toVar(text)},
 						}
 					},
 				},
@@ -64,5 +64,6 @@ namespace jive_gui
 		int height;
 		juce::Image imageSource;
 		juce::String id;
+		juce::String text;
 	};
 }

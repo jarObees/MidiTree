@@ -119,7 +119,8 @@ namespace jive_gui
 					{
 						// Button{}.withHeight(20).withWidth(40).withId("save-button").withText("save")(),
 						jive::makeView<TextEditorView>(0, 0, "name-textBox", "100%", "20%"),
-						jive::makeView<SaveButton>(20, 40, jive_gui::images::knobTestWhiteFilmstrip, "save-button"),
+						jive::makeView<SaveButton>(20, 40, jive_gui::images::knobTestWhiteFilmstrip, "save", "save-button"),
+						jive::makeView<SaveButton>(20, 40, jive_gui::images::knobTestWhiteFilmstrip, "plant!", "load-button"),
 						jive::makeView<FilmstripKnobView>(64, 64, jive_gui::images::knobTestWhiteFilmstrip, "generations-knob"),
 					},
 				},

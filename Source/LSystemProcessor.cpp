@@ -27,16 +27,14 @@ void LSystemProcessor::generateLSystem(const uint8_t& gens)
 void LSystemProcessor::translateSet(juce::SortedSet<std::string>& stringSet)
 {
     juce::SortedSet<std::string> translatedRuleset;
-    // Iterates through each line in the ruleset.
-    for (const std::string& ruleLine : stringSet)
+    
+    for (const std::string& ruleLine : stringSet) // Iterates through each line in the ruleset.
     {
-        // Iterates through each key, value pair in map.
         std::string newRuleLine = ruleLine;
         for (const auto& [key, value] : replacementRulesToChar)
         {
-            // Replace any instance of the key (illegal string) in the ruleLine with the value (legal string)
             size_t pos = 0;
-            while ((pos = newRuleLine.find(key, pos)) != std::string::npos)
+            while ((pos = newRuleLine.find(key, pos)) != std::string::npos) // Replace any instance of the key (illegal string) in the ruleLine with the value (legal string)
             {
                 newRuleLine.replace(pos, key.length(), value);
                 pos += value.length();
@@ -87,7 +85,7 @@ std::unordered_map<std::string, std::string> LSystemProcessor::generateRuleset()
     return map;
 }
 
-void LSystemProcessor::saveLSystem(LSystem lSystem)
+void LSystemProcessor::saveLSystem()
 {
     // TODO: Implement saving feature
 }

@@ -95,7 +95,7 @@ namespace jive_gui
 					},
 					{
 						jive::makeView<FilmstripKnobView>(224, 32, jive_gui::images::horiSliderWhiteFilmstrip, "forest-slider", true),
-						jive::makeView<TextEditorView>(80, 160, "textEditor", "100%", "50%"),
+						jive::makeView<TextEditorView>(80, 160, "ruleset-textBox", "100%", "50%"),
 					},
 				},
 
@@ -118,8 +118,9 @@ namespace jive_gui
 					},
 					{
 						// Button{}.withHeight(20).withWidth(40).withId("save-button").withText("save")(),
+						jive::makeView<TextEditorView>(0, 0, "name-textBox", "100%", "20%"),
 						jive::makeView<SaveButton>(20, 40, jive_gui::images::knobTestWhiteFilmstrip, "save-button"),
-						jive::makeView<FilmstripKnobView>(64, 64, jive_gui::images::knobTestWhiteFilmstrip, "generations"),
+						jive::makeView<FilmstripKnobView>(64, 64, jive_gui::images::knobTestWhiteFilmstrip, "generations-knob"),
 					},
 				},
 			}

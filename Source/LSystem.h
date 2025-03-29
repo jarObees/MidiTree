@@ -57,6 +57,6 @@ public:
 			}
 		}
 		DBG("Final String: " << genString << "<----");
-		isGenerated = true;
+		isGenerated = true; // No use currently.
 	}
 };

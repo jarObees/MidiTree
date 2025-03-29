@@ -33,6 +33,7 @@ public:
         {"1/32", 0.03125f}, {"1/64", 0.015625f}
     };
     std::vector<std::string> noteRateKeys;
+    void saveLSystem();
 private:
     std::atomic<float>& generations;
     // Used for replacing user input (keys), to single char strings to be used in l-sys computation (values).
@@ -58,5 +59,4 @@ private:
     };
     void translateSet(juce::SortedSet<std::string>& stringSet);
     std::unordered_map<std::string, std::string> generateRuleset();
-    void saveLSystem(LSystem lSystem);
 };

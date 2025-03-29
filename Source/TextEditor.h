@@ -16,7 +16,6 @@ namespace jive_gui
 
 		juce::ValueTree initialise() final
 		{
-			jassert(width > 0);
 			DBG("width percentage: " << widthPercentage);
 			auto _width = (widthPercentage == "0%") ? jive::toVar(width) : jive::toVar(widthPercentage);
 			auto _height = (heightPercentage == "0%") ? jive::toVar(height) : jive::toVar(heightPercentage);

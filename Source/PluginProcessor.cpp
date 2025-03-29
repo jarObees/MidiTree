@@ -292,12 +292,12 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             jive::findItemWithID(*editor, "noteRate-knob")->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
             jive::findItemWithID(*editor, "midiVelocity-knob")->attachToParameter(apvts.getParameter("vel"), &undoManager);
             jive::findItemWithID(*editor, "forest-slider")->attachToParameter(apvts.getParameter("forest"), &undoManager);
-            
+            jive::findItemWithID(*editor, "generations-knob")->attachToParameter(apvts.getParameter("gens"), &undoManager);
+
             auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, "save-button")->getComponent().get());
             saveButtonTingy->onClick = [this]()
                 {
-                    // When button is clicked.
-                    // Save state of all non-automatable parameters.
+                    lsysProcessor.saveLSystem();
                 };
 
             //jive::findItemWithID(*editor, "midiVelocity-label")->attachToParameter(apvts.getParameter("vel"), &undoManager);

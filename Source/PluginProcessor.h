@@ -29,7 +29,7 @@ public:
     bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
 #endif
 
-    void getParams();
+    void getAutomatableParams();
 
     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
@@ -77,7 +77,9 @@ public:
     static const inline juce::Identifier generatedLStringType{ "generatedLStringNode" };
     juce::ValueTree generatedLStringNode{ generatedLStringType};
 
-
+    std::vector<juce::ValueTree> nonAutomatableParams;
+	
+    void getNonAutomatableParams();
 	// ==============================================================================================================
     
     //TODO: No use anywhere else.

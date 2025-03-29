@@ -136,9 +136,7 @@ bool MidiArpeggiatorAudioProcessor::isBusesLayoutSupported(const BusesLayout& la
 }
 #endif
 
-
-// Gets the parameters from the AudioProcessorValueTreeState to use in the processBlock. 
-void MidiArpeggiatorAudioProcessor::getParams()
+void MidiArpeggiatorAudioProcessor::getAutomatableParams()
 {
     genParam = apvts.getRawParameterValue("gens")->load();
     velParam = apvts.getRawParameterValue("vel")->load();
@@ -161,7 +159,7 @@ void MidiArpeggiatorAudioProcessor::getParams()
 void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
 	DBG("Processing Block==============");
-    getParams();
+    getAutomatableParams();
     buffer.clear();
     
  //   auto* playHead = getPlayHead();
@@ -323,8 +321,12 @@ void MidiArpeggiatorAudioProcessor::getStateInformation(juce::MemoryBlock& destD
     
     juce::MemoryOutputStream mos(destData, true); // TODO: Should this be true or not?
     apvts.state.writeToStream(mos);
-    userRulesetNode.writeToStream(mos);
-    userAxiomNode.writeToStream(mos);
+
+	// Writes non-automatable parameters to the memory block.
+	for (const auto& param : nonAutomatableParams)
+	{
+		param.writeToStream(mos);
+	}
 }
 
 void MidiArpeggiatorAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
@@ -337,9 +339,20 @@ void MidiArpeggiatorAudioProcessor::setStateInformation(const void* data, int si
     if (tree.isValid())
     {
         apvts.replaceState(tree);
-        userRulesetNode.copyPropertiesAndChildrenFrom(tree, nullptr);
-        userAxiomNode.copyPropertiesAndChildrenFrom(tree, nullptr);
+		// Reads non-automatable parameters from the memory block.
+		for (auto& param : nonAutomatableParams)
+		{
+			param.copyPropertiesAndChildrenFrom(tree, nullptr);
+		}
     }
+}
+
+void MidiArpeggiatorAudioProcessor::getNonAutomatableParams()
+{
+	nonAutomatableParams.push_back(userRulesetNode);
+	nonAutomatableParams.push_back(userAxiomNode);
+	nonAutomatableParams.push_back(userLsysNameNode);
+	nonAutomatableParams.push_back(generatedLStringNode);
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout 

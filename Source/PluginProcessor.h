@@ -94,6 +94,8 @@ public:
     static const inline juce::StringArray comboBoxNoteTypes{"Quarter", "Dotted"};
     
 private:
+    std::unordered_map<std::string, juce::Image> imageCollection;
+    std::unordered_map<std::string, juce::Image> getImages();
     bool isFirstNote;
     bool isMidiHeldDown;
     bool mustTurnOff;

@@ -277,16 +277,29 @@ bool MidiArpeggiatorAudioProcessor::hasEditor() const
     return true; // (change this to false if you choose to not supply an editor)
 }
 
+// Returns a map of images to be used in the editor.
+std::unordered_map<std::string, juce::Image> MidiArpeggiatorAudioProcessor::getImages()
+{
+    std::unordered_map<std::string, juce::Image> imageCollection;
+	juce::Image knobTestWhiteFilmstrip = juce::ImageFileFormat::loadFrom(BinaryData::knobTestWhite_png, BinaryData::knobTestWhite_pngSize);
+    juce::Image horiSliderWhiteFilmstrip = juce::ImageFileFormat::loadFrom(BinaryData::_128_HORISLIDER_FILMSTRIP_png, BinaryData::_128_HORISLIDER_FILMSTRIP_pngSize);
+	imageCollection["knobTestWhite"] = knobTestWhiteFilmstrip;
+	imageCollection["horiSliderWhite"] = horiSliderWhiteFilmstrip;
+	return imageCollection;
+}
 juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 {
     jassert(JIVE_IS_PLUGIN_PROJECT);
-    view = jive_gui::getView();
+	imageCollection = getImages();
+
+    view = jive_gui::getView(imageCollection);
     if (auto editor = viewInterpreter.interpret(view, this))
     {
         if (dynamic_cast<juce::AudioProcessorEditor*>(editor.get()))
         {
             viewInterpreter.listenTo(*editor);
             //TODO: FIND THE PARAMETERS HERE
+
             jive::findItemWithID(*editor, jive_gui::stringIds::noteRateKnob)->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
             jive::findItemWithID(*editor, jive_gui::stringIds::midiVelocityKnob)->attachToParameter(apvts.getParameter("vel"), &undoManager);
             jive::findItemWithID(*editor, jive_gui::stringIds::forestSlider)->attachToParameter(apvts.getParameter("forest"), &undoManager);

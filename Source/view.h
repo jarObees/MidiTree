@@ -10,6 +10,7 @@
 
 namespace jive_gui
 {
+
 	namespace stringIds
 	{
 		const juce::String forestSlider{ "forest-slider" };
@@ -70,8 +71,10 @@ namespace jive_gui
 	}
 
 	// MAIN COMPONENTS ==========================================================
-	[[nodiscard]] inline auto getCrown()
+	[[nodiscard]] inline auto getCrown(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
+		juce::Image filmstripKnob = imageCollection.at("knobTestWhite");
+		juce::Image filmstripKnobHori = imageCollection.at("horiSliderWhite");
 		return juce::ValueTree{
 			"Component",
 			{
@@ -109,7 +112,7 @@ namespace jive_gui
 						},
 					},
 					{
-						jive::makeView<FilmstripKnobView>(224, 32, jive_gui::images::horiSliderWhiteFilmstrip, stringIds::forestSlider, true),
+						jive::makeView<FilmstripKnobView>(224, 32, filmstripKnobHori, stringIds::forestSlider, true),
 						jive::makeView<TextEditorView>(80, 160, stringIds::rulesetTextbox, "100%", "50%"),
 					},
 				},
@@ -133,19 +136,20 @@ namespace jive_gui
 					},
 					{
 						// Button{}.withHeight(20).withWidth(40).withId("save-button").withText("save")(),
+						
 						jive::makeView<TextEditorView>(0, 0, stringIds::nameTextBox, "100%", "10%"),
-						jive::makeView<SaveButton>(20, 40, jive_gui::images::knobTestWhiteFilmstrip, "save", stringIds::saveButton),
+						jive::makeView<SaveButton>(20, 40, filmstripKnob, "save", stringIds::saveButton),
 						jive::makeView<TextEditorView>(0, 0, "axiom-textBox", "100%", "10%"),
-						jive::makeView<SaveButton>(20, 40, jive_gui::images::knobTestWhiteFilmstrip, "plant!", stringIds::loadButton),
-						jive::makeView<FilmstripKnobView>(64, 64, jive_gui::images::knobTestWhiteFilmstrip, stringIds::generationsKnob),
-						jive::makeView<SaveButton>(20, 40, jive_gui::images::knobTestWhiteFilmstrip, "grow!", stringIds::growButton),
+						jive::makeView<SaveButton>(20, 40, filmstripKnob, "plant!", stringIds::loadButton),
+						jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, stringIds::generationsKnob),
+						jive::makeView<SaveButton>(20, 40, filmstripKnob, "grow!", stringIds::growButton),
 					},
 				},
 			}
 		};
 	}
 	
-	[[nodiscard]] inline auto getSky()
+	[[nodiscard]] inline auto getSky(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
 		return juce::ValueTree{
 			"Component",
@@ -168,8 +172,9 @@ namespace jive_gui
 		};
 	}
 	
-	[[nodiscard]] inline auto getGround()
+	[[nodiscard]] inline auto getGround(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
+		juce::Image filmstripKnob = imageCollection.at("knobTestWhite");
 		juce::StringArray comboBoxTypes = { "Quarter", "Dotted" };
 		return juce::ValueTree{
 			"Component",
@@ -187,16 +192,17 @@ namespace jive_gui
 				},
 			},
 			{
-				jive::makeView<FilmstripKnobView>(64, 64, jive_gui::images::knobTestWhiteFilmstrip, stringIds::midiVelocityKnob),
-				jive::makeView<FilmstripKnobView>(64, 64, jive_gui::images::knobTestWhiteFilmstrip, stringIds::noteRateKnob),
+				jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, stringIds::midiVelocityKnob),
+				jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, stringIds::noteRateKnob),
 				jive::makeView<ComboBoxView>(80, 20, comboBoxTypes, stringIds::noteTypeComboBox), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
 			}
 		};
 	}
 
 	// TOP LEVEL VIEW =========================================================
-	[[nodiscard]] inline auto getView()
+	[[nodiscard]] inline auto getView(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
+		//TODO: PASS IN THE IMAGES TO THE COMPONENTS.
 		return juce::ValueTree{
 			"Editor",
 			{
@@ -214,9 +220,9 @@ namespace jive_gui
 				},
 			},
 			{
-				getCrown(),
-				getSky(),
-				getGround(),
+				getCrown(imageCollection),
+				getSky(imageCollection),
+				getGround(imageCollection),
 			}
 		};
 	}

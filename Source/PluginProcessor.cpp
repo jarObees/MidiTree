@@ -289,8 +289,10 @@ std::unordered_map<std::string, juce::Image> MidiArpeggiatorAudioProcessor::getI
 }
 juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 {
+	DBG("------ CREATING EDITOR ------");
     jassert(JIVE_IS_PLUGIN_PROJECT);
-	imageCollection = getImages();
+    // SETUP some basic stuff.
+	imageCollection = getImages(); // Images have to be retrieved during runtime not compile time.
 
     view = jive_gui::getView(imageCollection);
     if (auto editor = viewInterpreter.interpret(view, this))
@@ -298,13 +300,13 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
         if (dynamic_cast<juce::AudioProcessorEditor*>(editor.get()))
         {
             viewInterpreter.listenTo(*editor);
-            //TODO: FIND THE PARAMETERS HERE
-
+			// Attaches automatable parameters. ========================================================
             jive::findItemWithID(*editor, jive_gui::stringIds::noteRateKnob)->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
             jive::findItemWithID(*editor, jive_gui::stringIds::midiVelocityKnob)->attachToParameter(apvts.getParameter("vel"), &undoManager);
             jive::findItemWithID(*editor, jive_gui::stringIds::forestSlider)->attachToParameter(apvts.getParameter("forest"), &undoManager);
             jive::findItemWithID(*editor, jive_gui::stringIds::generationsKnob)->attachToParameter(apvts.getParameter("gens"), &undoManager);
 
+			// Links and sets up non-automatable parameters. ========================================================
             auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::stringIds::saveButton)->getComponent().get());
             saveButtonTingy->onClick = [this]()
             {
@@ -328,6 +330,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 //==============================================================================
 void MidiArpeggiatorAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
+    DBG("------ GETTING STATE INFORMATION ------");
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
@@ -336,14 +339,15 @@ void MidiArpeggiatorAudioProcessor::getStateInformation(juce::MemoryBlock& destD
     apvts.state.writeToStream(mos);
 
 	// Writes non-automatable parameters to the memory block.
-	for (const auto& param : nonAutomatableParams)
+    for (const auto& [_, param] : nonAutomatableParams)
 	{
-		param.writeToStream(mos);
+		param->writeToStream(mos);
 	}
 }
 
 void MidiArpeggiatorAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
+    DBG("------ SETTING STATE INFORMATION ------");
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
 
@@ -353,19 +357,21 @@ void MidiArpeggiatorAudioProcessor::setStateInformation(const void* data, int si
     {
         apvts.replaceState(tree);
 		// Reads non-automatable parameters from the memory block.
-		for (auto& param : nonAutomatableParams)
+        for (auto& [_, param] : nonAutomatableParams)
 		{
-			param.copyPropertiesAndChildrenFrom(tree, nullptr);
+
+			param->copyPropertiesAndChildrenFrom(tree, nullptr);
 		}
     }
 }
 
-void MidiArpeggiatorAudioProcessor::getNonAutomatableParams()
+// Stores the non-automatable parameters in a vector.
+void MidiArpeggiatorAudioProcessor::setNonAutomatableParams()
 {
-	nonAutomatableParams.push_back(userRulesetNode);
-	nonAutomatableParams.push_back(userAxiomNode);
-	nonAutomatableParams.push_back(userLsysNameNode);
-	nonAutomatableParams.push_back(generatedLStringNode);
+	nonAutomatableParams["userRulesetNode"] = &userRulesetNode;
+	nonAutomatableParams["userAxiomNode"] = &userAxiomNode;
+	nonAutomatableParams["userLsysNameNode"] = &userLsysNameNode;
+	nonAutomatableParams["generatedLStringNode"] = &generatedLStringNode;
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout 
@@ -404,6 +410,8 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
     }
     params.add(std::make_unique<juce::AudioParameterChoice>("noteRate", "Rate", _noteRateKeys, 5));
     return params;
+
+    setNonAutomatableParams();
  }
 //==============================================================================
 // This creates new instances of the plugin..

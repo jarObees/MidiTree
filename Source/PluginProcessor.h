@@ -77,9 +77,9 @@ public:
     static const inline juce::Identifier generatedLStringType{ "generatedLStringNode" };
     juce::ValueTree generatedLStringNode{ generatedLStringType};
 
-    std::vector<juce::ValueTree> nonAutomatableParams;
+	std::unordered_map<std::string, juce::ValueTree*> nonAutomatableParams;
 	
-    void getNonAutomatableParams();
+    void setNonAutomatableParams();
 	// ==============================================================================================================
     
     //TODO: No use anywhere else.

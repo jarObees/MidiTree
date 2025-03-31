@@ -22,7 +22,6 @@ public:
     std::vector<int> generateNotesPool(const std::string& genString);
     // l-string generated notes relative to the axiom. 
     // Currently used for storing the actual note pool.
-    //TODO: Fix how note pools are stored. They should be stored as a saved parameter or something. 
     std::vector<int> notesPool;
     static inline const std::unordered_map<std::string, float> noteRateMap = {
         {"32/1", 32.0f}, {"16/1", 16.0f},
@@ -33,7 +32,7 @@ public:
         {"1/32", 0.03125f}, {"1/64", 0.015625f}
     };
     std::vector<std::string> noteRateKeys;
-    void saveLSystem();
+    void saveLSystem(std::unordered_map<std::string, juce::ValueTree*>& nonAutomatableParams);
 private:
     std::atomic<float>& generations;
     // Used for replacing user input (keys), to single char strings to be used in l-sys computation (values).

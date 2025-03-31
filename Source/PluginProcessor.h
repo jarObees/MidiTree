@@ -12,6 +12,7 @@
 #include <juce_data_structures/juce_data_structures.h>
 #include "LSystemProcessor.h"
 #include "view.h"
+#include "presetManager.h"
 
 //==============================================================================
 class MidiArpeggiatorAudioProcessor : public juce::AudioProcessor
@@ -77,6 +78,9 @@ public:
     static const inline juce::Identifier generatedLStringType{ "generatedLStringNode" };
     juce::ValueTree generatedLStringNode{ generatedLStringType};
 
+    static const inline juce::Identifier notesPoolType{ "notesPoolNode" };
+    juce::ValueTree notesPoolNode{ notesPoolType };
+
 	std::unordered_map<std::string, juce::ValueTree*> nonAutomatableParams;
 	
     void setNonAutomatableParams();
@@ -92,7 +96,8 @@ public:
     int midiAxiom; // Value representing the initial midi input by user. Should be set to -1 if no user input.
     
     static const inline juce::StringArray comboBoxNoteTypes{"Quarter", "Dotted"};
-    
+    Preset::PresetManager presetManager{apvts};
+
 private:
     std::unordered_map<std::string, juce::Image> imageCollection;
     std::unordered_map<std::string, juce::Image> getImages();

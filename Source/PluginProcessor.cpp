@@ -310,7 +310,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::stringIds::saveButton)->getComponent().get());
             saveButtonTingy->onClick = [this]()
             {
-                lsysProcessor.saveLSystem();
+                lsysProcessor.saveLSystem(nonAutomatableParams);
             };
 			
             auto* loadButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::stringIds::loadButton)->getComponent().get());

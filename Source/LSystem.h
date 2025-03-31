@@ -1,5 +1,5 @@
 #pragma once
-#include "JuceHeader.h"
+#include <JuceHeader.h>
 
 // Used to store generated L systems and execute l system generation comands.
 class LSystem
@@ -19,8 +19,7 @@ public:
 		}
 		DBG("--------");
 	}
-	//TODO: For future use.
-	bool isGenerated = false;
+	bool isGenerated = false; //TODO: For future use.
 	std::string name;
 	std::string axiom;
 	std::string genString;

@@ -10,7 +10,7 @@
 
 namespace jive_gui
 {
-
+	// All ID's for a component should be stored here.
 	namespace stringIds
 	{
 		const juce::String forestSlider{ "forest-slider" };
@@ -25,49 +25,6 @@ namespace jive_gui
 		const juce::String nameTextBox{ "name-textBox" };
 		const juce::String axiomTextBox{ "axiom-textBox" };
 
-	}
-	// SUB-COMPONENTS ===========================================================
-	[[nodiscard]] inline auto noteRateLabel()
-	{
-		return juce::ValueTree{
-			"Text",
-			{
-				{"id", "noteRate-label"},
-
-			},
-			{
-				juce::ValueTree{
-					"Text",
-					{
-						{"text", " rate"},
-					},
-				},
-			},
-		};
-	}
-
-	[[nodiscard]] inline auto noteRateKnob()
-	{
-		return juce::ValueTree{
-			"Knob",
-			{
-				{"id", "noteRate-knob"},
-				{"width", 80},
-				{"height", 80}
-			},
-		};
-	}
-	
-	[[nodiscard]] inline auto noteTypeComboBox()
-	{
-		return juce::ValueTree{
-			"ComboBox",
-			{
-				{"id", "noteType-comboBox"},
-				{"width", 80},
-				{"height", 80}
-			},
-		};
 	}
 
 	// MAIN COMPONENTS ==========================================================

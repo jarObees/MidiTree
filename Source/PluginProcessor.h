@@ -80,10 +80,8 @@ public:
 
     static const inline juce::Identifier notesPoolType{ "notesPoolNode" };
     juce::ValueTree notesPoolNode{ notesPoolType };
-
-	std::unordered_map<std::string, juce::ValueTree*> nonAutomatableParams;
 	
-    void setNonAutomatableParams();
+    void addNonAutomatableParams();
 	// ==============================================================================================================
     
     //TODO: No use anywhere else.

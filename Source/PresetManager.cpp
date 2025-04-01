@@ -1,14 +1,31 @@
 #include "presetManager.h"
 namespace Preset
 {
+	const juce::File PresetManager::defaultDirectory{ juce::File::getSpecialLocation(
+		juce::File::SpecialLocationType::commonDocumentsDirectory)
+		.getChildFile(ProjectInfo::companyName)
+		.getChildFile(ProjectInfo::projectName) 
+	};
+	const juce::String PresetManager::presetExtension{ ".preset" };
+
 	PresetManager::PresetManager(juce::AudioProcessorValueTreeState& _apvts)
 		: apvts(_apvts)
 	{
+		if (!defaultDirectory.exists())
+		{
+			const auto result = defaultDirectory.createDirectory();
+			{
+				if (result.failed())
+					jassertfalse;
+			}
+		}
 	}
+
 	void PresetManager::savePreset()
 	{
-		// Save the current state of the plugin to a file.
+		// apvts.copyState()
 	}
+
 	void PresetManager::loadPreset()
 	{
 		// Load a preset from a file.

@@ -310,7 +310,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::stringIds::saveButton)->getComponent().get());
             saveButtonTingy->onClick = [this]()
             {
-                lsysProcessor.saveLSystem(nonAutomatableParams);
+                    presetManager.savePreset();
             };
 			
             auto* loadButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::stringIds::loadButton)->getComponent().get());
@@ -337,12 +337,6 @@ void MidiArpeggiatorAudioProcessor::getStateInformation(juce::MemoryBlock& destD
     
     juce::MemoryOutputStream mos(destData, true); // TODO: Should this be true or not?
     apvts.state.writeToStream(mos);
-
-	// Writes non-automatable parameters to the memory block.
-    for (const auto& [_, param] : nonAutomatableParams)
-	{
-		param->writeToStream(mos);
-	}
 }
 
 void MidiArpeggiatorAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
@@ -356,22 +350,16 @@ void MidiArpeggiatorAudioProcessor::setStateInformation(const void* data, int si
     if (tree.isValid())
     {
         apvts.replaceState(tree);
-		// Reads non-automatable parameters from the memory block.
-        for (auto& [_, param] : nonAutomatableParams)
-		{
-
-			param->copyPropertiesAndChildrenFrom(tree, nullptr);
-		}
     }
 }
 
-// Stores the non-automatable parameters in a vector.
-void MidiArpeggiatorAudioProcessor::setNonAutomatableParams()
+// Adds the non-auto params to the apvts as child value trees.
+void MidiArpeggiatorAudioProcessor::addNonAutomatableParams()
 {
-	nonAutomatableParams["userRulesetNode"] = &userRulesetNode;
-	nonAutomatableParams["userAxiomNode"] = &userAxiomNode;
-	nonAutomatableParams["userLsysNameNode"] = &userLsysNameNode;
-	nonAutomatableParams["generatedLStringNode"] = &generatedLStringNode;
+    apvts.state.addChild(userRulesetNode, -1, nullptr);
+	apvts.state.addChild(userAxiomNode, -1, nullptr);
+	apvts.state.addChild(userLsysNameNode, -1, nullptr);
+	apvts.state.addChild(generatedLStringNode, -1, nullptr);
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout 
@@ -411,7 +399,7 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
     params.add(std::make_unique<juce::AudioParameterChoice>("noteRate", "Rate", _noteRateKeys, 5));
     return params;
 
-    setNonAutomatableParams();
+    addNonAutomatableParams();
  }
 //==============================================================================
 // This creates new instances of the plugin..

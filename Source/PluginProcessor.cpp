@@ -21,8 +21,7 @@ MidiArpeggiatorAudioProcessor::MidiArpeggiatorAudioProcessor()
 #endif
     )
 #endif
-{
-}
+{}
 
 MidiArpeggiatorAudioProcessor::~MidiArpeggiatorAudioProcessor()
 {
@@ -158,7 +157,7 @@ void MidiArpeggiatorAudioProcessor::getAutomatableParams()
 // FOR NOW, WE WILL ASSUME THAT WE ARE NOT GOING TO CHANGE THE L SYSTEM DURING PLAY.
 void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-	DBG("Processing Block==============");
+	// DBG("Processing Block==============");
     getAutomatableParams();
     buffer.clear();
     
@@ -289,6 +288,7 @@ std::unordered_map<std::string, juce::Image> MidiArpeggiatorAudioProcessor::getI
 }
 juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 {
+    // 331 ms
     // return new MidiArpeggiatorAudioProcessorEditor(*this);
 	DBG("------ CREATING EDITOR ------");
     jassert(JIVE_IS_PLUGIN_PROJECT);
@@ -296,30 +296,33 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 	imageCollection = getImages(); // Images have to be retrieved during runtime not compile time.
 
     view = jive_gui::getView(imageCollection);
+
     if (auto editor = viewInterpreter.interpret(view, this))
     {
         if (dynamic_cast<juce::AudioProcessorEditor*>(editor.get()))
         {
+            
             viewInterpreter.listenTo(*editor);
+            
 			// Attaches automatable parameters. ========================================================
             jive::findItemWithID(*editor, jive_gui::StringIds::noteRateKnob)->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
             jive::findItemWithID(*editor, jive_gui::StringIds::midiVelocityKnob)->attachToParameter(apvts.getParameter("vel"), &undoManager);
             jive::findItemWithID(*editor, jive_gui::StringIds::forestSlider)->attachToParameter(apvts.getParameter("forest"), &undoManager);
             jive::findItemWithID(*editor, jive_gui::StringIds::generationsKnob)->attachToParameter(apvts.getParameter("gens"), &undoManager);
-
-			// Links and sets up non-automatable parameters. ========================================================
-            // Save button
-            auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::StringIds::saveButton)->getComponent().get());
-            saveButtonTingy->onClick = [this]()
+            
+            // Links and sets up non-automatable parameters. ========================================================
+            if (auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::StringIds::saveButton)->getComponent().get()))
             {
-                    presetManager.savePreset();
-            };
-			// Load Button
-            auto* loadButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::StringIds::loadButton)->getComponent().get());
-            loadButtonTingy->onClick = [this]()
-            {
-				//TODO: LOAD DA FOREST
-			};
+                presetManager.configureSaveButtonComponent(saveButtonTingy);
+            }
+            else
+                jassertfalse;
+            if (auto* presetComboBox = dynamic_cast<juce::ComboBox*>(jive::findItemWithID(*editor, jive_gui::StringIds::presetComboBox)->getComponent().get()))
+                presetManager.configureComboBoxComponent(presetComboBox);
+            else
+                jassertfalse;
+            
+            
             // ruleset Textbox
 			auto* textEditorTingy = dynamic_cast<juce::TextEditor*>(jive::findItemWithID(*editor, jive_gui::StringIds::rulesetTextbox)->getComponent().get());
             textEditorTingy->setText(apvts.state.getProperty(Preset::Ids::userRulesetProperty));
@@ -337,6 +340,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
                 apvts.state.setProperty(Preset::Ids::userAxiomProperty, textEditorTingy->getText(), nullptr);
                 auto thing = apvts.state.getPropertyAsValue(Preset::Ids::userAxiomProperty, nullptr).toString();
             };
+            
 
 
             //jive::findItemWithID(*editor, "midiVelocity-label")->attachToParameter(apvts.getParameter("vel"), &undoManager);

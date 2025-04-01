@@ -5,9 +5,9 @@
 #include "Images.h"
 #include "ComboBoxView.h"
 #include "FilmstripKnobView.h"
-#include "TextEditor.h"
+#include "TextEditorView.h"
 #include "Button.h"
-#include "SaveButton.h"
+#include "SaveButtonView.h"
 
 namespace jive_gui
 {

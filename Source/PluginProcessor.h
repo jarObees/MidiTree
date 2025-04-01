@@ -13,6 +13,7 @@
 #include "LSystemProcessor.h"
 #include "View.h"
 #include "PresetManager.h"
+#include <chrono>
 
 //==============================================================================
 class MidiArpeggiatorAudioProcessor : public juce::AudioProcessor

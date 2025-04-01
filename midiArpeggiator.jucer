@@ -7,13 +7,14 @@
   <MAINGROUP id="tMID8o" name="midiArpeggiator">
     <GROUP id="{364A534D-7CD2-809C-2196-30E80E3205D4}" name="GUI">
       <GROUP id="{483EDA95-BB1B-8D9C-B965-108436522E99}" name="Components">
-        <FILE id="dXHXVK" name="ConfigureComponents.h" compile="0" resource="0"
-              file="Source/ConfigureComponents.h"/>
+        <GROUP id="{F2036D29-5126-F642-A6C8-DE51618AD569}" name="New Group"/>
         <FILE id="qPBQOs" name="Ids.h" compile="0" resource="0" file="Source/Ids.h"/>
         <FILE id="nxoI6Q" name="Colors.h" compile="0" resource="0" file="Source/Colors.h"/>
-        <FILE id="K3ilcR" name="SaveButton.h" compile="0" resource="0" file="Source/SaveButton.h"/>
+        <FILE id="K3ilcR" name="SaveButtonView.h" compile="0" resource="0"
+              file="Source/SaveButtonView.h"/>
         <FILE id="OluRou" name="Button.h" compile="0" resource="0" file="Source/Button.h"/>
-        <FILE id="vU4EUM" name="TextEditor.h" compile="0" resource="0" file="Source/TextEditor.h"/>
+        <FILE id="vU4EUM" name="TextEditorView.h" compile="0" resource="0"
+              file="Source/TextEditorView.h"/>
         <FILE id="gZpKKp" name="ComboBoxView.h" compile="0" resource="0" file="Source/ComboBoxView.h"/>
         <FILE id="iuvDUn" name="FilmstripKnobView.h" compile="0" resource="0"
               file="Source/FilmstripKnobView.h"/>
@@ -28,9 +29,11 @@
       <FILE id="rsk38a" name="View.h" compile="0" resource="0" file="Source/View.h"/>
     </GROUP>
     <GROUP id="{968718A0-7025-4E85-0A48-8A9854BC5E9F}" name="Source">
-      <FILE id="DvIzno" name="PresetManager.cpp" compile="1" resource="0"
-            file="Source/PresetManager.cpp"/>
-      <FILE id="eehAuW" name="PresetManager.h" compile="0" resource="0" file="Source/PresetManager.h"/>
+      <GROUP id="{2ADA2F28-3D67-6E16-B2E4-B0E82CDA3FDB}" name="Preset">
+        <FILE id="eehAuW" name="PresetManager.h" compile="0" resource="0" file="Source/PresetManager.h"/>
+        <FILE id="DvIzno" name="PresetManager.cpp" compile="1" resource="0"
+              file="Source/PresetManager.cpp"/>
+      </GROUP>
       <FILE id="IJAVLp" name="LSystem.h" compile="0" resource="0" file="Source/LSystem.h"/>
       <FILE id="Bl64sn" name="LSystemProcessor.cpp" compile="1" resource="0"
             file="Source/LSystemProcessor.cpp"/>

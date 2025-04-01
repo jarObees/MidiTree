@@ -21,19 +21,18 @@ namespace Preset
 		}
 	}
 
-	void PresetManager::savePreset()
+	void PresetManager::savePreset(const juce::String& presetName)
 	{
 		const auto xml = apvts.copyState().createXml();
 		const auto presetFile = defaultDirectory.getChildFile(presetName + "." + presetExtension);
-		//if (!xml->writeToFile(presetFile))
-		//{
-
-		//	jassertfalse;
-		//}
+		if (!xml->writeToFile(presetFile, ""))
+		{
+			jassertfalse;
+		}
 		currentPreset = presetName;
 	}
 
-	void PresetManager::deletePreset()
+	void PresetManager::deletePreset(const juce::String& presetName)
 	{
 		const auto presetFile = defaultDirectory.getChildFile(presetName + "." + presetExtension);
 		if (!presetFile.existsAsFile())
@@ -54,6 +53,28 @@ namespace Preset
 
 	void PresetManager::loadPreset()
 	{
-		// Load a preset from a file.
+
+	}
+
+	void PresetManager::configureComboBoxComponent(juce::ComboBox* comboBox)
+	{
+		//TODO
+	}
+	void PresetManager::configureSaveButtonComponent(juce::Button* saveButton)
+	{
+		saveButton->onClick = [this]()
+		{
+				fileChooser = std::make_unique<juce::FileChooser>
+				(
+					"Please enter the name of file :3",
+					defaultDirectory,
+					"*" + presetExtension
+				);
+				fileChooser->launchAsync(juce::FileBrowserComponent::saveMode, [this](const juce::FileChooser& chooser)
+										 {
+											 const auto resultFile = chooser.getResult();
+											 savePreset(resultFile.getFileNameWithoutExtension());
+										 });
+		};
 	}
 }

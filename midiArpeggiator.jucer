@@ -3,10 +3,11 @@
 <JUCERPROJECT id="uXyLlP" name="midiArpeggiator" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginCharacteristicsValue="pluginProducesMidiOut,pluginWantsMidiIn"
               pluginFormats="buildStandalone,buildVST3" cppLanguageStandard="20"
-              defines="JIVE_GUI_ITEMS_HAVE_STYLE_SHEETS=1&#10;">
+              defines="JIVE_GUI_ITEMS_HAVE_STYLE_SHEETS=1&#10;" companyName="The Neighbor's Cat">
   <MAINGROUP id="tMID8o" name="midiArpeggiator">
     <GROUP id="{364A534D-7CD2-809C-2196-30E80E3205D4}" name="GUI">
       <GROUP id="{483EDA95-BB1B-8D9C-B965-108436522E99}" name="Components">
+        <FILE id="qPBQOs" name="Ids.h" compile="0" resource="0" file="Source/Ids.h"/>
         <FILE id="nxoI6Q" name="Colors.h" compile="0" resource="0" file="Source/Colors.h"/>
         <FILE id="K3ilcR" name="SaveButton.h" compile="0" resource="0" file="Source/SaveButton.h"/>
         <FILE id="OluRou" name="Button.h" compile="0" resource="0" file="Source/Button.h"/>

@@ -109,26 +109,28 @@ MidiArpeggiatorAudioProcessorEditor::MidiArpeggiatorAudioProcessorEditor (MidiAr
     // On text change, sends data to value tree.
     inputUserRuleset.onTextChange = [this]()
         {
-            audioProcessor.userRulesetNode.setProperty("userRulesetNode", inputUserRuleset.getText(), nullptr);
+            DBG("TEXT CHANGE DETECTED");
+            // audioProcessor.userRulesetNode.setProperty("userRulesetNode", inputUserRuleset.getText(), nullptr);
         };
     // Sets text to data from value tree.
-    if (audioProcessor.userRulesetNode.hasProperty("userRulesetNode"))
-    {
-        inputUserRuleset.setText(audioProcessor.userRulesetNode.getProperty("userRulesetNode"));
-    }
+  //  if (audioProcessor.userRulesetNode.hasProperty("userRulesetNode"))
+  //  {
+		//DBG("SETTING TEXT");
+  //      inputUserRuleset.setText(audioProcessor.userRulesetNode.getProperty("userRulesetNode"));
+  //  }
 
     inputUserAxiom.setFont(juce::Font(15.0));
     inputUserAxiom.setTextToShowWhenEmpty("Axiom", juce::Colours::black);
     inputUserAxiom.setInputRestrictions(1);
-    inputUserAxiom.onTextChange = [this]()
-        {
-            // Stores the text into the valueTree
-            audioProcessor.userAxiomNode.setProperty("userAxiomNode", inputUserAxiom.getText(), nullptr);
-        };
-    if (audioProcessor.userAxiomNode.hasProperty("userAxiomNode"))
-    {
-        inputUserAxiom.setText(audioProcessor.userAxiomNode.getProperty("userAxiomNode"));
-    }
+    //inputUserAxiom.onTextChange = [this]()
+    //    {
+    //        // Stores the text into the valueTree
+    //        audioProcessor.userAxiomNode.setProperty("userAxiomNode", inputUserAxiom.getText(), nullptr);
+    //    };
+    //if (audioProcessor.userAxiomNode.hasProperty("userAxiomNode"))
+    //{
+    //    inputUserAxiom.setText(audioProcessor.userAxiomNode.getProperty("userAxiomNode"));
+    //}
 
     // GEN SLIDERS
     genSlider.setSliderStyle(juce::Slider::LinearHorizontal);

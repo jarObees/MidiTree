@@ -5,8 +5,7 @@ namespace jive_gui
 {
 	// View is used to generate a juce::TextEditor component.
 	class TextEditorView :
-		public jive::View,
-		private juce::TextEditor::Listener
+		public jive::View
 	{
 	public:
 		TextEditorView(int rawWidth, int rawHeight, juce::String rawId, juce::String rawWidthPercentage = "0%", juce::String rawHeightPercentage = "0%")
@@ -63,22 +62,13 @@ namespace jive_gui
 		juce::TextEditor* textEditorComponent;
 
 	private:
-
 		void setTextEditorSettings(juce::TextEditor* textEditor)
 		{
 			DBG("Setting text editor settings...");
-			textEditor->setText("HERE IS THE TEXT");
 			textEditor->setMultiLine(true);
 			textEditor->setReturnKeyStartsNewLine(true);
 			textEditor->setReadOnly(false);
 			textEditor->setWantsKeyboardFocus(true);
-			textEditor->addListener(this);
-		}
-
-		// This function is called whenever text is changed.
-		void textEditorTextChanged(juce::TextEditor& editor) override
-		{
-			DBG("TEXT CHANGED");
 		}
 
 		juce::String id;

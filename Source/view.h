@@ -1,5 +1,6 @@
 #pragma once
 #include <jive_core/jive_core.h>
+#include "Ids.h"
 #include "Colors.h"
 #include "Images.h"
 #include "ComboBoxView.h"
@@ -10,22 +11,6 @@
 
 namespace jive_gui
 {
-	// All ID's for a component should be stored here.
-	namespace stringIds
-	{
-		const juce::String forestSlider{ "forest-slider" };
-		const juce::String saveButton{ "save-button" };
-		const juce::String rulesetTextbox{ "ruleset-textBox" };
-		const juce::String loadButton{ "load-button" };
-		const juce::String generationsKnob{ "generations-knob" };
-		const juce::String growButton{ "grow-button" };
-		const juce::String midiVelocityKnob{ "midiVelocity-knob" };
-		const juce::String noteRateKnob{ "noteRate-knob" };
-		const juce::String noteTypeComboBox{ "noteType-comboBox" };
-		const juce::String nameTextBox{ "name-textBox" };
-		const juce::String axiomTextBox{ "axiom-textBox" };
-
-	}
 
 	// MAIN COMPONENTS ==========================================================
 	[[nodiscard]] inline auto getCrown(std::unordered_map<std::string, juce::Image>& imageCollection)
@@ -96,7 +81,7 @@ namespace jive_gui
 						
 						jive::makeView<TextEditorView>(0, 0, stringIds::nameTextBox, "100%", "10%"),
 						jive::makeView<SaveButton>(20, 40, filmstripKnob, "save", stringIds::saveButton),
-						jive::makeView<TextEditorView>(0, 0, "axiom-textBox", "100%", "10%"),
+						jive::makeView<TextEditorView>(0, 0, stringIds::axiomTextBox, "100%", "10%"),
 						jive::makeView<SaveButton>(20, 40, filmstripKnob, "plant!", stringIds::loadButton),
 						jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, stringIds::generationsKnob),
 						jive::makeView<SaveButton>(20, 40, filmstripKnob, "grow!", stringIds::growButton),

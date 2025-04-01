@@ -61,28 +61,10 @@ public:
     std::atomic<float> velParam;
 
     LSystemProcessor lsysProcessor{ genParam };
-
+	
+	// ==============================================================================================================
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout() };
-
-    // Non-Automatable Parameters ===================================================================================
-    static const inline juce::Identifier userRulesetNodeType{ "userRulesetNode" };
-    juce::ValueTree userRulesetNode{ userRulesetNodeType };
-
-    static const inline juce::Identifier userAxiomNodeType{ "userAxiomNode" };
-    juce::ValueTree userAxiomNode{ userAxiomNodeType };
-
-    static const inline juce::Identifier userLsyNameType{ "userLsysNameNode" };
-    juce::ValueTree userLsysNameNode{ userLsyNameType };
-
-    static const inline juce::Identifier generatedLStringType{ "generatedLStringNode" };
-    juce::ValueTree generatedLStringNode{ generatedLStringType};
-
-    static const inline juce::Identifier notesPoolType{ "notesPoolNode" };
-    juce::ValueTree notesPoolNode{ notesPoolType };
-	
-    void addNonAutomatableParams();
-	// ==============================================================================================================
     
     //TODO: No use anywhere else.
     // Original purpose was to store a list of l systems created. But new idea is different.

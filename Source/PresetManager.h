@@ -2,6 +2,16 @@
 #include <JuceHeader.h>
 namespace Preset
 {
+	namespace Ids
+	{
+		static const juce::Identifier userRulesetProperty{ "userRulesetNode" };
+		static const juce::Identifier userAxiomProperty{ "userAxiomNode" };
+		static const juce::Identifier userLsysNameProperty{ "userLsysNameNode" };
+		static const juce::Identifier generatedLsysStringProperty{ "generatedLStringNode" };
+		static const juce::Identifier notesPoolProperty{ "notesPoolNode" };
+
+	}
+
 	class PresetManager
 	{
 	public:
@@ -16,5 +26,6 @@ namespace Preset
 	private:
 		juce::AudioProcessorValueTreeState& apvts;
 		juce::String currentPreset;
+		juce::String presetName;
 	};
 }

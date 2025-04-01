@@ -289,6 +289,7 @@ std::unordered_map<std::string, juce::Image> MidiArpeggiatorAudioProcessor::getI
 }
 juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 {
+    // return new MidiArpeggiatorAudioProcessorEditor(*this);
 	DBG("------ CREATING EDITOR ------");
     jassert(JIVE_IS_PLUGIN_PROJECT);
     // SETUP some basic stuff.
@@ -319,6 +320,15 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 				//TODO: LOAD DA FOREST
 			};
 
+			auto* textEditorTingy = dynamic_cast<juce::TextEditor*>(jive::findItemWithID(*editor, jive_gui::stringIds::rulesetTextbox)->getComponent().get());
+			textEditorTingy->setText(apvts.state.getProperty(Preset::Ids::userRulesetProperty));
+            textEditorTingy->onTextChange = [this, textEditorTingy]()
+				{
+					DBG("TEXT CHANGE DETECTED");
+					apvts.state.setProperty(Preset::Ids::userRulesetProperty, textEditorTingy->getText(), nullptr);
+					auto thing = apvts.state.getPropertyAsValue(Preset::Ids::userRulesetProperty, nullptr).toString();
+                    DBG("Current Ruleset: " << thing);
+				};
 
             //jive::findItemWithID(*editor, "midiVelocity-label")->attachToParameter(apvts.getParameter("vel"), &undoManager);
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
@@ -339,27 +349,18 @@ void MidiArpeggiatorAudioProcessor::getStateInformation(juce::MemoryBlock& destD
     apvts.state.writeToStream(mos);
 }
 
+//TODO: Figure out why this shit aint working.
 void MidiArpeggiatorAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
     DBG("------ SETTING STATE INFORMATION ------");
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
 
-    //WARNING: This is NOT thread safe. BUT. If it ain't broke...
     auto tree = juce::ValueTree::readFromData(data, size_t(sizeInBytes));
+    jassert(apvts.state.getNumProperties() != 0); // Doesn't trigger.
     if (tree.isValid())
     {
         apvts.replaceState(tree);
+        jassert(apvts.state.getNumProperties() != 0);
     }
-}
-
-// Adds the non-auto params to the apvts as child value trees.
-void MidiArpeggiatorAudioProcessor::addNonAutomatableParams()
-{
-    apvts.state.addChild(userRulesetNode, -1, nullptr);
-	apvts.state.addChild(userAxiomNode, -1, nullptr);
-	apvts.state.addChild(userLsysNameNode, -1, nullptr);
-	apvts.state.addChild(generatedLStringNode, -1, nullptr);
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout 
@@ -398,8 +399,6 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
     }
     params.add(std::make_unique<juce::AudioParameterChoice>("noteRate", "Rate", _noteRateKeys, 5));
     return params;
-
-    addNonAutomatableParams();
  }
 //==============================================================================
 // This creates new instances of the plugin..

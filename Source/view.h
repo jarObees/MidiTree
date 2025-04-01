@@ -11,7 +11,6 @@
 
 namespace jive_gui
 {
-
 	// MAIN COMPONENTS ==========================================================
 	[[nodiscard]] inline auto getCrown(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
@@ -54,8 +53,8 @@ namespace jive_gui
 						},
 					},
 					{
-						jive::makeView<FilmstripKnobView>(224, 32, filmstripKnobHori, stringIds::forestSlider, true),
-						jive::makeView<TextEditorView>(80, 160, stringIds::rulesetTextbox, "100%", "50%"),
+						jive::makeView<FilmstripKnobView>(224, 32, filmstripKnobHori, StringIds::forestSlider, true),
+						jive::makeView<TextEditorView>(80, 160, StringIds::rulesetTextbox, "100%", "50%"),
 					},
 				},
 
@@ -78,13 +77,13 @@ namespace jive_gui
 					},
 					{
 						// Button{}.withHeight(20).withWidth(40).withId("save-button").withText("save")(),
-						
-						jive::makeView<TextEditorView>(0, 0, stringIds::nameTextBox, "100%", "10%"),
-						jive::makeView<SaveButton>(20, 40, filmstripKnob, "save", stringIds::saveButton),
-						jive::makeView<TextEditorView>(0, 0, stringIds::axiomTextBox, "100%", "10%"),
-						jive::makeView<SaveButton>(20, 40, filmstripKnob, "plant!", stringIds::loadButton),
-						jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, stringIds::generationsKnob),
-						jive::makeView<SaveButton>(20, 40, filmstripKnob, "grow!", stringIds::growButton),
+		
+						jive::makeView<ComboBoxView>(40, 10, StringIds::presetComboBox),
+						jive::makeView<SaveButton>(20, 40, filmstripKnob, "save", StringIds::saveButton),
+						jive::makeView<TextEditorView>(0, 0, StringIds::axiomTextBox, "100%", "10%"),
+						jive::makeView<SaveButton>(20, 40, filmstripKnob, "plant!", StringIds::loadButton),
+						jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, StringIds::generationsKnob),
+						jive::makeView<SaveButton>(20, 40, filmstripKnob, "grow!", StringIds::growButton),
 					},
 				},
 			}
@@ -117,7 +116,6 @@ namespace jive_gui
 	[[nodiscard]] inline auto getGround(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
 		juce::Image filmstripKnob = imageCollection.at("knobTestWhite");
-		juce::StringArray comboBoxTypes = { "Quarter", "Dotted" };
 		return juce::ValueTree{
 			"Component",
 			{
@@ -134,9 +132,9 @@ namespace jive_gui
 				},
 			},
 			{
-				jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, stringIds::midiVelocityKnob),
-				jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, stringIds::noteRateKnob),
-				jive::makeView<ComboBoxView>(80, 20, comboBoxTypes, stringIds::noteTypeComboBox), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
+				jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, StringIds::midiVelocityKnob),
+				jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, StringIds::noteRateKnob),
+				jive::makeView<ComboBoxView>(80, 20, StringIds::noteTypeComboBox), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
 			}
 		};
 	}

@@ -302,33 +302,42 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
         {
             viewInterpreter.listenTo(*editor);
 			// Attaches automatable parameters. ========================================================
-            jive::findItemWithID(*editor, jive_gui::stringIds::noteRateKnob)->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
-            jive::findItemWithID(*editor, jive_gui::stringIds::midiVelocityKnob)->attachToParameter(apvts.getParameter("vel"), &undoManager);
-            jive::findItemWithID(*editor, jive_gui::stringIds::forestSlider)->attachToParameter(apvts.getParameter("forest"), &undoManager);
-            jive::findItemWithID(*editor, jive_gui::stringIds::generationsKnob)->attachToParameter(apvts.getParameter("gens"), &undoManager);
+            jive::findItemWithID(*editor, jive_gui::StringIds::noteRateKnob)->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
+            jive::findItemWithID(*editor, jive_gui::StringIds::midiVelocityKnob)->attachToParameter(apvts.getParameter("vel"), &undoManager);
+            jive::findItemWithID(*editor, jive_gui::StringIds::forestSlider)->attachToParameter(apvts.getParameter("forest"), &undoManager);
+            jive::findItemWithID(*editor, jive_gui::StringIds::generationsKnob)->attachToParameter(apvts.getParameter("gens"), &undoManager);
 
 			// Links and sets up non-automatable parameters. ========================================================
-            auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::stringIds::saveButton)->getComponent().get());
+            // Save button
+            auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::StringIds::saveButton)->getComponent().get());
             saveButtonTingy->onClick = [this]()
             {
                     presetManager.savePreset();
             };
-			
-            auto* loadButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::stringIds::loadButton)->getComponent().get());
+			// Load Button
+            auto* loadButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::StringIds::loadButton)->getComponent().get());
             loadButtonTingy->onClick = [this]()
             {
 				//TODO: LOAD DA FOREST
 			};
-
-			auto* textEditorTingy = dynamic_cast<juce::TextEditor*>(jive::findItemWithID(*editor, jive_gui::stringIds::rulesetTextbox)->getComponent().get());
-			textEditorTingy->setText(apvts.state.getProperty(Preset::Ids::userRulesetProperty));
+            // ruleset Textbox
+			auto* textEditorTingy = dynamic_cast<juce::TextEditor*>(jive::findItemWithID(*editor, jive_gui::StringIds::rulesetTextbox)->getComponent().get());
+            textEditorTingy->setText(apvts.state.getProperty(Preset::Ids::userRulesetProperty));
             textEditorTingy->onTextChange = [this, textEditorTingy]()
-				{
-					DBG("TEXT CHANGE DETECTED");
-					apvts.state.setProperty(Preset::Ids::userRulesetProperty, textEditorTingy->getText(), nullptr);
-					auto thing = apvts.state.getPropertyAsValue(Preset::Ids::userRulesetProperty, nullptr).toString();
-                    DBG("Current Ruleset: " << thing);
-				};
+			{
+				apvts.state.setProperty(Preset::Ids::userRulesetProperty, textEditorTingy->getText(), nullptr);
+				auto thing = apvts.state.getPropertyAsValue(Preset::Ids::userRulesetProperty, nullptr).toString();
+			};
+            // Axiom Textbox
+            // TODO: NOT WORKIN FOR SOME GODDAMN REASON.
+            auto* axiomEditor = dynamic_cast<juce::TextEditor*>(jive::findItemWithID(*editor, jive_gui::StringIds::axiomTextBox)->getComponent().get());
+            axiomEditor->setText(apvts.state.getProperty(Preset::Ids::userAxiomProperty));
+            axiomEditor->onTextChange = [this, textEditorTingy]()
+            {
+                apvts.state.setProperty(Preset::Ids::userAxiomProperty, textEditorTingy->getText(), nullptr);
+                auto thing = apvts.state.getPropertyAsValue(Preset::Ids::userAxiomProperty, nullptr).toString();
+            };
+
 
             //jive::findItemWithID(*editor, "midiVelocity-label")->attachToParameter(apvts.getParameter("vel"), &undoManager);
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
@@ -355,11 +364,9 @@ void MidiArpeggiatorAudioProcessor::setStateInformation(const void* data, int si
     DBG("------ SETTING STATE INFORMATION ------");
 
     auto tree = juce::ValueTree::readFromData(data, size_t(sizeInBytes));
-    jassert(apvts.state.getNumProperties() != 0); // Doesn't trigger.
     if (tree.isValid())
     {
         apvts.replaceState(tree);
-        jassert(apvts.state.getNumProperties() != 0);
     }
 }
 

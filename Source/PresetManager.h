@@ -2,6 +2,7 @@
 #include <JuceHeader.h>
 namespace Preset
 {
+	// All ID's for propertys should be stored here.
 	namespace Ids
 	{
 		static const juce::Identifier userRulesetProperty{ "userRulesetNode" };

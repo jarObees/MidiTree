@@ -11,8 +11,8 @@
 #include <JuceHeader.h>
 #include <juce_data_structures/juce_data_structures.h>
 #include "LSystemProcessor.h"
-#include "view.h"
-#include "presetManager.h"
+#include "View.h"
+#include "PresetManager.h"
 
 //==============================================================================
 class MidiArpeggiatorAudioProcessor : public juce::AudioProcessor

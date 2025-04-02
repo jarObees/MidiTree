@@ -12,8 +12,10 @@ namespace Preset
 		static const juce::Identifier notesPoolProperty{ "notesPoolNode" };
 	}
 
+
+
 	class PresetManager
-		: juce::Button::Listener
+		: public juce::Button::Listener
 	{
 	public:
 		static const juce::File defaultDirectory;
@@ -30,7 +32,7 @@ namespace Preset
 
 		juce::StringArray getAllPresets() const;
 
-		void buttonClicked(juce::Button* button);
+		void buttonClicked(juce::Button* button) override;
 	private:
 		juce::AudioProcessorValueTreeState& apvts;
 		juce::String currentPreset;

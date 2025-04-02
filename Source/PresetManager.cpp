@@ -91,23 +91,29 @@ namespace Preset
 	{
 		//TODO
 	}
-	void PresetManager::configureSaveButtonComponent(juce::Button* saveButton)
+	void PresetManager::configureSaveButtonComponent(juce::Button* _saveButton)
 	{
-		saveButton->onClick = [this]()
+		saveButton = _saveButton;
+		saveButton->addListener(this);
+	}
+
+	void PresetManager::buttonClicked(juce::Button* button)
+	{
+		DBG("BUTTON CLICK DETECTED!");
+		if (button == saveButton)
 		{
-				fileChooser = std::make_unique<juce::FileChooser>
+			fileChooser = std::make_unique<juce::FileChooser>
 				(
 					"Please enter the name of file :3",
 					defaultDirectory,
 					"*" + presetExtension
 				);
-				fileChooser->launchAsync(juce::FileBrowserComponent::saveMode, [this](const juce::FileChooser& chooser)
-										 {
-											 const auto resultFile = chooser.getResult();
-											 savePreset(resultFile.getFileNameWithoutExtension());
-										 });
-		};
+			fileChooser->launchAsync(juce::FileBrowserComponent::saveMode, [this](const juce::FileChooser& chooser)
+									 {
+										 const auto resultFile = chooser.getResult();
+										 savePreset(resultFile.getFileNameWithoutExtension());
+									 });
+		}
 	}
-
 
 }

@@ -13,19 +13,24 @@ namespace Preset
 	}
 
 	class PresetManager
+		: juce::Button::Listener
 	{
 	public:
 		static const juce::File defaultDirectory;
 		static const juce::String presetExtension;
 
 		PresetManager(juce::AudioProcessorValueTreeState& apvts);
-		void savePreset(const juce::String& presetName);
-		void loadPreset();
-		void deletePreset(const juce::String& presetName);
 		
+		void savePreset(const juce::String& presetName);
+		void loadPreset(const juce::String& presetName);
+		void deletePreset(const juce::String& presetName);
+
 		void configureComboBoxComponent(juce::ComboBox* comboBox);
 		void configureSaveButtonComponent(juce::Button* saveButton);
 
+		juce::StringArray getAllPresets() const;
+
+		void buttonClicked(juce::Button* button);
 	private:
 		juce::AudioProcessorValueTreeState& apvts;
 		juce::String currentPreset;

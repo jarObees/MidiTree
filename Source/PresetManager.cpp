@@ -21,8 +21,23 @@ namespace Preset
 		}
 	}
 
+	juce::StringArray PresetManager::getAllPresets() const
+	{
+		juce::StringArray presets;
+		const auto fileArray = defaultDirectory.findChildFiles(juce::File::TypesOfFileToFind::findFiles, 
+															   false, 
+															   "*." + presetExtension);
+		for (const auto& file : fileArray)
+		{
+			presets.add(file.getFileNameWithoutExtension());
+		}
+		return presets;
+	}
+
 	void PresetManager::savePreset(const juce::String& presetName)
 	{
+		if (presetName.isEmpty())
+			return;
 		const auto xml = apvts.copyState().createXml();
 		const auto presetFile = defaultDirectory.getChildFile(presetName + "." + presetExtension);
 		if (!xml->writeToFile(presetFile, ""))
@@ -34,6 +49,9 @@ namespace Preset
 
 	void PresetManager::deletePreset(const juce::String& presetName)
 	{
+		if (presetName.isEmpty())
+			return;
+
 		const auto presetFile = defaultDirectory.getChildFile(presetName + "." + presetExtension);
 		if (!presetFile.existsAsFile())
 		{
@@ -48,12 +66,25 @@ namespace Preset
 			return;
 		}
 		currentPreset = "";
-
 	}
 
-	void PresetManager::loadPreset()
+	void PresetManager::loadPreset(const juce::String& presetName)
 	{
-
+		if (presetName.isEmpty())
+		{
+			jassertfalse;
+			return;
+		}
+		const auto presetFile = defaultDirectory.getChildFile(presetName + "." + presetExtension);
+		if(!presetFile.existsAsFile())
+		{
+			jassertfalse;
+			return;
+		}
+		juce::XmlDocument xmlDoc{ presetFile };
+		const auto valueTreeToLoad = juce::ValueTree::fromXml(*xmlDoc.getDocumentElement());
+		apvts.replaceState(valueTreeToLoad);
+		currentPreset = presetName;
 	}
 
 	void PresetManager::configureComboBoxComponent(juce::ComboBox* comboBox)
@@ -77,4 +108,6 @@ namespace Preset
 										 });
 		};
 	}
+
+
 }

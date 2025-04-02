@@ -19,6 +19,10 @@ namespace Preset
 					jassertfalse;
 			}
 		}
+
+		// Adds a listener to update the comboBox in realtime.
+		apvts.state.addListener(this);
+		currentPreset.referTo(apvts.state.getPropertyAsValue(Ids::presetNameProperty, nullptr));
 	}
 
 	juce::StringArray PresetManager::getAllPresets() const
@@ -38,6 +42,8 @@ namespace Preset
 	{
 		if (presetName.isEmpty())
 			return;
+
+		currentPreset.setValue(presetName);
 		const auto xml = apvts.copyState().createXml();
 		const auto presetFile = defaultDirectory.getChildFile(presetName + "." + presetExtension);
 		DBG("Writing as: " << presetFile.getFileName());
@@ -45,7 +51,6 @@ namespace Preset
 		{
 			jassertfalse;
 		}
-		currentPreset = presetName;
 	}
 
 	void PresetManager::deletePreset(const juce::String& presetName)
@@ -66,7 +71,7 @@ namespace Preset
 			jassertfalse;
 			return;
 		}
-		currentPreset = "";
+		currentPreset.setValue("");
 	}
 
 	void PresetManager::loadPreset(const juce::String& presetName)
@@ -86,7 +91,7 @@ namespace Preset
 		juce::XmlDocument xmlDoc{ presetFile };
 		const auto valueTreeToLoad = juce::ValueTree::fromXml(*xmlDoc.getDocumentElement());
 		apvts.replaceState(valueTreeToLoad);
-		currentPreset = presetName;
+		currentPreset.setValue(presetName);
 	}
 
 	void PresetManager::configureComboBoxComponent(juce::ComboBox* _comboBox)
@@ -122,6 +127,7 @@ namespace Preset
 										 const auto resultFile = chooser.getResult();
 										 DBG("Passing preset name to saveFile Function as: " << resultFile.getFileNameWithoutExtension());
 										 savePreset(resultFile.getFileNameWithoutExtension());
+										 loadPresetList(); // Reloads preset list 
 									 });
 		}
 	}
@@ -146,6 +152,11 @@ namespace Preset
 		comboBox->clear(juce::dontSendNotification);
 		const auto allPresets = getAllPresets();
 		comboBox->addItemList(allPresets, 1);
-		comboBox->setSelectedItemIndex(allPresets.indexOf(currentPreset), juce::dontSendNotification);
+		comboBox->setSelectedItemIndex(allPresets.indexOf(currentPreset.toString()), juce::dontSendNotification);
+	}
+
+	void PresetManager::valueTreeRedirected(juce::ValueTree& changedValueTree)
+	{
+		currentPreset.referTo(changedValueTree.getPropertyAsValue(Ids::presetNameProperty, nullptr));
 	}
 }

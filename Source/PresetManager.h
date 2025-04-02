@@ -10,12 +10,13 @@ namespace Preset
 		static const juce::Identifier userLsysNameProperty{ "userLsysNameNode" };
 		static const juce::Identifier generatedLsysStringProperty{ "generatedLStringNode" };
 		static const juce::Identifier notesPoolProperty{ "notesPoolNode" };
+		static const juce::Identifier presetNameProperty{ "presetNameProperty" };
 	}
 
 
 
 	class PresetManager
-		: public juce::Button::Listener, juce::ComboBox::Listener
+		: public juce::Button::Listener, juce::ComboBox::Listener, juce::ValueTree::Listener
 	{
 	public:
 		static const juce::File defaultDirectory;
@@ -34,10 +35,13 @@ namespace Preset
 
 		void buttonClicked(juce::Button* button) override;
 		void comboBoxChanged(juce::ComboBox* comboBox) override;
+		void valueTreeRedirected(juce::ValueTree& changedValueTree) override;
 		void loadPresetList();
+
+
 	private:
 		juce::AudioProcessorValueTreeState& apvts;
-		juce::String currentPreset;
+		juce::Value currentPreset;
 
 		juce::Button* saveButton;
 		juce::ComboBox* comboBox;

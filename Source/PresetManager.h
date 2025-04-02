@@ -15,7 +15,7 @@ namespace Preset
 
 
 	class PresetManager
-		: public juce::Button::Listener
+		: public juce::Button::Listener, juce::ComboBox::Listener
 	{
 	public:
 		static const juce::File defaultDirectory;
@@ -33,11 +33,14 @@ namespace Preset
 		juce::StringArray getAllPresets() const;
 
 		void buttonClicked(juce::Button* button) override;
+		void comboBoxChanged(juce::ComboBox* comboBox) override;
+		void loadPresetList();
 	private:
 		juce::AudioProcessorValueTreeState& apvts;
 		juce::String currentPreset;
 
 		juce::Button* saveButton;
+		juce::ComboBox* comboBox;
 		std::unique_ptr<juce::FileChooser> fileChooser;
 	};
 }

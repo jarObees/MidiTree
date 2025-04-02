@@ -6,7 +6,7 @@ namespace Preset
 		.getChildFile(ProjectInfo::companyName)
 		.getChildFile(ProjectInfo::projectName) 
 	};
-	const juce::String PresetManager::presetExtension{ ".preset" };
+	const juce::String PresetManager::presetExtension{ "preset" };
 
 	PresetManager::PresetManager(juce::AudioProcessorValueTreeState& _apvts)
 		: apvts(_apvts)
@@ -40,6 +40,7 @@ namespace Preset
 			return;
 		const auto xml = apvts.copyState().createXml();
 		const auto presetFile = defaultDirectory.getChildFile(presetName + "." + presetExtension);
+		DBG("Writing as: " << presetFile.getFileName());
 		if (!xml->writeToFile(presetFile, ""))
 		{
 			jassertfalse;
@@ -70,6 +71,7 @@ namespace Preset
 
 	void PresetManager::loadPreset(const juce::String& presetName)
 	{
+		DBG("Loading preset: " << presetName);
 		if (presetName.isEmpty())
 		{
 			jassertfalse;
@@ -87,9 +89,16 @@ namespace Preset
 		currentPreset = presetName;
 	}
 
-	void PresetManager::configureComboBoxComponent(juce::ComboBox* comboBox)
+	void PresetManager::configureComboBoxComponent(juce::ComboBox* _comboBox)
 	{
-		//TODO
+		DBG("Configuring ComboBox");
+		comboBox = _comboBox;
+		jassert(comboBox != nullptr);
+		comboBox->setTextWhenNothingSelected("No Tree Selected :(");
+		comboBox->setMouseCursor(juce::MouseCursor::PointingHandCursor);
+		comboBox->addListener(this);
+		loadPresetList();
+
 	}
 	void PresetManager::configureSaveButtonComponent(juce::Button* _saveButton)
 	{
@@ -99,7 +108,7 @@ namespace Preset
 
 	void PresetManager::buttonClicked(juce::Button* button)
 	{
-		DBG("BUTTON CLICK DETECTED!");
+		// Opens up a file picker window for the user to save.
 		if (button == saveButton)
 		{
 			fileChooser = std::make_unique<juce::FileChooser>
@@ -111,9 +120,32 @@ namespace Preset
 			fileChooser->launchAsync(juce::FileBrowserComponent::saveMode, [this](const juce::FileChooser& chooser)
 									 {
 										 const auto resultFile = chooser.getResult();
+										 DBG("Passing preset name to saveFile Function as: " << resultFile.getFileNameWithoutExtension());
 										 savePreset(resultFile.getFileNameWithoutExtension());
 									 });
 		}
 	}
 
+	void PresetManager::comboBoxChanged(juce::ComboBox* changedComboBox)
+	{
+		if (changedComboBox == comboBox)
+		{
+			DBG("Combo Box Change detected.");
+			loadPreset(comboBox->getItemText(comboBox->getSelectedItemIndex()));
+		}
+	}
+
+	void PresetManager::loadPresetList()
+	{
+		if (comboBox == nullptr)
+		{
+			jassertfalse;
+			return;
+		}
+
+		comboBox->clear(juce::dontSendNotification);
+		const auto allPresets = getAllPresets();
+		comboBox->addItemList(allPresets, 1);
+		comboBox->setSelectedItemIndex(allPresets.indexOf(currentPreset), juce::dontSendNotification);
+	}
 }

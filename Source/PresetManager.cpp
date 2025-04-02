@@ -25,19 +25,7 @@ namespace Preset
 		currentPreset.referTo(apvts.state.getPropertyAsValue(Ids::presetNameProperty, nullptr));
 	}
 
-	juce::StringArray PresetManager::getAllPresets() const
-	{
-		juce::StringArray presets;
-		const auto fileArray = defaultDirectory.findChildFiles(juce::File::TypesOfFileToFind::findFiles, 
-															   false, 
-															   "*." + presetExtension);
-		for (const auto& file : fileArray)
-		{
-			presets.add(file.getFileNameWithoutExtension());
-		}
-		return presets;
-	}
-
+	// Copies state of apvts and savesit to file.
 	void PresetManager::savePreset(const juce::String& presetName)
 	{
 		if (presetName.isEmpty())
@@ -46,7 +34,6 @@ namespace Preset
 		currentPreset.setValue(presetName);
 		const auto xml = apvts.copyState().createXml();
 		const auto presetFile = defaultDirectory.getChildFile(presetName + "." + presetExtension);
-		DBG("Writing as: " << presetFile.getFileName());
 		if (!xml->writeToFile(presetFile, ""))
 		{
 			jassertfalse;
@@ -74,6 +61,7 @@ namespace Preset
 		currentPreset.setValue("");
 	}
 
+	// After passing the preset name, loads in said preset to the apvts. 
 	void PresetManager::loadPreset(const juce::String& presetName)
 	{
 		DBG("Loading preset: " << presetName);
@@ -105,12 +93,14 @@ namespace Preset
 		loadPresetList();
 
 	}
+
 	void PresetManager::configureSaveButtonComponent(juce::Button* _saveButton)
 	{
 		saveButton = _saveButton;
 		saveButton->addListener(this);
 	}
 
+	// General buttonClicked override for any related button.
 	void PresetManager::buttonClicked(juce::Button* button)
 	{
 		// Opens up a file picker window for the user to save.
@@ -127,11 +117,12 @@ namespace Preset
 										 const auto resultFile = chooser.getResult();
 										 DBG("Passing preset name to saveFile Function as: " << resultFile.getFileNameWithoutExtension());
 										 savePreset(resultFile.getFileNameWithoutExtension());
-										 loadPresetList(); // Reloads preset list 
+										 loadPresetList(); // Reloads preset list right after saving to refresh it.
 									 });
 		}
 	}
 
+	// Geenral comboBoxChanged for any related button.
 	void PresetManager::comboBoxChanged(juce::ComboBox* changedComboBox)
 	{
 		if (changedComboBox == comboBox)
@@ -141,6 +132,7 @@ namespace Preset
 		}
 	}
 
+	// Refreshes preset list on comboBox component with the latest presets.
 	void PresetManager::loadPresetList()
 	{
 		if (comboBox == nullptr)
@@ -153,6 +145,20 @@ namespace Preset
 		const auto allPresets = getAllPresets();
 		comboBox->addItemList(allPresets, 1);
 		comboBox->setSelectedItemIndex(allPresets.indexOf(currentPreset.toString()), juce::dontSendNotification);
+	}
+
+	// Helper to loadPresetList()
+	juce::StringArray PresetManager::getAllPresets() const
+	{
+		juce::StringArray presets;
+		const auto fileArray = defaultDirectory.findChildFiles(juce::File::TypesOfFileToFind::findFiles,
+															   false,
+															   "*." + presetExtension);
+		for (const auto& file : fileArray)
+		{
+			presets.add(file.getFileNameWithoutExtension());
+		}
+		return presets;
 	}
 
 	void PresetManager::valueTreeRedirected(juce::ValueTree& changedValueTree)

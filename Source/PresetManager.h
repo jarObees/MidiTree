@@ -2,7 +2,7 @@
 #include <JuceHeader.h>
 namespace Preset
 {
-	// All ID's for propertys should be stored here.
+	// All ID's for properties should be stored here.
 	namespace Ids
 	{
 		static const juce::Identifier userRulesetProperty{ "userRulesetNode" };
@@ -14,7 +14,7 @@ namespace Preset
 	}
 
 
-
+	// This class is for managing the backend/component configuration of stuff related to saving and loading presets.
 	class PresetManager
 		: public juce::Button::Listener, juce::ComboBox::Listener, juce::ValueTree::Listener
 	{
@@ -31,8 +31,6 @@ namespace Preset
 		void configureComboBoxComponent(juce::ComboBox* comboBox);
 		void configureSaveButtonComponent(juce::Button* saveButton);
 
-		juce::StringArray getAllPresets() const;
-
 		void buttonClicked(juce::Button* button) override;
 		void comboBoxChanged(juce::ComboBox* comboBox) override;
 		void valueTreeRedirected(juce::ValueTree& changedValueTree) override;
@@ -40,6 +38,8 @@ namespace Preset
 
 
 	private:
+		juce::StringArray getAllPresets() const;
+
 		juce::AudioProcessorValueTreeState& apvts;
 		juce::Value currentPreset;
 

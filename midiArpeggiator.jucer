@@ -29,6 +29,11 @@
       <FILE id="rsk38a" name="View.h" compile="0" resource="0" file="Source/View.h"/>
     </GROUP>
     <GROUP id="{968718A0-7025-4E85-0A48-8A9854BC5E9F}" name="Source">
+      <GROUP id="{21CB11F1-75A8-5ABB-1BF0-2E27FA6914CF}" name="Forest">
+        <FILE id="FkI2ON" name="ForestManager.cpp" compile="1" resource="0"
+              file="Source/ForestManager.cpp"/>
+        <FILE id="ycwJNN" name="ForestManager.h" compile="0" resource="0" file="Source/ForestManager.h"/>
+      </GROUP>
       <GROUP id="{2ADA2F28-3D67-6E16-B2E4-B0E82CDA3FDB}" name="Preset">
         <FILE id="eehAuW" name="PresetManager.h" compile="0" resource="0" file="Source/PresetManager.h"/>
         <FILE id="DvIzno" name="PresetManager.cpp" compile="1" resource="0"

@@ -53,6 +53,7 @@ namespace jive_gui
 					juce::Rectangle<int> clippedArea(0, imageNumber * sideLength, sideLength, sideLength);
 					juce::Image croppedImage = rawFilmstripImage.getClippedImage(clippedArea);
 					filmstripSource->set(croppedImage);
+					DBG(sliderId << "filmstrip value: " << stripSlider->getValue());
 					};
 			}
 			else

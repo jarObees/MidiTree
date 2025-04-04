@@ -15,6 +15,9 @@ namespace Preset
 
 
 	// This class is for managing the backend/component configuration of stuff related to saving and loading presets.
+	// By configuring the comboBox and saveButton component, it's able to work the rest of the magic.
+
+	//TODO: Currently does not save texteditor shit. Figure out why.
 	class PresetManager
 		: public juce::Button::Listener, juce::ComboBox::Listener, juce::ValueTree::Listener
 	{

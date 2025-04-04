@@ -28,6 +28,7 @@ namespace Preset
 	// Copies state of apvts and savesit to file.
 	void PresetManager::savePreset(const juce::String& presetName)
 	{
+		DBG("Saving preset: " << presetName);
 		if (presetName.isEmpty())
 			return;
 
@@ -38,6 +39,27 @@ namespace Preset
 		{
 			jassertfalse;
 		}
+	}
+
+	// After passing the preset name, loads in said preset to the apvts. 
+	void PresetManager::loadPreset(const juce::String& presetName)
+	{
+		DBG("Loading preset: " << presetName);
+		if (presetName.isEmpty())
+		{
+			jassertfalse;	
+			return;
+		}
+		const auto presetFile = defaultDirectory.getChildFile(presetName + "." + presetExtension);
+		if (!presetFile.existsAsFile())
+		{
+			jassertfalse;
+			return;
+		}
+		juce::XmlDocument xmlDoc{ presetFile };
+		const auto valueTreeToLoad = juce::ValueTree::fromXml(*xmlDoc.getDocumentElement());
+		apvts.replaceState(valueTreeToLoad);
+		currentPreset.setValue(presetName);
 	}
 
 	void PresetManager::deletePreset(const juce::String& presetName)
@@ -59,27 +81,6 @@ namespace Preset
 			return;
 		}
 		currentPreset.setValue("");
-	}
-
-	// After passing the preset name, loads in said preset to the apvts. 
-	void PresetManager::loadPreset(const juce::String& presetName)
-	{
-		DBG("Loading preset: " << presetName);
-		if (presetName.isEmpty())
-		{
-			jassertfalse;
-			return;
-		}
-		const auto presetFile = defaultDirectory.getChildFile(presetName + "." + presetExtension);
-		if(!presetFile.existsAsFile())
-		{
-			jassertfalse;
-			return;
-		}
-		juce::XmlDocument xmlDoc{ presetFile };
-		const auto valueTreeToLoad = juce::ValueTree::fromXml(*xmlDoc.getDocumentElement());
-		apvts.replaceState(valueTreeToLoad);
-		currentPreset.setValue(presetName);
 	}
 
 	void PresetManager::configureComboBoxComponent(juce::ComboBox* _comboBox)

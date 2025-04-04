@@ -13,6 +13,7 @@
 #include "LSystemProcessor.h"
 #include "View.h"
 #include "PresetManager.h"
+#include "ForestManager.h"
 #include <chrono>
 
 //==============================================================================
@@ -78,6 +79,8 @@ public:
     
     static const inline juce::StringArray comboBoxNoteTypes{"Quarter", "Dotted"};
     Preset::PresetManager presetManager{apvts};
+    Forest::ForestManager forestManager{ presetManager, int(apvts.getParameter("forest")->getNormalisableRange().end) };
+
 
 private:
     std::unordered_map<std::string, juce::Image> imageCollection;

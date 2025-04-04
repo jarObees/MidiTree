@@ -8,8 +8,6 @@ LSystemManager::LSystemManager(std::atomic<float>& generations)
 // Main function to generate and run everything necessary to produce an L system.
 void LSystemManager::generateLSystem(const uint8_t& gens)
 {
-    DBG("Begin Generating L System------");
-    DBG("Translating rulesets/vars");
     translateSet(current_lsysRulesets);
     translateSet(current_lsysVars);
     std::unordered_map<std::string, std::string> newLsysRulemap = generateRuleset();

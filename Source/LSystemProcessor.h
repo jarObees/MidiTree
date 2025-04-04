@@ -4,25 +4,13 @@
 #include "JuceHeader.h"
 #include "LSystem.h"
 
-//TODO: IMPLEMENT SAVING FEATURE!!!
-// Should be able to save each lsystem into some sort of data format that can be shared across all instances
-// of this plugin. Then you can browse and select a format that's already generated.
-// Maybe even automate this. So you can combine L systems within the same thing.
 class LSystemManager
 {
 public:
     LSystemManager(std::atomic<float>& generations);
-    // L System Generation ====================================================
-    juce::SortedSet<std::string> current_lsysVars;
-    juce::SortedSet<std::string> current_lsysRulesets;
-    std::string lsysAxiom;
-    std::vector<LSystem> lSystems;
-    void generateLSystem(const uint8_t& gens);
+    
     // APVTS Processor ========================================================
-    std::vector<int> generateNotesPool(const std::string& genString);
-    // l-string generated notes relative to the axiom. 
-    // Currently used for storing the actual note pool.
-    std::vector<int> notesPool;
+    std::vector<int> notesPool; // Currently used for storing the actual note pool.
     static inline const std::unordered_map<std::string, float> noteRateMap = {
         {"32/1", 32.0f}, {"16/1", 16.0f},
         {"8/1", 8.0f}, {"4/1", 4.0f},
@@ -34,7 +22,16 @@ public:
     std::vector<std::string> noteRateKeys;
     void saveLSystem(std::unordered_map<std::string, juce::ValueTree*>& nonAutomatableParams);
 private:
+    // L System Generation ====================================================
+    juce::SortedSet<std::string> current_lsysVars;
+    juce::SortedSet<std::string> current_lsysRulesets;
+    std::string lsysAxiom;
+    std::vector<LSystem> lSystems;
+    void generateLSystem(const uint8_t& gens);
+    std::vector<int> generateNotesPool(const std::string& genString);
+
     std::atomic<float>& generations;
+    
     // Used for replacing user input (keys), to single char strings to be used in l-sys computation (values).
     static inline const std::unordered_map<std::string, std::string> replacementRulesToChar = {
         {"#1", "a"}, {"b2", "a"},

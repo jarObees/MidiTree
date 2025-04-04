@@ -1,4 +1,4 @@
-// LSystemProcessor.h
+// LSystemManager.h
 #pragma once
 
 #include "JuceHeader.h"
@@ -8,10 +8,10 @@
 // Should be able to save each lsystem into some sort of data format that can be shared across all instances
 // of this plugin. Then you can browse and select a format that's already generated.
 // Maybe even automate this. So you can combine L systems within the same thing.
-class LSystemProcessor
+class LSystemManager
 {
 public:
-    LSystemProcessor(std::atomic<float>& generations);
+    LSystemManager(std::atomic<float>& generations);
     // L System Generation ====================================================
     juce::SortedSet<std::string> current_lsysVars;
     juce::SortedSet<std::string> current_lsysRulesets;

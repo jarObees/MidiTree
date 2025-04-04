@@ -62,7 +62,7 @@ public:
     std::atomic<float> genParam; // IS THE ONLY AUTOMATABLE VAR THAT SHOULDN'T REALLY BE.
     std::atomic<float> velParam;
 
-    LSystemProcessor lsysProcessor{ genParam };
+    LSystemManager lsysProcessor{ genParam };
 	
 	// ==============================================================================================================
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();

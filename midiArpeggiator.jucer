@@ -29,6 +29,13 @@
       <FILE id="rsk38a" name="View.h" compile="0" resource="0" file="Source/View.h"/>
     </GROUP>
     <GROUP id="{968718A0-7025-4E85-0A48-8A9854BC5E9F}" name="Source">
+      <GROUP id="{AF06FDC2-6789-9BAD-8AF1-AD53118CB4D8}" name="LSystemStuff">
+        <FILE id="IJAVLp" name="LSystem.h" compile="0" resource="0" file="Source/LSystem.h"/>
+        <FILE id="Bl64sn" name="LSystemProcessor.cpp" compile="1" resource="0"
+              file="Source/LSystemProcessor.cpp"/>
+        <FILE id="f11Wcw" name="LSystemProcessor.h" compile="0" resource="0"
+              file="Source/LSystemProcessor.h"/>
+      </GROUP>
       <GROUP id="{21CB11F1-75A8-5ABB-1BF0-2E27FA6914CF}" name="Forest">
         <FILE id="FkI2ON" name="ForestManager.cpp" compile="1" resource="0"
               file="Source/ForestManager.cpp"/>
@@ -39,11 +46,6 @@
         <FILE id="DvIzno" name="PresetManager.cpp" compile="1" resource="0"
               file="Source/PresetManager.cpp"/>
       </GROUP>
-      <FILE id="IJAVLp" name="LSystem.h" compile="0" resource="0" file="Source/LSystem.h"/>
-      <FILE id="Bl64sn" name="LSystemProcessor.cpp" compile="1" resource="0"
-            file="Source/LSystemProcessor.cpp"/>
-      <FILE id="f11Wcw" name="LSystemProcessor.h" compile="0" resource="0"
-            file="Source/LSystemProcessor.h"/>
       <FILE id="Ll35bX" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="qMuWqj" name="PluginProcessor.h" compile="0" resource="0"

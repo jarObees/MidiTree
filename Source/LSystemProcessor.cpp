@@ -2,11 +2,11 @@
 
 // Map containing illegal strings as keys, and their corrosponding legal string as values.
 // // For use in correcting lsys variables and rulesets.
-LSystemProcessor::LSystemProcessor(std::atomic<float>& generations)
+LSystemManager::LSystemManager(std::atomic<float>& generations)
     : generations(generations) {}
 
 // Main function to generate and run everything necessary to produce an L system.
-void LSystemProcessor::generateLSystem(const uint8_t& gens)
+void LSystemManager::generateLSystem(const uint8_t& gens)
 {
     DBG("Begin Generating L System------");
     DBG("Translating rulesets/vars");
@@ -24,7 +24,7 @@ void LSystemProcessor::generateLSystem(const uint8_t& gens)
 
 // We need to verify that all variables in l system are single characters for future rule application.
 // Searches through each string in the set and replaces illegal substrings with legal ones using the replacementRules map.
-void LSystemProcessor::translateSet(juce::SortedSet<std::string>& stringSet)
+void LSystemManager::translateSet(juce::SortedSet<std::string>& stringSet)
 {
     juce::SortedSet<std::string> translatedRuleset;
     
@@ -47,7 +47,7 @@ void LSystemProcessor::translateSet(juce::SortedSet<std::string>& stringSet)
 
 // Converts the generated string into a vector<int> representing the interval in half steps from the root note (axiom).
 // Example: "3" represents a major 3rd, so it's converted to 4 (half-steps from the root).
-std::vector<int> LSystemProcessor::generateNotesPool(const std::string& genString)
+std::vector<int> LSystemManager::generateNotesPool(const std::string& genString)
 {
     std::vector<int> notesPlus;
     for (char c : genString)
@@ -71,7 +71,7 @@ std::vector<int> LSystemProcessor::generateNotesPool(const std::string& genStrin
 }
 
 // Generates ruleset map from ruleset set.
-std::unordered_map<std::string, std::string> LSystemProcessor::generateRuleset()
+std::unordered_map<std::string, std::string> LSystemManager::generateRuleset()
 {
     DBG("Generating Ruleset");
     std::unordered_map<std::string, std::string> map;
@@ -85,7 +85,7 @@ std::unordered_map<std::string, std::string> LSystemProcessor::generateRuleset()
     return map;
 }
 
-void LSystemProcessor::saveLSystem(std::unordered_map<std::string, juce::ValueTree*>& nonAutomatableParams)
+void LSystemManager::saveLSystem(std::unordered_map<std::string, juce::ValueTree*>& nonAutomatableParams)
 {
     //
 }

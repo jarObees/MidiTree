@@ -431,7 +431,7 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
     params.add(std::make_unique<juce::AudioParameterInt>("forest", "Forest Selection", 1, 7, 1));
 
     // Takes each note rate, "1/4", "1/18", etc. and creates an array for the param display.
-    for (const auto& pair : LSystemProcessor::noteRateMap)
+    for (const auto& pair : LSystemManager::noteRateMap)
     {
         std::string thingy = pair.first;
         lsysProcessor.noteRateKeys.push_back(pair.first);

@@ -30,9 +30,10 @@ The container simply has the generatedLString and the notesPool.
 */
 namespace Forest
 {
-	ForestManager::ForestManager(Preset::PresetManager& _presetManager, const int _numOTrees)
-		: presetManager(_presetManager), maxNumTrees(_numOTrees)
-	{}
+	ForestManager::ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager)
+		: apvts(_apvts), presetManager(_presetManager), maxNumTrees(int(apvts.getParameter("forest")->getNormalisableRange().end))
+	{
+	}
 
 	void ForestManager::configureTreeSlider(juce::Slider* slider)
 	{
@@ -43,6 +44,7 @@ namespace Forest
 	void ForestManager::plantTree()
 	{
 
+		// apvts.state.getProperty(Preset)
 	}
 
 	void ForestManager::sliderValueChanged(juce::Slider* slider)

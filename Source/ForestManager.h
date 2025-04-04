@@ -9,18 +9,18 @@ namespace Forest
 		: public juce::Slider::Listener
 	{
 	public:
-		ForestManager(Preset::PresetManager&, const int _numOTrees);
+		ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager&);
 		void plantTree();
 		void configureTreeSlider(juce::Slider* slider);
 		void sliderValueChanged(juce::Slider* slider) override;
 	
 	private:
+		const juce::AudioProcessorValueTreeState& apvts;
 		const int maxNumTrees;
 		int currentForestIndex;
 		juce::StringArray treeContainer;
 
 		juce::Slider* forestSlider = nullptr;
 		const Preset::PresetManager& presetManager;
-
 	};
 }

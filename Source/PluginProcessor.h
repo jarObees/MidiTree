@@ -79,7 +79,7 @@ public:
     
     static const inline juce::StringArray comboBoxNoteTypes{"Quarter", "Dotted"};
     Preset::PresetManager presetManager{apvts};
-    Forest::ForestManager forestManager{ presetManager, int(apvts.getParameter("forest")->getNormalisableRange().end) };
+    Forest::ForestManager forestManager{ apvts, presetManager };
 
 
 private:

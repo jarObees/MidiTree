@@ -50,11 +50,15 @@ namespace Forest
 
 	void ForestManager::plantTree()
 	{
-		if (!apvts.state.getProperty(apvtsPropIds::generatedLsysStringProperty).isVoid())
+		// Inserts a pair of string data points which tell us stuff. Good stuff.
+		if (!apvts.state.getProperty(apvtsPropIds::generatedLsysStringProperty).isVoid() &&
+			!apvts.state.getProperty(apvtsPropIds::notesPoolProperty).isVoid())
 		{
-			// juce::StringPairArray& midiTreeLStrings = treeContainer[currentForestIndex];
-
+			std::pair<juce::String, juce::String>& midiTreeLStrings = treeContainer[currentForestIndex];
+			midiTreeLStrings.first = apvts.state.getProperty(apvtsPropIds::generatedLsysStringProperty);
+			midiTreeLStrings.second = apvts.state.getProperty(apvtsPropIds::notesPoolProperty);
 		}
+
 		else
 		{
 			DBG(apvtsPropIds::generatedLsysStringProperty << " property not found");

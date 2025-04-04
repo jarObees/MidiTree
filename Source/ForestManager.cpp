@@ -42,6 +42,12 @@ namespace Forest
 		}
 	}
 
+	void ForestManager::configureForestButton(juce::Button* button)
+	{
+		forestButton = button;
+		forestButton->addListener(this);
+	}
+
 	void ForestManager::configureTreeSlider(juce::Slider* slider)
 	{
 		forestSlider = slider;
@@ -50,6 +56,7 @@ namespace Forest
 
 	void ForestManager::plantTree()
 	{
+		DBG("Attempting to plant");
 		// Inserts a pair of string data points which tell us stuff. Good stuff.
 		if (!apvts.state.getProperty(apvtsPropIds::generatedLsysStringProperty).isVoid() &&
 			!apvts.state.getProperty(apvtsPropIds::notesPoolProperty).isVoid())
@@ -71,6 +78,13 @@ namespace Forest
 		if (forestSlider == slider)
 		{
 			currentForestIndex = forestSlider->getValue();
+		}
+	}
+	void ForestManager::buttonClicked(juce::Button* button)
+	{
+		if (forestButton = button)
+		{
+			plantTree();
 		}
 	}
 }

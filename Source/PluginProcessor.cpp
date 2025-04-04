@@ -307,33 +307,50 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             viewInterpreter.listenTo(*editor);
             
 			// Attaches automatable parameters. ========================================================
-            jive::findItemWithID(*editor, jive_gui::StringIds::noteRateKnob)->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
-            jive::findItemWithID(*editor, jive_gui::StringIds::midiVelocityKnob)->attachToParameter(apvts.getParameter("vel"), &undoManager);
-            jive::findItemWithID(*editor, jive_gui::StringIds::forestSlider)->attachToParameter(apvts.getParameter("forest"), &undoManager); // TODO: Configure default state to fix weird bugging out?
-            jive::findItemWithID(*editor, jive_gui::StringIds::generationsKnob)->attachToParameter(apvts.getParameter("gens"), &undoManager); // TODO: Configure default state to fix weird bugging out?
+            jive::findItemWithID(*editor, jive_gui::StringIds::noteRateKnob)
+                ->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
+            jive::findItemWithID(*editor, jive_gui::StringIds::midiVelocityKnob)
+                ->attachToParameter(apvts.getParameter("vel"), &undoManager);
+            jive::findItemWithID(*editor, jive_gui::StringIds::forestSlider)
+                ->attachToParameter(apvts.getParameter("forest"), &undoManager); // TODO: Configure default state to fix weird bugging out?
+            jive::findItemWithID(*editor, jive_gui::StringIds::generationsKnob)
+                ->attachToParameter(apvts.getParameter("gens"), &undoManager); // TODO: Configure default state to fix weird bugging out?
             
             // Links and sets up non-automatable parameters. ========================================================
-            if (auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::StringIds::saveButton)->getComponent().get()))
+            if (auto* saveButtonTingy = dynamic_cast<juce::Button*>
+                (jive::findItemWithID(*editor, jive_gui::StringIds::saveButton)
+                 ->getComponent().get()))
             {
                 presetManager.configureSaveButtonComponent(saveButtonTingy);
             }
             else
                 jassertfalse;
-            if (auto* presetComboBox = dynamic_cast<juce::ComboBox*>(jive::findItemWithID(*editor, jive_gui::StringIds::presetComboBox)->getComponent().get()))
+            if (auto* presetComboBox = dynamic_cast<juce::ComboBox*>
+                (jive::findItemWithID(*editor, jive_gui::StringIds::presetComboBox)
+                 ->getComponent().get()))
+            {
                 presetManager.configureComboBoxComponent(presetComboBox);
+            }
             else
                 jassertfalse;
             
-            // ruleset Textbox
-			auto* textEditorTingy = dynamic_cast<juce::TextEditor*>(jive::findItemWithID(*editor, jive_gui::StringIds::rulesetTextbox)->getComponent().get());
+            // Ruleset Textbox ======================================================================================
+			auto* textEditorTingy = dynamic_cast<juce::TextEditor*>
+                (jive::findItemWithID(*editor, jive_gui::StringIds::rulesetTextbox)
+                 ->getComponent().get());
             textEditorTingy->setText(apvts.state.getProperty(apvtsPropIds::userRulesetProperty));
             textEditorTingy->onTextChange = [this, textEditorTingy]()
 			{
-				apvts.state.setProperty(apvtsPropIds::userRulesetProperty, textEditorTingy->getText(), nullptr);
-				auto thing = apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetProperty, nullptr).toString();
+				apvts.state.setProperty(apvtsPropIds::userRulesetProperty, 
+                                        textEditorTingy->getText(), 
+                                        nullptr);
+				auto thing = apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetProperty, 
+                                                            nullptr).toString();
 			};
-            // Axiom Textbox. TODO: NOT WORKIN FOR SOME GODDAMN REASON.
-            auto* axiomEditor = dynamic_cast<juce::TextEditor*>(jive::findItemWithID(*editor, jive_gui::StringIds::axiomTextBox)->getComponent().get());
+            // Axiom Textbox. TODO: NOT WORKIN FOR SOME GODDAMN REASON. =============================================
+            auto* axiomEditor = dynamic_cast<juce::TextEditor*>
+                (jive::findItemWithID(*editor, jive_gui::StringIds::axiomTextBox)
+                 ->getComponent().get());
             axiomEditor->setText(apvts.state.getProperty(apvtsPropIds::userAxiomProperty));
             axiomEditor->onTextChange = [this, textEditorTingy]()
             {
@@ -341,9 +358,20 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
                 auto thing = apvts.state.getPropertyAsValue(apvtsPropIds::userAxiomProperty, nullptr).toString();
             };
 
-            if (auto* forestSlider = dynamic_cast<juce::Slider*>(jive::findItemWithID(*editor, jive_gui::StringIds::forestSlider)->getComponent().get()))
+            // Forest Manager ========================================================================================
+            if (auto* forestSlider = dynamic_cast<juce::Slider*>
+                (jive::findItemWithID(*editor, jive_gui::StringIds::forestSlider)
+                 ->getComponent().get()))
             {
                 forestManager.configureTreeSlider(forestSlider);
+            }
+            else
+                jassertfalse;
+            if (auto* forestButton = dynamic_cast<juce::Button*>
+                (jive::findItemWithID(*editor, jive_gui::StringIds::plantButton)
+                 ->getComponent().get()))
+            {
+                forestManager.configureForestButton(forestButton);
             }
             else
                 jassertfalse;

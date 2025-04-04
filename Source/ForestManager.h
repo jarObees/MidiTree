@@ -12,12 +12,14 @@ namespace Forest
 	}
 
 	class ForestManager
-		: public juce::Slider::Listener
+		: public juce::Slider::Listener, juce::Button::Listener
 	{
 	public:
 		ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager&);
-		void plantTree();
 		void configureTreeSlider(juce::Slider* slider);
+		void configureForestButton(juce::Button* button);
+		
+		void buttonClicked(juce::Button* button) override;
 		void sliderValueChanged(juce::Slider* slider) override;
 	
 	private:
@@ -25,7 +27,12 @@ namespace Forest
 		const int maxNumTrees;
 		int currentForestIndex;
 		std::vector<std::pair<juce::String, juce::String>> treeContainer; // Vector that should contain the genreatedLString
+		
 		juce::Slider* forestSlider = nullptr;
+		juce::Button* forestButton = nullptr;
+
 		const Preset::PresetManager& presetManager;
+
+		void plantTree();
 	};
 }

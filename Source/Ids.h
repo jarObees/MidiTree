@@ -11,7 +11,7 @@ namespace jive_gui
 		const juce::String forestSlider{ "forest-slider" };
 		const juce::String saveButton{ "save-button" };
 		const juce::String rulesetTextbox{ "ruleset-textBox" };
-		const juce::String loadButton{ "load-button" };
+		const juce::String plantButton{ "load-button" };
 		const juce::String generationsKnob{ "generations-knob" };
 		const juce::String growButton{ "grow-button" };
 		const juce::String midiVelocityKnob{ "midiVelocity-knob" };

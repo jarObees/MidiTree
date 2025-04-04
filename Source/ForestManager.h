@@ -5,6 +5,12 @@ namespace Preset { class PresetManager; }
 
 namespace Forest
 {
+	namespace midiTreePair
+	{
+		static const juce::String lStringToShow = "lstringtoshow";
+		static const juce::String lStringToComputer = "lstringtocomputer";
+	}
+
 	class ForestManager
 		: public juce::Slider::Listener
 	{
@@ -15,11 +21,10 @@ namespace Forest
 		void sliderValueChanged(juce::Slider* slider) override;
 	
 	private:
-		const juce::AudioProcessorValueTreeState& apvts;
+		juce::AudioProcessorValueTreeState& apvts;
 		const int maxNumTrees;
 		int currentForestIndex;
-		juce::StringArray treeContainer;
-
+		std::vector<std::pair<juce::String, juce::String>> treeContainer; // Vector that should contain the genreatedLString
 		juce::Slider* forestSlider = nullptr;
 		const Preset::PresetManager& presetManager;
 	};

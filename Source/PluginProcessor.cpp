@@ -8,6 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "Ids.h"
 
 //==============================================================================
 MidiArpeggiatorAudioProcessor::MidiArpeggiatorAudioProcessor()
@@ -325,19 +326,19 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             
             // ruleset Textbox
 			auto* textEditorTingy = dynamic_cast<juce::TextEditor*>(jive::findItemWithID(*editor, jive_gui::StringIds::rulesetTextbox)->getComponent().get());
-            textEditorTingy->setText(apvts.state.getProperty(Preset::Ids::userRulesetProperty));
+            textEditorTingy->setText(apvts.state.getProperty(apvtsPropIds::userRulesetProperty));
             textEditorTingy->onTextChange = [this, textEditorTingy]()
 			{
-				apvts.state.setProperty(Preset::Ids::userRulesetProperty, textEditorTingy->getText(), nullptr);
-				auto thing = apvts.state.getPropertyAsValue(Preset::Ids::userRulesetProperty, nullptr).toString();
+				apvts.state.setProperty(apvtsPropIds::userRulesetProperty, textEditorTingy->getText(), nullptr);
+				auto thing = apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetProperty, nullptr).toString();
 			};
             // Axiom Textbox. TODO: NOT WORKIN FOR SOME GODDAMN REASON.
             auto* axiomEditor = dynamic_cast<juce::TextEditor*>(jive::findItemWithID(*editor, jive_gui::StringIds::axiomTextBox)->getComponent().get());
-            axiomEditor->setText(apvts.state.getProperty(Preset::Ids::userAxiomProperty));
+            axiomEditor->setText(apvts.state.getProperty(apvtsPropIds::userAxiomProperty));
             axiomEditor->onTextChange = [this, textEditorTingy]()
             {
-                apvts.state.setProperty(Preset::Ids::userAxiomProperty, textEditorTingy->getText(), nullptr);
-                auto thing = apvts.state.getPropertyAsValue(Preset::Ids::userAxiomProperty, nullptr).toString();
+                apvts.state.setProperty(apvtsPropIds::userAxiomProperty, textEditorTingy->getText(), nullptr);
+                auto thing = apvts.state.getPropertyAsValue(apvtsPropIds::userAxiomProperty, nullptr).toString();
             };
 
             if (auto* forestSlider = dynamic_cast<juce::Slider*>(jive::findItemWithID(*editor, jive_gui::StringIds::forestSlider)->getComponent().get()))

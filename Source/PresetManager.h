@@ -2,16 +2,6 @@
 #include <JuceHeader.h>
 namespace Preset
 {
-	// All ID's for properties should be stored here.
-	namespace Ids
-	{
-		static const juce::Identifier userRulesetProperty{ "userRulesetNode" };
-		static const juce::Identifier userAxiomProperty{ "userAxiomNode" };
-		static const juce::Identifier userLsysNameProperty{ "userLsysNameNode" };
-		static const juce::Identifier generatedLsysStringProperty{ "generatedLStringNode" };
-		static const juce::Identifier notesPoolProperty{ "notesPoolNode" };
-		static const juce::Identifier presetNameProperty{ "presetNameProperty" };
-	}
 
 
 	// This class is for managing the backend/component configuration of stuff related to saving and loading presets.

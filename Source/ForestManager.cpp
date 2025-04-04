@@ -1,5 +1,6 @@
 #include <JuceHeader.h>
 #include "ForestManager.h"
+#include "Ids.h"
 
 //TODO: 
 // Create class that handles the hori slider.
@@ -33,6 +34,12 @@ namespace Forest
 	ForestManager::ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager)
 		: apvts(_apvts), presetManager(_presetManager), maxNumTrees(int(apvts.getParameter("forest")->getNormalisableRange().end))
 	{
+		treeContainer.reserve(maxNumTrees);
+
+		for (std::pair<juce::String, juce::String>& midiTreeLStrings : treeContainer)
+		{
+			midiTreeLStrings = std::make_pair("", "");
+		}
 	}
 
 	void ForestManager::configureTreeSlider(juce::Slider* slider)
@@ -43,8 +50,16 @@ namespace Forest
 
 	void ForestManager::plantTree()
 	{
+		if (!apvts.state.getProperty(apvtsPropIds::generatedLsysStringProperty).isVoid())
+		{
+			// juce::StringPairArray& midiTreeLStrings = treeContainer[currentForestIndex];
 
-		// apvts.state.getProperty(Preset)
+		}
+		else
+		{
+			DBG(apvtsPropIds::generatedLsysStringProperty << " property not found");
+			return;
+		}
 	}
 
 	void ForestManager::sliderValueChanged(juce::Slider* slider)

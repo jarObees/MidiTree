@@ -1,4 +1,6 @@
 #include "presetManager.h"
+#include "Ids.h"
+
 namespace Preset
 {
 	const juce::File PresetManager::defaultDirectory{ juce::File::getSpecialLocation(
@@ -22,7 +24,7 @@ namespace Preset
 
 		// Adds a listener to update the comboBox in realtime.
 		apvts.state.addListener(this);
-		currentPreset.referTo(apvts.state.getPropertyAsValue(Ids::presetNameProperty, nullptr));
+		currentPreset.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
 	}
 
 	// Copies state of apvts and savesit to file.
@@ -164,6 +166,6 @@ namespace Preset
 
 	void PresetManager::valueTreeRedirected(juce::ValueTree& changedValueTree)
 	{
-		currentPreset.referTo(changedValueTree.getPropertyAsValue(Ids::presetNameProperty, nullptr));
+		currentPreset.referTo(changedValueTree.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
 	}
 }

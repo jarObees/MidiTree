@@ -44,7 +44,7 @@ private:
     bool checkUserAxiom(std::string axiomInput);
     void throwCustomError(std::string errorMessage);
     
-    // Should these live in LSystemManager?lsys
+    // Should these live in LSystemProcessor?lsys
     juce::SortedSet<std::string> lsysVariablesDisplay;
     juce::SortedSet<std::string> lsysRulesetsDisplay;
     std::string lsysAxiomDisplay;

@@ -14,6 +14,7 @@
 #include "View.h"
 #include "PresetManager.h"
 #include "ForestManager.h"
+#include "LSystemManager.h"
 #include <chrono>
 
 //==============================================================================
@@ -61,8 +62,8 @@ public:
 
     std::atomic<float> genParam; // IS THE ONLY AUTOMATABLE VAR THAT SHOULDN'T REALLY BE.
     std::atomic<float> velParam;
-
-    LSystemManager lsysProcessor{ genParam };
+	LSystemStuff::LSystemManager lSystemManager{ apvts };
+    LSystemProcessor lsysProcessor{ genParam };
 	
 	// ==============================================================================================================
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();

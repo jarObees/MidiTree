@@ -334,28 +334,23 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
                 jassertfalse;
             
             // Ruleset Textbox ======================================================================================
-			auto* textEditorTingy = dynamic_cast<juce::TextEditor*>
+            if (auto* textEditorTingy = dynamic_cast<juce::TextEditor*>
                 (jive::findItemWithID(*editor, jive_gui::StringIds::rulesetTextbox)
-                 ->getComponent().get());
-            textEditorTingy->setText(apvts.state.getProperty(apvtsPropIds::userRulesetProperty));
-            textEditorTingy->onTextChange = [this, textEditorTingy]()
-			{
-				apvts.state.setProperty(apvtsPropIds::userRulesetProperty, 
-                                        textEditorTingy->getText(), 
-                                        nullptr);
-				auto thing = apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetProperty, 
-                                                            nullptr).toString();
-			};
-            // Axiom Textbox. TODO: NOT WORKIN FOR SOME GODDAMN REASON. =============================================
-            auto* axiomEditor = dynamic_cast<juce::TextEditor*>
-                (jive::findItemWithID(*editor, jive_gui::StringIds::axiomTextBox)
-                 ->getComponent().get());
-            axiomEditor->setText(apvts.state.getProperty(apvtsPropIds::userAxiomProperty));
-            axiomEditor->onTextChange = [this, textEditorTingy]()
+                 ->getComponent().get()))
             {
-                apvts.state.setProperty(apvtsPropIds::userAxiomProperty, textEditorTingy->getText(), nullptr);
-                auto thing = apvts.state.getPropertyAsValue(apvtsPropIds::userAxiomProperty, nullptr).toString();
-            };
+				lSystemManager.configureRulesetInputTextEditor(textEditorTingy);
+            }
+            else
+                jassertfalse;
+            // Axiom Textbox. TODO: NOT WORKIN FOR SOME GODDAMN REASON. =============================================
+            if (auto* axiomEditor = dynamic_cast<juce::TextEditor*>
+                (jive::findItemWithID(*editor, jive_gui::StringIds::axiomTextBox)
+                 ->getComponent().get()))
+            {
+                lSystemManager.configureAxiomInputTextEditor(axiomEditor);
+            }
+            else
+                jassertfalse;
 
             // Forest Manager ========================================================================================
             if (auto* forestSlider = dynamic_cast<juce::Slider*>
@@ -430,7 +425,7 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
     params.add(std::make_unique<juce::AudioParameterInt>("forest", "Forest Selection", 1, 7, 1));
 
     // Takes each note rate, "1/4", "1/18", etc. and creates an array for the param display.
-    for (const auto& pair : LSystemManager::noteRateMap)
+    for (const auto& pair : LSystemProcessor::noteRateMap)
     {
         std::string thingy = pair.first;
         lsysProcessor.noteRateKeys.push_back(pair.first);

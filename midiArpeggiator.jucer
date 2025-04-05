@@ -31,6 +31,10 @@
     <GROUP id="{968718A0-7025-4E85-0A48-8A9854BC5E9F}" name="Source">
       <GROUP id="{AF06FDC2-6789-9BAD-8AF1-AD53118CB4D8}" name="LSystemStuff">
         <FILE id="IJAVLp" name="LSystem.h" compile="0" resource="0" file="Source/LSystem.h"/>
+        <FILE id="PAW4Ot" name="LSystemManager.cpp" compile="1" resource="0"
+              file="Source/LSystemManager.cpp"/>
+        <FILE id="qj9PfB" name="LSystemManager.h" compile="0" resource="0"
+              file="Source/LSystemManager.h"/>
         <FILE id="Bl64sn" name="LSystemProcessor.cpp" compile="1" resource="0"
               file="Source/LSystemProcessor.cpp"/>
         <FILE id="f11Wcw" name="LSystemProcessor.h" compile="0" resource="0"
@@ -50,7 +54,7 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="qMuWqj" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="ywNNOI" name="PluginEditor.cpp" compile="1" resource="0"
+      <FILE id="ywNNOI" name="PluginEditor.cpp" compile="0" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="vOUwEX" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>

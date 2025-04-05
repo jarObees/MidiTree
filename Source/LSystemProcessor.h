@@ -1,13 +1,13 @@
-// LSystemManager.h
+// LSystemProcessor.h
 #pragma once
 
 #include "JuceHeader.h"
 #include "LSystem.h"
 
-class LSystemManager
+class LSystemProcessor
 {
 public:
-    LSystemManager(std::atomic<float>& generations);
+    LSystemProcessor(std::atomic<float>& generations);
     
     // APVTS Processor ========================================================
     std::vector<int> notesPool; // Currently used for storing the actual note pool.

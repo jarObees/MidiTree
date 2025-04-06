@@ -7,7 +7,7 @@
 class LSystemProcessor
 {
 public:
-    LSystemProcessor(juce::Slider* generationsKnob, juce::Value& _rulesetUserInput, juce::Value& _axiomUserInput );
+    LSystemProcessor(juce::Slider* generationsKnob, juce::Value& _rulesetUserInput, juce::Value& _axiomUserInput, juce::Value& _generatedLString);
     void growLSystem();
 
 
@@ -27,6 +27,8 @@ public:
 private:
     juce::Value rulesetUserInput;
     juce::Value axiomUserInput;
+    juce::Value generatedLString;
+
     juce::Slider* generationsKnob; // Warning: this could be a nullptr at class's construction, so make sure to jassert that it isn't when we need it.
     int generationsNum;
     bool setLSystemRules();
@@ -34,7 +36,8 @@ private:
     juce::SortedSet<std::string> currentLSystemVariables;
     juce::SortedSet<std::string> currentLSystemRules;
     std::unordered_map<std::string, std::string> generateRuleset();
-
+	std::unordered_map<std::string, std::string> currentLSystemRulemap;
+    void generateLSystem();
 
     // L System Generation ====================================================
     std::string lsysAxiom;

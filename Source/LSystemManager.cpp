@@ -8,7 +8,8 @@ LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState&
 {
 	axiomInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userAxiomProperty, nullptr));
 	rulesetInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetProperty, nullptr));
-	lSystemProcessor = std::make_unique<LSystemProcessor>(gensKnob, rulesetInputValue, axiomInputValue);
+	generatedStringValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
+	lSystemProcessor = std::make_unique<LSystemProcessor>(gensKnob, rulesetInputValue, axiomInputValue, generatedStringValue);
 }
 
 void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEditor* textEditor)

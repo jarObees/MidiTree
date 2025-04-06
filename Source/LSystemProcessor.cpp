@@ -2,8 +2,8 @@
 
 // Map containing illegal strings as keys, and their corrosponding legal string as values.
 // // For use in correcting lsys variables and rulesets.
-LSystemProcessor::LSystemProcessor(juce::Slider* generationsKnob, juce::Value& _rulesetUserInput, juce::Value& _axiomUserInput)
-    : rulesetUserInput(_rulesetUserInput), axiomUserInput(_axiomUserInput)
+LSystemProcessor::LSystemProcessor(juce::Slider* generationsKnob, juce::Value& _rulesetUserInput, juce::Value& _axiomUserInput, juce::Value& _generatedLString)
+    : rulesetUserInput(_rulesetUserInput), axiomUserInput(_axiomUserInput), generatedLString(_generatedLString)
 {}
 
 void LSystemProcessor::growLSystem()
@@ -22,7 +22,38 @@ void LSystemProcessor::growLSystem()
     translateSet(currentLSystemRules);
     translateSet(currentLSystemVariables);
     std::unordered_map<std::string, std::string> newLsysRulemap = generateRuleset();
+    generateLSystem();
+}
 
+void LSystemProcessor::generateLSystem()
+{
+    DBG("GENERATING L STRING");
+    auto genString = axiomUserInput.toString().toStdString();
+    // For each generation...
+    for (int i = 0; i < generationsNum; ++i)
+    {
+        // Search through each character and check if it needs to convert to new character and do so accordingly.
+        std::ostringstream nextGen;
+        DBG("Gen: " << i << "----------");
+        for (char c : genString)
+        {
+            DBG("Current genString: " << genString);
+            DBG("Checking: " << c);
+            if (currentLSystemRulemap.find(std::string(1, c)) != currentLSystemRulemap.end())
+            {
+                DBG("Found " << c << " in ruleMap. Replacing with: " << currentLSystemRulemap[std::string(1, c)]);
+                nextGen << currentLSystemRulemap.at(std::string(1, c));
+            }
+            else
+            {
+                DBG("Could not find " << c << " in ruleMap.");
+                DBG("Adding: " << c);
+                nextGen << c;
+            }
+            genString = std::move(nextGen.str());
+        }
+    }
+	generatedLString = juce::String(genString);
 }
 
 // Checks if the ruleset is valid, and if so, stores it in the class.

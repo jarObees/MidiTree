@@ -22,6 +22,7 @@ namespace LSystemStuff
 		//LSystemProcessor lSystemProcessor;
 		juce::Value axiomInputValue;
 		juce::Value rulesetInputValue;
+		juce::Value generatedStringValue;
 
 		juce::TextEditor* axiomInputEditor = nullptr;
 		juce::TextEditor* rulesetInputEditor = nullptr;

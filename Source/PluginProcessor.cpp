@@ -23,6 +23,7 @@ MidiArpeggiatorAudioProcessor::MidiArpeggiatorAudioProcessor()
     )
 #endif
 {
+    DBG("Finished Constructing MAIN Audio Processor");
 }
 
 MidiArpeggiatorAudioProcessor::~MidiArpeggiatorAudioProcessor()
@@ -369,8 +370,6 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             }
             else
                 jassertfalse;
-            
-
 
             //jive::findItemWithID(*editor, "midiVelocity-label")->attachToParameter(apvts.getParameter("vel"), &undoManager);
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());

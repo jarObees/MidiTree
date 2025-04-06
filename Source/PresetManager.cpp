@@ -25,6 +25,7 @@ namespace Preset
 		// Adds a listener to update the comboBox in realtime.
 		apvts.state.addListener(this);
 		currentPreset.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
+		DBG("Set the current preset");
 	}
 
 	// Copies state of apvts and savesit to file.
@@ -164,8 +165,10 @@ namespace Preset
 		return presets;
 	}
 
+	// Whenever value tree is copied, this function isc alled.
 	void PresetManager::valueTreeRedirected(juce::ValueTree& changedValueTree)
 	{
+		DBG("Value Tree Redirected");
 		currentPreset.referTo(changedValueTree.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
 	}
 }

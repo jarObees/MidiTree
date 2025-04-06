@@ -60,9 +60,10 @@ public:
     void getStateInformation(juce::MemoryBlock& destData) override;
     void setStateInformation(const void* data, int sizeInBytes) override;
 
+    // Non auto params =======================================================================================================
+
     std::atomic<float> genParam; // IS THE ONLY AUTOMATABLE VAR THAT SHOULDN'T REALLY BE.
     std::atomic<float> velParam;
-	LSystemStuff::LSystemManager lSystemManager{ apvts };
     LSystemProcessor lsysProcessor{ genParam };
 	
 	// ==============================================================================================================
@@ -79,9 +80,9 @@ public:
     int midiAxiom; // Value representing the initial midi input by user. Should be set to -1 if no user input.
     
     static const inline juce::StringArray comboBoxNoteTypes{"Quarter", "Dotted"};
+    LSystemStuff::LSystemManager lSystemManager{ apvts };
     Preset::PresetManager presetManager{apvts};
     Forest::ForestManager forestManager{ apvts, presetManager };
-
 
 private:
     std::unordered_map<std::string, juce::Image> imageCollection;

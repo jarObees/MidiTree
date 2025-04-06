@@ -1,8 +1,14 @@
 #include "LSystemManager.h"
 #include "Ids.h"
 
+//TODO: Figure out why teh value shit isn't working.
+// problem is right here.
 LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState& _apvts)
-	: apvts(_apvts) {}
+	: apvts(_apvts)
+{
+	axiomInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userAxiomProperty, nullptr));
+	rulesetInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetProperty, nullptr));
+}
 
 void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEditor* textEditor)
 {
@@ -13,6 +19,7 @@ void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEdito
 
 void LSystemStuff::LSystemManager::configureRulesetInputTextEditor(juce::TextEditor* textEditor)
 {
+	DBG("Configuring userRulesetProperty");
 	rulesetInputEditor = textEditor;
 	rulesetInputEditor->setText(apvts.state.getProperty(apvtsPropIds::userRulesetProperty));
 	rulesetInputEditor->addListener(this);
@@ -38,19 +45,20 @@ void LSystemStuff::LSystemManager::textEditorTextChanged(juce::TextEditor& textE
 {
 	if (&textEditor == rulesetInputEditor)
 	{
-		DBG("Change in text editor detected");
-		apvts.state.setProperty(apvtsPropIds::userRulesetProperty,
-								rulesetInputEditor->getText(),
-								nullptr);
-		// rulesetInputString = apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetProperty, nullptr);
+		//axiomInputValue = rulesetInputEditor->getText();
+		//DBG("Change in text editor detected");
+		//DBG("Current ruleSet: " << rulesetInputValue);
 	}
 
 	if (&textEditor == axiomInputEditor)
 	{
-		DBG("Change in axiom editor detected");
-		apvts.state.setProperty(apvtsPropIds::userAxiomProperty, 
-								axiomInputEditor->getText(), 
-								nullptr);
-		// axiomInputString = apvts.state.getPropertyAsValue(apvtsPropIds::userAxiomProperty, nullptr);
+		//rulesetInputValue = axiomInputEditor->getText();
+		//DBG("Change in axiom editor detected");
+		//DBG("Current axiom: " << axiomInputValue);
 	}
+}
+
+void LSystemStuff::LSystemManager::valueTreeRedirected(juce::ValueTree& changedValueTree)
+{
+	// UPDATE ALL VALUES HERE.
 }

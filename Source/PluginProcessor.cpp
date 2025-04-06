@@ -343,7 +343,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             }
             else
                 jassertfalse;
-            // Axiom Textbox. TODO: NOT WORKIN FOR SOME GODDAMN REASON. =============================================
+            // Axiom Textbox. =============================================
             if (auto* axiomEditor = dynamic_cast<juce::TextEditor*>
                 (jive::findItemWithID(*editor, jive_gui::StringIds::axiomTextBox)
                  ->getComponent().get()))
@@ -352,7 +352,15 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             }
             else
                 jassertfalse;
-
+			// Grow Button =========================================================================================
+			if (auto* growButton = dynamic_cast<juce::Button*>
+				(jive::findItemWithID(*editor, jive_gui::StringIds::growButton)
+				 ->getComponent().get()))
+			{
+				lSystemManager.configureGrowButton(growButton);
+			}
+			else
+				jassertfalse;
             // Forest Manager ========================================================================================
             if (auto* forestSlider = dynamic_cast<juce::Slider*>
                 (jive::findItemWithID(*editor, jive_gui::StringIds::forestSlider)

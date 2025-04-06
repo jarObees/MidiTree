@@ -12,6 +12,7 @@ LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState&
 
 void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEditor* textEditor)
 {
+	DBG("Configuring axiom input text editor");
 	axiomInputEditor = textEditor;
 	axiomInputEditor->setText(apvts.state.getProperty(apvtsPropIds::userAxiomProperty));
 	axiomInputEditor->addListener(this);
@@ -19,7 +20,7 @@ void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEdito
 
 void LSystemStuff::LSystemManager::configureRulesetInputTextEditor(juce::TextEditor* textEditor)
 {
-	DBG("Configuring userRulesetProperty");
+	DBG("Configuring ruleset input text editor");
 	rulesetInputEditor = textEditor;
 	rulesetInputEditor->setText(apvts.state.getProperty(apvtsPropIds::userRulesetProperty));
 	rulesetInputEditor->addListener(this);
@@ -27,14 +28,17 @@ void LSystemStuff::LSystemManager::configureRulesetInputTextEditor(juce::TextEdi
 
 void LSystemStuff::LSystemManager::configureGrowButton(juce::Button* button)
 {
+	DBG("configured grow button");
 	growButton = button;
 	growButton->addListener(this);
 }
 
 void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)
 {
+	DBG("button click detected");
 	if (button == growButton)
 	{
+		DBG("Plant button clicked");
 		// Check if the axiom and ruleset inputs are valid
 		// Generate dat shit.
 		// lSystemProcessor.generateLSystem(apvts.getRawParameterValue("gens")->load());
@@ -45,6 +49,7 @@ void LSystemStuff::LSystemManager::textEditorTextChanged(juce::TextEditor& textE
 {
 	if (&textEditor == rulesetInputEditor)
 	{
+		DBG("inputEditor text changed.");
 		//axiomInputValue = rulesetInputEditor->getText();
 		//DBG("Change in text editor detected");
 		//DBG("Current ruleSet: " << rulesetInputValue);
@@ -52,6 +57,7 @@ void LSystemStuff::LSystemManager::textEditorTextChanged(juce::TextEditor& textE
 
 	if (&textEditor == axiomInputEditor)
 	{
+		DBG("axiom text change");
 		//rulesetInputValue = axiomInputEditor->getText();
 		//DBG("Change in axiom editor detected");
 		//DBG("Current axiom: " << axiomInputValue);
@@ -60,5 +66,6 @@ void LSystemStuff::LSystemManager::textEditorTextChanged(juce::TextEditor& textE
 
 void LSystemStuff::LSystemManager::valueTreeRedirected(juce::ValueTree& changedValueTree)
 {
+	DBG("Value tree redirected.");
 	// UPDATE ALL VALUES HERE.
 }

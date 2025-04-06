@@ -64,7 +64,6 @@ public:
 
     std::atomic<float> genParam; // IS THE ONLY AUTOMATABLE VAR THAT SHOULDN'T REALLY BE.
     std::atomic<float> velParam;
-    LSystemProcessor lsysProcessor{ genParam };
 	
 	// ==============================================================================================================
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
@@ -85,6 +84,7 @@ public:
     Forest::ForestManager forestManager{ apvts, presetManager };
 
 private:
+
     std::unordered_map<std::string, juce::Image> imageCollection;
     std::unordered_map<std::string, juce::Image> getImages();
     bool isFirstNote;

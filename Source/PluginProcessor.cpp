@@ -314,7 +314,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             jive::findItemWithID(*editor, jive_gui::StringIds::forestSlider)
                 ->attachToParameter(apvts.getParameter("forest"), &undoManager); // TODO: Configure default state to fix weird bugging out?
             jive::findItemWithID(*editor, jive_gui::StringIds::generationsKnob)
-                ->attachToParameter(apvts.getParameter("gens"), &undoManager); // TODO: Configure default state to fix weird bugging out?
+                ->attachToParameter(apvts.getParameter("gens"), &undoManager); // TODO: Configure default state to fix weird bugging out? (different case)
             
             // Links and sets up non-automatable parameters. ========================================================
             if (auto* saveButtonTingy = dynamic_cast<juce::Button*>
@@ -358,6 +358,14 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 				 ->getComponent().get()))
 			{
 				lSystemManager.configureGrowButton(growButton);
+			}
+			else
+				jassertfalse;
+			if (auto* gensKnob = dynamic_cast<juce::Slider*>
+				(jive::findItemWithID(*editor, jive_gui::StringIds::generationsKnob)
+				 ->getComponent().get()))
+			{
+				lSystemManager.configureGensButton(gensKnob);
 			}
 			else
 				jassertfalse;
@@ -415,7 +423,7 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout params;
     // Global Generation Variables
-    params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 1));
+    params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 1)); //TODO: Refactor this as a non-automatable parameter.
     params.add(std::make_unique<juce::AudioParameterInt>("vel", "Midi Velocity", 1, 127, 100,
                                                          juce::AudioParameterIntAttributes{}
                                                          .withStringFromValueFunction(

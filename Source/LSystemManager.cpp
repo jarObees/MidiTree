@@ -1,20 +1,22 @@
 #include "LSystemManager.h"
 #include "Ids.h"
 
-//TODO: Figure out why teh value shit isn't working.
-// problem is right here.
+// Implement the next layer of stuff. 
+// Now the actual shit that handles the growth logic for the l system shit.
 LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState& _apvts)
 	: apvts(_apvts)
 {
 	axiomInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userAxiomProperty, nullptr));
 	rulesetInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetProperty, nullptr));
+	lSystemProcessor = std::make_unique<LSystemProcessor>(gensKnob, rulesetInputValue, axiomInputValue);
 }
 
 void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEditor* textEditor)
 {
 	DBG("Configuring axiom input text editor");
 	axiomInputEditor = textEditor;
-	axiomInputEditor->setText(apvts.state.getProperty(apvtsPropIds::userAxiomProperty));
+	axiomInputEditor->setText(axiomInputValue.toString());
+	axiomInputEditor->setInputRestrictions(1); // Restricts axiom to one character.
 	axiomInputEditor->addListener(this);
 }
 
@@ -22,7 +24,7 @@ void LSystemStuff::LSystemManager::configureRulesetInputTextEditor(juce::TextEdi
 {
 	DBG("Configuring ruleset input text editor");
 	rulesetInputEditor = textEditor;
-	rulesetInputEditor->setText(apvts.state.getProperty(apvtsPropIds::userRulesetProperty));
+	rulesetInputEditor->setText(rulesetInputValue.toString());
 	rulesetInputEditor->addListener(this);
 }
 
@@ -33,15 +35,19 @@ void LSystemStuff::LSystemManager::configureGrowButton(juce::Button* button)
 	growButton->addListener(this);
 }
 
+void LSystemStuff::LSystemManager::configureGensButton(juce::Slider* knob)
+{
+	DBG("configured gens knob");
+	gensKnob = knob;
+}
+
 void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)
 {
 	DBG("button click detected");
 	if (button == growButton)
 	{
-		DBG("Plant button clicked");
-		// Check if the axiom and ruleset inputs are valid
-		// Generate dat shit.
-		// lSystemProcessor.generateLSystem(apvts.getRawParameterValue("gens")->load());
+		DBG("Grow button clicked.");
+		lSystemProcessor->growLSystem();
 	}
 }
 

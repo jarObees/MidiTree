@@ -2,17 +2,88 @@
 
 // Map containing illegal strings as keys, and their corrosponding legal string as values.
 // // For use in correcting lsys variables and rulesets.
-LSystemProcessor::LSystemProcessor(std::atomic<float>& generations)
-    : generations(generations) {}
+LSystemProcessor::LSystemProcessor(juce::Slider* generationsKnob, juce::Value& _rulesetUserInput, juce::Value& _axiomUserInput)
+    : rulesetUserInput(_rulesetUserInput), axiomUserInput(_axiomUserInput)
+{}
+
+void LSystemProcessor::growLSystem()
+{
+    DBG("Grow L System");
+    if (generationsKnob == nullptr)
+        jassertfalse;
+    generationsNum = generationsKnob->getValue();
+    
+    if (!setLSystemRules() || !confirmAxiom())
+    {
+        DBG("big fat failure");
+        return;
+    }
+
+    translateSet(currentLSystemRules);
+    translateSet(currentLSystemVariables);
+    std::unordered_map<std::string, std::string> newLsysRulemap = generateRuleset();
+
+}
+
+// Checks if the ruleset is valid, and if so, stores it in the class.
+bool LSystemProcessor::setLSystemRules()
+{
+    std::regex rulesetPattern("^[b#]?[1-7]=([b#]?[1-7])+$"); // Used to capture strings like, "1=#2b4", "4=2b34#4", etc...
+    std::regex variablePattern("[b#]?[1-7]"); // Individually captures strings like, "1", "#2", "b7"
+
+    // Iterates through and verifies each line in ruleSetInput.
+    std::stringstream ss(rulesetUserInput.toString().toStdString());
+    std::string line;
+    juce::SortedSet<std::string> tempLsysVariables;
+    juce::SortedSet<std::string> tempLsysRulesets;
+    while (std::getline(ss, line))
+    {
+        // If the line is valid, adds it to the sorted set.
+        if (std::regex_match(line, rulesetPattern))
+        {
+            tempLsysRulesets.add(line);
+            auto begin = std::sregex_iterator(line.begin(), line.end(), variablePattern);
+            auto end = std::sregex_iterator();
+            for (auto it = begin; it != end; ++it)
+            {
+                tempLsysVariables.add(it->str());
+            }
+        }
+        else
+        {
+            DBG("Incorrect ruleset format");
+            // throwCustomError("Incorrect Ruleset Format.");
+            return false;
+        }
+    }
+    currentLSystemVariables = tempLsysVariables;
+    currentLSystemRules = tempLsysRulesets;
+    return true;
+}
+
+bool LSystemProcessor::confirmAxiom()
+{
+    for (auto it = currentLSystemVariables.begin(); it != currentLSystemVariables.end(); ++it)
+    {
+        if (*it == axiomUserInput.toString().toStdString())
+        {
+            return true;
+        }
+    }
+    DBG("Axiom is not a valid variable!");
+    return false;
+}
+
+
 
 // Main function to generate and run everything necessary to produce an L system.
 void LSystemProcessor::generateLSystem(const uint8_t& gens)
 {
-    translateSet(current_lsysRulesets);
-    translateSet(current_lsysVars);
+    translateSet(currentLSystemRules);
+    translateSet(currentLSystemVariables);
     std::unordered_map<std::string, std::string> newLsysRulemap = generateRuleset();
     LSystem lsystem(lsysAxiom, newLsysRulemap);
-    lsystem.generate(generations);
+    lsystem.generate(generationsNum);
     lSystems.push_back(lsystem);
 
     //FOR TESTING PURPOSES=============================================================
@@ -73,7 +144,7 @@ std::unordered_map<std::string, std::string> LSystemProcessor::generateRuleset()
 {
     DBG("Generating Ruleset");
     std::unordered_map<std::string, std::string> map;
-    for (const std::string& ruleLine : current_lsysRulesets)
+    for (const std::string& ruleLine : currentLSystemRules)
     {
         size_t equalsPos = ruleLine.find('=');
         std::string leftHandSide = ruleLine.substr(0, equalsPos);

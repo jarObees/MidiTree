@@ -11,8 +11,10 @@ namespace LSystemStuff
 		LSystemManager(juce::AudioProcessorValueTreeState& _apvts);
 		void configureAxiomInputTextEditor(juce::TextEditor* textEditor);
 		void configureRulesetInputTextEditor(juce::TextEditor* textEditor);
+		void configureGensButton(juce::Slider* gensKnob);
 		void configureGrowButton(juce::Button* button);
 		void valueTreeRedirected(juce::ValueTree& changedValueTree) override;
+
 	private:
 		void textEditorTextChanged(juce::TextEditor& textEditor) override;
 		void buttonClicked(juce::Button* button) override;
@@ -23,8 +25,10 @@ namespace LSystemStuff
 
 		juce::TextEditor* axiomInputEditor = nullptr;
 		juce::TextEditor* rulesetInputEditor = nullptr;
-		juce::Button* growButton;
+		juce::Button* growButton = nullptr;
+		juce::Slider* gensKnob = nullptr;
 
 		juce::AudioProcessorValueTreeState& apvts;
+		std::unique_ptr<LSystemProcessor> lSystemProcessor;
 	};
 }

@@ -82,8 +82,8 @@ void MidiArpeggiatorAudioProcessorEditor::generateButtonClick()
     // Attempts to store user ruleset and axiom
     if (addUserRuleset(userRuleset) == true && checkUserAxiom(userAxiom) == true)
     {
-        audioProcessor.lsysProcessor.current_lsysVars = lsysVariablesDisplay;
-        audioProcessor.lsysProcessor.current_lsysRulesets = lsysRulesetsDisplay;
+        audioProcessor.lsysProcessor.currentLSystemVariables = lsysVariablesDisplay;
+        audioProcessor.lsysProcessor.currentLSystemRules = lsysRulesetsDisplay;
         audioProcessor.lsysProcessor.lsysAxiom = lsysAxiomDisplay;
         audioProcessor.lsysProcessor.generateLSystem(static_cast<uint8_t>(audioProcessor.genParam.load()));
     }

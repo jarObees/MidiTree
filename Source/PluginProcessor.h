@@ -66,6 +66,7 @@ public:
     std::atomic<float> velParam;
 	
 	// ==============================================================================================================
+    std::vector<std::string> noteRateKeys;
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout() };
     
@@ -82,9 +83,16 @@ public:
     LSystemStuff::LSystemManager lSystemManager{ apvts };
     Preset::PresetManager presetManager{apvts};
     Forest::ForestManager forestManager{ apvts, presetManager };
-
 private:
-
+    static inline const std::unordered_map<std::string, float> noteRateMap = 
+    {
+        {"32/1", 32.0f}, {"16/1", 16.0f},
+        {"8/1", 8.0f}, {"4/1", 4.0f},
+        {"2/1", 2.0f}, {"1/1", 1.0f},
+        {"1/2", 0.5f}, {"1/4", 0.25f},
+        {"1/8", 0.125f}, {"1/16", 0.0625f},
+        {"1/32", 0.03125f}, {"1/64", 0.015625f}
+    };
     std::unordered_map<std::string, juce::Image> imageCollection;
     std::unordered_map<std::string, juce::Image> getImages();
     bool isFirstNote;

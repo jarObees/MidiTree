@@ -12,6 +12,9 @@ LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState&
 	notesPoolValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
 
 	lSystemProcessor = std::make_unique<LSystemProcessor>(gensKnob, rulesetInputValue, axiomInputValue, generatedStringValue, notesPoolValue);
+	DBG("default ruleset is: " << rulesetInputValue.getValue());
+
+	apvts.state.addListener(this);
 }
 
 void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEditor* textEditor)
@@ -27,7 +30,7 @@ void LSystemStuff::LSystemManager::configureRulesetInputTextEditor(juce::TextEdi
 {
 	DBG("Configuring ruleset input text editor");
 	rulesetInputEditor = textEditor;
-	rulesetInputEditor->setText(rulesetInputValue.toString());
+	rulesetInputEditor->setText("DEFAULT TEXT");
 	rulesetInputEditor->addListener(this);
 }
 
@@ -57,25 +60,46 @@ void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)
 
 void LSystemStuff::LSystemManager::textEditorTextChanged(juce::TextEditor& textEditor)
 {
+	DBG("ruleset before making changes to text editor: " << rulesetInputValue);
 	if (&textEditor == rulesetInputEditor)
 	{
-		DBG("inputEditor text changed.");
 		rulesetInputValue = rulesetInputEditor->getText();
+
 		//DBG("Change in text editor detected");
 		//DBG("Current ruleSet: " << rulesetInputValue);
 	}
 
 	if (&textEditor == axiomInputEditor)
 	{
-		DBG("axiom text change");
 		axiomInputValue = axiomInputEditor->getText();
 		//DBG("Change in axiom editor detected");
 		//DBG("Current axiom: " << axiomInputValue);
 	}
 }
 
+// This is called every time a preset is loaded (or we apvts.replaceState()).
 void LSystemStuff::LSystemManager::valueTreeRedirected(juce::ValueTree& changedValueTree)
 {
 	DBG("Value tree redirected.");
-	// UPDATE ALL VALUES HERE.
+	axiomInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userAxiomStringProperty, nullptr));
+	rulesetInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetStringProperty, nullptr));
+	generatedStringValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
+	notesPoolValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
+	if (axiomInputEditor != nullptr && rulesetInputEditor != nullptr)
+	{
+		axiomInputEditor->setText(axiomInputValue.toString());
+		rulesetInputEditor->setText(rulesetInputValue.toString());
+	}
+}
+
+void LSystemStuff::LSystemManager::valueTreePropertyChanged(juce::ValueTree& tree, const juce::Identifier& property)
+{
+	if (property == apvtsPropIds::userRulesetStringProperty)
+	{
+		DBG("!" << apvtsPropIds::userRulesetStringProperty << "property changed to: " << tree.getProperty(property).toString());
+	}
+	if (property == apvtsPropIds::generatedLsysStringProperty)
+	{
+		DBG("!" << apvtsPropIds::generatedLsysStringProperty << "property changed to: " << tree.getProperty(property).toString());
+	}
 }

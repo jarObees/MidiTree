@@ -44,7 +44,7 @@ void LSystemProcessor::growLSystem()
 
 void LSystemProcessor::generateLString()
 {
-    DBG("GENERATING L STRING");
+    DBG("GENERATING L STRING ===============================================");
     auto genString = axiomUserInput.toString().toStdString();
     // For each generation...
     for (int i = 0; i < generationsNum; ++i)
@@ -71,13 +71,14 @@ void LSystemProcessor::generateLString()
         }
     }
     generatedLString = juce::String(genString);
+    DBG("Generated L String: " << generatedLString.getValue().toString());
 }
 
 // Converts the generated string into a vector<int> representing the interval in half steps from the root note (axiom).
 // Example: "3" represents a major 3rd, so it's converted to 4 (half-steps from the root).
 void LSystemProcessor::generateNotesPool()
 {
-    DBG("Generating notes pool");
+    DBG("Generating notes pool ===========================================================");
     std::string genString = generatedLString.toString().toStdString();
     juce::Array<juce::var> notesPlus;
     for (char c : genString)
@@ -98,11 +99,6 @@ void LSystemProcessor::generateNotesPool()
     }
     DBG("Notes Pool Generated!");
     notesPool = notesPlus;
-    auto* thing = notesPool.getValue().getArray();
-    if (thing == nullptr)
-        jassertfalse;
-    auto numTing = thing->size();
-    DBG("notes pool size : " << numTing);
 }
 
 // Checks if the ruleset is valid, and if so, stores it in the class.

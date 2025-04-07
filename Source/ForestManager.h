@@ -12,7 +12,7 @@ namespace Forest
 	}
 
 	class ForestManager
-		: public juce::Slider::Listener, juce::Button::Listener
+		: public juce::Slider::Listener, juce::Button::Listener, juce::ValueTree::Listener
 	{
 	public:
 		ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager&);
@@ -21,6 +21,7 @@ namespace Forest
 		
 		void buttonClicked(juce::Button* button) override;
 		void sliderValueChanged(juce::Slider* slider) override;
+		void valueTreeRedirected(juce::ValueTree& changedTree) override;
 	
 	private:
 		juce::Value generatedLString;

@@ -38,6 +38,7 @@ namespace Forest
 		forestDataSlots.assign(maxNumTrees, { "", {} });
 		generatedLString.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
 		notesPool.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
+		apvts.state.addListener(this);
 		DBG("Linked genLString/notesPool to property value");
 	}
 
@@ -55,16 +56,12 @@ namespace Forest
 
 	void ForestManager::plantTree()
 	{
-		DBG("Attempting to plant");
+		DBG("Attempting to plant =======================================================");
 
 		if (!generatedLString.getValue().isVoid())
 		{
 			if (true) //TODO: FIX NTOE POOLS BUGGING OUT.
 			{
-				auto* thing = notesPool.getValue().getArray();
-				if (thing == nullptr)
-					jassertfalse;
-				auto numTing = thing->size();
 				auto& dataSlot = forestDataSlots[currentForestIndex];
 				dataSlot.first = generatedLString.getValue();
 				
@@ -102,5 +99,10 @@ namespace Forest
 		{
 			plantTree();
 		}
+	}
+	void ForestManager::valueTreeRedirected(juce::ValueTree& changedTree)
+	{
+		generatedLString.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
+		notesPool.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
 	}
 }

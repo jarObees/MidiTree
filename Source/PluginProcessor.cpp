@@ -340,6 +340,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
                  ->getComponent().get()))
             {
 				lSystemManager.configureRulesetInputTextEditor(textEditorTingy);
+                DBG("RULESET AFTER ruleestinputtexteditor configured:" << (apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetStringProperty, nullptr)));
             }
             else
                 jassertfalse;
@@ -391,6 +392,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
         }
     }
+    DBG("RULESET AFTER EDITOR IS CREATED:" << (apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetStringProperty, nullptr)));
     // return dynamic_cast<juce::AudioProcessorEditor*>(viewInterpreter.interpret(view, this).release());
 }
 

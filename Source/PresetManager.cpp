@@ -25,6 +25,7 @@ namespace Preset
 		// Adds a listener to update the comboBox in realtime.
 		apvts.state.addListener(this);
 		currentPreset.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
+		DBG("RULESET IN PRESET MANAGER CONSTRUCTION" << (apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetStringProperty, nullptr)));
 		DBG("Set the current preset");
 	}
 
@@ -107,6 +108,8 @@ namespace Preset
 	// General buttonClicked override for any related button.
 	void PresetManager::buttonClicked(juce::Button* button)
 	{
+		DBG("Save button clicked");
+		
 		// Opens up a file picker window for the user to save.
 		if (button == saveButton)
 		{

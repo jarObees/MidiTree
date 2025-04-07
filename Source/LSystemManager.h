@@ -14,7 +14,7 @@ namespace LSystemStuff
 		void configureGensKnob(juce::Slider* gensKnob);
 		void configureGrowButton(juce::Button* button);
 		void valueTreeRedirected(juce::ValueTree& changedValueTree) override;
-
+		void valueTreePropertyChanged(juce::ValueTree& tree, const juce::Identifier& property) override;
 	private:
 		void textEditorTextChanged(juce::TextEditor& textEditor) override;
 		void buttonClicked(juce::Button* button) override;

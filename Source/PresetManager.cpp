@@ -95,8 +95,26 @@ namespace Preset
 			return;
 		}
 		juce::XmlDocument xmlDoc{ presetFile };
-		const auto valueTreeToLoad = juce::ValueTree::fromXml(*xmlDoc.getDocumentElement());
-		apvts.replaceState(valueTreeToLoad);
+
+		// DEFUCKER
+		//TODO: Double check that this thing is working how I want it to work.
+		auto fuckedValueTree = juce::ValueTree::fromXml(*xmlDoc.getDocumentElement());
+		juce::String serializedArray = fuckedValueTree.getProperty("serializedArray").toString();
+		std::unique_ptr<juce::XmlElement> arrayXml = juce::parseXML(serializedArray);
+		jassert(arrayXml != nullptr);
+		juce::Array<juce::var> restoredArray;
+		for (auto child : arrayXml.get()->getChildIterator())
+		{
+			if (child->hasTagName("NoteElement"))
+			{
+				auto thing = child->getStringAttribute("value");
+				restoredArray.add((child->getStringAttribute("value")).getIntValue());
+			}
+		}
+		fuckedValueTree.setProperty(apvtsPropIds::notesPoolVectorStringProperty, restoredArray, nullptr);
+
+		apvts.replaceState(fuckedValueTree);
+		DBG("NOTES POOL IS: " << apvts.state.getProperty(apvtsPropIds::notesPoolVectorStringProperty));
 		currentPreset.setValue(presetName);
 	}
 

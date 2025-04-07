@@ -14,6 +14,11 @@ void LSystemProcessor::growLSystem()
     if (generationsKnob == nullptr)
         jassertfalse;
     generationsNum = generationsKnob->getValue();
+    if (rulesetUserInput.getValue().isVoid() || axiomUserInput.getValue().isVoid())
+    {
+        DBG("SHITS EMPTY");
+        jassertfalse;
+    }
 
     if (!setLSystemRulesAndVariables() || !confirmAxiom())
     {
@@ -93,6 +98,7 @@ bool LSystemProcessor::setLSystemRulesAndVariables()
     std::regex rulesetPattern("^[b#]?[1-7]=([b#]?[1-7])+$"); // Used to capture strings like, "1=#2b4", "4=2b34#4", etc...
     std::regex variablePattern("[b#]?[1-7]"); // Individually captures strings like, "1", "#2", "b7"
 
+    DBG("rulesetUserInput" << rulesetUserInput.toString().toStdString());
     // Iterates through and verifies each line in ruleSetInput.
     std::stringstream ss(rulesetUserInput.toString().toStdString());
     std::string line;
@@ -118,7 +124,7 @@ bool LSystemProcessor::setLSystemRulesAndVariables()
             return false;
         }
     }
-    DBG("Everything's good, setting properties!");
+    DBG("Everything's good, properties set!");
     currentLSystemVariables = tempLsysVariables;
     currentLSystemRules = tempLsysRulesets;
     return true;
@@ -127,8 +133,10 @@ bool LSystemProcessor::setLSystemRulesAndVariables()
 bool LSystemProcessor::confirmAxiom()
 {
     DBG("Checking axiom correctness...");
+    DBG("l SYS VAR SIZE: " << currentLSystemVariables.size());
     for (auto it = currentLSystemVariables.begin(); it != currentLSystemVariables.end(); ++it)
     {
+        DBG("Checking: " << axiomUserInput.toString().toStdString() << "against: " << *it);
         if (*it == axiomUserInput.toString().toStdString())
         {
             return true;

@@ -60,7 +60,7 @@ void LSystemStuff::LSystemManager::textEditorTextChanged(juce::TextEditor& textE
 	if (&textEditor == rulesetInputEditor)
 	{
 		DBG("inputEditor text changed.");
-		//axiomInputValue = rulesetInputEditor->getText();
+		rulesetInputValue = rulesetInputEditor->getText();
 		//DBG("Change in text editor detected");
 		//DBG("Current ruleSet: " << rulesetInputValue);
 	}
@@ -68,7 +68,7 @@ void LSystemStuff::LSystemManager::textEditorTextChanged(juce::TextEditor& textE
 	if (&textEditor == axiomInputEditor)
 	{
 		DBG("axiom text change");
-		//rulesetInputValue = axiomInputEditor->getText();
+		axiomInputValue = axiomInputEditor->getText();
 		//DBG("Change in axiom editor detected");
 		//DBG("Current axiom: " << axiomInputValue);
 	}

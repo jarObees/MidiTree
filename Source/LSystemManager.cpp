@@ -6,9 +6,11 @@
 LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState& _apvts)
 	: apvts(_apvts)
 {
-	axiomInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userAxiomProperty, nullptr));
-	rulesetInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetProperty, nullptr));
+	axiomInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userAxiomStringProperty, nullptr));
+	rulesetInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetStringProperty, nullptr));
 	generatedStringValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
+	notesPoolValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
+
 	lSystemProcessor = std::make_unique<LSystemProcessor>(gensKnob, rulesetInputValue, axiomInputValue, generatedStringValue);
 }
 
@@ -36,10 +38,11 @@ void LSystemStuff::LSystemManager::configureGrowButton(juce::Button* button)
 	growButton->addListener(this);
 }
 
-void LSystemStuff::LSystemManager::configureGensButton(juce::Slider* knob)
+void LSystemStuff::LSystemManager::configureGensKnob(juce::Slider* knob)
 {
 	DBG("configured gens knob");
 	gensKnob = knob;
+	jassert(gensKnob != nullptr);
 }
 
 void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)

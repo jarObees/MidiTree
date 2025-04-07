@@ -26,7 +26,7 @@ namespace Forest
 		juce::AudioProcessorValueTreeState& apvts;
 		const int maxNumTrees;
 		int currentForestIndex;
-		std::vector<std::pair<juce::String, juce::String>> treeContainer; // Vector that should contain the genreatedLString
+		std::vector<std::pair<juce::String, juce::Array<juce::var>>> forestDataSlots; // Slider will be indexing across this vector.
 		
 		juce::Slider* forestSlider = nullptr;
 		juce::Button* forestButton = nullptr;

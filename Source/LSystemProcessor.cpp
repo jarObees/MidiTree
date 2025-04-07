@@ -2,18 +2,20 @@
 
 // Map containing illegal strings as keys, and their corrosponding legal string as values.
 // // For use in correcting lsys variables and rulesets.
-LSystemProcessor::LSystemProcessor(juce::Slider* generationsKnob, juce::Value& _rulesetUserInput, juce::Value& _axiomUserInput, juce::Value& _generatedLString)
-    : rulesetUserInput(_rulesetUserInput), axiomUserInput(_axiomUserInput), generatedLString(_generatedLString)
-{}
+LSystemProcessor::LSystemProcessor(juce::Slider*& generationsKnob, juce::Value& _rulesetUserInput, juce::Value& _axiomUserInput, juce::Value& _generatedLString)
+    : rulesetUserInput(_rulesetUserInput), axiomUserInput(_axiomUserInput), generatedLString(_generatedLString), generationsKnob(generationsKnob)
+{
+        
+}
 
 void LSystemProcessor::growLSystem()
 {
-    DBG("Grow L System");
+    DBG("Growing L System");
     if (generationsKnob == nullptr)
         jassertfalse;
     generationsNum = generationsKnob->getValue();
-    
-    if (!setLSystemRules() || !confirmAxiom())
+
+    if (!setLSystemRulesAndVariables() || !confirmAxiom())
     {
         DBG("big fat failure");
         return;
@@ -21,11 +23,12 @@ void LSystemProcessor::growLSystem()
 
     translateSet(currentLSystemRules);
     translateSet(currentLSystemVariables);
-    std::unordered_map<std::string, std::string> newLsysRulemap = generateRuleset();
-    generateLSystem();
+    currentLSystemRulemap = generateRuleset();
+    generateLString();
+    generateNotesPool();
 }
 
-void LSystemProcessor::generateLSystem()
+void LSystemProcessor::generateLString()
 {
     DBG("GENERATING L STRING");
     auto genString = axiomUserInput.toString().toStdString();
@@ -53,12 +56,40 @@ void LSystemProcessor::generateLSystem()
             genString = std::move(nextGen.str());
         }
     }
-	generatedLString = juce::String(genString);
+    generatedLString = juce::String(genString);
+}
+
+// Converts the generated string into a vector<int> representing the interval in half steps from the root note (axiom).
+// Example: "3" represents a major 3rd, so it's converted to 4 (half-steps from the root).
+void LSystemProcessor::generateNotesPool()
+{
+    DBG("Generating notes pool");
+    std::string genString = generatedLString.toString().toStdString();
+    juce::Array<juce::var> notesPlus;
+    for (char c : genString)
+    {
+        DBG("Char: " << c);
+        std::string s{ c };
+        auto it = replacementRulesToInt.find(s);
+        if (it != replacementRulesToInt.end())
+        {
+            DBG("Adding " << it->second);
+            notesPlus.add(it->second);
+        }
+        else
+        {
+            DBG("NOTES POOL: REPLACEMENT RULES AND L STRING MISMATCH");
+            return;
+        }
+    }
+    DBG("Notes Pool Generated!");
+    notesPool = notesPlus;
 }
 
 // Checks if the ruleset is valid, and if so, stores it in the class.
-bool LSystemProcessor::setLSystemRules()
+bool LSystemProcessor::setLSystemRulesAndVariables()
 {
+    DBG("Setting L System Rules and Variables");
     std::regex rulesetPattern("^[b#]?[1-7]=([b#]?[1-7])+$"); // Used to capture strings like, "1=#2b4", "4=2b34#4", etc...
     std::regex variablePattern("[b#]?[1-7]"); // Individually captures strings like, "1", "#2", "b7"
 
@@ -87,6 +118,7 @@ bool LSystemProcessor::setLSystemRules()
             return false;
         }
     }
+    DBG("Everything's good, setting properties!");
     currentLSystemVariables = tempLsysVariables;
     currentLSystemRules = tempLsysRulesets;
     return true;
@@ -94,6 +126,7 @@ bool LSystemProcessor::setLSystemRules()
 
 bool LSystemProcessor::confirmAxiom()
 {
+    DBG("Checking axiom correctness...");
     for (auto it = currentLSystemVariables.begin(); it != currentLSystemVariables.end(); ++it)
     {
         if (*it == axiomUserInput.toString().toStdString())
@@ -119,7 +152,7 @@ void LSystemProcessor::generateLSystem(const uint8_t& gens)
 
     //FOR TESTING PURPOSES=============================================================
     const LSystem& testLSystem = lSystems[0];
-    notesPool = generateNotesPool(testLSystem.genString);
+    // notesPool = generateNotesPool(testLSystem.genString);
 }
 
 // We need to verify that all variables in l system are single characters for future rule application.
@@ -143,31 +176,6 @@ void LSystemProcessor::translateSet(juce::SortedSet<std::string>& stringSet)
         translatedRuleset.add(newRuleLine);
     }
     stringSet = std::move(translatedRuleset);
-}
-
-// Converts the generated string into a vector<int> representing the interval in half steps from the root note (axiom).
-// Example: "3" represents a major 3rd, so it's converted to 4 (half-steps from the root).
-std::vector<int> LSystemProcessor::generateNotesPool(const std::string& genString)
-{
-    std::vector<int> notesPlus;
-    for (char c : genString)
-    {
-        DBG("Char: " << c);
-        std::string s{ c };
-        auto it = replacementRulesToInt.find(s);
-        if (it != replacementRulesToInt.end())
-        {
-			DBG("Adding " << it->second);
-            notesPlus.push_back(it->second);
-        }
-        else
-        {
-            DBG("REPLACEMENT RULES AND L STRING MISMATCH");
-            return notesPlus;
-        }
-    }
-    DBG("Done generating. Returning notesPlus");
-    return notesPlus;
 }
 
 // Generates ruleset map from ruleset set.

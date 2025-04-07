@@ -25,10 +25,10 @@ namespace jive_gui
 // All ID's for properties should be stored here.
 namespace apvtsPropIds
 {
-	static const juce::Identifier userRulesetProperty{ "userRulesetNode" };
-	static const juce::Identifier userAxiomProperty{ "userAxiomNode" };
-	static const juce::Identifier userLsysNameProperty{ "userLsysNameNode" };
+	static const juce::Identifier userRulesetStringProperty{ "userRulesetNode" };
+	static const juce::Identifier userAxiomStringProperty{ "userAxiomNode" };
+	static const juce::Identifier userLsysNameStringProperty{ "userLsysNameNode" };
 	static const juce::Identifier generatedLsysStringProperty{ "generatedLStringNode" };
-	static const juce::Identifier notesPoolProperty{ "notesPoolNode" };
+	static const juce::Identifier notesPoolVectorStringProperty{ "notesPoolNode" };
 	static const juce::Identifier presetNameProperty{ "presetNameProperty" };
 }

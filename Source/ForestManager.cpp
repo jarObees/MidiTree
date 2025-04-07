@@ -34,11 +34,12 @@ namespace Forest
 	ForestManager::ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager)
 		: apvts(_apvts), presetManager(_presetManager), maxNumTrees(int(apvts.getParameter("forest")->getNormalisableRange().end))
 	{
-		treeContainer.reserve(maxNumTrees);
-
-		for (std::pair<juce::String, juce::String>& midiTreeLStrings : treeContainer)
+		// Sets up each data slot with some dummy values.
+		forestDataSlots.reserve(maxNumTrees);
+		for (auto& lStringNotesPoolPair : forestDataSlots)
 		{
-			midiTreeLStrings = std::make_pair("", "");
+			juce::Array<juce::var> emptyVector;
+			lStringNotesPoolPair = std::make_pair("", emptyVector);
 		}
 	}
 
@@ -57,13 +58,14 @@ namespace Forest
 	void ForestManager::plantTree()
 	{
 		DBG("Attempting to plant");
-		// Inserts a pair of string data points which tell us stuff. Good stuff.
 		if (!apvts.state.getProperty(apvtsPropIds::generatedLsysStringProperty).isVoid() &&
-			!apvts.state.getProperty(apvtsPropIds::notesPoolProperty).isVoid())
+			!apvts.state.getProperty(apvtsPropIds::notesPoolVectorStringProperty).isVoid())
 		{
-			std::pair<juce::String, juce::String>& midiTreeLStrings = treeContainer[currentForestIndex];
-			midiTreeLStrings.first = apvts.state.getProperty(apvtsPropIds::generatedLsysStringProperty);
-			midiTreeLStrings.second = apvts.state.getProperty(apvtsPropIds::notesPoolProperty);
+			auto& dataSlot = forestDataSlots[currentForestIndex];
+			dataSlot.first = apvts.state.getProperty(apvtsPropIds::generatedLsysStringProperty);
+			auto* thing = apvts.state.getProperty(apvtsPropIds::notesPoolVectorStringProperty).getArray();
+			
+			jassert(thing != nullptr);
 		}
 
 		else

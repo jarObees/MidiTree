@@ -365,7 +365,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 				(jive::findItemWithID(*editor, jive_gui::StringIds::generationsKnob)
 				 ->getComponent().get()))
 			{
-				lSystemManager.configureGensButton(gensKnob);
+				lSystemManager.configureGensKnob(gensKnob);
 			}
 			else
 				jassertfalse;

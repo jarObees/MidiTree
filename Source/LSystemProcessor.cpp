@@ -75,7 +75,7 @@ void LSystemProcessor::generateLString()
 }
 
 // Converts the generated string into a vector<int> representing the interval in half steps from the root note (axiom).
-// Example: "3" represents a major 3rd, so it's converted to 4 (half-steps from the root).
+// Example: "3" represents a minor 3rd, so it's converted to 4 (half-steps from the root).
 void LSystemProcessor::generateNotesPool()
 {
     DBG("Generating notes pool ===========================================================");

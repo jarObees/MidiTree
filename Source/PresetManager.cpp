@@ -37,12 +37,46 @@ namespace Preset
 			return;
 
 		currentPreset.setValue(presetName);
-		const auto xml = apvts.copyState().createXml();
+		
+		
+		std::unique_ptr<juce::XmlElement> xml;
+
+		// In order to put into xml, we must convert our juce::Array<int> var into a readable xml, since we can't store those for xml.
+		// We will then read this back to normal later within the loadPreset().
+		if (!apvts.state.getProperty(apvtsPropIds::notesPoolVectorStringProperty).isVoid())
+		{
+			DBG("fixing the notes pool stuff...");
+			auto apvtsCopy = apvts.copyState();
+			juce::Array<juce::var> notesPoolArray = *apvtsCopy.getProperty(apvtsPropIds::notesPoolVectorStringProperty).getArray();
+
+			// Create a new XML element that holds all the juce::Array data.
+			juce::XmlElement arrayXml("arrayXml");
+			for (auto& item : notesPoolArray) // Grabs each var (which is an int) from the notes pool, and converts it to an xml element.
+			{
+				jassert(item.isInt());
+				int item = item;
+				auto* element = new juce::XmlElement("NoteElement");
+				element->setAttribute("value", item);
+				arrayXml.addChildElement(element);
+			}
+
+			const juce::String serializedArray = arrayXml.createDocument("");
+			apvtsCopy.setProperty("serializedArray", serializedArray, nullptr);
+			apvtsCopy.removeProperty(apvtsPropIds::notesPoolVectorStringProperty, nullptr); // Removes buggy property, once everything else has worked.
+			xml = apvtsCopy.createXml();
+		}
+		else
+		{
+			DBG("Not fixing notes pool stuff..");
+			xml = apvts.copyState().createXml();
+		}
+
 		const auto presetFile = defaultDirectory.getChildFile(presetName + "." + presetExtension);
 		if (!xml->writeToFile(presetFile, ""))
 		{
 			jassertfalse;
 		}
+
 	}
 
 	// After passing the preset name, loads in said preset to the apvts. 

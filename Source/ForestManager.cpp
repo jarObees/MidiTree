@@ -34,13 +34,11 @@ namespace Forest
 	ForestManager::ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager)
 		: apvts(_apvts), presetManager(_presetManager), maxNumTrees(int(apvts.getParameter("forest")->getNormalisableRange().end))
 	{
-		// Sets up each data slot with some dummy values.
-		forestDataSlots.reserve(maxNumTrees);
-		for (auto& lStringNotesPoolPair : forestDataSlots)
-		{
-			juce::Array<juce::var> emptyVector;
-			lStringNotesPoolPair = std::make_pair("", emptyVector);
-		}
+
+		forestDataSlots.assign(maxNumTrees, { "", {} });
+		generatedLString.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
+		notesPool.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
+		DBG("Linked genLString/notesPool to property value");
 	}
 
 	void ForestManager::configureForestButton(juce::Button* button)
@@ -58,19 +56,35 @@ namespace Forest
 	void ForestManager::plantTree()
 	{
 		DBG("Attempting to plant");
-		if (!apvts.state.getProperty(apvtsPropIds::generatedLsysStringProperty).isVoid() &&
-			!apvts.state.getProperty(apvtsPropIds::notesPoolVectorStringProperty).isVoid())
-		{
-			auto& dataSlot = forestDataSlots[currentForestIndex];
-			dataSlot.first = apvts.state.getProperty(apvtsPropIds::generatedLsysStringProperty);
-			auto* thing = apvts.state.getProperty(apvtsPropIds::notesPoolVectorStringProperty).getArray();
-			
-			jassert(thing != nullptr);
-		}
 
+		if (!generatedLString.getValue().isVoid())
+		{
+			if (true) //TODO: FIX NTOE POOLS BUGGING OUT.
+			{
+				auto* thing = notesPool.getValue().getArray();
+				if (thing == nullptr)
+					jassertfalse;
+				auto numTing = thing->size();
+				auto& dataSlot = forestDataSlots[currentForestIndex];
+				dataSlot.first = generatedLString.getValue();
+				
+				juce::Array<int> extractedArray;
+				for (const auto& note : *notesPool.getValue().getArray())
+				{
+					DBG("Added " << (int)note << "to notes pool.");
+					extractedArray.add((int)note);
+				}
+				DBG("Successfully added notes to notesPool!");
+			}
+			else
+			{
+				DBG(apvtsPropIds::notesPoolVectorStringProperty << "IS VOID");
+				return;
+			}
+		}
 		else
 		{
-			DBG(apvtsPropIds::generatedLsysStringProperty << " property not found");
+			DBG(apvtsPropIds::generatedLsysStringProperty << " IS VOID");
 			return;
 		}
 	}

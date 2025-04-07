@@ -2,8 +2,16 @@
 
 // Map containing illegal strings as keys, and their corrosponding legal string as values.
 // // For use in correcting lsys variables and rulesets.
-LSystemProcessor::LSystemProcessor(juce::Slider*& generationsKnob, juce::Value& _rulesetUserInput, juce::Value& _axiomUserInput, juce::Value& _generatedLString)
-    : rulesetUserInput(_rulesetUserInput), axiomUserInput(_axiomUserInput), generatedLString(_generatedLString), generationsKnob(generationsKnob)
+LSystemProcessor::LSystemProcessor(juce::Slider*& generationsKnob, 
+                                   juce::Value& _rulesetUserInput, 
+                                   juce::Value& _axiomUserInput, 
+                                   juce::Value& _generatedLString,
+                                   juce::Value& _notesPool)
+    : rulesetUserInput(_rulesetUserInput), 
+    axiomUserInput(_axiomUserInput), 
+    generatedLString(_generatedLString), 
+    generationsKnob(generationsKnob), 
+    notesPool(_notesPool)
 {
         
 }
@@ -14,6 +22,7 @@ void LSystemProcessor::growLSystem()
     if (generationsKnob == nullptr)
         jassertfalse;
     generationsNum = generationsKnob->getValue();
+    DBG("Number of Generations: " << generationsNum);
     if (rulesetUserInput.getValue().isVoid() || axiomUserInput.getValue().isVoid())
     {
         DBG("SHITS EMPTY");
@@ -89,6 +98,11 @@ void LSystemProcessor::generateNotesPool()
     }
     DBG("Notes Pool Generated!");
     notesPool = notesPlus;
+    auto* thing = notesPool.getValue().getArray();
+    if (thing == nullptr)
+        jassertfalse;
+    auto numTing = thing->size();
+    DBG("notes pool size : " << numTing);
 }
 
 // Checks if the ruleset is valid, and if so, stores it in the class.

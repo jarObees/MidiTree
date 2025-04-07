@@ -23,10 +23,13 @@ namespace Forest
 		void sliderValueChanged(juce::Slider* slider) override;
 	
 	private:
+		juce::Value generatedLString;
+		juce::Value notesPool;
+
 		juce::AudioProcessorValueTreeState& apvts;
 		const int maxNumTrees;
 		int currentForestIndex;
-		std::vector<std::pair<juce::String, juce::Array<juce::var>>> forestDataSlots; // Slider will be indexing across this vector.
+		std::vector<std::pair<juce::String, juce::Array<int>>> forestDataSlots; // Slider will be indexing across this vector.
 		
 		juce::Slider* forestSlider = nullptr;
 		juce::Button* forestButton = nullptr;

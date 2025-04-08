@@ -46,10 +46,14 @@ namespace jive_gui
 				imageComponent->setInterceptsMouseClicks(false, false);
 				onValueChange = std::make_unique<jive::Event>(item.state, "on-change");
 				filmstripSource = std::make_unique<jive::Property<juce::Image>>(item.state.getChild(0), "source"); // We can interact with the "source" property of "Image" through this.
-
 				// When it detects a value change, it displays the appropriate cropped portion of the filmstrip image.
 				onValueChange->onTrigger = [this, stripSlider]() {
-					std::size_t imageNumber = static_cast<std::size_t>(0.5 + (stripSlider->getValue() - stripSlider->getMinimum()) / (stripSlider->getMaximum() - stripSlider->getMinimum()) * (numFrames - 1));
+					std::size_t imageNumber = static_cast<std::size_t>
+						(0.5 + (stripSlider->getValue() 
+								- stripSlider->getMinimum()) 
+								/ (stripSlider->getMaximum() 
+								- stripSlider->getMinimum()) 
+								* (numFrames - 1));
 					juce::Rectangle<int> clippedArea(0, imageNumber * sideLength, sideLength, sideLength);
 					juce::Image croppedImage = rawFilmstripImage.getClippedImage(clippedArea);
 					filmstripSource->set(croppedImage);

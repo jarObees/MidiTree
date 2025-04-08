@@ -340,7 +340,6 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
                  ->getComponent().get()))
             {
 				lSystemManager.configureRulesetInputTextEditor(textEditorTingy);
-                DBG("RULESET AFTER ruleestinputtexteditor configured:" << (apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetStringProperty, nullptr)));
             }
             else
                 jassertfalse;
@@ -425,7 +424,7 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout params;
     // Global Generation Variables
-    params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 1)); //TODO: Refactor this as a non-automatable parameter.
+    params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 5)); // IGNORE DEFAULT PARAMETER. This is set in appropriate manager class.
     params.add(std::make_unique<juce::AudioParameterInt>("vel", "Midi Velocity", 1, 127, 100,
                                                          juce::AudioParameterIntAttributes{}
                                                          .withStringFromValueFunction(
@@ -438,8 +437,8 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
                                                                                           return text.getIntValue();
                                                                                       })
                                                          .withAutomatable(true)));
-    params.add(std::make_unique<juce::AudioParameterChoice>("noteType", "Note Type", comboBoxNoteTypes, 0));
-    params.add(std::make_unique<juce::AudioParameterInt>("forest", "Forest Selection", 1, 7, 1));
+    params.add(std::make_unique<juce::AudioParameterChoice>("noteType", "Note Type", comboBoxNoteTypes, 0)); 
+    params.add(std::make_unique<juce::AudioParameterInt>("forest", "Forest Selection", 1, 7, 2)); // IGNORE DEFAULT PARAMETER. This is set in appropriate manager class.
 
     // Takes each note rate, "1/4", "1/18", etc. and creates an array for the param display.
     for (const auto& pair : noteRateMap)

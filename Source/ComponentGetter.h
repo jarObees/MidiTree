@@ -57,4 +57,55 @@ namespace jive_gui
 			}
 		};
 	}
+
+	[[noexcept]] inline auto getNoteRateKnob(std::unordered_map<std::string, juce::Image>& imageCollection)
+	{
+		return juce::ValueTree
+		{
+			"Component",
+			{
+				{"align-items", "centre"},
+				{"justify-content", "centre"},
+				{"flex-direction", "column"},
+			},
+			{
+				jive::makeView<FilmstripKnobView>(64, 64, imageCollection[ImageIds::mainKnobFilmstrip], StringIds::noteRateKnob),
+				juce::ValueTree
+				{
+					"Text",
+					{
+						{"id", StringIds::noteRateKnobText},
+						{"flex-direction", "column"},
+						{
+						"style",
+							new jive::Object
+								{
+									{ "foreground", "#FFFFFF" },
+									{ "font-size", 20 },
+									{ "letter-spacing", 1.5 },
+								},
+						},
+					},
+				},
+				{
+					juce::ValueTree
+					{
+						"Text",
+						{
+							{"text", "Note Rate"},
+							{
+								"style",
+									new jive::Object
+										{
+											{ "foreground", "#FFFFFF" },
+											{ "font-size", 10 },
+											{ "letter-spacing", 1.5 },
+										},
+							},
+						}
+					},
+				}
+			}
+		};
+	}
 }

@@ -313,6 +313,8 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 			// Attaches automatable parameters. ========================================================
             jive::findItemWithID(*editor, jive_gui::StringIds::noteRateKnob)
                 ->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
+            jive::findItemWithID(*editor, jive_gui::StringIds::noteRateKnobText)
+                ->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
             jive::findItemWithID(*editor, jive_gui::StringIds::midiVelocityKnob)
                 ->attachToParameter(apvts.getParameter("vel"), &undoManager);
             jive::findItemWithID(*editor, jive_gui::StringIds::midiVelocityKnobText)
@@ -445,7 +447,7 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
                                                                                           return text.getIntValue();
                                                                                       })
                                                          .withAutomatable(true)));
-    params.add(std::make_unique<juce::AudioParameterChoice>("noteType", "Note Type", comboBoxNoteTypes, 0)); 
+    params.add(std::make_unique<juce::AudioParameterChoice>("noteType", "Note Type", comboBoxNoteTypes, 0));
     params.add(std::make_unique<juce::AudioParameterInt>("forest", "Forest Selection", 1, 7, 2)); // IGNORE DEFAULT PARAMETER. This is set in appropriate manager class.
 
     // Takes each note rate, "1/4", "1/18", etc. and creates an array for the param display.

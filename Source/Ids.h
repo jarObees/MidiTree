@@ -17,6 +17,7 @@ namespace jive_gui
 		const juce::String midiVelocityKnob{ "midiVelocity-knob" };
 		const juce::String midiVelocityKnobText{ "mkt"};
 		const juce::String noteRateKnob{ "noteRate-knob" };
+		const juce::String noteRateKnobText{ "nrkt" };
 		const juce::String noteTypeComboBox{ "noteType-comboBox" };
 		const juce::String nameTextBox{ "name-textBox" };
 		const juce::String axiomTextBox{ "axiom-textBox" };

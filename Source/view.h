@@ -135,8 +135,7 @@ namespace jive_gui
 			},
 			{
 				getMidiVelocityKnob(imageCollection),
-				// jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, StringIds::midiVelocityKnob),
-				jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, StringIds::noteRateKnob),
+				getNoteRateKnob(imageCollection),
 				jive::makeView<ComboBoxView>(80, 20, StringIds::noteTypeComboBox), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
 			}
 		};

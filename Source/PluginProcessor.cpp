@@ -9,6 +9,8 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "Ids.h"
+#include <chrono>
+
 
 //==============================================================================
 MidiArpeggiatorAudioProcessor::MidiArpeggiatorAudioProcessor()
@@ -282,10 +284,12 @@ bool MidiArpeggiatorAudioProcessor::hasEditor() const
 std::unordered_map<std::string, juce::Image> MidiArpeggiatorAudioProcessor::getImages()
 {
     std::unordered_map<std::string, juce::Image> imageCollection;
-	juce::Image knobTestWhiteFilmstrip = juce::ImageFileFormat::loadFrom(BinaryData::knobTestWhite_png, BinaryData::knobTestWhite_pngSize);
-    juce::Image horiSliderWhiteFilmstrip = juce::ImageFileFormat::loadFrom(BinaryData::_128_HORISLIDER_FILMSTRIP_png, BinaryData::_128_HORISLIDER_FILMSTRIP_pngSize);
-	imageCollection["knobTestWhite"] = knobTestWhiteFilmstrip;
-	imageCollection["horiSliderWhite"] = horiSliderWhiteFilmstrip;
+	juce::Image knobTestWhiteFilmstrip = juce::ImageFileFormat::loadFrom(BinaryData::knobTestWhite_png, 
+                                                                         BinaryData::knobTestWhite_pngSize);
+    juce::Image horiSliderWhiteFilmstrip = juce::ImageFileFormat::loadFrom(BinaryData::_128_HORISLIDER_FILMSTRIP_png, 
+                                                                           BinaryData::_128_HORISLIDER_FILMSTRIP_pngSize);
+	imageCollection[jive_gui::ImageIds::mainKnobFilmstrip] = knobTestWhiteFilmstrip;
+	imageCollection[jive_gui::ImageIds::horiKnobFilmstrip] = horiSliderWhiteFilmstrip;
 	return imageCollection;
 }
 juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
@@ -311,10 +315,13 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
                 ->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
             jive::findItemWithID(*editor, jive_gui::StringIds::midiVelocityKnob)
                 ->attachToParameter(apvts.getParameter("vel"), &undoManager);
+            jive::findItemWithID(*editor, jive_gui::StringIds::midiVelocityKnobText)
+                ->attachToParameter(apvts.getParameter("vel"), &undoManager);
             jive::findItemWithID(*editor, jive_gui::StringIds::forestSlider)
-                ->attachToParameter(apvts.getParameter("forest"), &undoManager); // TODO: Configure default state to fix weird bugging out?
+                ->attachToParameter(apvts.getParameter("forest"), &undoManager);
             jive::findItemWithID(*editor, jive_gui::StringIds::generationsKnob)
-                ->attachToParameter(apvts.getParameter("gens"), &undoManager); // TODO: Configure default state to fix weird bugging out? (different case)
+                ->attachToParameter(apvts.getParameter("gens"), &undoManager);
+            
             
             // Links and sets up non-automatable parameters. ========================================================
             if (auto* saveButtonTingy = dynamic_cast<juce::Button*>
@@ -322,6 +329,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
                  ->getComponent().get()))
             {
                 presetManager.configureSaveButtonComponent(saveButtonTingy);
+
             }
             else
                 jassertfalse;

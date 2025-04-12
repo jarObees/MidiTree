@@ -26,7 +26,7 @@ void LSystemProcessor::growLSystem()
     if (rulesetUserInput.getValue().isVoid() || axiomUserInput.getValue().isVoid())
     {
         DBG("SHITS EMPTY");
-        jassertfalse;
+        return;
     }
 
     if (!setLSystemRulesAndVariables() || !confirmAxiom())

@@ -8,14 +8,16 @@
 #include "TextEditorView.h"
 #include "Button.h"
 #include "SaveButtonView.h"
+#include "ComponentGetter.h"
 
 namespace jive_gui
 {
+
 	// MAIN COMPONENTS ==========================================================
 	[[nodiscard]] inline auto getCrown(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
-		juce::Image filmstripKnob = imageCollection.at("knobTestWhite");
-		juce::Image filmstripKnobHori = imageCollection.at("horiSliderWhite");
+		juce::Image filmstripKnob = imageCollection.at(ImageIds::mainKnobFilmstrip);
+		juce::Image filmstripKnobHori = imageCollection.at(ImageIds::horiKnobFilmstrip);
 		return juce::ValueTree{
 			"Component",
 			{
@@ -115,7 +117,7 @@ namespace jive_gui
 	
 	[[nodiscard]] inline auto getGround(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
-		juce::Image filmstripKnob = imageCollection.at("knobTestWhite");
+		juce::Image filmstripKnob = imageCollection.at(ImageIds::mainKnobFilmstrip);
 		return juce::ValueTree{
 			"Component",
 			{
@@ -132,7 +134,8 @@ namespace jive_gui
 				},
 			},
 			{
-				jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, StringIds::midiVelocityKnob),
+				getMidiVelocityKnob(imageCollection),
+				// jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, StringIds::midiVelocityKnob),
 				jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, StringIds::noteRateKnob),
 				jive::makeView<ComboBoxView>(80, 20, StringIds::noteTypeComboBox), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
 			}

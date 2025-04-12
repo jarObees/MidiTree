@@ -7,7 +7,8 @@
   <MAINGROUP id="tMID8o" name="midiArpeggiator">
     <GROUP id="{364A534D-7CD2-809C-2196-30E80E3205D4}" name="GUI">
       <GROUP id="{483EDA95-BB1B-8D9C-B965-108436522E99}" name="Components">
-        <GROUP id="{F2036D29-5126-F642-A6C8-DE51618AD569}" name="New Group"/>
+        <FILE id="TygFYk" name="ComponentGetter.h" compile="0" resource="0"
+              file="Source/ComponentGetter.h"/>
         <FILE id="qPBQOs" name="Ids.h" compile="0" resource="0" file="Source/Ids.h"/>
         <FILE id="nxoI6Q" name="Colors.h" compile="0" resource="0" file="Source/Colors.h"/>
         <FILE id="K3ilcR" name="SaveButtonView.h" compile="0" resource="0"

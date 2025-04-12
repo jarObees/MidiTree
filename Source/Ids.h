@@ -15,10 +15,16 @@ namespace jive_gui
 		const juce::String generationsKnob{ "generations-knob" };
 		const juce::String growButton{ "grow-button" };
 		const juce::String midiVelocityKnob{ "midiVelocity-knob" };
+		const juce::String midiVelocityKnobText{ "mkt"};
 		const juce::String noteRateKnob{ "noteRate-knob" };
 		const juce::String noteTypeComboBox{ "noteType-comboBox" };
 		const juce::String nameTextBox{ "name-textBox" };
 		const juce::String axiomTextBox{ "axiom-textBox" };
+	}
+	namespace ImageIds
+	{
+		const std::string mainKnobFilmstrip{ "mainKnobFilmstrip" };
+		const std::string horiKnobFilmstrip{ "horiKnobFilmstrip" };
 	}
 }
 

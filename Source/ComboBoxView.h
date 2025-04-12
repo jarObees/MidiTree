@@ -55,6 +55,7 @@ namespace jive_gui
 			// We confirm access to the comboBox itself.
 			if (auto* comboBox = dynamic_cast<juce::ComboBox*>(item.getComponent().get()))
 			{
+				comboBox->setVisible(true);
 			}
 			else
 			{

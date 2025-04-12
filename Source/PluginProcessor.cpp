@@ -310,7 +310,17 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             
             viewInterpreter.listenTo(*editor);
             
-			// Attaches automatable parameters. ========================================================
+			// Attaches/Configures automatable parameters. ========================================================
+            jive::findItemWithID(*editor, jive_gui::StringIds::noteTypeComboBox)
+                ->attachToParameter(apvts.getParameter("noteType"), &undoManager);
+            if (auto* comboBoxTingy = dynamic_cast<juce::ComboBox*>(jive::findItemWithID(*editor, jive_gui::StringIds::noteTypeComboBox)
+                                                                    ->getComponent().get()))
+            {
+                comboBoxTingy->addItem(comboBoxNoteTypes[0], 1);
+                comboBoxTingy->addItem(comboBoxNoteTypes[1], 2);
+            }
+            else
+                jassertfalse;
             jive::findItemWithID(*editor, jive_gui::StringIds::noteRateKnob)
                 ->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
             jive::findItemWithID(*editor, jive_gui::StringIds::noteRateKnobText)
@@ -326,8 +336,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             
             
             // Links and sets up non-automatable parameters. ========================================================
-            if (auto* saveButtonTingy = dynamic_cast<juce::Button*>
-                (jive::findItemWithID(*editor, jive_gui::StringIds::saveButton)
+            if (auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::StringIds::saveButton)
                  ->getComponent().get()))
             {
                 presetManager.configureSaveButtonComponent(saveButtonTingy);
@@ -463,7 +472,7 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
     {
         _noteRateKeys.add(element);
     }
-    params.add(std::make_unique<juce::AudioParameterChoice>("noteRate", "Rate", _noteRateKeys, 5));
+    params.add(std::make_unique<juce::AudioParameterChoice>("noteRate", "Rate", _noteRateKeys, 5)); //TODO: Fix the shit not showing up.
     return params;
  }
 //==============================================================================

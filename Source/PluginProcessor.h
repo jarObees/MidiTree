@@ -69,12 +69,7 @@ public:
     std::vector<std::string> noteRateKeys;
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout() };
-    
-    //TODO: No use anywhere else.
-    // Original purpose was to store a list of l systems created. But new idea is different.
-    // Store lsystems as simply presets (store the inputs n shit instead of generating some new shit.)
-    static const inline juce::Identifier lSystemListNodeType{ "lSystemList" };
-    juce::ValueTree lSystemList{ lSystemListNodeType };
+
 
     float noteRate; // Contains float value of note fraction. (E.g 1/4 is stored as 0.25f)
     int midiAxiom; // Value representing the initial midi input by user. Should be set to -1 if no user input.

@@ -160,7 +160,7 @@ void MidiArpeggiatorAudioProcessor::getAutomatableParams()
     }
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> duration = end - start;
-    DBG("Note Rate Finder Time: " << duration.count() << " ms");
+    // DBG("Note Rate Finder Time: " << duration.count() << " ms");
     // Updates note Type =================================================================
     noteType = apvts.getRawParameterValue("noteType")->load();
 
@@ -169,14 +169,24 @@ void MidiArpeggiatorAudioProcessor::getAutomatableParams()
 // FOR NOW, WE WILL ASSUME THAT WE ARE NOT GOING TO CHANGE THE L SYSTEM DURING PLAY.
 void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-	DBG("Processing Block==============");
+	//DBG("Processing Block==============");
     getAutomatableParams();
     buffer.clear();
 
     if (currentNotesPool.isEmpty())
     {
-        DBG("Empty notes pool!");
-        DBG("Ignoring everything else...");
+        //DBG("Empty notes pool!");
+        //DBG("Ignoring everything else...");
+        return;
+    }
+    else
+    {
+        //DBG("Current notes pool------");
+        for (const auto& thing1 : currentNotesPool)
+        {
+            DBG(thing1);
+        }
+        //DBG("-------------");
         return;
     }
     

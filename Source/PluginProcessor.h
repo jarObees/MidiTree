@@ -75,11 +75,11 @@ public:
     int midiAxiom; // Value representing the initial midi input by user. Should be set to -1 if no user input.
     
     static const inline juce::StringArray comboBoxNoteTypes{"Quarter", "Dotted"};
-    juce::Array<int> currentNotesPool;
+    juce::Array<int> currentNotesPool; // DO NOT MODIFY IN PROCESS BLOCK.
 
-    LSystemStuff::LSystemManager lSystemManager{ apvts, currentNotesPool };
     Preset::PresetManager presetManager{ apvts };
-    Forest::ForestManager forestManager{ apvts, presetManager };
+    Forest::ForestManager forestManager{ apvts, presetManager, currentNotesPool };
+    LSystemStuff::LSystemManager lSystemManager{ apvts, presetManager, currentNotesPool };
 private:
     static inline const std::unordered_map<std::string, float> noteRateMap = 
     {

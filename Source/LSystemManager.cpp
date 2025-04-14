@@ -1,10 +1,10 @@
 #include "LSystemManager.h"
 #include "Ids.h"
-
+#include "PresetManager.h"
 // Implement the next layer of stuff. 
 // Now the actual shit that handles the growth logic for the l system shit.
-LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState& _apvts, juce::Array<int>& _currenNotesPool)
-	: apvts(_apvts), currentNotesPool(_currenNotesPool)
+LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager, juce::Array<int>& _currenNotesPool)
+	: apvts(_apvts), presetManager(_presetManager), currentNotesPool(_currenNotesPool)
 {
 	axiomInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userAxiomStringProperty, nullptr));
 	rulesetInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetStringProperty, nullptr));
@@ -47,10 +47,9 @@ void LSystemStuff::LSystemManager::configureGensKnob(juce::Slider* knob)
 	DBG("configured gens knob");
 	gensKnob = knob;
 	gensKnob->setValue(3);
-	jassert(gensKnob != nullptr);
+	gensKnob->addListener(this);
 }
 
-//TODO: Fix the shit not working properly.
 void LSystemStuff::LSystemManager::setCurrentNotesPool()
 {
 	DBG("Setting current notes pool");
@@ -80,7 +79,8 @@ void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)
 
 void LSystemStuff::LSystemManager::textEditorTextChanged(juce::TextEditor& textEditor)
 {
-	DBG("ruleset before making changes to text editor: " << rulesetInputValue);
+	DBG("Text editor(s) changed");
+	presetManager.isModified = true;
 	if (&textEditor == rulesetInputEditor)
 	{
 		rulesetInputValue = rulesetInputEditor->getText();
@@ -94,6 +94,15 @@ void LSystemStuff::LSystemManager::textEditorTextChanged(juce::TextEditor& textE
 		axiomInputValue = axiomInputEditor->getText();
 		//DBG("Change in axiom editor detected");
 		//DBG("Current axiom: " << axiomInputValue);
+	}
+}
+
+void LSystemStuff::LSystemManager::sliderValueChanged(juce::Slider* slider)
+{
+	if (slider == gensKnob)
+	{
+		DBG("Slider gens knob change detected!");
+		presetManager.isModified = true;
 	}
 }
 

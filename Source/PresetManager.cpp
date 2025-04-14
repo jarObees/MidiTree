@@ -3,6 +3,7 @@
 
 namespace Preset
 {
+	//TODO: Add an isModified() parameter. Everytime that the user 
 	const juce::File PresetManager::defaultDirectory{ juce::File::getSpecialLocation(
 		juce::File::SpecialLocationType::userDocumentsDirectory)
 		.getChildFile(ProjectInfo::companyName)
@@ -27,6 +28,7 @@ namespace Preset
 		currentPreset.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
 		DBG("RULESET IN PRESET MANAGER CONSTRUCTION" << (apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetStringProperty, nullptr)));
 		DBG("Set the current preset");
+		isModified = false;
 	}
 
 	// Copies state of apvts and savesit to file.
@@ -76,7 +78,7 @@ namespace Preset
 		{
 			jassertfalse;
 		}
-
+		isModified = false;
 	}
 
 	// After passing the preset name, loads in said preset to the apvts. 
@@ -116,6 +118,8 @@ namespace Preset
 		apvts.replaceState(fuckedValueTree);
 		DBG("NOTES POOL IS: " << apvts.state.getProperty(apvtsPropIds::notesPoolVectorStringProperty));
 		currentPreset.setValue(presetName);
+
+		isModified = false;
 	}
 
 	void PresetManager::deletePreset(const juce::String& presetName)

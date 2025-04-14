@@ -31,13 +31,13 @@ The container simply has the generatedLString and the notesPool.
 */
 namespace Forest
 {
-	ForestManager::ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager)
-		: apvts(_apvts), presetManager(_presetManager), maxNumTrees(int(apvts.getParameter("forest")->getNormalisableRange().end))
+	ForestManager::ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager, juce::Array<int>& _currentNotesPool)
+		: apvts(_apvts), presetManager(_presetManager), maxNumTrees(int(apvts.getParameter("forest")->getNormalisableRange().end)), currentNotesPool(_currentNotesPool)
 	{
-
 		forestDataSlots.assign(maxNumTrees, { "", {} });
 		generatedLString.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
 		notesPool.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
+		midiTreeName.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
 		apvts.state.addListener(this);
 		DBG("Linked genLString/notesPool to property value");
 	}
@@ -59,20 +59,15 @@ namespace Forest
 	{
 		DBG("Attempting to plant =======================================================");
 
-		if (!generatedLString.getValue().isVoid())
+		if (!generatedLString.getValue().isVoid()) // If we were able to generate an L string, aka it's valid...
 		{
-			if (true) //TODO: FIX NTOE POOLS BUGGING OUT.
+			if (true)
 			{
 				auto& dataSlot = forestDataSlots[currentForestIndex];
-				dataSlot.first = generatedLString.getValue();
-				
-				juce::Array<int> extractedArray;
-				for (const auto& note : *notesPool.getValue().getArray())
-				{
-					DBG("Added " << (int)note << "to notes pool.");
-					extractedArray.add((int)note);
-				}
-				DBG("Successfully added notes to notesPool!");
+				dataSlot.first = generatedLString.getValue(); //TODO: Force user to save preset before using this.
+																	// Check to see if 
+														      // Get the name of the midiTree in first slot, notesPool in the second slot.
+				dataSlot.second = currentNotesPool;
 			}
 			else
 			{
@@ -105,5 +100,6 @@ namespace Forest
 	{
 		generatedLString.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
 		notesPool.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
+		midiTreeName.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
 	}
 }

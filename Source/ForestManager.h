@@ -15,7 +15,7 @@ namespace Forest
 		: public juce::Slider::Listener, juce::Button::Listener, juce::ValueTree::Listener
 	{
 	public:
-		ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager&);
+		ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager&, juce::Array<int>& currentNotesPool);
 		void configureTreeSlider(juce::Slider* slider);
 		void configureForestButton(juce::Button* button);
 		
@@ -24,13 +24,18 @@ namespace Forest
 		void valueTreeRedirected(juce::ValueTree& changedTree) override;
 	
 	private:
-		juce::Value generatedLString;
+		juce::Value generatedLString; // juce::String
 		juce::Value notesPool; // juce::Array<juce::var>
+		juce::Value midiTreeName; // juce::Array<juce::var>
+		juce::Array<int>& currentNotesPool;
 
 		juce::AudioProcessorValueTreeState& apvts;
 		const int maxNumTrees;
 		int currentForestIndex;
-		std::vector<std::pair<juce::String, juce::Array<int>>> forestDataSlots; // Slider will be indexing across this vector.
+
+		// Slider will be indexing across this vector.
+		// First pair value is the midiTree name, second is the notesPool.
+		std::vector<std::pair<juce::String, juce::Array<int>>> forestDataSlots;
 		
 		juce::Slider* forestSlider = nullptr;
 		juce::Button* forestButton = nullptr;

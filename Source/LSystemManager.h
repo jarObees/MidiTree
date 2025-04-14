@@ -8,7 +8,7 @@ namespace LSystemStuff
 		: public juce::TextEditor::Listener, juce::Button::Listener, juce::ValueTree::Listener
 	{
 	public:
-		LSystemManager(juce::AudioProcessorValueTreeState& _apvts);
+		LSystemManager(juce::AudioProcessorValueTreeState& _apvts, juce::Array<int>& curentNotesPool);
 		void configureAxiomInputTextEditor(juce::TextEditor* textEditor);
 		void configureRulesetInputTextEditor(juce::TextEditor* textEditor);
 		void configureGensKnob(juce::Slider* gensKnob);
@@ -18,12 +18,13 @@ namespace LSystemStuff
 	private:
 		void textEditorTextChanged(juce::TextEditor& textEditor) override;
 		void buttonClicked(juce::Button* button) override;
+		void setCurrentNotesPool();
 
-		//LSystemProcessor lSystemProcessor;
-		juce::Value axiomInputValue;
-		juce::Value rulesetInputValue;
-		juce::Value generatedStringValue;
-		juce::Value notesPoolValue;
+		// Values are used to keep non-auto params connceted to apvts as var properties of the apvts.
+		juce::Value axiomInputValue; //juce::String
+		juce::Value rulesetInputValue; //juce::String
+		juce::Value generatedStringValue; //juce::String
+		juce::Value notesPoolValue; // juce::Array<juce::var>
 
 		juce::TextEditor* axiomInputEditor = nullptr;
 		juce::TextEditor* rulesetInputEditor = nullptr;
@@ -31,6 +32,7 @@ namespace LSystemStuff
 		juce::Slider* gensKnob = nullptr;
 
 		juce::AudioProcessorValueTreeState& apvts;
+		juce::Array<int> &currentNotesPool;
 		std::unique_ptr<LSystemProcessor> lSystemProcessor;
 	};
 }

@@ -3,8 +3,8 @@
 
 // Implement the next layer of stuff. 
 // Now the actual shit that handles the growth logic for the l system shit.
-LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState& _apvts)
-	: apvts(_apvts)
+LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState& _apvts, juce::Array<int>& _currenNotesPool)
+	: apvts(_apvts), currentNotesPool(_currenNotesPool)
 {
 	axiomInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userAxiomStringProperty, nullptr));
 	rulesetInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetStringProperty, nullptr));
@@ -36,6 +36,7 @@ void LSystemStuff::LSystemManager::configureRulesetInputTextEditor(juce::TextEdi
 
 void LSystemStuff::LSystemManager::configureGrowButton(juce::Button* button)
 {
+
 	DBG("configured grow button");
 	growButton = button;
 	growButton->addListener(this);
@@ -49,13 +50,31 @@ void LSystemStuff::LSystemManager::configureGensKnob(juce::Slider* knob)
 	jassert(gensKnob != nullptr);
 }
 
+//TODO: Fix the shit not working properly.
+void LSystemStuff::LSystemManager::setCurrentNotesPool()
+{
+	DBG("Setting current notes pool");
+	if (!currentNotesPool.isEmpty())
+	{
+		DBG("Current Notes Pool Size: " << currentNotesPool.size());
+		currentNotesPool.clear();
+	}
+	juce::Array<juce::var> notesPoolTemp = *notesPoolValue.getValue().getArray(); // Should not be a nullptr, assuming generateNotesPool() succeeds.
+	for (auto& item : notesPoolTemp)
+	{
+		currentNotesPool.add(static_cast<int>(item));
+		DBG("Adding item to newNotesPool: " << item);
+	}
+}
+
 void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)
 {
 	DBG("button click detected");
+	DBG("Current Notes Pool Size: " << currentNotesPool.size());
 	if (button == growButton)
 	{
-		DBG("Grow button clicked.");
 		lSystemProcessor->growLSystem();
+		setCurrentNotesPool();
 	}
 }
 
@@ -78,7 +97,7 @@ void LSystemStuff::LSystemManager::textEditorTextChanged(juce::TextEditor& textE
 	}
 }
 
-// This is called every time a preset is loaded (or we apvts.replaceState()).
+// This is called every time a preset is loaded (and/or we apvts.replaceState()).
 void LSystemStuff::LSystemManager::valueTreeRedirected(juce::ValueTree& changedValueTree)
 {
 	DBG("Value tree redirected.");

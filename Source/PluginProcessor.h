@@ -64,19 +64,21 @@ public:
 
     std::atomic<float> genParam; // IS THE ONLY AUTOMATABLE VAR THAT SHOULDN'T REALLY BE.
     std::atomic<float> velParam;
+    std::atomic<float> noteType;
 	
 	// ==============================================================================================================
     std::vector<std::string> noteRateKeys;
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout() };
 
-
     float noteRate; // Contains float value of note fraction. (E.g 1/4 is stored as 0.25f)
     int midiAxiom; // Value representing the initial midi input by user. Should be set to -1 if no user input.
     
     static const inline juce::StringArray comboBoxNoteTypes{"Quarter", "Dotted"};
-    LSystemStuff::LSystemManager lSystemManager{ apvts };
-    Preset::PresetManager presetManager{apvts};
+    juce::Array<int> currentNotesPool;
+
+    LSystemStuff::LSystemManager lSystemManager{ apvts, currentNotesPool };
+    Preset::PresetManager presetManager{ apvts };
     Forest::ForestManager forestManager{ apvts, presetManager };
 private:
     static inline const std::unordered_map<std::string, float> noteRateMap = 

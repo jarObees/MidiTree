@@ -25,7 +25,7 @@ namespace Forest
 	
 	private:
 		juce::Value generatedLString;
-		juce::Value notesPool;
+		juce::Value notesPool; // juce::Array<juce::var>
 
 		juce::AudioProcessorValueTreeState& apvts;
 		const int maxNumTrees;

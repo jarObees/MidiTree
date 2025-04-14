@@ -28,10 +28,10 @@ public:
     std::vector<std::string> noteRateKeys;
     void saveLSystem(std::unordered_map<std::string, juce::ValueTree*>& nonAutomatableParams);
 private:
-    juce::Value& rulesetUserInput;
-    juce::Value& axiomUserInput;
-    juce::Value& generatedLString;
-    juce::Value& notesPool;
+    juce::Value& rulesetUserInput;          // juce::String
+    juce::Value& axiomUserInput;            // juce::String
+    juce::Value& generatedLString;          // juce::String
+    juce::Value& notesPool;                 // juce::Array<juce::var>
 
     juce::Slider*& generationsKnob; // Warning: this could be a nullptr at class's construction, so make sure to jassert that it isn't when we need it.
     int generationsNum;

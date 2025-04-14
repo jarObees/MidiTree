@@ -118,8 +118,6 @@ namespace Preset
 		apvts.replaceState(fuckedValueTree);
 		DBG("NOTES POOL IS: " << apvts.state.getProperty(apvtsPropIds::notesPoolVectorStringProperty));
 		currentPreset.setValue(presetName);
-
-		isModified = false;
 	}
 
 	void PresetManager::deletePreset(const juce::String& presetName)
@@ -152,7 +150,6 @@ namespace Preset
 		comboBox->setMouseCursor(juce::MouseCursor::PointingHandCursor);
 		comboBox->addListener(this);
 		loadPresetList();
-
 	}
 
 	void PresetManager::configureSaveButtonComponent(juce::Button* _saveButton)
@@ -193,6 +190,9 @@ namespace Preset
 			DBG("Combo Box Change detected.");
 			loadPreset(comboBox->getItemText(comboBox->getSelectedItemIndex()));
 		}
+		// After loading, our presetManager is fresh and set to false. 
+		// Have to declare here because reasons beyond my understanding. Don't touch it tho :)
+		isModified = false; 
 	}
 
 	// Refreshes preset list on comboBox component with the latest presets.

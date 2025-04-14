@@ -182,10 +182,10 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
     else
     {
         //DBG("Current notes pool------");
-        for (const auto& thing1 : currentNotesPool)
-        {
-            DBG(thing1);
-        }
+        //for (const auto& thing1 : currentNotesPool)
+        //{
+        //    DBG(thing1);
+        //}
         //DBG("-------------");
         return;
     }

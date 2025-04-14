@@ -1,5 +1,6 @@
 #include <JuceHeader.h>
 #include "ForestManager.h"
+#include "PresetManager.h"
 #include "Ids.h"
 
 //TODO: 
@@ -55,38 +56,47 @@ namespace Forest
 		forestSlider->addListener(this);
 	}
 
+	// Planting is the only place where we should interact with the PresetManager.
 	void ForestManager::plantTree()
 	{
 		DBG("Attempting to plant =======================================================");
 
-		if (!generatedLString.getValue().isVoid()) // If we were able to generate an L string, aka it's valid...
+		if (!generatedLString.getValue().isVoid()) // Guarantees that midiTree is valid and has been saved.
 		{
-			if (true)
+			if (!presetManager.isModified)
 			{
+				DBG("WE PLANTING IN THIS HOE!");
 				auto& dataSlot = forestDataSlots[currentForestIndex];
-				dataSlot.first = generatedLString.getValue(); //TODO: Force user to save preset before using this.
-																	// Check to see if 
-														      // Get the name of the midiTree in first slot, notesPool in the second slot.
+				dataSlot.first = midiTreeName.getValue();
 				dataSlot.second = currentNotesPool;
 			}
 			else
 			{
-				DBG(apvtsPropIds::notesPoolVectorStringProperty << "IS VOID");
+				DBG("Preset manager is currently modified!");
 				return;
 			}
+
 		}
 		else
 		{
-			DBG(apvtsPropIds::generatedLsysStringProperty << " IS VOID");
+			DBG("generatedLString is void!");
 			return;
 		}
 	}
 
 	void ForestManager::sliderValueChanged(juce::Slider* slider)
 	{
+		// If valid, set current notes pool to the one given by the forest.
+		// TODO: Fix thing going out of range.
 		if (forestSlider == slider)
 		{
-			currentForestIndex = forestSlider->getValue();
+			currentForestIndex = forestSlider->getValue() - 1;
+			DBG("Current tree: " << forestDataSlots[currentForestIndex].first);
+			auto notesPool = forestDataSlots[currentForestIndex].second;
+			if (!notesPool.isEmpty())
+			{
+				currentNotesPool = notesPool;
+			}
 		}
 	}
 	void ForestManager::buttonClicked(juce::Button* button)

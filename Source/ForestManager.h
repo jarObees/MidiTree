@@ -40,7 +40,7 @@ namespace Forest
 		juce::Slider* forestSlider = nullptr;
 		juce::Button* forestButton = nullptr;
 
-		const Preset::PresetManager& presetManager;
+		Preset::PresetManager& presetManager;
 
 		void plantTree();
 	};

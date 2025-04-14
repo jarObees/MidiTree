@@ -80,7 +80,6 @@ void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)
 void LSystemStuff::LSystemManager::textEditorTextChanged(juce::TextEditor& textEditor)
 {
 	DBG("Text editor(s) changed");
-	presetManager.isModified = true;
 	if (&textEditor == rulesetInputEditor)
 	{
 		rulesetInputValue = rulesetInputEditor->getText();

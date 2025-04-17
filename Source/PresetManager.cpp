@@ -3,7 +3,6 @@
 
 namespace Preset
 {
-	//TODO: Add an isModified() parameter. Everytime that the user 
 	const juce::File PresetManager::defaultDirectory{ juce::File::getSpecialLocation(
 		juce::File::SpecialLocationType::userDocumentsDirectory)
 		.getChildFile(ProjectInfo::companyName)
@@ -182,7 +181,8 @@ namespace Preset
 		}
 	}
 
-	// Geenral comboBoxChanged for any related button.
+	// TODO: What if user selects the same comboBox?
+	// Maybe add a reload button to refresh the current guy.
 	void PresetManager::comboBoxChanged(juce::ComboBox* changedComboBox)
 	{
 		if (changedComboBox == comboBox)

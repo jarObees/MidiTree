@@ -166,29 +166,18 @@ void MidiArpeggiatorAudioProcessor::getAutomatableParams()
 
 }
 
-// FOR NOW, WE WILL ASSUME THAT WE ARE NOT GOING TO CHANGE THE L SYSTEM DURING PLAY.
 void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-	//DBG("Processing Block==============");
-    getAutomatableParams();
     buffer.clear();
-
     if (currentNotesPool.isEmpty())
     {
-        //DBG("Empty notes pool!");
-        //DBG("Ignoring everything else...");
+        DBG("Notes pool empty, bypassing...");
+        midiMessages.clear();
         return;
     }
-    else
-    {
-        //DBG("Current notes pool------");
-        //for (const auto& thing1 : currentNotesPool)
-        //{
-        //    DBG(thing1);
-        //}
-        //DBG("-------------");
-        return;
-    }
+
+	DBG("Processing Block ==============");
+    getAutomatableParams();
     
     auto* playHead = getPlayHead();
     const int samplesPerBlock = buffer.getNumSamples(); // Number of samples per block
@@ -201,10 +190,8 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
     const double samplesPerQuarter = sampRate * secondsPerQuarterNote;
     const double samplesPerDotted = sampRate * secondsPerDottedNote;
 
-
-    const int samplesPerNote = (int(noteType) == 1) ? static_cast<int> (std::ceil(samplesPerQuarter * noteRate))
+    const int samplesPerNote = (int(noteType) == 0) ? static_cast<int> (std::ceil(samplesPerQuarter * noteRate))
                                                     : static_cast<int> (std::ceil(samplesPerDotted * noteRate));
-        
     // Checks for user midi input.
     int midiLocalPos = 0;
     bool ismidiTurnedOffInThisBlock = false;
@@ -219,17 +206,16 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
 			midiLocalPos = currentMessage.getTimeStamp();
 			isFirstNote = true;
 			isMidiHeldDown = true;
-            DBG("Midi Note On Received");
+            DBG("Midi Note On Message Received at " << currentMessage.getTimeStamp());
         }
-        /// TODO: Currently, since isMidiHeldDown is set to false, the main timer logic is skipped over, and as such the final note is not turned off.
-        /// We need to make sure that once we get a note off within the block, we 'cleanup' as in turn off any remaining notes that might be playing.
+
         else if (currentMessage.isNoteOff())
         {
 			isMidiHeldDown = false;
             mustTurnOff = true;
             DBG("midiNoteToPlay= " << midiNoteToPlay);
             DBG("isMiiHeldDown = FALSE");
-            DBG("Midi Note Off Received.");
+            DBG("Midi Note Off  Message Received." << currentMessage.getTimeStamp());
         }
     }
     midiMessages.clear();
@@ -237,9 +223,11 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
     // Handles the quantization for the first note and triggers a timer for all future notes.
     if (isFirstNote)
     {
+        DBG("Is first note...");
         // If the playhead is running...
         if (posInfoOpt.hasValue() && posInfoOpt->getIsPlaying())
         {
+            DBG("Playhead Running...");
             // Quantize note =====================
             // Grab Global Position.
             const int blockSamplePos = static_cast<int>(*posInfoOpt->getTimeInSamples());
@@ -248,6 +236,9 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
             DBG("FN Global Sample Position: " << globalSamplePos);
 
             // Find nearest future quantized sample pos.
+            //TODO: NEXT QUANTIZED NOTE IS NOT CORRECT.
+            // For some reason, the first is played twice.
+            // Maybe lets restrict the first note to only be played at the next sample position. aka don't allow it to be played at the very beginning. 
             const int samplesIntoQuantizedNote = globalSamplePos % samplesPerNote; // If 0, then we are at the quantized note.
             const int samplesToNextQuantizedNote = (samplesIntoQuantizedNote == 0) ? 0 : (samplesPerNote - samplesIntoQuantizedNote);
 
@@ -261,6 +252,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
         // Else if the user hasn't started the playhead (say in a live performance).
         else
         {
+            DBG("Playhead not active, live performance detected...");
             midiNoteToPlay = currentNotesPool[currentNote] + midiAxiom;
             DBG("FN *** Turning note on: " << midiNoteToPlay << " at sample: " << midiLocalPos);
             midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)127), midiLocalPos); // Plays the note.
@@ -286,7 +278,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
             DBG("*** Turning off" << midiNoteToPlay << " at sample: " << samplesToNextQuantizedNote);
             midiMessages.addEvent(juce::MidiMessage::noteOff(1, midiNoteToPlay), samplesToNextQuantizedNote); // Turn note off.
 
-            if (mustTurnOff != true) // If we need to play a note...
+            if (!mustTurnOff) // If we need to play a note...
             {
                 midiNoteToPlay = currentNotesPool[currentNote] + midiAxiom;
                 DBG("*** Turning note on: " << midiNoteToPlay << " at sample: " << samplesToNextQuantizedNote);
@@ -302,6 +294,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
 		timer += samplesPerBlock;
 	}
 	isFirstNote = false;
+    DBG("End -----");
 }
 
 //==============================================================================

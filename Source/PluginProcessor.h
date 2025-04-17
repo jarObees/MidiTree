@@ -64,7 +64,7 @@ public:
 
     std::atomic<float> genParam; // IS THE ONLY AUTOMATABLE VAR THAT SHOULDN'T REALLY BE.
     std::atomic<float> velParam;
-    std::atomic<float> noteType;
+    std::atomic<float> noteType; // 0 for quarterNote, 1 for dottedNote.
 	
 	// ==============================================================================================================
     std::vector<std::string> noteRateKeys;

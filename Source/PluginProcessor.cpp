@@ -198,9 +198,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
             : static_cast<int> (std::ceil(samplesPerDotted * noteRate));
         // Checks for user midi input.
         int midiLocalPos;
-        bool ismidiTurnedOffInThisBlock = false;
-        int firstNoteSamplePos;
-        for (const auto meta : midiMessages)
+        for (const auto& meta : midiMessages)
         {
             // Sets midiAxiom to note that was played.
             const auto currentMessage = meta.getMessage();
@@ -237,7 +235,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
                 lastNoteValue = -1;
             }
 
-            if (isMidiHeldDown == true) // Keep playing if MIDI note is held down.
+            if (isMidiHeldDown) // Keep playing if MIDI note is held down.
             {
                 auto midiNoteToPlay = currentNotesPool[notesPoolIndex] + midiAxiom;
                 DBG("Turning on: " << midiNoteToPlay << "at" << offset << " with velocity: " << velParam);

@@ -240,10 +240,10 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
             if (isMidiHeldDown == true) // Keep playing if MIDI note is held down.
             {
                 auto midiNoteToPlay = currentNotesPool[notesPoolIndex] + midiAxiom;
-                DBG("Turning on: " << midiNoteToPlay << "at" << offset);
+                DBG("Turning on: " << midiNoteToPlay << "at" << offset << " with velocity: " << velParam);
                 notesPoolIndex = (notesPoolIndex + 1) % currentNotesPool.size();
                 lastNoteValue = midiNoteToPlay;
-                midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)127), offset);
+                midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)velParam), offset);
             }
         }
 

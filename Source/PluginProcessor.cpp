@@ -99,13 +99,14 @@ void MidiArpeggiatorAudioProcessor::changeProgramName(int index, const juce::Str
 void MidiArpeggiatorAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
     sampRate = static_cast<float> (sampleRate); // Get samplerate
-    currentNote = 0;
-    midiNoteToPlay = -1;
+    notesPoolIndex = 0;
+    lastNoteValue = -1;
     // midiAxiom = -1; // Default state is set to -1.
 
     isFirstNote = false;
     isMidiHeldDown = false;
     mustTurnOff = false;
+    time = 0.0;
 }
 
 void MidiArpeggiatorAudioProcessor::releaseResources()
@@ -169,6 +170,7 @@ void MidiArpeggiatorAudioProcessor::getAutomatableParams()
 void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     buffer.clear();
+    currentNotesPool = { 0, 4, 7 };
     if (currentNotesPool.isEmpty())
     {
         DBG("Notes pool empty, bypassing...");
@@ -178,123 +180,76 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
 
 	DBG("Processing Block ==============");
     getAutomatableParams();
-    
+
     auto* playHead = getPlayHead();
-    const int samplesPerBlock = buffer.getNumSamples(); // Number of samples per block
-
-    // Sample Position
-    auto posInfoOpt = playHead->getPosition();
-    auto bpm = *posInfoOpt->getBpm();
-    const double secondsPerQuarterNote = 60.0 / bpm;
-    const double secondsPerDottedNote = secondsPerQuarterNote + (secondsPerQuarterNote / 2);
-    const double samplesPerQuarter = sampRate * secondsPerQuarterNote;
-    const double samplesPerDotted = sampRate * secondsPerDottedNote;
-
-    const int samplesPerNote = (int(noteType) == 0) ? static_cast<int> (std::ceil(samplesPerQuarter * noteRate))
-                                                    : static_cast<int> (std::ceil(samplesPerDotted * noteRate));
-    // Checks for user midi input.
-    int midiLocalPos = 0;
-    bool ismidiTurnedOffInThisBlock = false;
-    for (const auto meta : midiMessages)
+    if (playHead != nullptr)
     {
-        // Sets midiAxiom to note that was played.
-        const auto currentMessage = meta.getMessage();
-        if (currentMessage.isNoteOn())
+        const int samplesPerBlock = buffer.getNumSamples();
+
+        // Sample Position
+        auto posInfoOpt = playHead->getPosition();
+        auto bpm = *posInfoOpt->getBpm();
+        const double secondsPerQuarterNote = 60.0 / bpm;
+        const double secondsPerDottedNote = secondsPerQuarterNote + (secondsPerQuarterNote / 2);
+        const double samplesPerQuarter = sampRate * secondsPerQuarterNote;
+        const double samplesPerDotted = sampRate * secondsPerDottedNote;
+
+        const int samplesPerNote = (int(noteType) == 0) ? static_cast<int> (std::ceil(samplesPerQuarter * noteRate))
+            : static_cast<int> (std::ceil(samplesPerDotted * noteRate));
+        // Checks for user midi input.
+        int midiLocalPos;
+        bool ismidiTurnedOffInThisBlock = false;
+        int firstNoteSamplePos;
+        for (const auto meta : midiMessages)
         {
-			currentNote = 0; // Resets the note to first note in notePool, so that each midi triggers a new stream of lsys notes.
-            midiAxiom = currentMessage.getNoteNumber();
-			midiLocalPos = currentMessage.getTimeStamp();
-			isFirstNote = true;
-			isMidiHeldDown = true;
-            DBG("Midi Note On Message Received at " << currentMessage.getTimeStamp());
-        }
-
-        else if (currentMessage.isNoteOff())
-        {
-			isMidiHeldDown = false;
-            mustTurnOff = true;
-            DBG("midiNoteToPlay= " << midiNoteToPlay);
-            DBG("isMiiHeldDown = FALSE");
-            DBG("Midi Note Off  Message Received." << currentMessage.getTimeStamp());
-        }
-    }
-    midiMessages.clear();
-
-    // Handles the quantization for the first note and triggers a timer for all future notes.
-    if (isFirstNote)
-    {
-        DBG("Is first note...");
-        // If the playhead is running...
-        if (posInfoOpt.hasValue() && posInfoOpt->getIsPlaying())
-        {
-            DBG("Playhead Running...");
-            // Quantize note =====================
-            // Grab Global Position.
-            const int blockSamplePos = static_cast<int>(*posInfoOpt->getTimeInSamples());
-            const int globalSamplePos = blockSamplePos + midiLocalPos;
-            DBG("FN Block Sample Position: " << blockSamplePos);
-            DBG("FN Global Sample Position: " << globalSamplePos);
-
-            // Find nearest future quantized sample pos.
-            //TODO: NEXT QUANTIZED NOTE IS NOT CORRECT.
-            // For some reason, the first is played twice.
-            // Maybe lets restrict the first note to only be played at the next sample position. aka don't allow it to be played at the very beginning. 
-            const int samplesIntoQuantizedNote = globalSamplePos % samplesPerNote; // If 0, then we are at the quantized note.
-            const int samplesToNextQuantizedNote = (samplesIntoQuantizedNote == 0) ? 0 : (samplesPerNote - samplesIntoQuantizedNote);
-
-            midiNoteToPlay = currentNotesPool[currentNote] + midiAxiom;
-            DBG("FN*** Turning note on: " << midiNoteToPlay);
-            midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)127), samplesToNextQuantizedNote); // Plays the note.
-            currentNote = (currentNote + 1) % currentNotesPool.size(); // Goes to the next note, and loops over to the start once we get to end of sequence.
-            DBG("FN Last note value after note on = " << midiNoteToPlay);
-            timer = 0;
-        }
-        // Else if the user hasn't started the playhead (say in a live performance).
-        else
-        {
-            DBG("Playhead not active, live performance detected...");
-            midiNoteToPlay = currentNotesPool[currentNote] + midiAxiom;
-            DBG("FN *** Turning note on: " << midiNoteToPlay << " at sample: " << midiLocalPos);
-            midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)127), midiLocalPos); // Plays the note.
-            currentNote = (currentNote + 1) % currentNotesPool.size(); // Goes to the next note, and loops over to the start once we get to end of sequence.
-            DBG("FN Last note value after note on = " << midiNoteToPlay);
-            timer = 0;
-        }
-        timer += samplesPerBlock;
-    }
-
-    // Handles all note arpeggiation besides the first note based on the timer.
-	if (isMidiHeldDown == true && isFirstNote == false || mustTurnOff)
-	{
-        // Find nearest future quantized sample pos.
-        const int samplesIntoQuantizedNote = timer % samplesPerNote; // If 0, then we are at the quantized note.
-        const int samplesToNextQuantizedNote = (samplesIntoQuantizedNote == 0) ? 0 : (samplesPerNote - samplesIntoQuantizedNote);
-        
-        // Working through all the notes in the notePool.
-        if (samplesToNextQuantizedNote < samplesPerBlock || samplesIntoQuantizedNote == 0) // If a quantized note should be turned on/off within this block...
-        {
-            // We will always turn a note off...
-            DBG("Last note value is currently: " << midiNoteToPlay);
-            DBG("*** Turning off" << midiNoteToPlay << " at sample: " << samplesToNextQuantizedNote);
-            midiMessages.addEvent(juce::MidiMessage::noteOff(1, midiNoteToPlay), samplesToNextQuantizedNote); // Turn note off.
-
-            if (!mustTurnOff) // If we need to play a note...
+            // Sets midiAxiom to note that was played.
+            const auto currentMessage = meta.getMessage();
+            if (currentMessage.isNoteOn() && !isMidiHeldDown)
             {
-                midiNoteToPlay = currentNotesPool[currentNote] + midiAxiom;
-                DBG("*** Turning note on: " << midiNoteToPlay << " at sample: " << samplesToNextQuantizedNote);
-                midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)127), samplesToNextQuantizedNote); // Plays the note.
-                currentNote = (currentNote + 1) % currentNotesPool.size(); // Goes to the next note, and loops over to the start once we get to end of sequence.
-                DBG("Last note value after note on = " << midiNoteToPlay);
+                DBG("Note On: " << currentMessage.getNoteNumber() << " at time: " << currentMessage.getTimeStamp());
+                notesPoolIndex = 0; // Resets the note to first note in notePool, so that each midi triggers a new stream of lsys notes.
+                midiAxiom = currentMessage.getNoteNumber();
+                midiLocalPos = currentMessage.getTimeStamp();
+                isFirstNote = true;
+                isMidiHeldDown = true;
+                time = -midiLocalPos;
             }
-            else
+
+            else if (currentMessage.isNoteOff())
             {
-                mustTurnOff = false;
+                DBG("Note Off: " << currentMessage.getNoteNumber() << " at time: " << currentMessage.getTimeStamp());
+                isMidiHeldDown = false;
             }
         }
-		timer += samplesPerBlock;
-	}
-	isFirstNote = false;
-    DBG("End -----");
+        midiMessages.clear();
+
+        DBG("Time: " << time << "| samplesPerBlock " << samplesPerBlock << "| SUM: " << (time + samplesPerBlock));
+        DBG("Samples Per Note: " << samplesPerNote);
+        if ((time + samplesPerBlock) >= samplesPerNote || isFirstNote)
+        {
+            auto offset = isFirstNote ? midiLocalPos :
+                juce::jmax(0, juce::jmin((int)(samplesPerNote - time), samplesPerBlock - 1));
+
+            if (lastNoteValue > 0)
+            {
+                DBG("Turning off " << lastNoteValue << " at " << offset);
+                midiMessages.addEvent(juce::MidiMessage::noteOff(1, lastNoteValue), offset);
+                lastNoteValue = -1;
+            }
+
+            if (isMidiHeldDown == true) // Keep playing if MIDI note is held down.
+            {
+                auto midiNoteToPlay = currentNotesPool[notesPoolIndex] + midiAxiom;
+                DBG("Turning on: " << midiNoteToPlay << "at" << offset);
+                notesPoolIndex = (notesPoolIndex + 1) % currentNotesPool.size();
+                lastNoteValue = midiNoteToPlay;
+                midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)127), offset);
+            }
+        }
+
+        time = (time + samplesPerBlock) % samplesPerNote;
+        isFirstNote = false;
+    }
 }
 
 //==============================================================================

@@ -81,6 +81,7 @@ public:
     Forest::ForestManager forestManager{ apvts, presetManager, currentNotesPool };
     LSystemStuff::LSystemManager lSystemManager{ apvts, presetManager, currentNotesPool };
 private:
+    int time;
     static inline const std::unordered_map<std::string, float> noteRateMap = 
     {
         {"32/1", 32.0f}, {"16/1", 16.0f},
@@ -96,8 +97,8 @@ private:
     bool isMidiHeldDown;
     bool mustTurnOff;
     float sampRate;
-    int currentNote; // Index into note that is played in notesPool
-    int midiNoteToPlay; // Note number of note to-be-played
+    int notesPoolIndex; // Index into note that is played in notesPool
+    int lastNoteValue; // Note number of note to-be-played
     int timer; // Representts the time that has elapsed since the start of the note on output. 
     juce::SortedSet<int> notes;
 

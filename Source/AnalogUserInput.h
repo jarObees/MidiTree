@@ -29,7 +29,7 @@ namespace jive_gui
 			"Component",
 			{
 				{"flex-direction", "row"},
-				{"justify-content", "flex-start"},
+				{"justify-content", "space-between"},
 				{"width", "100%"},
 				{"height", 60},
 				{
@@ -60,7 +60,7 @@ namespace jive_gui
 			{
 				{"flex-direction", "column"},
 				{"align-items", "centre"},
-				{"justify-content", "flex-start"},
+				{"justify-content", "space-between"},
 				{"width", "100%"},
 				{"height", "80%"},
 				{
@@ -72,6 +72,10 @@ namespace jive_gui
 				},
 			},
 			{
+				getInputRow(),
+				getInputRow(),
+				getInputRow(),
+				getInputRow(),
 				getInputRow(),
 			}
 		};

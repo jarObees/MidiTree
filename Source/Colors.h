@@ -13,4 +13,8 @@ namespace jive_gui::colors
 	static const auto crown_primary = jive::parseColour("#5F7055");
 	static const auto crown_secondary = jive::parseColour("#97946B");
 	static const auto crown_highlight = jive::parseColour("#AEA151");
+
+	static const auto debug_primary = jive::parseColour("#EC00FF");
+	static const auto debug_secondary = jive::parseColour("#F57BFF");
+	static const auto debug_tertiary = jive::parseColour("#FBC8FF");
 }

@@ -19,6 +19,7 @@ LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState&
 
 void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEditor* textEditor)
 {
+	return;
 	DBG("Configuring axiom input text editor");
 	axiomInputEditor = textEditor;
 	axiomInputEditor->setText(axiomInputValue.toString());

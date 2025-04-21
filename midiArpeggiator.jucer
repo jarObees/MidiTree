@@ -6,6 +6,11 @@
               defines="JIVE_GUI_ITEMS_HAVE_STYLE_SHEETS=1&#10;" companyName="The Neighbor's Cat">
   <MAINGROUP id="tMID8o" name="midiArpeggiator">
     <GROUP id="{364A534D-7CD2-809C-2196-30E80E3205D4}" name="GUI">
+      <GROUP id="{7C7EFBE3-6AFF-60FE-E083-ED5532D19A06}" name="AnalogUserInput">
+        <FILE id="yqZ9nS" name="AnalogUserInput.h" compile="0" resource="0"
+              file="Source/AnalogUserInput.h"/>
+        <FILE id="VvAbtz" name="NoteWheel.h" compile="0" resource="0" file="Source/NoteWheel.h"/>
+      </GROUP>
       <GROUP id="{483EDA95-BB1B-8D9C-B965-108436522E99}" name="Components">
         <FILE id="TygFYk" name="ComponentGetter.h" compile="0" resource="0"
               file="Source/ComponentGetter.h"/>

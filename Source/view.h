@@ -9,6 +9,7 @@
 #include "Button.h"
 #include "SaveButtonView.h"
 #include "ComponentGetter.h"
+#include "AnalogUserInput.h"
 
 namespace jive_gui
 {
@@ -56,7 +57,8 @@ namespace jive_gui
 					},
 					{
 						jive::makeView<FilmstripKnobView>(224, 32, filmstripKnobHori, StringIds::forestSlider, true),
-						jive::makeView<TextEditorView>(80, 160, StringIds::rulesetTextbox, "100%", "50%"),
+						jive_gui::getAnalogUserInput(),
+						//jive::makeView<TextEditorView>(80, 160, StringIds::rulesetTextbox, "100%", "50%"),
 					},
 				},
 

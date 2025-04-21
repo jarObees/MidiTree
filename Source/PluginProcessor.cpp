@@ -332,14 +332,14 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
                 jassertfalse;
             
             // Ruleset Textbox ======================================================================================
-            if (auto* textEditorTingy = dynamic_cast<juce::TextEditor*>
-                (jive::findItemWithID(*editor, jive_gui::StringIds::rulesetTextbox)
-                 ->getComponent().get()))
-            {
-				lSystemManager.configureRulesetInputTextEditor(textEditorTingy);
-            }
-            else
-                jassertfalse;
+    //        if (auto* textEditorTingy = dynamic_cast<juce::TextEditor*>
+    //            (jive::findItemWithID(*editor, jive_gui::StringIds::rulesetTextbox)
+    //             ->getComponent().get()))
+    //        {
+				//lSystemManager.configureRulesetInputTextEditor(textEditorTingy);
+    //        }
+    //        else
+    //            jassertfalse;
             // Axiom Textbox. =============================================
             if (auto* axiomEditor = dynamic_cast<juce::TextEditor*>
                 (jive::findItemWithID(*editor, jive_gui::StringIds::axiomTextBox)

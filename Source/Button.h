@@ -1,5 +1,4 @@
 #pragma once
-// TODO: Finish implementing juce stuf.
 namespace jive_gui
 {
 	class Button

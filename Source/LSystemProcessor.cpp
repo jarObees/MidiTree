@@ -101,12 +101,10 @@ void LSystemProcessor::generateNotesPool()
     notesPool = notesPlus;
 }
 
-// Checks if the ruleset is valid, and if so, stores it in the class.
+// Checks if the ruleset is valid, and if so, stores it in this class.
 bool LSystemProcessor::setLSystemRulesAndVariables()
 {
     DBG("Setting L System Rules and Variables");
-    std::regex rulesetPattern("^[b#]?[1-7]=([b#]?[1-7])+$"); // Used to capture strings like, "1=#2b4", "4=2b34#4", etc...
-    std::regex variablePattern("[b#]?[1-7]"); // Individually captures strings like, "1", "#2", "b7"
 
     DBG("rulesetUserInput" << rulesetUserInput.toString().toStdString());
     // Iterates through and verifies each line in ruleSetInput.
@@ -209,9 +207,4 @@ std::unordered_map<std::string, std::string> LSystemProcessor::generateRuleset()
         map.emplace(leftHandSide, rightHandSide);
     }
     return map;
-}
-
-void LSystemProcessor::saveLSystem(std::unordered_map<std::string, juce::ValueTree*>& nonAutomatableParams)
-{
-    //
 }

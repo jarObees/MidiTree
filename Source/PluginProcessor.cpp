@@ -170,7 +170,8 @@ void MidiArpeggiatorAudioProcessor::getAutomatableParams()
 void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     buffer.clear();
-    currentNotesPool = { 0, 4, 7 };
+    // currentNotesPool = { 0, 4, 7 };
+    return;
     if (currentNotesPool.isEmpty())
     {
         DBG("Notes pool empty, bypassing...");

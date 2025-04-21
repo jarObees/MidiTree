@@ -16,17 +16,7 @@ public:
 
 
     // APVTS Processor ========================================================
-    // This shit has NO business being defined in the LSystemProcessor. It's only used in the audio processor stuff, so go define it over there.
-    static inline const std::unordered_map<std::string, float> noteRateMap = {
-        {"32/1", 32.0f}, {"16/1", 16.0f},
-        {"8/1", 8.0f}, {"4/1", 4.0f},
-        {"2/1", 2.0f}, {"1/1", 1.0f},
-        {"1/2", 0.5f}, {"1/4", 0.25f},
-        {"1/8", 0.125f}, {"1/16", 0.0625f},
-        {"1/32", 0.03125f}, {"1/64", 0.015625f}
-    };
     std::vector<std::string> noteRateKeys;
-    void saveLSystem(std::unordered_map<std::string, juce::ValueTree*>& nonAutomatableParams);
 private:
     juce::Value& rulesetUserInput;          // juce::String
     juce::Value& axiomUserInput;            // juce::String
@@ -44,6 +34,8 @@ private:
     void generateLString();
     void generateNotesPool();
 
+    std::regex rulesetPattern{"^[b#]?[1-7]=([b#]?[1-7])+$"}; // Used to capture strings like, "1=#2b4", "b4=2b34#4", etc...
+    std::regex variablePattern{"[b#]?[1-7]"}; // Individually captures strings like, "1", "#2", "b7"   
     std::string lsysAxiom;
     std::vector<LSystem> lSystems;
     void generateLSystem(const uint8_t& gens);

@@ -17,4 +17,11 @@ namespace jive_gui::colors
 	static const auto debug_primary = jive::parseColour("#EC00FF");
 	static const auto debug_secondary = jive::parseColour("#F57BFF");
 	static const auto debug_tertiary = jive::parseColour("#FBC8FF");
+
+	static const auto white = jive::parseColour("#FFFFFF");
+	static const auto black = jive::parseColour("#000000");
+	static const auto grey = jive::parseColour("#808080");
+	static const auto darkGray = jive::parseColour("#404040");
+	static const auto red = jive::parseColour("#FF0000");
+
 }

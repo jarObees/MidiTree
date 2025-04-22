@@ -43,10 +43,10 @@ namespace jive_gui
 					"Component",
 					{
 						{"align-items", "centre"},
-						{"flex-grow", 1.5}, //TODO: Adjust flex grow so that it's more fixed.
 						{"flex-direction", "column"},
 						{"height", "100%"},
 						{"padding", "10px"},
+						{"width", "80%"},
 						{
 							"style",
 								new jive::Object
@@ -68,9 +68,9 @@ namespace jive_gui
 					"Component",
 					{
 						{"align-items", "centre"},
-						{"flex-grow", 1},
 						{"height", "100%"},
 						{"padding", "10px"},
+						{"width", "20%"},
 						{
 							"style",
 								new jive::Object
@@ -150,8 +150,8 @@ namespace jive_gui
 		return juce::ValueTree{
 			"Editor",
 			{
-				{"width", 300},
-				{"height", 600},
+				{"width", 350},
+				{"height", 700},
 				{"align-items", "flex-start"},
 				{"justify-content", "centre"},
 				{"flex-direction", "column"},

@@ -34,21 +34,7 @@ namespace jive_gui
 
 		[[nodiscard]] inline auto getNoteWheel()
 		{
-			return juce::ValueTree
-			{
-				"Component",
-				{
-					{"width", "100%"},
-					{"height", "50%"},
-					{
-						"style",
-							new jive::Object
-							{
-								{ "background", jive::toVar(colors::grey)},
-							},
-					},
-				},
-			};
+			return jive::makeView<NoteWheel::NoteWheelView>();
 		}
 
 		[[nodiscard]] inline auto getInputBlockTop()
@@ -77,11 +63,12 @@ namespace jive_gui
 		// If rowNum == -1, then it indicates that inputBlock is an LH thing.
 		[[nodiscard]] inline auto getInputBlock(int rowNum, int columnNum)
 		{
-			std::string id = "ip" + std::to_string(rowNum) + std::to_string(columnNum);
+			juce::String id = "ip" + std::to_string(rowNum) + std::to_string(columnNum);
 			return juce::ValueTree
 			{
 				"Component",
 				{
+					{"id", id},
 					{"width", BLOCKWIDTH},
 					{"height", "100%" },
 					{"flex-direction", "column"},

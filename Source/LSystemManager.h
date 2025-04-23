@@ -21,7 +21,7 @@ namespace LSystemStuff
 		void buttonClicked(juce::Button* button) override;
 		void sliderValueChanged(juce::Slider* slider) override;
 		void setCurrentNotesPool();
-
+			
 		// Values are used to keep non-auto params connceted to apvts as var properties of the apvts.
 		juce::Value axiomInputValue; //juce::String
 		juce::Value rulesetInputValue; //juce::String

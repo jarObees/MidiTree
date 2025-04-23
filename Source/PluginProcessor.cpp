@@ -312,7 +312,6 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             jive::findItemWithID(*editor, jive_gui::StringIds::generationsKnob)
                 ->attachToParameter(apvts.getParameter("gens"), &undoManager);
             
-            
             // Links and sets up non-automatable parameters. ========================================================
             if (auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::StringIds::saveButton)
                  ->getComponent().get()))
@@ -401,7 +400,7 @@ void MidiArpeggiatorAudioProcessor::getStateInformation(juce::MemoryBlock& destD
     // as intermediaries to make it easy to save and load complex data.
     
     juce::MemoryOutputStream mos(destData, true); // TODO: Should this be true or not?
-    apvts.state.writeToStream(mos);
+    apvts.state.writeToStream(mos); // Everything should be saved to the apvts for simplicity.
 }
 
 //TODO: Figure out why this shit aint working.

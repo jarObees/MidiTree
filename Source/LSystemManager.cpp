@@ -29,6 +29,7 @@ void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEdito
 
 void LSystemStuff::LSystemManager::configureRulesetInputTextEditor(juce::TextEditor* textEditor)
 {
+	return;
 	DBG("Configuring ruleset input text editor");
 	rulesetInputEditor = textEditor;
 	rulesetInputEditor->setText("DEFAULT TEXT");
@@ -114,6 +115,8 @@ void LSystemStuff::LSystemManager::valueTreeRedirected(juce::ValueTree& changedV
 	rulesetInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetStringProperty, nullptr));
 	generatedStringValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
 	notesPoolValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
+
+	// When APVTS is refreshed, sets the values back to the appropriate ones. 
 	if (axiomInputEditor != nullptr && rulesetInputEditor != nullptr)
 	{
 		axiomInputEditor->setText(axiomInputValue.toString());

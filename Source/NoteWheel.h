@@ -1,11 +1,32 @@
-/*
-  ==============================================================================
-
-    noteWheel.h
-    Created: 21 Apr 2025 11:06:49am
-    Author:  werer
-
-  ==============================================================================
-*/
-
 #pragma once
+
+//namespace jive_gui
+//{
+//	namespace AnalogUserInput
+//	{
+//		class NoteWheelView
+//			: public jive::View
+//		{
+//		public:
+//			juce::ValueTree initialise() final
+//			{
+//				return juce::ValueTree{
+//					"Label",
+//					{
+//						{"id", sliderId},
+//					},
+//					{
+//					},
+//				};
+//			}
+//
+//			void setup(jive::GuiItem& item) final
+//			{
+//
+//			}
+//
+//		private:
+//
+//		};
+//	}
+//}

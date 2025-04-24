@@ -3,17 +3,17 @@ namespace jiveGui
 {
 	namespace AnalogUserInput
 	{
-		namespace OctaveInput
+		namespace DirectionInput
 		{
-			class OctavesInputView : public jive::View
+			class DirectionInputView : public jive::View
 			{
 			public:
-				OctavesInputView(int rowNum, int columnNum)
+				DirectionInputView(int rowNum, int columnNum)
 					: rowNum(rowNum), columnNum(columnNum)
 				{
-					id = rowColIdMaker("oi", rowNum, columnNum);
+					id = rowColIdMaker("di", rowNum, columnNum);
 				}
-				
+
 				juce::ValueTree initialise()
 				{
 					return juce::ValueTree{
@@ -22,10 +22,10 @@ namespace jiveGui
 							{"id", id},
 							{"width", "100%"},
 							{"height", "25%"},
-							{"max", 2},
+							{"max", 1},
 							{"min", 0},
 							{"interval", "1"},
-							{"orientation", "vertical"},
+							{"orientation", "horizontal"},
 							{"align-content", "centre"},
 							{"justify-content", "centre"},
 						},
@@ -43,7 +43,7 @@ namespace jiveGui
 						onValueChange = std::make_unique<jive::Event>(item.state, "on-change");
 						onValueChange->onTrigger = [this, stripSlider]()
 							{
-								DBG("Octave Input Changed! Value: " << stripSlider->getValue());
+								DBG("Dierction Changed! Value: " << stripSlider->getValue());
 							};
 					}
 					else

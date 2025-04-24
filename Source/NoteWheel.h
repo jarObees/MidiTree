@@ -78,7 +78,7 @@ namespace jiveGui
 						textProperty = std::make_unique<jive::Property<juce::String>>(item.state.getChild(0), "text");
 						onValueChange->onTrigger = [this, stripSlider]()
 						{
-							DBG("Value changed!");
+							DBG("Note Wheel changed! Value: " << stripSlider->getValue());
 							int index = static_cast<int>(stripSlider->getValue());
 							textProperty->set(intervals[index]);
 						};

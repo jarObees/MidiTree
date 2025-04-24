@@ -1,6 +1,7 @@
 #pragma once
 #include "NoteWheel.h"
 #include "OctavesInput.h"
+#include "DirectionInput.h"
 
 // NOTE: For each block, the id will be "ipxy", where x is the row number, and y is the column (0 indexed). 
 // If y = -1, then it's the LH side of a ruleset.
@@ -15,21 +16,7 @@ namespace jiveGui
 
 		[[nodiscard]] inline auto getInputBlockBottom(int rowNum, int columnNum)
 		{
-			return juce::ValueTree
-			{
-				"Component",
-				{
-					{"width", "100%"},
-					{"height", "25%"},
-					{
-						"style",
-							new jive::Object
-							{
-								{ "background", jive::toVar(colors::darkGray)},
-							},
-					},
-				}
-			};
+			return jive::makeView<DirectionInput::DirectionInputView>(rowNum, columnNum);
 		}
 
 		[[nodiscard]] inline auto getNoteWheel(int rowNum, int columnNum)

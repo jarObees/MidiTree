@@ -11,7 +11,7 @@
 #include "ComponentGetter.h"
 #include "AnalogUserInput.h"
 
-namespace jive_gui
+namespace jiveGui
 {
 
 	// MAIN COMPONENTS ==========================================================
@@ -57,7 +57,7 @@ namespace jive_gui
 					},
 					{
 						jive::makeView<FilmstripKnobView>(224, 32, filmstripKnobHori, StringIds::forestSlider, true),
-						jive_gui::AnalogUserInput::getAnalogUserInput(),
+						jiveGui::AnalogUserInput::getAnalogUserInput(),
 						//jive::makeView<TextEditorView>(80, 160, StringIds::rulesetTextbox, "100%", "50%"),
 					},
 				},

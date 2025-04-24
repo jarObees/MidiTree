@@ -265,8 +265,8 @@ std::unordered_map<std::string, juce::Image> MidiArpeggiatorAudioProcessor::getI
                                                                          BinaryData::knobTestWhite_pngSize);
     juce::Image horiSliderWhiteFilmstrip = juce::ImageFileFormat::loadFrom(BinaryData::_128_HORISLIDER_FILMSTRIP_png, 
                                                                            BinaryData::_128_HORISLIDER_FILMSTRIP_pngSize);
-	imageCollection[jive_gui::ImageIds::mainKnobFilmstrip] = knobTestWhiteFilmstrip;
-	imageCollection[jive_gui::ImageIds::horiKnobFilmstrip] = horiSliderWhiteFilmstrip;
+	imageCollection[jiveGui::ImageIds::mainKnobFilmstrip] = knobTestWhiteFilmstrip;
+	imageCollection[jiveGui::ImageIds::horiKnobFilmstrip] = horiSliderWhiteFilmstrip;
 	return imageCollection;
 }
 juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
@@ -278,7 +278,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
     // SETUP some basic stuff.
 	imageCollection = getImages(); // Images have to be retrieved during runtime not compile time.
 
-    view = jive_gui::getView(imageCollection);
+    view = jiveGui::getView(imageCollection);
 
     if (auto editor = viewInterpreter.interpret(view, this))
     {
@@ -288,7 +288,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             viewInterpreter.listenTo(*editor);
             
 			// Attaches/Configures automatable parameters. ========================================================
-            if (auto* comboBoxTingy = dynamic_cast<juce::ComboBox*>(jive::findItemWithID(*editor, jive_gui::StringIds::noteTypeComboBox)
+            if (auto* comboBoxTingy = dynamic_cast<juce::ComboBox*>(jive::findItemWithID(*editor, jiveGui::StringIds::noteTypeComboBox)
                                                                     ->getComponent().get()))
             {
                 comboBoxTingy->addItem(comboBoxNoteTypes[0], 1);
@@ -297,23 +297,23 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             }
             else
                 jassertfalse;
-            jive::findItemWithID(*editor, jive_gui::StringIds::noteTypeComboBox)
+            jive::findItemWithID(*editor, jiveGui::StringIds::noteTypeComboBox)
                 ->attachToParameter(apvts.getParameter("noteType"), &undoManager);
-            jive::findItemWithID(*editor, jive_gui::StringIds::noteRateKnob)
+            jive::findItemWithID(*editor, jiveGui::StringIds::noteRateKnob)
                 ->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
-            jive::findItemWithID(*editor, jive_gui::StringIds::noteRateKnobText)
+            jive::findItemWithID(*editor, jiveGui::StringIds::noteRateKnobText)
                 ->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
-            jive::findItemWithID(*editor, jive_gui::StringIds::midiVelocityKnob)
+            jive::findItemWithID(*editor, jiveGui::StringIds::midiVelocityKnob)
                 ->attachToParameter(apvts.getParameter("vel"), &undoManager);
-            jive::findItemWithID(*editor, jive_gui::StringIds::midiVelocityKnobText)
+            jive::findItemWithID(*editor, jiveGui::StringIds::midiVelocityKnobText)
                 ->attachToParameter(apvts.getParameter("vel"), &undoManager);
-            jive::findItemWithID(*editor, jive_gui::StringIds::forestSlider)
+            jive::findItemWithID(*editor, jiveGui::StringIds::forestSlider)
                 ->attachToParameter(apvts.getParameter("forest"), &undoManager);
-            jive::findItemWithID(*editor, jive_gui::StringIds::generationsKnob)
+            jive::findItemWithID(*editor, jiveGui::StringIds::generationsKnob)
                 ->attachToParameter(apvts.getParameter("gens"), &undoManager);
             
             // Links and sets up non-automatable parameters. ========================================================
-            if (auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jive_gui::StringIds::saveButton)
+            if (auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jiveGui::StringIds::saveButton)
                  ->getComponent().get()))
             {
                 presetManager.configureSaveButtonComponent(saveButtonTingy);
@@ -322,7 +322,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             else
                 jassertfalse;
             if (auto* presetComboBox = dynamic_cast<juce::ComboBox*>
-                (jive::findItemWithID(*editor, jive_gui::StringIds::presetComboBox)
+                (jive::findItemWithID(*editor, jiveGui::StringIds::presetComboBox)
                  ->getComponent().get()))
             {
                 presetManager.configureComboBoxComponent(presetComboBox);
@@ -332,7 +332,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             
             // Ruleset Textbox ======================================================================================
     //        if (auto* textEditorTingy = dynamic_cast<juce::TextEditor*>
-    //            (jive::findItemWithID(*editor, jive_gui::StringIds::rulesetTextbox)
+    //            (jive::findItemWithID(*editor, jiveGui::StringIds::rulesetTextbox)
     //             ->getComponent().get()))
     //        {
 				//lSystemManager.configureRulesetInputTextEditor(textEditorTingy);
@@ -341,7 +341,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
     //            jassertfalse;
             // Axiom Textbox. =============================================
             if (auto* axiomEditor = dynamic_cast<juce::TextEditor*>
-                (jive::findItemWithID(*editor, jive_gui::StringIds::axiomTextBox)
+                (jive::findItemWithID(*editor, jiveGui::StringIds::axiomTextBox)
                  ->getComponent().get()))
             {
                 lSystemManager.configureAxiomInputTextEditor(axiomEditor);
@@ -350,7 +350,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
                 jassertfalse;
 			// Grow Button =========================================================================================
 			if (auto* growButton = dynamic_cast<juce::Button*>
-				(jive::findItemWithID(*editor, jive_gui::StringIds::growButton)
+				(jive::findItemWithID(*editor, jiveGui::StringIds::growButton)
 				 ->getComponent().get()))
 			{
 				lSystemManager.configureGrowButton(growButton);
@@ -358,7 +358,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 			else
 				jassertfalse;
 			if (auto* gensKnob = dynamic_cast<juce::Slider*>
-				(jive::findItemWithID(*editor, jive_gui::StringIds::generationsKnob)
+				(jive::findItemWithID(*editor, jiveGui::StringIds::generationsKnob)
 				 ->getComponent().get()))
 			{
 				lSystemManager.configureGensKnob(gensKnob);
@@ -367,7 +367,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 				jassertfalse;
             // Forest Manager ========================================================================================
             if (auto* forestSlider = dynamic_cast<juce::Slider*>
-                (jive::findItemWithID(*editor, jive_gui::StringIds::forestSlider)
+                (jive::findItemWithID(*editor, jiveGui::StringIds::forestSlider)
                  ->getComponent().get()))
             {
                 forestManager.configureTreeSlider(forestSlider);
@@ -375,7 +375,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             else
                 jassertfalse;
             if (auto* forestButton = dynamic_cast<juce::Button*>
-                (jive::findItemWithID(*editor, jive_gui::StringIds::plantButton)
+                (jive::findItemWithID(*editor, jiveGui::StringIds::plantButton)
                  ->getComponent().get()))
             {
                 forestManager.configureForestButton(forestButton);

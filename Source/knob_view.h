@@ -1,6 +1,6 @@
 #pragma once
 #include <jive_core/jive_core.h>
-namespace jive_gui
+namespace jiveGui
 {
 	class KnobWithLabel
 	{

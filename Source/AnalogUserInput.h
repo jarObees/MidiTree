@@ -1,19 +1,19 @@
 #pragma once
 #include "NoteWheel.h"
+#include "OctavesInput.h"
 
 // NOTE: For each block, the id will be "ipxy", where x is the row number, and y is the column (0 indexed). 
 // If y = -1, then it's the LH side of a ruleset.
-namespace jive_gui
+namespace jiveGui
 {
 	namespace AnalogUserInput
 	{
-
 		const int NUMBLOCKCOLUMNS = 8;
 		const int NUMBLOCKROWS = 5;
 		const int BLOCKHEIGHT = 75;
 		const int BLOCKWIDTH = 25;
 
-		[[nodiscard]] inline auto getInputBlockBottom()
+		[[nodiscard]] inline auto getInputBlockBottom(int rowNum, int columnNum)
 		{
 			return juce::ValueTree
 			{
@@ -32,38 +32,21 @@ namespace jive_gui
 			};
 		}
 
-		[[nodiscard]] inline auto getNoteWheel()
+		[[nodiscard]] inline auto getNoteWheel(int rowNum, int columnNum)
 		{
-			return jive::makeView<NoteWheel::NoteWheelView>();
+			return jive::makeView<NoteWheel::NoteWheelView>(rowNum, columnNum);
 		}
 
-		[[nodiscard]] inline auto getInputBlockTop()
+		[[nodiscard]] inline auto getInputBlockTop(int rowNum, int columnNum)
 		{
-			return juce::ValueTree
-			{
-				"Component",
-				{
-					{"width", "100%"},
-					{"height", "25%"},
-					{
-						"style",
-							new jive::Object
-							{
-								{ "background", jive::toVar(colors::white)},
-							},
-					},
-				},
-				{
-
-				}
-			};
+			return jive::makeView<OctaveInput::OctavesInputView>(rowNum, columnNum);
 		}
 
 		// Height is defined in getInputRow()
 		// If rowNum == -1, then it indicates that inputBlock is an LH thing.
 		[[nodiscard]] inline auto getInputBlock(int rowNum, int columnNum)
 		{
-			juce::String id = "ip" + std::to_string(rowNum) + std::to_string(columnNum);
+			const juce::String id = rowColIdMaker("ib", rowNum, columnNum);
 			return juce::ValueTree
 			{
 				"Component",
@@ -72,8 +55,7 @@ namespace jive_gui
 					{"width", BLOCKWIDTH},
 					{"height", "100%" },
 					{"flex-direction", "column"},
-					{
-						"style",
+					{"style",
 							new jive::Object
 							{
 								{ "background", jive::toVar(colors::debug_tertiary)},
@@ -81,9 +63,9 @@ namespace jive_gui
 					},
 				},
 				{
-					getInputBlockTop(),
-					getNoteWheel(),
-					getInputBlockBottom(),
+					getInputBlockTop(rowNum, columnNum),
+					getNoteWheel(rowNum, columnNum),
+					getInputBlockBottom(rowNum, columnNum),
 				}
 			};
 		}

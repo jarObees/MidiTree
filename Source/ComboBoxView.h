@@ -2,7 +2,7 @@
 
 // Args: (int width, int height, juce::StringArray comboBoxItems, std::string comboBoxId)
 //TODO: Why is this shit invisible.
-namespace jive_gui
+namespace jiveGui
 {
 	class ComboBoxView : public jive::View
 	{

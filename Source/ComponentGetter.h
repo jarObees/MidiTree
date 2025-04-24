@@ -4,7 +4,7 @@
 
 // Contains the actual getters for components and stuff to keep it clean.
 
-namespace jive_gui
+namespace jiveGui
 {
 	std::unordered_map<std::string, juce::Image> imageMap;
 	[[noexcept]] inline auto getMidiVelocityKnob(std::unordered_map<std::string, juce::Image>& imageCollection)

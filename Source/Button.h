@@ -1,5 +1,5 @@
 #pragma once
-namespace jive_gui
+namespace jiveGui
 {
 	class Button
 	{
@@ -65,7 +65,7 @@ namespace jive_gui
 						"style",
 							new jive::Object
 							{
-								{ "background", jive::toVar(jive_gui::colors::ground_tertiary)},
+								{ "background", jive::toVar(jiveGui::colors::ground_tertiary)},
 							},
 					},
 				},

@@ -15,6 +15,10 @@ namespace LSystemStuff
 		void configureGensKnob(juce::Slider* gensKnob);
 		void configureGrowButton(juce::Button* button);
 		void configureAnalogUserInput(juce::Component* analogUserInputComponent, const int numBlockRows, const int numBlockColumns);
+		void configureInputBlockTop(juce::Component* octaveBlockTopComponent);
+		void configureNoteWheel(juce::Slider* noteWheel);
+		void configureInputBlockBottom(juce::Component* inputBlockBottomComponent);
+
 	private:
 		void valueTreeRedirected(juce::ValueTree& changedValueTree) override;
 		void valueTreePropertyChanged(juce::ValueTree& tree, const juce::Identifier& property) override;

@@ -4,6 +4,7 @@
 //TODO: One day refactor these to just be under the same namespace. Not important for now lol.
 namespace jiveGui
 {
+
 	// All ID's for a component should be stored here.
 	namespace StringIds
 	{

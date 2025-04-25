@@ -26,6 +26,11 @@ void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEdito
 	axiomInputEditor->setInputRestrictions(1); // Restricts axiom to one character.
 	axiomInputEditor->addListener(this);
 }
+void LSystemStuff::LSystemManager::configureInputBlockTop(juce::Component* inputBlockTopComponent)
+{
+	//juce::Slider* octavesInput = dynamic_cast<juce::Slider*>(inputBlockTopComponent);
+	//jassert(octavesInput != nullptr);
+}
 
 void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* analogUserInputComponent, 
 															const int numBlockRows, 
@@ -47,13 +52,14 @@ void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* ana
 					{
 						if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockTop))
 						{
-							DBG("Found an input block top!");
 							// Configure inputBlockTop.
+							DBG("Found an input block top!");
+							configureInputBlockTop(blockChild);
 						}
 						else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::noteWheel))
 						{
 							DBG("Found a note wheel!");
-							// Confgiure noteWheel.
+							// Configure noteWheel.
 						}
 						else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockBottom))
 						{
@@ -65,40 +71,6 @@ void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* ana
 			}
 		}
 	}
-
-	//for (auto* rowComponent : children)
-	//{
-	//	int rowChildCount = rowComponent->getNumChildComponents();
-	//	jassert(rowComponent != nullptr);
-
-	//	for (int i = 0; i < rowComponent->getNumChildComponents(); ++i)
-	//	{
-	//		if (i == 0) 
-	//		{
-	//			auto* axiomInputBlock = rowComponent->getChildComponent(i); // First child should be the axiom...
-	//			int numChildren = axiomInputBlock->getNumChildComponents();
-
-	//			//jassert(axiomInputBlock->getNumChildComponents() == 3);
-	//			jassert(axiomInputBlock != nullptr);
-	//			i += 1; // And then skip over the spacer. 
-	//			continue;
-	//		}
-	//		auto* rulesetInputBlock = rowComponent->getChildComponent(i); // Get InputBlock
-	//		jassert(rulesetInputBlock != nullptr);
-	//		jassert(rulesetInputBlock->getNumChildComponents() == 3);
-
-	//		auto* inputBlockTop = rulesetInputBlock->getChildComponent(0);
-	//		jassert(inputBlockTop != nullptr);
-	//		//CONFIGURE INPUTBLOCKTOP
-	//		auto* noteWheel = rulesetInputBlock->getChildComponent(1);
-	//		jassert(noteWheel != nullptr);
-	//		//CONFIGURE NOTEWHEEL
-	//		auto* inputBlockBottom = rulesetInputBlock->getChildComponent(2);
-	//		jassert(inputBlockBottom != nullptr);
-	//		//CONFIGURE INPUTBLOCKBOTTOM
-	//	}
-
-	//}
 }
 
 void LSystemStuff::LSystemManager::configureRulesetInputTextEditor(juce::TextEditor* textEditor)

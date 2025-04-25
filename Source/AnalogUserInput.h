@@ -30,10 +30,11 @@ namespace jiveGui
 		}
 
 		// Height is defined in getInputRow()
-		// If rowNum == -1, then it indicates that inputBlock is an LH thing.
+		// If rowNum == -1, then it indicates that inputBlock is a LH rule.
+		// Children order: BlockTop, noteWheel, BlockBottom
 		[[nodiscard]] inline auto getInputBlock(int rowNum, int columnNum)
 		{
-			const juce::String id = rowColIdMaker("ib", rowNum, columnNum);
+			const juce::String id = rowColIdMaker(IdPrefix::inputBlock, rowNum, columnNum);
 			return juce::ValueTree
 			{
 				"Component",
@@ -78,13 +79,16 @@ namespace jiveGui
 			};
 		}
 
-		// Composes each row. 
+		// Composes each row.
+		// Children  (in order) = inputBlock, inputBlockSpacer, n inputBlocks
 		[[nodiscard]] inline auto getInputRow(int i)
 		{
+			const juce::String idTing = rowColIdMaker(IdPrefix::inputRow, i, 0);
 			juce::ValueTree row
 			{
 				"Component",
 				{
+					{"id", idTing},
 					{"flex-direction", "row"},
 					{"justify-content", "space-between"},
 					{"width", "100%"},
@@ -110,12 +114,15 @@ namespace jiveGui
 		}
 
 		// MAIN COMPONENT =================================================================
-		[[nodiscard]] inline auto getAnalogUserInput()
+		// Children: n InputRows;
+		[[nodiscard]] inline juce::ValueTree getAnalogUserInput()
 		{
+			DBG("Getting analog user input");
 			juce::ValueTree slots
 			{
 				"Component",
 				{
+					{"id", StringIds::analogUserInput},
 					{"flex-direction", "column"},
 					{"align-items", "centre"},
 					{"justify-content", "space-between"},
@@ -130,7 +137,6 @@ namespace jiveGui
 					},
 				},
 			};
-			
 			// Adds each row of blocks to the bigger AnalogUserInput component.
 			for (int i = 0; i < NUMBLOCKROWS; ++i)
 			{

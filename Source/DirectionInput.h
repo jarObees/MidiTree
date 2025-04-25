@@ -11,7 +11,7 @@ namespace jiveGui
 				DirectionInputView(int rowNum, int columnNum)
 					: rowNum(rowNum), columnNum(columnNum)
 				{
-					id = rowColIdMaker("di", rowNum, columnNum);
+					id = rowColIdMaker(IdPrefix::directionInput, rowNum, columnNum);
 				}
 
 				juce::ValueTree initialise()

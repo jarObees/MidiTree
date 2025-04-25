@@ -339,7 +339,15 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
     //        }
     //        else
     //            jassertfalse;
+
             // Axiom Textbox. =============================================
+            if (auto* analogUserInput = jive::findItemWithID(*editor, jiveGui::StringIds::analogUserInput)
+                ->getComponent().get())
+            {
+                lSystemManager.configureAnalogUserInput(analogUserInput, jiveGui::AnalogUserInput::NUMBLOCKROWS, jiveGui::AnalogUserInput::NUMBLOCKCOLUMNS);
+            }
+            else
+                jassertfalse;
             if (auto* axiomEditor = dynamic_cast<juce::TextEditor*>
                 (jive::findItemWithID(*editor, jiveGui::StringIds::axiomTextBox)
                  ->getComponent().get()))

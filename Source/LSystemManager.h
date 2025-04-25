@@ -14,6 +14,7 @@ namespace LSystemStuff
 		void configureRulesetInputTextEditor(juce::TextEditor* textEditor);
 		void configureGensKnob(juce::Slider* gensKnob);
 		void configureGrowButton(juce::Button* button);
+		void configureAnalogUserInput(juce::Component* analogUserInputComponent, const int numBlockRows, const int numBlockColumns);
 	private:
 		void valueTreeRedirected(juce::ValueTree& changedValueTree) override;
 		void valueTreePropertyChanged(juce::ValueTree& tree, const juce::Identifier& property) override;

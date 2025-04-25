@@ -8,7 +8,7 @@ namespace jiveGui
 		[[nodiscard]] const juce::String rowColIdMaker(const juce::String prefix, const int rowNum, const int columnNum)
 		{
 			juce::String id = prefix + static_cast<juce::String>(rowNum) + static_cast<juce::String>(columnNum);
-			DBG("Octave Button Id: " << id);
+			DBG("Id Made! : " << id);
 			return id;
 		}
 
@@ -23,7 +23,7 @@ namespace jiveGui
 				NoteWheelView(int rowNum, int columnNum)
 					: rowNum(rowNum), columnNum(columnNum)
 				{
-					id = rowColIdMaker("nw", rowNum, columnNum);
+					id = rowColIdMaker(IdPrefix::noteWheel, rowNum, columnNum);
 				}
 
 				juce::ValueTree initialise() final

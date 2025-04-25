@@ -1,4 +1,6 @@
 #pragma once
+#include "Ids.h"
+
 namespace jiveGui
 {
 	namespace AnalogUserInput
@@ -11,7 +13,7 @@ namespace jiveGui
 				OctavesInputView(int rowNum, int columnNum)
 					: rowNum(rowNum), columnNum(columnNum)
 				{
-					id = rowColIdMaker("oi", rowNum, columnNum);
+					id = rowColIdMaker(IdPrefix::octavesInput, rowNum, columnNum);
 				}
 				
 				juce::ValueTree initialise()

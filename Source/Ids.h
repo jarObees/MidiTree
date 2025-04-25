@@ -21,6 +21,18 @@ namespace jiveGui
 		const juce::String noteTypeComboBox{ "noteType-comboBox" };
 		const juce::String nameTextBox{ "name-textBox" };
 		const juce::String axiomTextBox{ "axiom-textBox" };
+		const juce::String analogUserInput{ "aui" };
+	}
+	namespace IdPrefix // Should only be two characters
+	{
+		const juce::String inputBlock{ "ib" };
+		const juce::String inputBlockAxiom{ "ia" };
+		const juce::String noteWheel{ "nw" };
+		const juce::String inputBlockTop{ "ibt" };
+		const juce::String inputBlockBottom{ "ibb" };
+		const juce::String octavesInput{ "oi" };
+		const juce::String directionInput{ "di" };
+		const juce::String inputRow{ "ir" };
 	}
 	namespace ImageIds
 	{

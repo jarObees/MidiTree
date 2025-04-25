@@ -4,7 +4,13 @@
 //TODO: One day refactor these to just be under the same namespace. Not important for now lol.
 namespace jiveGui
 {
-
+	// Creates an ID with the form "prefixXY" where X and Y are the row and column respectively.
+	[[nodiscard]] inline const juce::String rowColIdMaker(const juce::String prefix, const int rowNum, const int columnNum)
+	{
+		juce::String id = prefix + static_cast<juce::String>(rowNum) + static_cast<juce::String>(columnNum);
+		DBG("Id Made! : " << id);
+		return id;
+	}
 	// All ID's for a component should be stored here.
 	namespace StringIds
 	{

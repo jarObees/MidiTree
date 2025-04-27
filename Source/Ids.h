@@ -58,3 +58,10 @@ namespace apvtsPropIds
 	static const juce::Identifier notesPoolVectorStringProperty{ "notesPoolNode" };
 	static const juce::Identifier presetNameProperty{ "presetNameProperty" };
 }
+
+namespace dummyApvtsParams
+{
+	const juce::String noteWheelParam{ "dnw" };
+	const juce::String octavesParam{ "doi" };
+	const juce::String directionParam{ "ddi" };
+}

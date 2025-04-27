@@ -462,10 +462,39 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
  }
 
 juce::AudioProcessorValueTreeState::ParameterLayout
-MidiArpeggiatorAudioProcessor::createNonAutoParamaterLayout()
+MidiArpeggiatorAudioProcessor::createNonAutoParamaterLayout(int numRows, int numColumns)
 {
     juce::AudioProcessorValueTreeState::ParameterLayout params;
-
+    for (int rowNum = 0; rowNum < numRows; ++rowNum)
+    {
+        for (int columnNum = -1; columnNum < numColumns; ++columnNum) // Start at -1 to account for axiom, which is at column -1. Sorry in advance.
+        {
+            // Note Wheel Param
+            params.add(std::make_unique<juce::AudioParameterInt>(jiveGui::rowColIdMaker(dummyApvtsParams::noteWheelParam, 
+                                                                                        rowNum, 
+                                                                                        columnNum), 
+                                                                 "Note Wheel", 
+                                                                 0,
+                                                                 12,
+                                                                 0)); // Displays "-"
+            // Direction Param
+			params.add(std::make_unique<juce::AudioParameterInt>(jiveGui::rowColIdMaker(dummyApvtsParams::directionParam,
+																						rowNum,
+																						columnNum),
+																 "Direction",
+																 0, // Ascending
+																 1, // Descending
+																 0));
+			// Octave Param
+			params.add(std::make_unique<juce::AudioParameterInt>(jiveGui::rowColIdMaker(dummyApvtsParams::octavesParam,
+																						rowNum,
+																						columnNum),
+																 "Octaves",
+																 0,
+																 2,
+																 0));
+        }
+    }
     return params;
 }
 //==============================================================================

@@ -73,8 +73,11 @@ public:
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout() };
 
     Dummy::DummyAudioProcessor dummyAudioProcessor{};
-    juce::AudioProcessorValueTreeState::ParameterLayout createNonAutoParamaterLayout();
-    juce::AudioProcessorValueTreeState dummyApvts{ dummyAudioProcessor, nullptr, "dummyParams", createNonAutoParamaterLayout()};
+    juce::AudioProcessorValueTreeState::ParameterLayout createNonAutoParamaterLayout(int numRow, int numColumn);
+    juce::AudioProcessorValueTreeState dummyApvts{ dummyAudioProcessor, 
+        nullptr, 
+        "dummyParams", 
+        createNonAutoParamaterLayout(jiveGui::AnalogUserInput::NUMBLOCKROWS, jiveGui::AnalogUserInput::NUMBLOCKCOLUMNS)};
 
 
     float noteRate; // Contains float value of note fraction. (E.g 1/4 is stored as 0.25f)

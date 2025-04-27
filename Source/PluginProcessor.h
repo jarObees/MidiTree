@@ -15,6 +15,7 @@
 #include "PresetManager.h"
 #include "ForestManager.h"
 #include "LSystemManager.h"
+#include "DummyAudioProcessor.h"
 #include <chrono>
 
 //==============================================================================
@@ -70,6 +71,11 @@ public:
     std::vector<std::string> noteRateKeys;
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout() };
+
+    Dummy::DummyAudioProcessor dummyAudioProcessor{};
+    juce::AudioProcessorValueTreeState::ParameterLayout createNonAutoParamaterLayout();
+    juce::AudioProcessorValueTreeState dummyApvts{ dummyAudioProcessor, nullptr, "dummyParams", createNonAutoParamaterLayout()};
+
 
     float noteRate; // Contains float value of note fraction. (E.g 1/4 is stored as 0.25f)
     int midiAxiom; // Value representing the initial midi input by user. Should be set to -1 if no user input.

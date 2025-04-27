@@ -59,6 +59,8 @@
         <FILE id="DvIzno" name="PresetManager.cpp" compile="1" resource="0"
               file="Source/PresetManager.cpp"/>
       </GROUP>
+      <FILE id="KTcJCu" name="DummyAudioProcessor.h" compile="0" resource="0"
+            file="Source/DummyAudioProcessor.h"/>
       <FILE id="Ll35bX" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="qMuWqj" name="PluginProcessor.h" compile="0" resource="0"

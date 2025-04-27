@@ -3,8 +3,10 @@
 #include "LSystemProcessor.h"
 #include "PresetManager.h"
 
+// 
 namespace LSystemStuff
 {
+	// Manages the GUI/Non-auto params to be used in L-System generation.
 	class LSystemManager
 		: public juce::TextEditor::Listener, juce::Button::Listener, juce::ValueTree::Listener, juce::Slider::Listener
 	{
@@ -16,8 +18,8 @@ namespace LSystemStuff
 		void configureGrowButton(juce::Button* button);
 		void configureAnalogUserInput(juce::Component* analogUserInputComponent, const int numBlockRows, const int numBlockColumns);
 		void configureInputBlockTop(juce::Component* octaveBlockTopComponent);
-		void configureNoteWheel(juce::Slider* noteWheel);
-		void configureInputBlockBottom(juce::Component* inputBlockBottomComponent);
+		// void configureNoteWheel(juce::Slider* noteWheel);
+		// void configureInputBlockBottom(juce::Component* inputBlockBottomComponent);
 
 	private:
 		void valueTreeRedirected(juce::ValueTree& changedValueTree) override;

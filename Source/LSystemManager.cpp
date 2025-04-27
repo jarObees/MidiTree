@@ -28,8 +28,7 @@ void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEdito
 }
 void LSystemStuff::LSystemManager::configureInputBlockTop(juce::Component* inputBlockTopComponent)
 {
-	//juce::Slider* octavesInput = dynamic_cast<juce::Slider*>(inputBlockTopComponent);
-	//jassert(octavesInput != nullptr);
+	/// TODO: Configure the damn input blocks.
 }
 
 void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* analogUserInputComponent, 

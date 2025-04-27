@@ -81,9 +81,9 @@ namespace jiveGui
 
 		// Composes each row.
 		// Children  (in order) = inputBlock, inputBlockSpacer, n inputBlocks
-		[[nodiscard]] inline auto getInputRow(int i)
+		[[nodiscard]] inline auto getInputRow(int rowNum)
 		{
-			const juce::String idTing = rowColIdMaker(IdPrefix::inputRow, i, 0);
+			const juce::String idTing = rowColIdMaker(IdPrefix::inputRow, rowNum, 0); // Id: "irx0"
 			juce::ValueTree row
 			{
 				"Component",
@@ -103,11 +103,11 @@ namespace jiveGui
 				},
 			};
 
-			row.addChild(getInputBlock(i, -1), -1, nullptr);
+			row.addChild(getInputBlock(rowNum, -1), -1, nullptr);
 			row.addChild(getInputBlockSpacer(), -1, nullptr);
 			for (int j = 0; j < NUMBLOCKCOLUMNS; ++j)
 			{
-				row.addChild(getInputBlock(i, j), -1, nullptr);
+				row.addChild(getInputBlock(rowNum, j), -1, nullptr);
 			}
 
 			return row;

@@ -42,7 +42,7 @@ namespace Preset
 		
 		std::unique_ptr<juce::XmlElement> xml;
 
-		// In order to put into xml, we must convert our juce::Array<int> var into a readable xml, since we can't store those for xml.
+		// In order to put notesPool in xml, we must convert our juce::Array<int> var into a readable xml, since we can't store those for xml.
 		// We will then read this back to normal later within the loadPreset().
 		if (!apvts.state.getProperty(apvtsPropIds::notesPoolVectorStringProperty).isVoid())
 		{

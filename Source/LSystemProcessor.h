@@ -4,6 +4,7 @@
 #include "JuceHeader.h"
 #include "LSystem.h"
 
+// This class is where the actual calculations for the L-System are made.
 class LSystemProcessor
 {
 public:

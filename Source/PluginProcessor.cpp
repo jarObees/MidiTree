@@ -460,6 +460,14 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
     params.add(std::make_unique<juce::AudioParameterChoice>("noteRate", "Rate", _noteRateKeys, 5)); //TODO: Fix the shit not showing up.
     return params;
  }
+
+juce::AudioProcessorValueTreeState::ParameterLayout
+MidiArpeggiatorAudioProcessor::createNonAutoParamaterLayout()
+{
+    juce::AudioProcessorValueTreeState::ParameterLayout params;
+
+    return params;
+}
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()

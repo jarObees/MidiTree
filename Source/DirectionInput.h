@@ -45,6 +45,8 @@ namespace jiveGui
 							{
 								DBG("Dierction Changed! Value: " << stripSlider->getValue());
 							};
+						stripSlider->setValue(0); // Set default value to 0.
+						onValueChange->trigger();
 					}
 					else
 						jassertfalse;

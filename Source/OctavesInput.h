@@ -47,6 +47,8 @@ namespace jiveGui
 							{
 								DBG("Octave Input Changed! Value: " << stripSlider->getValue());
 							};
+						stripSlider->setValue(0); // Set default value to 0.
+						onValueChange->trigger();
 					}
 					else
 						jassertfalse;

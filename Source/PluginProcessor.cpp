@@ -271,7 +271,6 @@ std::unordered_map<std::string, juce::Image> MidiArpeggiatorAudioProcessor::getI
 }
 juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 {
-    // 331 ms
     // return new MidiArpeggiatorAudioProcessorEditor(*this);
 	DBG("------ CREATING EDITOR ------");
     jassert(JIVE_IS_PLUGIN_PROJECT);
@@ -329,18 +328,8 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             }
             else
                 jassertfalse;
-            
-            // Ruleset Textbox ======================================================================================
-    //        if (auto* textEditorTingy = dynamic_cast<juce::TextEditor*>
-    //            (jive::findItemWithID(*editor, jiveGui::StringIds::rulesetTextbox)
-    //             ->getComponent().get()))
-    //        {
-				//lSystemManager.configureRulesetInputTextEditor(textEditorTingy);
-    //        }
-    //        else
-    //            jassertfalse;
 
-            // Axiom Textbox. =============================================
+            // Analog User Input =============================================
             if (auto* analogUserInput = jive::findItemWithID(*editor, jiveGui::StringIds::analogUserInput)
                 ->getComponent().get())
             {

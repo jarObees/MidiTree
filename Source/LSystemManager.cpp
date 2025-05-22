@@ -28,9 +28,23 @@ void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEdito
 }
 void LSystemStuff::LSystemManager::configureInputBlockTop(juce::Component* inputBlockTopComponent)
 {
-	/// TODO: Configure the damn input blocks.
+	juce::Slider* octaveInput = dynamic_cast<juce::Slider*>(inputBlockTopComponent);
+	jassert(octaveInput != nullptr);
 }
 
+void LSystemStuff::LSystemManager::configureInputBlockBot(juce::Component* inputBlockBottomComponent)
+{
+	juce::Slider* directionInput = dynamic_cast<juce::Slider*>(inputBlockBottomComponent);
+	jassert(directionInput != nullptr);
+}
+
+void LSystemStuff::LSystemManager::configureNoteWheel(juce::Component* noteWheelComponent)
+{
+	juce::Slider* noteWheel = dynamic_cast<juce::Slider*>(noteWheelComponent);
+	jassert(noteWheel != nullptr);
+}
+
+// analoguserInputComponent is the topmost parent component for all the different input blocks.
 void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* analogUserInputComponent, 
 															const int numBlockRows, 
 															const int numBlockColumns)
@@ -58,12 +72,12 @@ void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* ana
 						else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::noteWheel))
 						{
 							DBG("Found a note wheel!");
-							// Configure noteWheel.
+							configureNoteWheel(blockChild);
 						}
 						else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockBottom))
 						{
 							DBG("Found an input block bottom!");
-							// Configure inputBlockBottom.
+							configureInputBlockBot(blockChild);
 						}
 					}
 				}

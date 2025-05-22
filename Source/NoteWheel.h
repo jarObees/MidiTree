@@ -74,6 +74,8 @@ namespace jiveGui
 							int index = static_cast<int>(stripSlider->getValue());
 							textProperty->set(intervals[index]);
 						};
+						stripSlider->setValue(0); // Set default value to 0.
+						onValueChange->trigger();
 					}
 					else
 						jassertfalse;

@@ -18,6 +18,8 @@ namespace LSystemStuff
 		void configureGrowButton(juce::Button* button);
 		void configureAnalogUserInput(juce::Component* analogUserInputComponent, const int numBlockRows, const int numBlockColumns);
 		void configureInputBlockTop(juce::Component* octaveBlockTopComponent);
+		void configureInputBlockBot(juce::Component* inputBlockBottomComponent);
+		void configureNoteWheel(juce::Component* noteWheelComponent);
 		// void configureNoteWheel(juce::Slider* noteWheel);
 		// void configureInputBlockBottom(juce::Component* inputBlockBottomComponent);
 

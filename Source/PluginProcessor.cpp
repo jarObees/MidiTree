@@ -337,14 +337,6 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             }
             else
                 jassertfalse;
-            if (auto* axiomEditor = dynamic_cast<juce::TextEditor*>
-                (jive::findItemWithID(*editor, jiveGui::StringIds::axiomTextBox)
-                 ->getComponent().get()))
-            {
-                lSystemManager.configureAxiomInputTextEditor(axiomEditor);
-            }
-            else
-                jassertfalse;
 			// Grow Button =========================================================================================
 			if (auto* growButton = dynamic_cast<juce::Button*>
 				(jive::findItemWithID(*editor, jiveGui::StringIds::growButton)

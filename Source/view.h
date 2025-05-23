@@ -84,7 +84,6 @@ namespace jiveGui
 		
 						jive::makeView<ComboBoxView>(40, 10, StringIds::presetComboBox),
 						jive::makeView<SaveButton>(20, 40, filmstripKnob, "save", StringIds::saveButton),
-						jive::makeView<TextEditorView>(0, 0, StringIds::axiomTextBox, "100%", "10%"),
 						jive::makeView<SaveButton>(20, 40, filmstripKnob, "plant!", StringIds::plantButton),
 						jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, StringIds::generationsKnob),
 						jive::makeView<SaveButton>(20, 40, filmstripKnob, "grow!", StringIds::growButton),

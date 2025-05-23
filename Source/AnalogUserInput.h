@@ -1,6 +1,6 @@
 #pragma once
 #include "NoteWheel.h"
-#include "OctavesInput.h"
+#include "InputBlockTop.h"
 #include "DirectionInput.h"
 
 // NOTE: For each block, the id will be "ipxy", where x is the row number, and y is the column (0 indexed). 
@@ -26,7 +26,16 @@ namespace jiveGui
 
 		[[nodiscard]] inline auto getInputBlockTop(int rowNum, int columnNum)
 		{
-			return jive::makeView<OctaveInput::OctavesInputView>(rowNum, columnNum);
+			if (columnNum == -1)
+			{
+				DBG("BUILDING AXIOM THING");
+				return jive::makeView<InputBlockTop::AxiomSelectorView>(rowNum, columnNum);
+			}
+			else
+			{
+				DBG("BUILDING OCTAVES THING");
+				return jive::makeView<InputBlockTop::OctavesInputView>(rowNum, columnNum);
+			}
 		}
 
 		// Height is defined in getInputRow()

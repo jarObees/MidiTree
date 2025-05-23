@@ -5,7 +5,7 @@ namespace jiveGui
 {
 	namespace AnalogUserInput
 	{
-		namespace OctaveInput
+		namespace InputBlockTop
 		{
 			class OctavesInputView : public jive::View
 			{
@@ -37,11 +37,6 @@ namespace jiveGui
 				{
 					if (auto* stripSlider = dynamic_cast<juce::Slider*>(item.getComponent().get()))
 					{
-						// Makes the slider invisible. (Can't just change the alpha, since this affects it's children (the text) as well).
-						//stripSlider->setColour(juce::Slider::backgroundColourId, juce::Colours::transparentBlack);
-						//stripSlider->setColour(juce::Slider::trackColourId, juce::Colours::transparentBlack);
-						//stripSlider->setColour(juce::Slider::thumbColourId, juce::Colours::transparentBlack);
-						//stripSlider->setOpaque(false);
 						onValueChange = std::make_unique<jive::Event>(item.state, "on-change");
 						onValueChange->onTrigger = [this, stripSlider]()
 							{
@@ -53,6 +48,53 @@ namespace jiveGui
 					else
 						jassertfalse;
 				}
+			private:
+				juce::String id;
+				const int rowNum, columnNum;
+				std::unique_ptr<jive::Event> onValueChange;
+			};
+
+			class AxiomSelectorView : public jive::View
+			{
+			public:
+				AxiomSelectorView(int rowNum, int columnNum)
+					: rowNum(rowNum), columnNum(columnNum)
+				{
+					id = rowColIdMaker(IdPrefix::inputBlockTopAxiom, rowNum, columnNum);
+				}
+
+				juce::ValueTree initialise()
+				{
+					return juce::ValueTree{
+						"Button",
+						{
+							{"id", id},
+							{"toggleable", true},
+							{"radio-group", 1},
+							{"width", "100%"},
+							{"height", "25%"},
+							{"orientation", "vertical"},
+							{"align-content", "centre"},
+							{"justify-content", "centre"},
+						},
+					};
+				}
+
+				void setup(jive::GuiItem& item) final
+				{
+					if (auto* axiomButton = dynamic_cast<juce::Button*>(item.getComponent().get()))
+					{
+						onValueChange = std::make_unique<jive::Event>(item.state, "on-click");
+						onValueChange->onTrigger = [this, axiomButton]()
+							{
+								DBG("Axiom Input toggled! State: " << axiomButton->getState());
+							};
+						onValueChange->trigger();
+					}
+					else
+						jassertfalse;
+				}
+
 			private:
 				juce::String id;
 				const int rowNum, columnNum;

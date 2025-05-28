@@ -12,7 +12,8 @@ public:
                      juce::Value& _rulesetUserInput, 
                      juce::Value& _axiomUserInput, 
                      juce::Value& _generatedLString,
-                     juce::Value& _notesPool);
+                     juce::Value& _notesPool,
+                     juce::Component*& analogUserInputComponent);
     void growLSystem();
 
 
@@ -23,15 +24,16 @@ private:
     juce::Value& axiomUserInput;            // juce::String
     juce::Value& generatedLString;          // juce::String
     juce::Value& notesPool;                 // juce::Array<juce::var>
+	juce::Component*& analogUserInputComponent;
 
     juce::Slider*& generationsKnob; // Warning: this could be a nullptr at class's construction, so make sure to jassert that it isn't when we need it.
     int generationsNum;
     bool setLSystemRulesAndVariables();
     bool confirmAxiom();
-    juce::SortedSet<std::string> currentLSystemVariables;
-    juce::SortedSet<std::string> currentLSystemRules;
-    std::unordered_map<std::string, std::string> generateRuleset();
-	std::unordered_map<std::string, std::string> currentLSystemRulemap;
+	juce::SortedSet<std::string> currentLSystemVariables; // SortedSet of variables, each variable is a string like "1", "b2", "#3", etc...
+	juce::SortedSet<std::string> currentLSystemRules; // SortedSet of rules, each rule is a string like "1=#2b4", "b4=2b34#4", etc...
+    std::unordered_map<std::string, std::string> generateRulemap();
+	std::unordered_map<std::string, std::string> currentLSystemRulemap; // Maps each variable to its corresponding rule, e.g., {"1": "#2b4", "b4": "2b34#4"}. Used directly in L-system generation.
     void generateLString();
     void generateNotesPool();
 

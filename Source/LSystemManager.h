@@ -20,8 +20,6 @@ namespace LSystemStuff
 		void configureInputBlockTop(juce::Component* octaveBlockTopComponent);
 		void configureInputBlockBot(juce::Component* inputBlockBottomComponent);
 		void configureNoteWheel(juce::Component* noteWheelComponent);
-		// void configureNoteWheel(juce::Slider* noteWheel);
-		// void configureInputBlockBottom(juce::Component* inputBlockBottomComponent);
 
 	private:
 		void valueTreeRedirected(juce::ValueTree& changedValueTree) override;
@@ -41,7 +39,7 @@ namespace LSystemStuff
 		juce::TextEditor* rulesetInputEditor = nullptr;
 		juce::Button* growButton = nullptr;
 		juce::Slider* gensKnob = nullptr;
-
+		juce::Component* analogUserInputComponent = nullptr;
 		juce::AudioProcessorValueTreeState& apvts;
 		Preset::PresetManager& presetManager;
 		juce::Array<int> &currentNotesPool;

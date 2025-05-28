@@ -1,4 +1,5 @@
 #include "LSystemProcessor.h"
+#include "Ids.h"
 
 // Map containing illegal strings as keys, and their corrosponding legal string as values.
 // // For use in correcting lsys variables and rulesets.
@@ -6,16 +7,20 @@ LSystemProcessor::LSystemProcessor(juce::Slider*& generationsKnob,
                                    juce::Value& _rulesetUserInput, 
                                    juce::Value& _axiomUserInput, 
                                    juce::Value& _generatedLString,
-                                   juce::Value& _notesPool)
+                                   juce::Value& _notesPool,
+                                   juce::Component*& analogUserInputComponent)
     : rulesetUserInput(_rulesetUserInput), 
     axiomUserInput(_axiomUserInput), 
     generatedLString(_generatedLString), 
     generationsKnob(generationsKnob), 
-    notesPool(_notesPool)
+    notesPool(_notesPool),
+    analogUserInputComponent(analogUserInputComponent)
 {
         
 }
 
+/// TODO: Refactor to use the current state of the UI. 
+/// Pass in a reference to the parent analog user input component. Go thruogh da shits and analyze.
 void LSystemProcessor::growLSystem()
 {
     DBG("Growing L System");
@@ -23,23 +28,60 @@ void LSystemProcessor::growLSystem()
         jassertfalse;
     generationsNum = generationsKnob->getValue();
     DBG("Number of Generations: " << generationsNum);
-    if (rulesetUserInput.getValue().isVoid() || axiomUserInput.getValue().isVoid())
+    //if (rulesetUserInput.getValue().isVoid() || axiomUserInput.getValue().isVoid())
+    //{
+    //    DBG("SHITS EMPTY");
+    //    return;
+    //}
+    
+    // ACCESS THE COMPONENTS ((GROSS WAYY MB)) =====================================================================
+    jassert(analogUserInputComponent != nullptr);
+    for (auto* child : analogUserInputComponent->getChildren())
     {
-        DBG("SHITS EMPTY");
-        return;
+        // Access Rows
+        if (child->getComponentID().startsWith(jiveGui::IdPrefix::inputRow))
+        {
+            DBG("Accessed row...");
+            for (auto* rowChild : child->getChildren())
+            {
+                if (rowChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlock))
+                {
+                    DBG("Accessing inputBlock...");
+
+                    for (auto* blockChild : rowChild->getChildren())
+                    {
+                        if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockTop))
+                        {
+                            // Found input block top.
+                            DBG("Found an input block top!");
+                        }
+                        else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::noteWheel))
+                        {
+                            // Found note wheel.
+                            DBG("Found a note wheel!");
+                        }
+                        else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockBottom))
+                        {
+                            // Found input block bottom.
+                            DBG("Found an input block bottom!");
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    if (!setLSystemRulesAndVariables() || !confirmAxiom())
-    {
-        DBG("big fat failure");
-        return;
-    }
+    //if (!setLSystemRulesAndVariables() || !confirmAxiom())
+    //{
+    //    DBG("big fat failure");
+    //    return;
+    //}
 
-    translateSet(currentLSystemRules);
-    translateSet(currentLSystemVariables);
-    currentLSystemRulemap = generateRuleset();
-    generateLString();
-    generateNotesPool();
+    //translateSet(currentLSystemRules);
+    //translateSet(currentLSystemVariables);
+    //currentLSystemRulemap = generateRulemap();
+    //generateLString();
+    //generateNotesPool();
 }
 
 void LSystemProcessor::generateLString()
@@ -101,7 +143,7 @@ void LSystemProcessor::generateNotesPool()
     notesPool = notesPlus;
 }
 
-// Checks if the ruleset is valid, and if so, stores it in this class.
+// Checks if the ruleset is valid, and if so, populates currentLSystemVariables and currentLSystemRules.
 bool LSystemProcessor::setLSystemRulesAndVariables()
 {
     DBG("Setting L System Rules and Variables");
@@ -138,6 +180,7 @@ bool LSystemProcessor::setLSystemRulesAndVariables()
     return true;
 }
 
+// Checks that axiom is valid.
 bool LSystemProcessor::confirmAxiom()
 {
     DBG("Checking axiom correctness...");
@@ -161,7 +204,7 @@ void LSystemProcessor::generateLSystem(const uint8_t& gens)
 {
     translateSet(currentLSystemRules);
     translateSet(currentLSystemVariables);
-    std::unordered_map<std::string, std::string> newLsysRulemap = generateRuleset();
+    std::unordered_map<std::string, std::string> newLsysRulemap = generateRulemap();
     LSystem lsystem(lsysAxiom, newLsysRulemap);
     lsystem.generate(generationsNum);
     lSystems.push_back(lsystem);
@@ -195,7 +238,7 @@ void LSystemProcessor::translateSet(juce::SortedSet<std::string>& stringSet)
 }
 
 // Generates ruleset map from ruleset set.
-std::unordered_map<std::string, std::string> LSystemProcessor::generateRuleset()
+std::unordered_map<std::string, std::string> LSystemProcessor::generateRulemap()
 {
     DBG("Generating Ruleset");
     std::unordered_map<std::string, std::string> map;

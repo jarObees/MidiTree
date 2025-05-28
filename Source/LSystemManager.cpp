@@ -3,6 +3,7 @@
 #include "PresetManager.h"
 // Implement the next layer of stuff. 
 // Now the actual shit that handles the growth logic for the l system shit.
+
 LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager, juce::Array<int>& _currenNotesPool)
 	: apvts(_apvts), presetManager(_presetManager), currentNotesPool(_currenNotesPool)
 {
@@ -11,7 +12,7 @@ LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState&
 	generatedStringValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
 	notesPoolValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
 
-	lSystemProcessor = std::make_unique<LSystemProcessor>(gensKnob, rulesetInputValue, axiomInputValue, generatedStringValue, notesPoolValue);
+	lSystemProcessor = std::make_unique<LSystemProcessor>(gensKnob, rulesetInputValue, axiomInputValue, generatedStringValue, notesPoolValue, analogUserInputComponent);
 	DBG("default ruleset is: " << rulesetInputValue.getValue());
 
 	apvts.state.addListener(this);
@@ -50,6 +51,8 @@ void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* ana
 															const int numBlockColumns)
 {
 	DBG("Configuring Analog User Input");
+	jassert(analogUserInputComponent != nullptr);
+	this->analogUserInputComponent = analogUserInputComponent;
 	for (auto* child : analogUserInputComponent->getChildren())
 	{	
 		// Access Rows
@@ -61,21 +64,25 @@ void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* ana
 				if (rowChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlock))
 				{
 					DBG("Accessing inputBlock...");
+					
 					for (auto* blockChild : rowChild->getChildren())
 					{
 						if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockTop))
 						{
-							// Configure inputBlockTop.
+							// Found input block top.
 							DBG("Found an input block top!");
 							configureInputBlockTop(blockChild);
+
 						}
 						else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::noteWheel))
 						{
+							// Found note wheel.
 							DBG("Found a note wheel!");
 							configureNoteWheel(blockChild);
 						}
 						else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockBottom))
 						{
+							// Found input block bottom.
 							DBG("Found an input block bottom!");
 							configureInputBlockBot(blockChild);
 						}
@@ -134,7 +141,7 @@ void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)
 	if (button == growButton)
 	{
 		lSystemProcessor->growLSystem();
-		setCurrentNotesPool();
+		// setCurrentNotesPool();
 	}
 }
 

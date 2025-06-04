@@ -1,6 +1,8 @@
 #include "LSystemManager.h"
 #include "Ids.h"
 #include "PresetManager.h"
+#include "AnalogUserInputBlockData.h"
+
 // Implement the next layer of stuff. 
 // Now the actual shit that handles the growth logic for the l system shit.
 
@@ -64,15 +66,14 @@ void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* ana
 				if (rowChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlock))
 				{
 					DBG("Accessing inputBlock...");
-					
+					AnalogUserInput::AnalogUserInputBlockData inputBlock;
 					for (auto* blockChild : rowChild->getChildren())
 					{
 						if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockTop))
 						{
 							// Found input block top.
-							DBG("Found an input block top!");
 							configureInputBlockTop(blockChild);
-
+							DBG("Found an input block top!");
 						}
 						else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::noteWheel))
 						{

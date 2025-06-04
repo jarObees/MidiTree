@@ -1,5 +1,6 @@
 #include "LSystemProcessor.h"
 #include "Ids.h"
+#include "NoteWheel.h"
 
 // Map containing illegal strings as keys, and their corrosponding legal string as values.
 // // For use in correcting lsys variables and rulesets.
@@ -35,7 +36,9 @@ void LSystemProcessor::growLSystem()
     //}
     
     // ACCESS THE COMPONENTS ((GROSS WAYY MB)) =====================================================================
+    // Build up a 
     jassert(analogUserInputComponent != nullptr);
+    std::stringstream stringRuleset;
     for (auto* child : analogUserInputComponent->getChildren())
     {
         // Access Rows
@@ -44,7 +47,7 @@ void LSystemProcessor::growLSystem()
             DBG("Accessed row...");
             for (auto* rowChild : child->getChildren())
             {
-                if (rowChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlock))
+                if (rowChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlock)) //======================= Within InputBlock
                 {
                     DBG("Accessing inputBlock...");
 
@@ -52,7 +55,6 @@ void LSystemProcessor::growLSystem()
                     {
                         if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockTop))
                         {
-                            // Found input block top.
                             DBG("Found an input block top!");
                         }
                         else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::noteWheel))
@@ -65,8 +67,10 @@ void LSystemProcessor::growLSystem()
                             // Found input block bottom.
                             DBG("Found an input block bottom!");
                         }
+
                     }
                 }
+                stringRuleset << "\n";
             }
         }
     }

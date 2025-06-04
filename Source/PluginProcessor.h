@@ -10,8 +10,8 @@
 // Testing the thing out so that it actually copies it over.
 #include <JuceHeader.h>
 #include <juce_data_structures/juce_data_structures.h>
-#include "LSystemProcessor.h"
 #include "View.h"
+#include "LSystemProcessor.h"
 #include "PresetManager.h"
 #include "ForestManager.h"
 #include "LSystemManager.h"

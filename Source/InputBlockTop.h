@@ -76,6 +76,12 @@ namespace jiveGui
 							{"orientation", "vertical"},
 							{"align-content", "centre"},
 							{"justify-content", "centre"},
+												{
+					"style",
+						new jive::Object{
+							{"background", jive::toVar(colors::red)},
+						}
+					}
 						},
 					};
 				}

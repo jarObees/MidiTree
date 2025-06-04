@@ -47,11 +47,11 @@ private:
     // Used for replacing user input (keys), to single char strings to be used in l-sys computation (values).
     static inline const std::unordered_map<std::string, std::string> replacementRulesToChar = 
     {
-        {"#1", "a"}, {"b2", "a"},
-        {"#2", "b"}, {"b3", "b"},
-        {"#4", "c"}, {"b5", "c"},
-        {"#5", "d"}, {"b6", "d"},
-        {"#6", "e"}, {"b7", "e"},
+        {"#1", "A"}, {"b2", "A"},
+        {"#2", "B"}, {"b3", "B"},
+        {"#4", "C"}, {"b5", "C"},
+        {"#5", "D"}, {"b6", "D"},
+        {"#6", "E"}, {"b7", "E"},
         {"b4", "3"}, {"#3", "4"}
     };
 
@@ -60,11 +60,11 @@ private:
     // Or at least. Let's think. if a character goes beyond an octave. We have to adjust our rule maps.
     // Because ultimately, each interval does indeed require a unique symbol.
     static inline const std::unordered_map<std::string, int> replacementRulesToInt = {
-        {"1", 0}, {"a", 1},
-        {"2", 2}, {"b", 3},
-        {"3", 4}, {"c", 6},
-        {"4", 5}, {"d", 8},
-        {"5", 7}, {"e", 10},
+        {"1", 0}, {"A", 1},
+        {"2", 2}, {"B", 3},
+        {"3", 4}, {"C", 6},
+        {"4", 5}, {"D", 8},
+        {"5", 7}, {"E", 10},
         {"6", 9}, {"7", 11}
     };
 };

@@ -24,18 +24,33 @@ namespace jiveGui
 			return jive::makeView<NoteWheel::NoteWheelView>(rowNum, columnNum);
 		}
 
+		//TODO: Fix how the axiom is displayed along with octaves here.
 		[[nodiscard]] inline auto getInputBlockTop(int rowNum, int columnNum)
 		{
+			juce::ValueTree rootComponent
+			{
+				"Component",
+				{
+					{"width", "100%"},
+					{"height", "25%"},
+					{"orientation", "vertical"},
+					{"align-content", "centre"},
+					{"justify-content", "centre"},
+				},
+			};
+
 			if (columnNum == -1)
 			{
-				DBG("BUILDING AXIOM THING");
-				return jive::makeView<InputBlockTop::AxiomSelectorView>(rowNum, columnNum);
+				DBG("BUILDING WITH AXIOM");
+				auto axiomView = jive::makeView<InputBlockTop::AxiomSelectorView>(rowNum, columnNum); // Add this as a child 
+				rootComponent.addChild(axiomView, -1, nullptr);
 			}
-			else
-			{
+
 				DBG("BUILDING OCTAVES THING");
-				return jive::makeView<InputBlockTop::OctavesInputView>(rowNum, columnNum);
-			}
+				rootComponent.addChild(jive::makeView<InputBlockTop::OctavesInputView>(rowNum, columnNum),
+									   -1,
+									   nullptr); // Always add this as a child regardless.
+				return rootComponent;
 		}
 
 		// Height is defined in getInputRow()

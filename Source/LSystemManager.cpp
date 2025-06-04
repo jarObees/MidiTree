@@ -45,7 +45,8 @@ void LSystemStuff::LSystemManager::configureInputBlockTop(juce::Component* input
 		else if (child->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockTopAxiom))
 		{
 			// Configure Axiom Input
-			DBG("> Found axiom input");
+			juce::Button* axiomInputButton = dynamic_cast<juce::Button*>(child);
+			jassert(axiomInputButton != nullptr);
 		}
 	}
 }
@@ -68,18 +69,6 @@ void LSystemStuff::LSystemManager::configureInputBlockBot(juce::Component* input
 
 void LSystemStuff::LSystemManager::configureNoteWheel(juce::Component* noteWheelComponent)
 {
-	auto children = noteWheelComponent->getChildren();
-	jassert(children.size() > 0); // Should have at least one child.
-	for (auto child : children)
-	{
-		if (child->getComponentID().startsWith(jiveGui::IdPrefix::directionInput))
-		{
-			// Configure Octave Input
-			DBG("> Found DI: " << child->getComponentID());
-			juce::Slider* directionInput = dynamic_cast<juce::Slider*>(child); // FIGURE OUT WHY THIS IS NO WORK
-			jassert(directionInput != nullptr);
-		}
-	}
 	juce::Slider* noteWheel = dynamic_cast<juce::Slider*>(noteWheelComponent);
 	jassert(noteWheel != nullptr);
 }

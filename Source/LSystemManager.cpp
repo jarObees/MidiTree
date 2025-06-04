@@ -31,19 +31,55 @@ void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEdito
 }
 void LSystemStuff::LSystemManager::configureInputBlockTop(juce::Component* inputBlockTopComponent)
 {
-	auto num = inputBlockTopComponent->getChildren().size();
-	juce::Slider* octaveInput = dynamic_cast<juce::Slider*>(inputBlockTopComponent);
-	jassert(octaveInput != nullptr);
+	auto children = inputBlockTopComponent->getChildren();
+	jassert(children.size() > 0); // Should have at least one child.
+	for (auto child : children)
+	{
+		if (child->getComponentID().startsWith(jiveGui::IdPrefix::octavesInput))
+		{
+			// Configure Octave Input
+			DBG("> Found OI");
+			juce::Slider* octaveInput = dynamic_cast<juce::Slider*>(child);
+			jassert(octaveInput != nullptr);
+		}
+		else if (child->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockTopAxiom))
+		{
+			// Configure Axiom Input
+			DBG("> Found axiom input");
+		}
+	}
 }
 
 void LSystemStuff::LSystemManager::configureInputBlockBot(juce::Component* inputBlockBottomComponent)
 {
-	juce::Slider* directionInput = dynamic_cast<juce::Slider*>(inputBlockBottomComponent);
-	jassert(directionInput != nullptr);
+	auto children = inputBlockBottomComponent->getChildren();
+	jassert(children.size() > 0); // Should have at least one child.
+	for (auto child : children)
+	{
+		if (child->getComponentID().startsWith(jiveGui::IdPrefix::directionInput))
+		{
+			// Configure Octave Input
+			DBG("> Found DI: " << child->getComponentID());
+			juce::Slider* directionInput = dynamic_cast<juce::Slider*>(child);
+			jassert(directionInput != nullptr);
+		}
+	}
 }
 
 void LSystemStuff::LSystemManager::configureNoteWheel(juce::Component* noteWheelComponent)
 {
+	auto children = noteWheelComponent->getChildren();
+	jassert(children.size() > 0); // Should have at least one child.
+	for (auto child : children)
+	{
+		if (child->getComponentID().startsWith(jiveGui::IdPrefix::directionInput))
+		{
+			// Configure Octave Input
+			DBG("> Found DI: " << child->getComponentID());
+			juce::Slider* directionInput = dynamic_cast<juce::Slider*>(child); // FIGURE OUT WHY THIS IS NO WORK
+			jassert(directionInput != nullptr);
+		}
+	}
 	juce::Slider* noteWheel = dynamic_cast<juce::Slider*>(noteWheelComponent);
 	jassert(noteWheel != nullptr);
 }

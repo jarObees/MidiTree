@@ -7,6 +7,7 @@ namespace jiveGui
 	// Creates an ID with the form "prefixXY" where X and Y are the row and column respectively.
 	[[nodiscard]] inline const juce::String rowColIdMaker(const juce::String prefix, const int rowNum, const int columnNum)
 	{
+		DBG("Making ID with prefix: " << prefix << " rowNum: " << rowNum << " columnNum: " << columnNum);
 		juce::String id = prefix + static_cast<juce::String>(rowNum) + static_cast<juce::String>(columnNum);
 		DBG("Id Made! : " << id);
 		return id;

@@ -20,6 +20,5 @@ namespace AnalogUserInput
 			else
 				return true;
 		}
-
 	};
 }

@@ -16,7 +16,24 @@ namespace jiveGui
 
 		[[nodiscard]] inline auto getInputBlockBottom(int rowNum, int columnNum)
 		{
-			return jive::makeView<DirectionInput::DirectionInputView>(rowNum, columnNum);
+			const juce::String id = rowColIdMaker(jiveGui::IdPrefix::inputBlockBottom, rowNum, columnNum);
+			juce::ValueTree inputBlockBottomComponent =
+			{
+				"Component",
+				{
+					{"id", id},
+					{"width", "100%"},
+					{"height", "25%"},
+					{"orientation", "vertical"},
+					{"align-content", "centre"},
+					{"justify-content", "centre"},
+				}
+
+			};
+			inputBlockBottomComponent.addChild(jive::makeView<DirectionInput::DirectionInputView>(rowNum, columnNum),
+											   -1,
+											   nullptr);
+			return inputBlockBottomComponent;
 		}
 
 		[[nodiscard]] inline auto getNoteWheel(int rowNum, int columnNum)
@@ -27,10 +44,12 @@ namespace jiveGui
 		//TODO: Fix how the axiom is displayed along with octaves here.
 		[[nodiscard]] inline auto getInputBlockTop(int rowNum, int columnNum)
 		{
+			const juce::String id = rowColIdMaker(IdPrefix::inputBlockTop, rowNum, columnNum);
 			juce::ValueTree rootComponent
 			{
 				"Component",
 				{
+					{"id", id},
 					{"width", "100%"},
 					{"height", "25%"},
 					{"orientation", "vertical"},

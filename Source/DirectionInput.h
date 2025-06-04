@@ -28,6 +28,12 @@ namespace jiveGui
 							{"orientation", "horizontal"},
 							{"align-content", "centre"},
 							{"justify-content", "centre"},
+												{
+					"style",
+						new jive::Object{
+							{"background", jive::toVar(colors::grey)},
+						}
+					}
 						},
 					};
 				}

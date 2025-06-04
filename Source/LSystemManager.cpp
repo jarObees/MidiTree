@@ -31,6 +31,7 @@ void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEdito
 }
 void LSystemStuff::LSystemManager::configureInputBlockTop(juce::Component* inputBlockTopComponent)
 {
+	auto num = inputBlockTopComponent->getChildren().size();
 	juce::Slider* octaveInput = dynamic_cast<juce::Slider*>(inputBlockTopComponent);
 	jassert(octaveInput != nullptr);
 }
@@ -69,6 +70,7 @@ void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* ana
 					AnalogUserInput::AnalogUserInputBlockData inputBlock;
 					for (auto* blockChild : rowChild->getChildren())
 					{
+						DBG("INPUT BLOCKCHILD ID: " << blockChild->getComponentID());
 						if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockTop))
 						{
 							// Found input block top.

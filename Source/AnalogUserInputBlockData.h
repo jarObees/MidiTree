@@ -6,12 +6,13 @@ namespace AnalogUserInput
 	{
 	private:
 	public:
-		bool axiom	      = false;
-		bool ascending    = false;
-		std::string note  = "";
-		int octave        = 0;
-		int intervalNum   = 0;
-		char id           = '\0';
+		bool axiom	          = false;
+		bool ascending		  = false;
+		std::string noteName  = "";
+		int noteWheelNum	  = 0;
+		int octave            = 0;
+		int intervalNum		  = 0;			// For use in notePool
+		char id			      = '\0';
 
 		bool isValid() const
 		{

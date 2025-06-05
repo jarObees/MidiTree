@@ -42,7 +42,7 @@ void LSystemStuff::LSystemManager::configureInputBlockTop(juce::Component* input
 			juce::Slider* octaveInput = dynamic_cast<juce::Slider*>(child);
 			jassert(octaveInput != nullptr);
 		}
-		else if (child->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockTopAxiom))
+		else if (child->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockAxiom))
 		{
 			// Configure Axiom Input
 			juce::Button* axiomInputButton = dynamic_cast<juce::Button*>(child);

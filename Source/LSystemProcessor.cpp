@@ -1,6 +1,7 @@
 #include "LSystemProcessor.h"
 #include "Ids.h"
 #include "NoteWheel.h"
+#include "AnalogUserInputBlockData.h"
 
 // Map containing illegal strings as keys, and their corrosponding legal string as values.
 // // For use in correcting lsys variables and rulesets.
@@ -37,6 +38,7 @@ void LSystemProcessor::growLSystem()
     
     // ACCESS THE COMPONENTS ((GROSS WAYY MB)) =====================================================================
     // Build up a 
+    ///TODO: Instantiate the inputBlock class stuff.
     jassert(analogUserInputComponent != nullptr);
     std::stringstream stringRuleset;
     for (auto* child : analogUserInputComponent->getChildren())
@@ -49,23 +51,57 @@ void LSystemProcessor::growLSystem()
             {
                 if (rowChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlock)) //======================= Within InputBlock
                 {
-                    DBG("Accessing inputBlock...");
-
+                    DBG("Accessing inputBlock =====");
+                    AnalogUserInput::AnalogUserInputBlockData inputBlockData;
                     for (auto* blockChild : rowChild->getChildren())
                     {
                         if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockTop))
                         {
-                            DBG("Found an input block top!");
+                            DBG("> InputBlockTOP");
+                            const auto inputBlockChildren = blockChild->getChildren();
+                            for (auto* child : inputBlockChildren)
+                            {
+                                if (child->getComponentID().startsWith(jiveGui::IdPrefix::octavesInput))
+                                {
+                                    juce::Slider* octavesInput = dynamic_cast<juce::Slider*>(child);
+                                    jassert(octavesInput != nullptr);
+                                    inputBlockData.octave = octavesInput->getValue();
+                                    DBG(">> Octaves Input: " << inputBlockData.octave);
+                                }
+                                if (child->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockAxiom))
+                                {
+                                    juce::Button* axiomInput = dynamic_cast<juce::Button*>(child);
+                                    jassert(axiomInput != nullptr);
+                                    inputBlockData.axiom = axiomInput->getToggleState();
+                                }
+                                juce::String dbgButtonState = (inputBlockData.axiom == false) ? "false" : "true";
+                                DBG(">> Axiom: " << dbgButtonState);
+                            }
                         }
                         else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::noteWheel))
                         {
+                            DBG("> NoteWheel");
                             // Found note wheel.
-                            DBG("Found a note wheel!");
+                            juce::Slider* noteWheelInput = dynamic_cast<juce::Slider*>(blockChild);
+                            jassert(noteWheelInput != nullptr);
+                            inputBlockData.noteWheelNum = noteWheelInput->getValue();
+                            DBG(">> Notewheel Num: " << inputBlockData.noteWheelNum);
                         }
                         else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockBottom))
                         {
-                            // Found input block bottom.
-                            DBG("Found an input block bottom!");
+                            DBG("> InputBlockBOT");
+                            const auto inputBlockChildren = blockChild->getChildren();
+                            for (auto* child : inputBlockChildren)
+                            {
+                                if (child->getComponentID().startsWith(jiveGui::IdPrefix::directionInput))
+                                {
+                                    juce::Slider* directionInput = dynamic_cast<juce::Slider*>(child);
+                                    jassert(directionInput != nullptr);
+                                    inputBlockData.ascending = (directionInput->getValue() == 0) ? true : false;
+                                    juce::String dbgDirection = (inputBlockData.ascending == true) ? "Ascending" : "Descending";
+                                    DBG(">> Direction: " << dbgDirection);
+                                }
+                            }
                         }
 
                     }

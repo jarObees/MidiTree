@@ -60,7 +60,7 @@ namespace jiveGui
 				AxiomSelectorView(int rowNum, int columnNum)
 					: rowNum(rowNum), columnNum(columnNum)
 				{
-					id = rowColIdMaker(IdPrefix::inputBlockTopAxiom, rowNum, columnNum);
+					id = rowColIdMaker(IdPrefix::inputBlockAxiom, rowNum, columnNum);
 				}
 
 				juce::ValueTree initialise()

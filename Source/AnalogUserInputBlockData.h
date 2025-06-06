@@ -6,20 +6,38 @@ namespace AnalogUserInput
 	{
 	private:
 	public:
-		bool axiom	          = false;
-		bool ascending		  = false;
-		std::string noteName  = "";
-		int noteWheelNum	  = 0;
-		int octave            = 0;
-		int intervalNum		  = 0;			// For use in notePool
-		char id			      = '\0';
+		bool axiom = false;
+		bool ascending = false;
+		int noteWheelNum = 0;
+		int octave = 0;
+		int intervalNum = 0;			// For use in notePool
+		char lSysChar = '\0';
+		std::string noteName = "";
 
 		bool isValid() const
 		{
-			if (id == '\0')
+			if (lSysChar == '\0')
 				return false;
 			else
 				return true;
+		}
+
+		bool operator==(const AnalogUserInputBlockData& other) const
+		{
+			if (axiom == other.axiom &&
+				ascending == other.ascending &&
+				noteWheelNum == other.noteWheelNum &&
+				octave == other.octave
+				)
+				return true;
+			else
+				return false;
+		}
+
+		// Generates unique char that no other analoguserinputblocks in a vector will have.
+		void generateLSysChar()
+		{
+
 		}
 	};
 }

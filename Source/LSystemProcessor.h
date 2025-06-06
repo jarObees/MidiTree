@@ -3,6 +3,7 @@
 
 #include "JuceHeader.h"
 #include "LSystem.h"
+#include "AnalogUserInputBlockData.h"
 
 // This class is where the actual calculations for the L-System are made.
 class LSystemProcessor

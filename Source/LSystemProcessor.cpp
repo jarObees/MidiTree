@@ -1,7 +1,6 @@
 #include "LSystemProcessor.h"
 #include "Ids.h"
 #include "NoteWheel.h"
-#include "AnalogUserInputBlockData.h"
 
 // Map containing illegal strings as keys, and their corrosponding legal string as values.
 // // For use in correcting lsys variables and rulesets.
@@ -36,16 +35,16 @@ void LSystemProcessor::growLSystem()
     //    return;
     //}
     
-    // ACCESS THE COMPONENTS ((GROSS WAYY MB)) =====================================================================
-    // Build up a 
+
     ///TODO: Instantiate the inputBlock class stuff.
     jassert(analogUserInputComponent != nullptr);
-    std::stringstream stringRuleset;
+    std::vector<std::vector<AnalogUserInput::AnalogUserInputBlockData>> analogUserInputBlockData;
     for (auto* child : analogUserInputComponent->getChildren())
     {
         // Access Rows
         if (child->getComponentID().startsWith(jiveGui::IdPrefix::inputRow))
         {
+            std::vector<AnalogUserInput::AnalogUserInputBlockData> blockRow;
             DBG("Accessed row...");
             for (auto* rowChild : child->getChildren())
             {
@@ -106,22 +105,14 @@ void LSystemProcessor::growLSystem()
 
                     }
                 }
-                stringRuleset << "\n";
             }
+            analogUserInputBlockData.push_back(blockRow);
         }
+
     }
 
-    //if (!setLSystemRulesAndVariables() || !confirmAxiom())
-    //{
-    //    DBG("big fat failure");
-    //    return;
-    //}
+    // Now go through and generate each unique character based on it's properties. 
 
-    //translateSet(currentLSystemRules);
-    //translateSet(currentLSystemVariables);
-    //currentLSystemRulemap = generateRulemap();
-    //generateLString();
-    //generateNotesPool();
 }
 
 void LSystemProcessor::generateLString()

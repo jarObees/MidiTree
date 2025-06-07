@@ -10,6 +10,7 @@ namespace AnalogUserInput
 		bool ascending = false;
 		int noteWheelNum = 0;
 		int octave = 0;
+
 		int intervalNum = 0;			// For use in notePool
 		char lSysChar = '\0';
 		std::string noteName = "";

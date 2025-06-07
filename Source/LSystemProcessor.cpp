@@ -38,7 +38,7 @@ void LSystemProcessor::growLSystem()
 
     ///TODO: Instantiate the inputBlock class stuff.
     jassert(analogUserInputComponent != nullptr);
-    std::vector<std::vector<AnalogUserInput::AnalogUserInputBlockData>> analogUserInputBlockData;
+    std::vector<std::vector<AnalogUserInput::AnalogUserInputBlockData>> analogUserInputBlockDataSet;
     for (auto* child : analogUserInputComponent->getChildren())
     {
         // Access Rows
@@ -104,14 +104,63 @@ void LSystemProcessor::growLSystem()
                         }
 
                     }
+                    blockRow.push_back(inputBlockData);
                 }
+
             }
-            analogUserInputBlockData.push_back(blockRow);
+            analogUserInputBlockDataSet.push_back(blockRow);
         }
 
     }
 
-    // Now go through and generate each unique character based on it's properties. 
+    char asciiChar = 'A';
+    std::map<std::tuple<bool, int, int>, char> uniqueInputs; // Pairs the unique combination of vars with a char.
+    int i = 0;
+    for (auto& blockRow : analogUserInputBlockDataSet)
+    {
+        DBG("Row: " << i);
+        i++;
+        int j = -1;
+        for (auto& blockData : blockRow)
+        {
+            DBG("Block: " << j);
+            j++;
+
+            if (blockData.noteWheelNum == 0)
+            {
+                DBG("Skipping empty noteWheel...");
+                continue;
+            }
+
+            if (asciiChar > 'z')
+            {
+                // Throw Error
+                jassertfalse;
+            }
+            auto key = std::make_tuple(blockData.ascending,
+                                                    blockData.noteWheelNum,
+                                                    blockData.octave);
+            auto it = uniqueInputs.find(key);
+            if (it != uniqueInputs.end())
+            {
+                blockData.lSysChar = it->second;
+                DBG("Predecessor found. Setting this block's lSysChar to: " << blockData.lSysChar);
+            }
+            else
+            {
+                blockData.lSysChar = asciiChar;
+                uniqueInputs[key] = asciiChar;
+                DBG("New note entry. Setting lSysChar to " << asciiChar);
+                asciiChar++;
+            }
+        }
+    }
+    // Begin with ascii character 65 (A) and end at 122 (z).
+	// Now iterate through each analogUserInputBlockData in the Set. 
+    // Check that asciiChar <= 122 (else throw error that too many chars.)
+    // If noteWheel is 0, skip.
+    // Make a tie of those core values and check if it's in the set.
+    // If not, then insert | set lSysChar to asciiChar | increment asciiChar by 1.
 
 }
 

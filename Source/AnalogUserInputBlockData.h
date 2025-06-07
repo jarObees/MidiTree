@@ -12,7 +12,7 @@ namespace AnalogUserInput
 		int octave = 0;
 
 		int intervalNum = 0;			// For use in notePool
-		char lSysChar = '\0';
+		char lSysChar = '\0';			// For use in l system generation
 		std::string noteName = "";
 
 		bool isValid() const
@@ -33,12 +33,6 @@ namespace AnalogUserInput
 				return true;
 			else
 				return false;
-		}
-
-		// Generates unique char that no other analoguserinputblocks in a vector will have.
-		void generateLSysChar()
-		{
-
 		}
 	};
 }

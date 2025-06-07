@@ -104,9 +104,9 @@ void LSystemProcessor::growLSystem()
                         }
 
                     }
-                    blockRow.push_back(inputBlockData);
+                    if (inputBlockData.noteWheelNum != 0)       // Only pushes stuff that has an actual value.
+                        blockRow.push_back(inputBlockData);
                 }
-
             }
             analogUserInputBlockDataSet.push_back(blockRow);
         }
@@ -155,12 +155,6 @@ void LSystemProcessor::growLSystem()
             }
         }
     }
-    // Begin with ascii character 65 (A) and end at 122 (z).
-	// Now iterate through each analogUserInputBlockData in the Set. 
-    // Check that asciiChar <= 122 (else throw error that too many chars.)
-    // If noteWheel is 0, skip.
-    // Make a tie of those core values and check if it's in the set.
-    // If not, then insert | set lSysChar to asciiChar | increment asciiChar by 1.
 
 }
 

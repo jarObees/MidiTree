@@ -31,6 +31,7 @@ private:
     int generationsNum;
     bool setLSystemRulesAndVariables();
     bool confirmAxiom();
+    
 	juce::SortedSet<std::string> currentLSystemVariables; // SortedSet of variables, each variable is a string like "1", "b2", "#3", etc...
 	juce::SortedSet<std::string> currentLSystemRules; // SortedSet of rules, each rule is a string like "1=#2b4", "b4=2b34#4", etc...
     std::unordered_map<std::string, std::string> generateRulemap();

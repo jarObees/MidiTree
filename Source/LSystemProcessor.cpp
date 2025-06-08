@@ -114,6 +114,7 @@ void LSystemProcessor::growLSystem()
 
     }
 
+    // Generates analogUserInputBlockDataSet
     char asciiChar = 'A';
     std::map<std::tuple<bool, int, int>, char> uniqueInputs; // Pairs the unique combination of vars with a char.
     int i = 0;
@@ -150,7 +151,24 @@ void LSystemProcessor::growLSystem()
             }
         }
     }
+
+
     auto ruleMap = generateRulemap(analogUserInputBlockDataSet);
+
+    AnalogUserInput::AnalogUserInputBlockData axiomBlock;
+    for (auto& blockRow : analogUserInputBlockDataSet)
+    {
+        for (auto& blockData : blockRow)
+        {
+            if (blockData.axiom == true)
+            {
+                axiomBlock = blockData;
+                // TODO: return here
+            }
+        }
+    }
+
+    generateLString(axiomBlock.lSysChar, ruleMap);
 }
 
 void LSystemProcessor::generateLString()

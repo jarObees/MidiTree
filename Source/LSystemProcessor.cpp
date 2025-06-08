@@ -108,7 +108,8 @@ void LSystemProcessor::growLSystem()
                         blockRow.push_back(inputBlockData);
                 }
             }
-            analogUserInputBlockDataSet.push_back(blockRow);
+            if (blockRow.size() != 0)
+                analogUserInputBlockDataSet.push_back(blockRow);
         }
 
     }
@@ -125,12 +126,6 @@ void LSystemProcessor::growLSystem()
         {
             DBG("Block: " << j);
             j++;
-
-            if (blockData.noteWheelNum == 0)
-            {
-                DBG("Skipping empty noteWheel...");
-                continue;
-            }
 
             if (asciiChar > 'z')
             {
@@ -155,7 +150,7 @@ void LSystemProcessor::growLSystem()
             }
         }
     }
-
+    auto ruleMap = generateRulemap(analogUserInputBlockDataSet);
 }
 
 void LSystemProcessor::generateLString()
@@ -278,10 +273,10 @@ void LSystemProcessor::generateLSystem(const uint8_t& gens)
 {
     translateSet(currentLSystemRules);
     translateSet(currentLSystemVariables);
-    std::unordered_map<std::string, std::string> newLsysRulemap = generateRulemap();
-    LSystem lsystem(lsysAxiom, newLsysRulemap);
-    lsystem.generate(generationsNum);
-    lSystems.push_back(lsystem);
+    // std::unordered_map<std::string, std::string> newLsysRulemap = generateRulemap();
+   // LSystem lsystem(lsysAxiom, newLsysRulemap);
+    //lsystem.generate(generationsNum);
+    // lSystems.push_back(lsystem);
 
     //FOR TESTING PURPOSES=============================================================
     const LSystem& testLSystem = lSystems[0];
@@ -312,16 +307,30 @@ void LSystemProcessor::translateSet(juce::SortedSet<std::string>& stringSet)
 }
 
 // Generates ruleset map from ruleset set.
-std::unordered_map<std::string, std::string> LSystemProcessor::generateRulemap()
+std::unordered_map<std::string, std::string> LSystemProcessor::generateRulemap(std::vector<std::vector<AnalogUserInput::AnalogUserInputBlockData>>& inputBlockDataSet)
 {
     DBG("Generating Ruleset");
     std::unordered_map<std::string, std::string> map;
-    for (const std::string& ruleLine : currentLSystemRules)
+    int i = 0;
+    for (auto& blockRow : inputBlockDataSet)
     {
-        size_t equalsPos = ruleLine.find('=');
-        std::string leftHandSide = ruleLine.substr(0, equalsPos);
-        std::string rightHandSide = ruleLine.substr(equalsPos + 1);
-        map.emplace(leftHandSide, rightHandSide);
+        DBG("Row: " << i);
+        i++;
+        bool firstInput = true;
+        std::stringstream rightHandSide;
+        std::string leftHandSide;
+        for (auto& blockData : blockRow)
+        {
+            if (firstInput)
+            {
+                leftHandSide = std::string{ blockData.lSysChar };
+                firstInput = false;
+            }
+            else
+                rightHandSide << blockData.lSysChar;
+        }
+        DBG("Adding rule: " << leftHandSide << "=" << rightHandSide.str());
+        map.emplace(leftHandSide, rightHandSide.str());
     }
     return map;
 }

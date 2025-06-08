@@ -1,7 +1,7 @@
 #include "LSystemProcessor.h"
 #include "Ids.h"
 #include "NoteWheel.h"
-
+using namespace AnalogUserInput;
 // Map containing illegal strings as keys, and their corrosponding legal string as values.
 // // For use in correcting lsys variables and rulesets.
 LSystemProcessor::LSystemProcessor(juce::Slider*& generationsKnob, 
@@ -34,24 +34,83 @@ void LSystemProcessor::growLSystem()
     //    DBG("SHITS EMPTY");
     //    return;
     //}
-    
+    std::vector<std::vector<AnalogUserInputBlockData>> analogUserInputBlockDataSet
+        = makeAnalogUIBlockDataSet();
 
-    ///TODO: Instantiate the inputBlock class stuff.
+    // Generates analogUserInputBlockDataSet
+    char asciiChar = 'A';
+    std::map<std::tuple<bool, int, int>, char> uniqueInputs; // Pairs the unique combination of vars with a char.
+    int i = 0;
+    for (auto& blockRow : analogUserInputBlockDataSet)
+    {
+        DBG("Row: " << i);
+        i++;
+        int j = -1;
+        for (auto& blockData : blockRow)
+        {
+            DBG("Block: " << j);
+            j++;
+
+            if (asciiChar > 'z')
+            {
+                // Throw Error
+                jassertfalse;
+            }
+            auto key = std::make_tuple(blockData.ascending,
+                                                    blockData.noteWheelNum,
+                                                    blockData.octave);
+            auto it = uniqueInputs.find(key);
+            if (it != uniqueInputs.end())
+            {
+                blockData.lSysChar = it->second;
+                DBG("Predecessor found. Setting this block's lSysChar to: " << blockData.lSysChar);
+            }
+            else
+            {
+                blockData.lSysChar = asciiChar;
+                uniqueInputs[key] = asciiChar;
+                DBG("New note entry. Setting lSysChar to " << asciiChar);
+                asciiChar++;
+            }
+        }
+    }
+
+
+    auto ruleMap = generateRulemap(analogUserInputBlockDataSet);
+
+    AnalogUserInputBlockData axiomBlock;
+    for (auto& blockRow : analogUserInputBlockDataSet)
+    {
+        for (auto& blockData : blockRow)
+        {
+            if (blockData.axiom == true)
+            {
+                axiomBlock = blockData;
+                // TODO: return here
+            }
+        }
+    }
+
+    // generateLString(axiomBlock.lSysChar, ruleMap);
+}
+
+std::vector<std::vector<AnalogUserInputBlockData>> LSystemProcessor::makeAnalogUIBlockDataSet()
+{
     jassert(analogUserInputComponent != nullptr);
-    std::vector<std::vector<AnalogUserInput::AnalogUserInputBlockData>> analogUserInputBlockDataSet;
+    std::vector<std::vector<AnalogUserInputBlockData>> analogUserInputBlockDataSet;
     for (auto* child : analogUserInputComponent->getChildren())
     {
         // Access Rows
         if (child->getComponentID().startsWith(jiveGui::IdPrefix::inputRow))
         {
-            std::vector<AnalogUserInput::AnalogUserInputBlockData> blockRow;
+            std::vector<AnalogUserInputBlockData> blockRow;
             DBG("Accessed row...");
             for (auto* rowChild : child->getChildren())
             {
                 if (rowChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlock)) //======================= Within InputBlock
                 {
                     DBG("Accessing inputBlock =====");
-                    AnalogUserInput::AnalogUserInputBlockData inputBlockData;
+                    AnalogUserInputBlockData inputBlockData;
                     for (auto* blockChild : rowChild->getChildren())
                     {
                         if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockTop))
@@ -111,64 +170,8 @@ void LSystemProcessor::growLSystem()
             if (blockRow.size() != 0)
                 analogUserInputBlockDataSet.push_back(blockRow);
         }
-
     }
-
-    // Generates analogUserInputBlockDataSet
-    char asciiChar = 'A';
-    std::map<std::tuple<bool, int, int>, char> uniqueInputs; // Pairs the unique combination of vars with a char.
-    int i = 0;
-    for (auto& blockRow : analogUserInputBlockDataSet)
-    {
-        DBG("Row: " << i);
-        i++;
-        int j = -1;
-        for (auto& blockData : blockRow)
-        {
-            DBG("Block: " << j);
-            j++;
-
-            if (asciiChar > 'z')
-            {
-                // Throw Error
-                jassertfalse;
-            }
-            auto key = std::make_tuple(blockData.ascending,
-                                                    blockData.noteWheelNum,
-                                                    blockData.octave);
-            auto it = uniqueInputs.find(key);
-            if (it != uniqueInputs.end())
-            {
-                blockData.lSysChar = it->second;
-                DBG("Predecessor found. Setting this block's lSysChar to: " << blockData.lSysChar);
-            }
-            else
-            {
-                blockData.lSysChar = asciiChar;
-                uniqueInputs[key] = asciiChar;
-                DBG("New note entry. Setting lSysChar to " << asciiChar);
-                asciiChar++;
-            }
-        }
-    }
-
-
-    auto ruleMap = generateRulemap(analogUserInputBlockDataSet);
-
-    AnalogUserInput::AnalogUserInputBlockData axiomBlock;
-    for (auto& blockRow : analogUserInputBlockDataSet)
-    {
-        for (auto& blockData : blockRow)
-        {
-            if (blockData.axiom == true)
-            {
-                axiomBlock = blockData;
-                // TODO: return here
-            }
-        }
-    }
-
-    generateLString(axiomBlock.lSysChar, ruleMap);
+    return analogUserInputBlockDataSet;
 }
 
 void LSystemProcessor::generateLString()

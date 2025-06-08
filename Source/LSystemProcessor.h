@@ -29,13 +29,17 @@ private:
 
     juce::Slider*& generationsKnob; // Warning: this could be a nullptr at class's construction, so make sure to jassert that it isn't when we need it.
     int generationsNum;
-    bool setLSystemRulesAndVariables();
-    bool confirmAxiom();
+    bool setLSystemRulesAndVariables();     /// Outdated?
+    bool confirmAxiom();                    /// Outdated?
     
+    /// Outdated?
 	juce::SortedSet<std::string> currentLSystemVariables; // SortedSet of variables, each variable is a string like "1", "b2", "#3", etc...
+    /// Outdated?
 	juce::SortedSet<std::string> currentLSystemRules; // SortedSet of rules, each rule is a string like "1=#2b4", "b4=2b34#4", etc...
     std::unordered_map<std::string, std::string> generateRulemap(std::vector<std::vector<AnalogUserInput::AnalogUserInputBlockData>>&);
+    /// Outdated?
 	std::unordered_map<std::string, std::string> currentLSystemRulemap; // Maps each variable to its corresponding rule, e.g., {"1": "#2b4", "b4": "2b34#4"}. Used directly in L-system generation.
+    std::vector<std::vector<AnalogUserInput::AnalogUserInputBlockData>> makeAnalogUIBlockDataSet();
     void generateLString();
     void generateNotesPool();
 

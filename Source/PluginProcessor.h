@@ -74,7 +74,7 @@ public:
 
     Dummy::DummyAudioProcessor dummyAudioProcessor{};
     juce::AudioProcessorValueTreeState::ParameterLayout createNonAutoParamaterLayout(int numRow, int numColumn);
-    juce::AudioProcessorValueTreeState dummyApvts{ dummyAudioProcessor, 
+    juce::AudioProcessorValueTreeState nonAutoApvts{ dummyAudioProcessor, 
         nullptr, 
         "dummyParams", 
         createNonAutoParamaterLayout(jiveGui::AnalogUserInput::NUMBLOCKROWS, jiveGui::AnalogUserInput::NUMBLOCKCOLUMNS)};

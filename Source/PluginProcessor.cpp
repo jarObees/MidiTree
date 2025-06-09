@@ -95,6 +95,11 @@ void MidiArpeggiatorAudioProcessor::changeProgramName(int index, const juce::Str
 
 }
 
+void MidiArpeggiatorAudioProcessor::releaseResources()
+{
+    // When playback stops, you can use this as an opportunity to free up any
+    // spare memory, etc.
+}
 //==============================================================================
 void MidiArpeggiatorAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock)
 {
@@ -107,12 +112,6 @@ void MidiArpeggiatorAudioProcessor::prepareToPlay(double sampleRate, int samples
     isMidiHeldDown = false;
     mustTurnOff = false;
     time = 0.0;
-}
-
-void MidiArpeggiatorAudioProcessor::releaseResources()
-{
-    // When playback stops, you can use this as an opportunity to free up any
-    // spare memory, etc.
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -164,7 +163,6 @@ void MidiArpeggiatorAudioProcessor::getAutomatableParams()
     // DBG("Note Rate Finder Time: " << duration.count() << " ms");
     // Updates note Type =================================================================
     noteType = apvts.getRawParameterValue("noteType")->load();
-
 }
 
 void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
@@ -384,23 +382,30 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 void MidiArpeggiatorAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {
     DBG("------ GETTING STATE INFORMATION ------");
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
-    
-    juce::MemoryOutputStream mos(destData, true); // TODO: Should this be true or not?
-    apvts.state.writeToStream(mos); // Everything should be saved to the apvts for simplicity.
+    auto xml{ std::make_unique<juce::XmlElement>(PluginTag::pluginTag) };
+    std::unique_ptr<juce::XmlElement> mainStateXml(apvts.copyState().createXml());
+    xml->addChildElement(mainStateXml.release());
+
+    std::unique_ptr<juce::XmlElement> nonAutoStateXml(nonAutoApvts.copyState().createXml());
+    xml->addChildElement(nonAutoStateXml.release());
+
+    copyXmlToBinary(*xml, destData);
 }
 
-//TODO: Figure out why this shit aint working.
 void MidiArpeggiatorAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
 {
     DBG("------ SETTING STATE INFORMATION ------");
-
-    auto tree = juce::ValueTree::readFromData(data, size_t(sizeInBytes));
-    if (tree.isValid())
+    std::unique_ptr<juce::XmlElement> xml{ getXmlFromBinary(data, sizeInBytes) };
+    if (xml.get() != nullptr && xml->hasTagName(PluginTag::pluginTag))
     {
-        apvts.replaceState(tree);
+        if (auto* mainStateXml = xml->getChildByName(apvts.state.getType()))
+        {
+            apvts.replaceState(juce::ValueTree::fromXml(*mainStateXml));
+        }
+        if (auto* nonAutoStateXml = xml->getChildByName(nonAutoApvts.state.getType()))
+        {
+            nonAutoApvts.replaceState(juce::ValueTree::fromXml(*nonAutoStateXml));
+        }
     }
 }
 

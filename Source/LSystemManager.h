@@ -2,7 +2,6 @@
 #include <JuceHeader.h>
 #include "LSystemProcessor.h"
 #include "PresetManager.h"
-#include "LSystemEncoder.h"
 
 // 
 namespace LSystemStuff

@@ -66,3 +66,8 @@ namespace dummyApvtsParams
 	const juce::String octavesParam{ "doi" };
 	const juce::String directionParam{ "ddi" };
 }
+
+namespace PluginTag
+{
+	const juce::String pluginTag{ "mapcat" };
+}

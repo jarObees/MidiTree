@@ -4,6 +4,7 @@
 #include "JuceHeader.h"
 #include "LSystem.h"
 #include "AnalogUserInputBlockData.h"
+using namespace AnalogUserInput;
 
 // This class is where the actual calculations for the L-System are made.
 class LSystemProcessor
@@ -36,12 +37,13 @@ private:
 	juce::SortedSet<std::string> currentLSystemVariables; // SortedSet of variables, each variable is a string like "1", "b2", "#3", etc...
     /// Outdated?
 	juce::SortedSet<std::string> currentLSystemRules; // SortedSet of rules, each rule is a string like "1=#2b4", "b4=2b34#4", etc...
-    std::unordered_map<std::string, std::string> generateRulemap(std::vector<std::vector<AnalogUserInput::AnalogUserInputBlockData>>&);
+    std::unordered_map<std::string, std::string> generateRulemap(std::vector<std::vector<AnalogUserInputBlockData>>&);
     /// Outdated?
 	std::unordered_map<std::string, std::string> currentLSystemRulemap; // Maps each variable to its corresponding rule, e.g., {"1": "#2b4", "b4": "2b34#4"}. Used directly in L-system generation.
-    std::vector<std::vector<AnalogUserInput::AnalogUserInputBlockData>> makeAnalogUIBlockDataSet();
-    void setBlockDataSetLSysChars(std::vector<std::vector<AnalogUserInput::AnalogUserInputBlockData>>&);
-    void generateLString();
+    std::vector<std::vector<AnalogUserInputBlockData>> makeAnalogUIBlockDataSet(); 
+    void setBlockDataSetLSysChars(std::vector<std::vector<AnalogUserInputBlockData>>&);
+    char getAxiomCharFromBDS(std::vector<std::vector<AnalogUserInputBlockData>>&) const;
+    void generateLString(char&, std::unordered_map<std::string, std::string>&);
     void generateNotesPool();
 
     std::regex rulesetPattern{"^[b#]?[1-7]=([b#]?[1-7])+$"}; // Used to capture strings like, "1=#2b4", "b4=2b34#4", etc...

@@ -40,21 +40,23 @@ void LSystemProcessor::growLSystem()
 
 
     auto ruleMap = generateRulemap(analogUserInputBlockDataSet);
+    char axiomChar = getAxiomCharFromBDS(analogUserInputBlockDataSet);
+    generateLString(axiomChar, ruleMap);
+}
 
-    AnalogUserInputBlockData axiomBlock;
+char LSystemProcessor::getAxiomCharFromBDS(std::vector<std::vector<AnalogUserInputBlockData>>& analogUserInputBlockDataSet) const
+{
     for (auto& blockRow : analogUserInputBlockDataSet)
     {
         for (auto& blockData : blockRow)
         {
             if (blockData.axiom == true)
             {
-                axiomBlock = blockData;
-                // TODO: return here
+                ///TODO: Set the value axiom thing to this as well if possible.
+                return blockData.lSysChar;
             }
         }
     }
-
-    // generateLString(axiomBlock.lSysChar, ruleMap);
 }
 
 std::vector<std::vector<AnalogUserInputBlockData>> LSystemProcessor::makeAnalogUIBlockDataSet()
@@ -179,10 +181,10 @@ void LSystemProcessor::setBlockDataSetLSysChars(std::vector<std::vector<AnalogUs
     }
 }
 
-void LSystemProcessor::generateLString()
+void LSystemProcessor::generateLString(char& axiomChar, std::unordered_map<std::string, std::string>& ruleMap)
 {
     DBG("GENERATING L STRING ===============================================");
-    auto genString = axiomUserInput.toString().toStdString();
+    std::string genString = std::string{axiomChar};
     // For each generation...
     for (int i = 0; i < generationsNum; ++i)
     {
@@ -193,10 +195,10 @@ void LSystemProcessor::generateLString()
         {
             DBG("Current genString: " << genString);
             DBG("Checking: " << c);
-            if (currentLSystemRulemap.find(std::string(1, c)) != currentLSystemRulemap.end())
+            if (ruleMap.find(std::string{ c }) != ruleMap.end())
             {
-                DBG("Found " << c << " in ruleMap. Replacing with: " << currentLSystemRulemap[std::string(1, c)]);
-                nextGen << currentLSystemRulemap.at(std::string(1, c));
+                DBG("Found " << c << " in ruleMap. Replacing with: " << ruleMap[std::string{c}]);
+                nextGen << ruleMap.at(std::string{c});
             }
             else
             {
@@ -204,8 +206,8 @@ void LSystemProcessor::generateLString()
                 DBG("Adding: " << c);
                 nextGen << c;
             }
-            genString = std::move(nextGen.str());
         }
+        genString = std::move(nextGen.str());
     }
     generatedLString = juce::String(genString);
     DBG("Generated L String: " << generatedLString.getValue().toString());
@@ -333,7 +335,7 @@ void LSystemProcessor::translateSet(juce::SortedSet<std::string>& stringSet)
 }
 
 // Generates ruleset map from ruleset set.
-std::unordered_map<std::string, std::string> LSystemProcessor::generateRulemap(std::vector<std::vector<AnalogUserInput::AnalogUserInputBlockData>>& inputBlockDataSet)
+std::unordered_map<std::string, std::string> LSystemProcessor::generateRulemap(std::vector<std::vector<AnalogUserInputBlockData>>& inputBlockDataSet)
 {
     DBG("Generating Ruleset");
     std::unordered_map<std::string, std::string> map;

@@ -21,7 +21,6 @@ LSystemProcessor::LSystemProcessor(juce::Slider*& generationsKnob,
 }
 
 /// TODO: Refactor to use the current state of the UI. 
-/// Pass in a reference to the parent analog user input component. Go thruogh da shits and analyze.
 void LSystemProcessor::growLSystem()
 {
     DBG("Growing L System");
@@ -29,15 +28,8 @@ void LSystemProcessor::growLSystem()
         jassertfalse;
     generationsNum = generationsKnob->getValue();
     DBG("Number of Generations: " << generationsNum);
-    //if (rulesetUserInput.getValue().isVoid() || axiomUserInput.getValue().isVoid())
-    //{
-    //    DBG("SHITS EMPTY");
-    //    return;
-    //}
     std::vector<std::vector<AnalogUserInputBlockData>> analogUserInputBlockDataSet
         = makeAnalogUIBlockDataSet();
-
-
 
     auto ruleMap = generateRulemap(analogUserInputBlockDataSet);
     char axiomChar = getAxiomCharFromBDS(analogUserInputBlockDataSet);
@@ -247,100 +239,6 @@ void LSystemProcessor::generateNotesPool(std::vector<std::vector<AnalogUserInput
         DBG(varTing.toString());
     }
     notesPool = notesPlus;
-}
-
-// Checks if the ruleset is valid, and if so, populates currentLSystemVariables and currentLSystemRules.
-bool LSystemProcessor::setLSystemRulesAndVariables()
-{
-    DBG("Setting L System Rules and Variables");
-
-    DBG("rulesetUserInput" << rulesetUserInput.toString().toStdString());
-    // Iterates through and verifies each line in ruleSetInput.
-    std::stringstream ss(rulesetUserInput.toString().toStdString());
-    std::string line;
-    juce::SortedSet<std::string> tempLsysVariables;
-    juce::SortedSet<std::string> tempLsysRulesets;
-    while (std::getline(ss, line))
-    {
-        // If the line is valid, adds it to the sorted set.
-        if (std::regex_match(line, rulesetPattern))
-        {
-            tempLsysRulesets.add(line);
-            auto begin = std::sregex_iterator(line.begin(), line.end(), variablePattern);
-            auto end = std::sregex_iterator();
-            for (auto it = begin; it != end; ++it)
-            {
-                tempLsysVariables.add(it->str());
-            }
-        }
-        else
-        {
-            DBG("Incorrect ruleset format");
-            // throwCustomError("Incorrect Ruleset Format.");
-            return false;
-        }
-    }
-    DBG("Everything's good, properties set!");
-    currentLSystemVariables = tempLsysVariables;
-    currentLSystemRules = tempLsysRulesets;
-    return true;
-}
-
-// Checks that axiom is valid.
-bool LSystemProcessor::confirmAxiom()
-{
-    DBG("Checking axiom correctness...");
-    DBG("l SYS VAR SIZE: " << currentLSystemVariables.size());
-    for (auto it = currentLSystemVariables.begin(); it != currentLSystemVariables.end(); ++it)
-    {
-        DBG("Checking: " << axiomUserInput.toString().toStdString() << "against: " << *it);
-        if (*it == axiomUserInput.toString().toStdString())
-        {
-            return true;
-        }
-    }
-    DBG("Axiom is not a valid variable!");
-    return false;
-}
-
-
-
-// Main function to generate and run everything necessary to produce an L system.
-void LSystemProcessor::generateLSystem(const uint8_t& gens)
-{
-    translateSet(currentLSystemRules);
-    translateSet(currentLSystemVariables);
-    // std::unordered_map<std::string, std::string> newLsysRulemap = generateRulemap();
-   // LSystem lsystem(lsysAxiom, newLsysRulemap);
-    //lsystem.generate(generationsNum);
-    // lSystems.push_back(lsystem);
-
-    //FOR TESTING PURPOSES=============================================================
-    const LSystem& testLSystem = lSystems[0];
-    // notesPool = generateNotesPool(testLSystem.genString);
-}
-
-// We need to verify that all variables in l system are single characters for future rule application.
-// Searches through each string in the set and replaces illegal substrings with legal ones using the replacementRules map.
-void LSystemProcessor::translateSet(juce::SortedSet<std::string>& stringSet)
-{
-    juce::SortedSet<std::string> translatedRuleset;
-    
-    for (const std::string& ruleLine : stringSet) // Iterates through each line in the ruleset.
-    {
-        std::string newRuleLine = ruleLine;
-        for (const auto& [key, value] : replacementRulesToChar)
-        {
-            size_t pos = 0;
-            while ((pos = newRuleLine.find(key, pos)) != std::string::npos) // Replace any instance of the key (illegal string) in the ruleLine with the value (legal string)
-            {
-                newRuleLine.replace(pos, key.length(), value);
-                pos += value.length();
-            }
-        }
-        translatedRuleset.add(newRuleLine);
-    }
-    stringSet = std::move(translatedRuleset);
 }
 
 // Generates ruleset map from ruleset set.

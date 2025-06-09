@@ -21,6 +21,9 @@ LSystemProcessor::LSystemProcessor(juce::Slider*& generationsKnob,
 }
 
 /// TODO: Refactor to use the current state of the UI. 
+/// TODO: 6/9/2025: See if this affects how the juce::value stuff works.
+/// Add safeguard function to make sure we have desired user input into the blocks?
+/// BIG TODO::: Check to see if the apvts stuff works (to make sure that the state of the ui is saved when minimizing the shit, etc)
 void LSystemProcessor::growLSystem()
 {
     DBG("Growing L System");

@@ -20,15 +20,6 @@ LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState&
 	apvts.state.addListener(this);
 }
 
-void LSystemStuff::LSystemManager::configureAxiomInputTextEditor(juce::TextEditor* textEditor)
-{
-	return;
-	DBG("Configuring axiom input text editor");
-	axiomInputEditor = textEditor;
-	axiomInputEditor->setText(axiomInputValue.toString());
-	axiomInputEditor->setInputRestrictions(1); // Restricts axiom to one character.
-	axiomInputEditor->addListener(this);
-}
 void LSystemStuff::LSystemManager::configureInputBlockTop(juce::Component* inputBlockTopComponent)
 {
 	auto children = inputBlockTopComponent->getChildren();
@@ -119,15 +110,6 @@ void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* ana
 			}
 		}
 	}
-}
-
-void LSystemStuff::LSystemManager::configureRulesetInputTextEditor(juce::TextEditor* textEditor)
-{
-	return;
-	DBG("Configuring ruleset input text editor");
-	rulesetInputEditor = textEditor;
-	rulesetInputEditor->setText("DEFAULT TEXT");
-	rulesetInputEditor->addListener(this);
 }
 
 void LSystemStuff::LSystemManager::configureGrowButton(juce::Button* button)

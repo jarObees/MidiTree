@@ -13,8 +13,6 @@ namespace LSystemStuff
 	{
 	public:
 		LSystemManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager, juce::Array<int>& curentNotesPool);
-		void configureAxiomInputTextEditor(juce::TextEditor* textEditor);
-		void configureRulesetInputTextEditor(juce::TextEditor* textEditor);
 		void configureGensKnob(juce::Slider* gensKnob);
 		void configureGrowButton(juce::Button* button);
 		void configureAnalogUserInput(juce::Component* analogUserInputComponent, const int numBlockRows, const int numBlockColumns);

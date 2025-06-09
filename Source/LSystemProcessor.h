@@ -44,7 +44,7 @@ private:
     void setBlockDataSetLSysChars(std::vector<std::vector<AnalogUserInputBlockData>>&);
     char getAxiomCharFromBDS(std::vector<std::vector<AnalogUserInputBlockData>>&) const;
     void generateLString(char&, std::unordered_map<std::string, std::string>&);
-    void generateNotesPool();
+    void generateNotesPool(std::vector<std::vector<AnalogUserInputBlockData>>&);
 
     std::regex rulesetPattern{"^[b#]?[1-7]=([b#]?[1-7])+$"}; // Used to capture strings like, "1=#2b4", "b4=2b34#4", etc...
     std::regex variablePattern{"[b#]?[1-7]"}; // Individually captures strings like, "1", "#2", "b7"   

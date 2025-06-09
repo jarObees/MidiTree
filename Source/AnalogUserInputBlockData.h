@@ -8,7 +8,7 @@ namespace AnalogUserInput
 	public:
 		bool axiom = false;
 		bool ascending = false;
-		int noteWheelNum = 0;
+		int noteWheelNum = 0;			// Num represents index in noteWheel. num - 1 is the actual half-step num interval it represents.
 		int octave = 0;
 
 		int intervalNum = 0;			// For use in notePool

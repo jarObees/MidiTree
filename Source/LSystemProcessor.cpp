@@ -42,6 +42,7 @@ void LSystemProcessor::growLSystem()
     auto ruleMap = generateRulemap(analogUserInputBlockDataSet);
     char axiomChar = getAxiomCharFromBDS(analogUserInputBlockDataSet);
     generateLString(axiomChar, ruleMap);
+    generateNotesPool(analogUserInputBlockDataSet);
 }
 
 char LSystemProcessor::getAxiomCharFromBDS(std::vector<std::vector<AnalogUserInputBlockData>>& analogUserInputBlockDataSet) const
@@ -52,7 +53,7 @@ char LSystemProcessor::getAxiomCharFromBDS(std::vector<std::vector<AnalogUserInp
         {
             if (blockData.axiom == true)
             {
-                ///TODO: Set the value axiom thing to this as well if possible.
+                axiomUserInput = juce::String(std::string{ blockData.axiom });
                 return blockData.lSysChar;
             }
         }
@@ -215,28 +216,36 @@ void LSystemProcessor::generateLString(char& axiomChar, std::unordered_map<std::
 
 // Converts the generated string into a vector<int> representing the interval in half steps from the root note (axiom).
 // Example: "3" represents a minor 3rd, so it's converted to 4 (half-steps from the root).
-void LSystemProcessor::generateNotesPool()
+void LSystemProcessor::generateNotesPool(std::vector<std::vector<AnalogUserInputBlockData>>& analogUserInputBlockDataSet)
 {
     DBG("Generating notes pool ===========================================================");
     std::string genString = generatedLString.toString().toStdString();
     juce::Array<juce::var> notesPlus;
     for (char c : genString)
     {
-        DBG("Char: " << c);
-        std::string s{ c };
-        auto it = replacementRulesToInt.find(s);
-        if (it != replacementRulesToInt.end())
+        bool found = false;
+        DBG("Checking: " << c << "in " << genString);
+        for (auto& row : analogUserInputBlockDataSet)
         {
-            DBG("Adding " << it->second);
-            notesPlus.add(it->second);
-        }
-        else
-        {
-            DBG("NOTES POOL: REPLACEMENT RULES AND L STRING MISMATCH");
-            return;
+            if (found != false)
+                break;
+            for (auto& blockData : row)
+            {
+                if (c == blockData.lSysChar)
+                {
+                    notesPlus.add(blockData.noteWheelNum - 1);
+                    DBG("Matched: " << c << "to interval " << (blockData.noteWheelNum - 1));
+                    found = true;
+                    break;
+                }
+            }
         }
     }
-    DBG("Notes Pool Generated!");
+    DBG("Notes Pool Generated:");
+    for (auto& varTing : notesPlus)
+    {
+        DBG(varTing.toString());
+    }
     notesPool = notesPlus;
 }
 

@@ -37,43 +37,6 @@ void LSystemProcessor::growLSystem()
     std::vector<std::vector<AnalogUserInputBlockData>> analogUserInputBlockDataSet
         = makeAnalogUIBlockDataSet();
 
-    // Generates analogUserInputBlockDataSet
-    char asciiChar = 'A';
-    std::map<std::tuple<bool, int, int>, char> uniqueInputs; // Pairs the unique combination of vars with a char.
-    int i = 0;
-    for (auto& blockRow : analogUserInputBlockDataSet)
-    {
-        DBG("Row: " << i);
-        i++;
-        int j = -1;
-        for (auto& blockData : blockRow)
-        {
-            DBG("Block: " << j);
-            j++;
-
-            if (asciiChar > 'z')
-            {
-                // Throw Error
-                jassertfalse;
-            }
-            auto key = std::make_tuple(blockData.ascending,
-                                                    blockData.noteWheelNum,
-                                                    blockData.octave);
-            auto it = uniqueInputs.find(key);
-            if (it != uniqueInputs.end())
-            {
-                blockData.lSysChar = it->second;
-                DBG("Predecessor found. Setting this block's lSysChar to: " << blockData.lSysChar);
-            }
-            else
-            {
-                blockData.lSysChar = asciiChar;
-                uniqueInputs[key] = asciiChar;
-                DBG("New note entry. Setting lSysChar to " << asciiChar);
-                asciiChar++;
-            }
-        }
-    }
 
 
     auto ruleMap = generateRulemap(analogUserInputBlockDataSet);
@@ -171,7 +134,49 @@ std::vector<std::vector<AnalogUserInputBlockData>> LSystemProcessor::makeAnalogU
                 analogUserInputBlockDataSet.push_back(blockRow);
         }
     }
+	setBlockDataSetLSysChars(analogUserInputBlockDataSet);
     return analogUserInputBlockDataSet;
+}
+
+// Goes through and sets the lSysChar for each block in the blockDataSet.
+void LSystemProcessor::setBlockDataSetLSysChars(std::vector<std::vector<AnalogUserInputBlockData>>& blockDataSet)
+{
+    char asciiChar = 'A';
+    std::map<std::tuple<bool, int, int>, char> uniqueInputs; // Pairs the unique combination of vars with a char.
+    int i = 0;
+    for (auto& blockRow : blockDataSet)
+    {
+        DBG("Row: " << i);
+        i++;
+        int j = -1;
+        for (auto& blockData : blockRow)
+        {
+            DBG("Block: " << j);
+            j++;
+
+            if (asciiChar > 'z')
+            {
+                // Throw Error
+                jassertfalse;
+            }
+            auto key = std::make_tuple(blockData.ascending,
+                                       blockData.noteWheelNum,
+                                       blockData.octave);
+            auto it = uniqueInputs.find(key);
+            if (it != uniqueInputs.end())
+            {
+                blockData.lSysChar = it->second;
+                DBG("Predecessor found. Setting this block's lSysChar to: " << blockData.lSysChar);
+            }
+            else
+            {
+                blockData.lSysChar = asciiChar;
+                uniqueInputs[key] = asciiChar;
+                DBG("New note entry. Setting lSysChar to " << asciiChar);
+                asciiChar++;
+            }
+        }
+    }
 }
 
 void LSystemProcessor::generateLString()

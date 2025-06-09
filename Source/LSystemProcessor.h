@@ -40,6 +40,7 @@ private:
     /// Outdated?
 	std::unordered_map<std::string, std::string> currentLSystemRulemap; // Maps each variable to its corresponding rule, e.g., {"1": "#2b4", "b4": "2b34#4"}. Used directly in L-system generation.
     std::vector<std::vector<AnalogUserInput::AnalogUserInputBlockData>> makeAnalogUIBlockDataSet();
+    void setBlockDataSetLSysChars(std::vector<std::vector<AnalogUserInput::AnalogUserInputBlockData>>&);
     void generateLString();
     void generateNotesPool();
 

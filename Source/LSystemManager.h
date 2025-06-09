@@ -19,7 +19,6 @@ namespace LSystemStuff
 		void configureInputBlockTop(juce::Component* octaveBlockTopComponent);
 		void configureInputBlockBot(juce::Component* inputBlockBottomComponent);
 		void configureNoteWheel(juce::Component* noteWheelComponent);
-
 	private:
 		void valueTreeRedirected(juce::ValueTree& changedValueTree) override;
 		void valueTreePropertyChanged(juce::ValueTree& tree, const juce::Identifier& property) override;

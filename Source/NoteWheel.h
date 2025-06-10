@@ -1,4 +1,5 @@
 #pragma once
+#include "Colors.h"
 
 namespace jiveGui
 {
@@ -32,6 +33,12 @@ namespace jiveGui
 							{"orientation", "vertical"},
 							{"align-content", "centre"},
 							{"justify-content", "centre"},
+																			{
+					"style",
+						new jive::Object{
+							{"background", jive::toVar(jiveGui::colors::white)},
+						}
+					}
 						},
 						{
 							juce::ValueTree

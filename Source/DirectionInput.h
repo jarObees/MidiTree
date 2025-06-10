@@ -17,14 +17,14 @@ namespace jiveGui
 				juce::ValueTree initialise()
 				{
 					return juce::ValueTree{
-						"Slider",
+						"Button",
 						{
 							{"id", id},
 							{"width", "100%"},
-							{"height", "25%"},
-							{"max", 1},
-							{"min", 0},
-							{"interval", "1"},
+							{"height", "100%"},
+							{"toggled", false },
+							{"toggleable", true},
+							{"toggle-on-click", true},
 							{"orientation", "horizontal"},
 							{"align-content", "centre"},
 							{"justify-content", "centre"},
@@ -39,19 +39,14 @@ namespace jiveGui
 				}
 				void setup(jive::GuiItem& item) final
 				{
-					if (auto* stripSlider = dynamic_cast<juce::Slider*>(item.getComponent().get()))
+					if (auto* buttonTing = dynamic_cast<juce::Button*>(item.getComponent().get()))
 					{
-						// Makes the slider invisible. (Can't just change the alpha, since this affects it's children (the text) as well).
-						//stripSlider->setColour(juce::Slider::backgroundColourId, juce::Colours::transparentBlack);
-						//stripSlider->setColour(juce::Slider::trackColourId, juce::Colours::transparentBlack);
-						//stripSlider->setColour(juce::Slider::thumbColourId, juce::Colours::transparentBlack);
-						//stripSlider->setOpaque(false);
-						onValueChange = std::make_unique<jive::Event>(item.state, "on-change");
-						onValueChange->onTrigger = [this, stripSlider]()
+						buttonTing->setToggleable(true);
+						onValueChange = std::make_unique<jive::Event>(item.state, "on-click");
+						onValueChange->onTrigger = [this, buttonTing]()
 							{
-								DBG("Dierction Changed! Value: " << stripSlider->getValue());
+								DBG("Direction Changed! Value: " << (buttonTing->getToggleState() ? "true" : "false"));
 							};
-						stripSlider->setValue(0); // Set default value to 0.
 						onValueChange->trigger();
 					}
 					else

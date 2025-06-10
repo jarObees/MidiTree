@@ -1,5 +1,6 @@
 #pragma once
 #include "Ids.h"
+#include "Colors.h"
 
 namespace jiveGui
 {
@@ -30,6 +31,13 @@ namespace jiveGui
 							{"orientation", "vertical"},
 							{"align-content", "centre"},
 							{"justify-content", "centre"},
+							{"flex-grow", 1},
+																			{
+					"style",
+						new jive::Object{
+							{"background", jive::toVar(colors::darkGray)},
+						}
+					}
 						},
 					};
 				}
@@ -76,6 +84,7 @@ namespace jiveGui
 							{"orientation", "vertical"},
 							{"align-content", "centre"},
 							{"justify-content", "centre"},
+							{"flex-grow", 1},
 												{
 					"style",
 						new jive::Object{

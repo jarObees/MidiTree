@@ -76,7 +76,7 @@ public:
     juce::AudioProcessorValueTreeState::ParameterLayout createNonAutoParamaterLayout(int numRow, int numColumn);
     juce::AudioProcessorValueTreeState nonAutoApvts{ dummyAudioProcessor, 
         nullptr, 
-        "dummyParams", 
+        "dummyParams",
         createNonAutoParamaterLayout(jiveGui::AnalogUserInput::NUMBLOCKROWS, jiveGui::AnalogUserInput::NUMBLOCKCOLUMNS)};
 
 
@@ -115,6 +115,8 @@ private:
     jive::Interpreter viewInterpreter;
     juce::UndoManager undoManager;
     //TODO: Should I also include the audioparameterfloats stuff?
+    // 
+    int countChildren(const juce::ValueTree&);
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiArpeggiatorAudioProcessor)
 };

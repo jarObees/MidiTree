@@ -52,7 +52,7 @@ void LSystemStuff::LSystemManager::configureInputBlockBot(juce::Component* input
 		{
 			// Configure Octave Input
 			DBG("> Found DI: " << child->getComponentID());
-			juce::Slider* directionInput = dynamic_cast<juce::Slider*>(child);
+			juce::Button* directionInput = dynamic_cast<juce::Button*>(child);
 			jassert(directionInput != nullptr);
 		}
 	}

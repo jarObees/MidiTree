@@ -53,7 +53,7 @@ namespace jiveGui
 					{"width", "100%"},
 					{"height", "25%"},
 					{"orientation", "vertical"},
-					{"align-content", "centre"},
+					{"align-items", "centre"},
 					{"justify-content", "centre"},
 				},
 			};

@@ -276,7 +276,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 	imageCollection = getImages(); // Images have to be retrieved during runtime not compile time.
 
     view = jiveGui::getView(imageCollection);
-
+    const auto howmuch = countChildren(view);
     if (auto editor = viewInterpreter.interpret(view, this))
     {
         if (dynamic_cast<juce::AudioProcessorEditor*>(editor.get()))
@@ -378,6 +378,18 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
     // return dynamic_cast<juce::AudioProcessorEditor*>(viewInterpreter.interpret(view, this).release());
 }
 
+int MidiArpeggiatorAudioProcessor::countChildren(const juce::ValueTree& tree)
+{
+    int count = 0;
+    for (int i = 0; i < tree.getNumChildren(); ++i)
+    {
+        auto child = tree.getChild(i);
+        ++count;
+        count += countChildren(child); // Recurse into child
+    }
+    DBG("NUM OF VIEW CHILDREN: " << count);
+    return count;
+}
 //==============================================================================
 void MidiArpeggiatorAudioProcessor::getStateInformation(juce::MemoryBlock& destData)
 {

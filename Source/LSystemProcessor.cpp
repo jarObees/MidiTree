@@ -66,17 +66,20 @@ std::vector<std::vector<AnalogUserInputBlockData>> LSystemProcessor::makeAnalogU
         {
             std::vector<AnalogUserInputBlockData> blockRow;
             DBG("Accessed row...");
+            DBG("row child num: " << child->getNumChildComponents());
             for (auto* rowChild : child->getChildren())
             {
                 if (rowChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlock)) //======================= Within InputBlock
                 {
                     DBG("Accessing inputBlock =====");
+                    DBG("ib child num: " << rowChild->getNumChildComponents());
                     AnalogUserInputBlockData inputBlockData;
                     for (auto* blockChild : rowChild->getChildren())
                     {
                         if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockTop))
                         {
                             DBG("> InputBlockTOP");
+                            DBG("ibt child num: " << blockChild->getNumChildComponents());
                             const auto inputBlockChildren = blockChild->getChildren();
                             for (auto* child : inputBlockChildren)
                             {
@@ -85,6 +88,7 @@ std::vector<std::vector<AnalogUserInputBlockData>> LSystemProcessor::makeAnalogU
                                     juce::Slider* octavesInput = dynamic_cast<juce::Slider*>(child);
                                     jassert(octavesInput != nullptr);
                                     inputBlockData.octave = octavesInput->getValue();
+                                    DBG("oi child num: " << child->getNumChildComponents());
                                     DBG(">> Octaves Input: " << inputBlockData.octave);
                                 }
                                 if (child->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockAxiom))
@@ -104,6 +108,7 @@ std::vector<std::vector<AnalogUserInputBlockData>> LSystemProcessor::makeAnalogU
                             juce::Slider* noteWheelInput = dynamic_cast<juce::Slider*>(blockChild);
                             jassert(noteWheelInput != nullptr);
                             inputBlockData.noteWheelNum = noteWheelInput->getValue();
+                            DBG("nw child num: " << blockChild->getNumChildComponents());
                             DBG(">> Notewheel Num: " << inputBlockData.noteWheelNum);
                         }
                         else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockBottom))
@@ -119,6 +124,7 @@ std::vector<std::vector<AnalogUserInputBlockData>> LSystemProcessor::makeAnalogU
                                     inputBlockData.ascending = (directionInput->getValue() == 0) ? true : false;
                                     juce::String dbgDirection = (inputBlockData.ascending == true) ? "Ascending" : "Descending";
                                     DBG(">> Direction: " << dbgDirection);
+                                    DBG("ibb child num: " << blockChild->getNumChildComponents());
                                 }
                             }
                         }

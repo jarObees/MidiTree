@@ -68,11 +68,13 @@ void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* ana
 		if (child->getComponentID().startsWith(jiveGui::IdPrefix::inputRow))
 		{
 			DBG("Accessed row...");
+			DBG("Row child num: " << child->getNumChildComponents());
 			for (auto* rowChild : child->getChildren())
 			{
 				if (rowChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlock))
 				{
 					DBG("Accessing inputBlock...");
+					DBG("inputBlock child num: " << rowChild->getNumChildComponents());
 					AnalogUserInput::AnalogUserInputBlockData inputBlock;
 					for (auto* blockChild : rowChild->getChildren())
 					{
@@ -82,17 +84,20 @@ void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* ana
 							// Found input block top.
 							configureInputBlockTop(blockChild);
 							DBG("Found an input block top!");
+							DBG("ibt child num: " << blockChild->getNumChildComponents());
 						}
 						else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::noteWheel))
 						{
 							// Found note wheel.
 							DBG("Found a note wheel!");
+							DBG("nw child num: " << blockChild->getNumChildComponents());
 							configureNoteWheel(blockChild);
 						}
 						else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockBottom))
 						{
 							// Found input block bottom.
 							DBG("Found an input block bottom!");
+							DBG("ibb child num: " << blockChild->getNumChildComponents());
 							configureInputBlockBot(blockChild);
 						}
 					}
@@ -104,7 +109,6 @@ void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* ana
 
 void LSystemStuff::LSystemManager::configureGrowButton(juce::Button* button)
 {
-
 	DBG("configured grow button");
 	growButton = button;
 	growButton->addListener(this);

@@ -114,7 +114,8 @@ private:
     juce::ValueTree view;
     jive::Interpreter viewInterpreter;
     juce::UndoManager undoManager;
-    //TODO: Should I also include the audioparameterfloats stuff?
+
+    void attachNonAutoParamsToNonAutoApvts(jive::GuiItem*);
     // 
     int countChildren(const juce::ValueTree&);
     //==============================================================================

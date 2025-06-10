@@ -60,7 +60,7 @@ namespace apvtsPropIds
 	static const juce::Identifier presetNameProperty{ "presetNameProperty" };
 }
 
-namespace dummyApvtsParams
+namespace dummyApvtsParamPrefix
 {
 	const juce::String noteWheelParam{ "dnw" };
 	const juce::String octavesParam{ "doi" };

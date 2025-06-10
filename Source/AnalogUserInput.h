@@ -9,7 +9,7 @@ namespace jiveGui
 {
 	namespace AnalogUserInput
 	{
-		const int NUMBLOCKCOLUMNS = 8;
+		const int NUMBLOCKCOLUMNS = 8;	// Recall: Cols start at -1.
 		const int NUMBLOCKROWS = 5;
 		const int BLOCKHEIGHT = 75;
 		const int BLOCKWIDTH = 25;

@@ -44,18 +44,8 @@ void LSystemStuff::LSystemManager::configureInputBlockTop(juce::Component* input
 
 void LSystemStuff::LSystemManager::configureInputBlockBot(juce::Component* inputBlockBottomComponent)
 {
-	auto children = inputBlockBottomComponent->getChildren();
-	jassert(children.size() > 0); // Should have at least one child.
-	for (auto child : children)
-	{
-		if (child->getComponentID().startsWith(jiveGui::IdPrefix::directionInput))
-		{
-			// Configure Octave Input
-			DBG("> Found DI: " << child->getComponentID());
-			juce::Button* directionInput = dynamic_cast<juce::Button*>(child);
-			jassert(directionInput != nullptr);
-		}
-	}
+	juce::Button* directionButton = dynamic_cast<juce::Button*>(inputBlockBottomComponent);
+	jassert(directionButton != nullptr); // Should have at least one child.
 }
 
 void LSystemStuff::LSystemManager::configureNoteWheel(juce::Component* noteWheelComponent)

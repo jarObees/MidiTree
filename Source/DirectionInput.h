@@ -21,7 +21,7 @@ namespace jiveGui
 						{
 							{"id", id},
 							{"width", "100%"},
-							{"height", "100%"},
+							{"height", "25%"},
 							{"toggled", false },
 							{"toggleable", true},
 							{"toggle-on-click", true},

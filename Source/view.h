@@ -58,7 +58,6 @@ namespace jiveGui
 					{
 						jive::makeView<FilmstripKnobView>(224, 32, filmstripKnobHori, StringIds::forestSlider, true),
 						jiveGui::AnalogUserInput::getAnalogUserInput(),
-						//jive::makeView<TextEditorView>(80, 160, StringIds::rulesetTextbox, "100%", "50%"),
 					},
 				},
 
@@ -79,9 +78,7 @@ namespace jiveGui
 								},
 						},
 					},
-					{
-						// Button{}.withHeight(20).withWidth(40).withId("save-button").withText("save")(),
-		
+					{		
 						jive::makeView<ComboBoxView>(40, 10, StringIds::presetComboBox),
 						jive::makeView<SaveButton>(20, 40, filmstripKnob, "save", StringIds::saveButton),
 						jive::makeView<SaveButton>(20, 40, filmstripKnob, "plant!", StringIds::plantButton),

@@ -35,7 +35,17 @@ void LSystemProcessor::growLSystem()
         = makeAnalogUIBlockDataSet();
 
     auto ruleMap = generateRulemap(analogUserInputBlockDataSet);
+    if (ruleMap.size() == 0)
+    {
+        ///TODO: Create error thrower.
+        DBG("YO RULES WRONG!");
+    }
     char axiomChar = getAxiomCharFromBDS(analogUserInputBlockDataSet);
+    if (axiomChar == '\0')
+    {
+        ///TODO: Create error thrower
+        DBG("NOAXIOM!!!");
+    }
     generateLString(axiomChar, ruleMap);
     generateNotesPool(analogUserInputBlockDataSet);
 }
@@ -53,6 +63,7 @@ char LSystemProcessor::getAxiomCharFromBDS(std::vector<std::vector<AnalogUserInp
             }
         }
     }
+    return '\0';
 }
 
 std::vector<std::vector<AnalogUserInputBlockData>> LSystemProcessor::makeAnalogUIBlockDataSet()
@@ -128,14 +139,15 @@ std::vector<std::vector<AnalogUserInputBlockData>> LSystemProcessor::makeAnalogU
                                 }
                             }
                         }
-
                     }
                     if (inputBlockData.noteWheelNum != 0)       // Only pushes stuff that has an actual value.
                         blockRow.push_back(inputBlockData);
                 }
             }
-            if (blockRow.size() != 0)
+            if (blockRow.size() > 1)
                 analogUserInputBlockDataSet.push_back(blockRow);
+            else
+                DBG("Weird aa blockRow. Ignoring...");
         }
     }
 	setBlockDataSetLSysChars(analogUserInputBlockDataSet);
@@ -271,7 +283,9 @@ std::unordered_map<std::string, std::string> LSystemProcessor::generateRulemap(s
                 firstInput = false;
             }
             else
+            {
                 rightHandSide << blockData.lSysChar;
+            }
         }
         DBG("Adding rule: " << leftHandSide << "=" << rightHandSide.str());
         map.emplace(leftHandSide, rightHandSide.str());

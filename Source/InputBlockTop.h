@@ -25,9 +25,6 @@ namespace jiveGui
 							{"id", id},
 							{"width", "100%"},
 							{"height", "25%"},
-							{"max", 2},
-							{"min", 0},
-							{"interval", "1"},
 							{"orientation", "vertical"},
 							{"align-content", "centre"},
 							{"justify-content", "centre"},
@@ -45,6 +42,8 @@ namespace jiveGui
 				{
 					if (auto* stripSlider = dynamic_cast<juce::Slider*>(item.getComponent().get()))
 					{
+						juce::NormalisableRange<double> range(0.0f, 2.0f, 1.0f);
+						stripSlider->setNormalisableRange(range);
 						onValueChange = std::make_unique<jive::Event>(item.state, "on-change");
 						onValueChange->onTrigger = [this, stripSlider]()
 							{

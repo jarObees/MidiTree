@@ -150,10 +150,11 @@ namespace jiveGui
 				{
 					{"id", StringIds::analogUserInput},
 					{"flex-direction", "column"},
-					{"align-items", "centre"},
+					{"align-items", "flex-start"},
+					{"align-content", "flex-start"},
 					{"justify-content", "space-between"},
 					{"width", "100%"},
-					{"height", "80%"},
+					{"height", "95%"},
 					{
 						"style",
 							new jive::Object

@@ -27,7 +27,7 @@ namespace jiveGui
 				{"justify-content", "centre"},
 				{"flex-direction", "row"},
 				{"width", "100%"},
-				{"height", "55%"},
+				{"height", "60%"},
 				{
 					"style",
 						new jive::Object{
@@ -56,7 +56,7 @@ namespace jiveGui
 					},
 					{
 						jiveGui::AnalogUserInput::getAnalogUserInput(),
-						///TODO: ADD TEXT
+						/// TODO: ADD TEXT
 						///TODO: ADD RESET BUTTON
 					},
 				},
@@ -88,14 +88,64 @@ namespace jiveGui
 		};
 	}
 
+	[[nodisacrd]] inline auto getForestLeft(std::unordered_map<std::string, juce::Image>& imageCollection)
+	{
+		juce::Image filmstripKnobHori = imageCollection.at(ImageIds::horiKnobFilmstrip);
+		return juce::ValueTree
+		{
+			"Component",
+			{
+				{"width", "90%"},
+				{"height", "100%"},
+				{
+					"style",
+						new jive::Object
+						{
+							{ "background", jive::toVar(colors::debug_tertiary)},
+						},
+				},
+			},
+			{
+				jive::makeView<FilmstripKnobView>(224, 32, filmstripKnobHori, StringIds::forestSlider, true),
+			}
+		};
+	}
+
+	[[nodiscard]] inline auto getForestRight(std::unordered_map<std::string, juce::Image>& imageCollection)
+	{
+		juce::Image filmstripKnob = imageCollection.at(ImageIds::mainKnobFilmstrip);
+		return juce::ValueTree
+		{
+			"Component",
+			{
+				{"width", "20%"},
+				{"height", "100%"},
+				{"flex-direction", "column"},
+				{
+					"style",
+						new jive::Object
+						{
+							{ "background", jive::toVar(colors::debug_primary)},
+						},
+				},
+			},
+			{
+				jive::makeView<SaveButton>(20, 40, filmstripKnob, "save", StringIds::saveButton),
+				jive::makeView<ComboBoxView>(40, 10, StringIds::presetComboBox),
+			}
+		};
+	}
+
 	[[nodiscard]] inline auto getForestComponent(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
-		return juce::ValueTree{
+		return juce::ValueTree
+		{
 			"Component",
 			{
 				{"id", "trunk"},
 				{"align-items", "centre"},
 				{"justify-content", "centre"},
+				{"flex-direction", "row"},
 				{"width", "100%"},
 				{"height", "17%"},
 				{
@@ -106,7 +156,8 @@ namespace jiveGui
 				},
 			},
 			{
-				//Get Trunk Components
+				getForestLeft(imageCollection),
+				getForestRight(imageCollection),
 			}
 		};
 	}
@@ -121,7 +172,7 @@ namespace jiveGui
 				{"flex-direction", "row"},
 				{"justify-content", "centre"},
 				{"width", "100%"},
-				{"height", "20%"},
+				{"height", "15%"},
 				{
 					"style",
 						new jive::Object{

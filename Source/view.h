@@ -25,9 +25,9 @@ namespace jiveGui
 				{"id", "crown"},
 				{"align-items", "centre"},
 				{"justify-content", "centre"},
-				{"flex-direction", "column"},
-				{"width", "90%"},
-				{"height", "70%"},
+				{"flex-direction", "row"},
+				{"width", "100%"},
+				{"height", "55%"},
 				{
 					"style",
 						new jive::Object{
@@ -55,8 +55,9 @@ namespace jiveGui
 						},
 					},
 					{
-						jive::makeView<FilmstripKnobView>(224, 32, filmstripKnobHori, StringIds::forestSlider, true),
 						jiveGui::AnalogUserInput::getAnalogUserInput(),
+						///TODO: ADD TEXT
+						///TODO: ADD RESET BUTTON
 					},
 				},
 
@@ -78,11 +79,9 @@ namespace jiveGui
 						},
 					},
 					{
-						jive::makeView<ComboBoxView>(40, 10, StringIds::presetComboBox),
-						jive::makeView<SaveButton>(20, 40, filmstripKnob, "save", StringIds::saveButton),
-						jive::makeView<SaveButton>(20, 40, filmstripKnob, "plant!", StringIds::plantButton),
 						jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, StringIds::generationsKnob),
 						jive::makeView<SaveButton>(20, 40, filmstripKnob, "grow!", StringIds::growButton),
+						///TODO: ADD "MIDI TREE" TEXT.
 					},
 				},
 			}
@@ -97,8 +96,8 @@ namespace jiveGui
 				{"id", "trunk"},
 				{"align-items", "centre"},
 				{"justify-content", "centre"},
-				{"width", "90%"},
-				{"height", "10%"},
+				{"width", "100%"},
+				{"height", "17%"},
 				{
 					"style",
 						new jive::Object{
@@ -121,7 +120,7 @@ namespace jiveGui
 				{"id", "ground"},
 				{"flex-direction", "row"},
 				{"justify-content", "centre"},
-				{"width", "90%"},
+				{"width", "100%"},
 				{"height", "20%"},
 				{
 					"style",
@@ -134,6 +133,30 @@ namespace jiveGui
 				getMidiVelocityKnob(imageCollection),
 				getNoteRateKnob(imageCollection),
 				jive::makeView<ComboBoxView>(80, 20, StringIds::noteTypeComboBox), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
+			}
+		};
+	}
+
+	[[nodiscard]] inline auto getInfoComponent(std::unordered_map<std::string, juce::Image>& imageCollection)
+	{
+		return juce::ValueTree{
+			"Component",
+			{
+				{"id", "info"},
+				{"align-items", "centre"},
+				{"justify-content", "centre"},
+				{"width", "100%"},
+				{"height", "8%"},
+				{
+					"style",
+						new jive::Object{
+							{ "background", jive::toVar(colors::debug_secondary)},
+						},
+				},
+			},
+			{
+				///TODO: Add text display
+				///TODO: Add dynamic image to display.
 			}
 		};
 	}
@@ -161,9 +184,8 @@ namespace jiveGui
 			{
 				getBuilderComponent(imageCollection),
 				getForestComponent(imageCollection),
-				//getInfoComponent(imageCollection),
+				getInfoComponent(imageCollection),
 				getGround(imageCollection),
-				//getSideBar(imageCollection),
 			}
 		};
 	}

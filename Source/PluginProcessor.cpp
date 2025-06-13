@@ -294,9 +294,9 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             }
             else
                 jassertfalse;
-            attachParamsToApvts(editor.get());
-            attachNonAutoParamsToNonAutoApvts(editor.get());
-            configureComponents(editor.get());
+            //attachParamsToApvts(editor.get());
+            //attachNonAutoParamsToNonAutoApvts(editor.get());
+            // configureComponents(editor.get());
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
         }
     }

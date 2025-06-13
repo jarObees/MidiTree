@@ -95,7 +95,7 @@ namespace jiveGui
 		{
 			"Component",
 			{
-				{"width", "90%"},
+				{"width", "80%"},
 				{"height", "100%"},
 				{
 					"style",
@@ -187,6 +187,51 @@ namespace jiveGui
 			}
 		};
 	}
+	[[nodiscard]] inline auto getInfoLeft(std::unordered_map<std::string, juce::Image>& imageCollection)
+	{
+		return juce::ValueTree
+		{
+			"Component",
+			{
+				{"width", "80%"},
+				{"height", "100%"},
+				{
+					"style",
+						new jive::Object
+						{
+							{ "background", jive::toVar(colors::crown_highlight)},
+						},
+				},
+			},
+			{
+				///TODO: ADD DYNAMIC NAME TEXT.
+				///TODO: ADD DYNAMIC GEN NOTES TEXT.
+			}
+		};
+	}
+
+	[[nodiscard]] inline auto getInfoRight(std::unordered_map<std::string, juce::Image>& imageCollection)
+	{
+		juce::Image filmstripKnob = imageCollection.at(ImageIds::mainKnobFilmstrip);
+		return juce::ValueTree
+		{
+			"Component",
+			{
+				{"width", "20%"},
+				{"height", "100%"},
+				{
+					"style",
+						new jive::Object
+						{
+							{ "background", jive::toVar(colors::crown_secondary)},
+						},
+				},
+			},
+			{
+				///TODO: ADD DYNAMIC ACTIVE IMAGE. bool state image that indicates whether the thing is active or not.
+			}
+		};
+	}
 
 	[[nodiscard]] inline auto getInfoComponent(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
@@ -196,6 +241,7 @@ namespace jiveGui
 				{"id", "info"},
 				{"align-items", "centre"},
 				{"justify-content", "centre"},
+				{"flex-direction", "row"},
 				{"width", "100%"},
 				{"height", "8%"},
 				{
@@ -206,8 +252,8 @@ namespace jiveGui
 				},
 			},
 			{
-				///TODO: Add text display
-				///TODO: Add dynamic image to display.
+				getInfoLeft(imageCollection),
+				getInfoRight(imageCollection),
 			}
 		};
 	}

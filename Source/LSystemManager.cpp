@@ -145,7 +145,6 @@ void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)
 	if (button == growButton)
 	{
 		lSystemProcessor->growLSystem();
-		// setCurrentNotesPool();
 	}
 }
 

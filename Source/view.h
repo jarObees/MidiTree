@@ -15,7 +15,7 @@ namespace jiveGui
 {
 
 	// MAIN COMPONENTS ==========================================================
-	[[nodiscard]] inline auto getCrown(std::unordered_map<std::string, juce::Image>& imageCollection)
+	[[nodiscard]] inline auto getBuilderComponent(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
 		juce::Image filmstripKnob = imageCollection.at(ImageIds::mainKnobFilmstrip);
 		juce::Image filmstripKnobHori = imageCollection.at(ImageIds::horiKnobFilmstrip);
@@ -25,8 +25,8 @@ namespace jiveGui
 				{"id", "crown"},
 				{"align-items", "centre"},
 				{"justify-content", "centre"},
-				{"flex-direction", "row"},
-				{"width", "100%"},
+				{"flex-direction", "column"},
+				{"width", "90%"},
 				{"height", "70%"},
 				{
 					"style",
@@ -35,7 +35,6 @@ namespace jiveGui
 						},
 				},
 			},
-
 			// LEFT CONTAINER
 			{
 				juce::ValueTree
@@ -78,7 +77,7 @@ namespace jiveGui
 								},
 						},
 					},
-					{		
+					{
 						jive::makeView<ComboBoxView>(40, 10, StringIds::presetComboBox),
 						jive::makeView<SaveButton>(20, 40, filmstripKnob, "save", StringIds::saveButton),
 						jive::makeView<SaveButton>(20, 40, filmstripKnob, "plant!", StringIds::plantButton),
@@ -89,8 +88,8 @@ namespace jiveGui
 			}
 		};
 	}
-	
-	[[nodiscard]] inline auto getSky(std::unordered_map<std::string, juce::Image>& imageCollection)
+
+	[[nodiscard]] inline auto getForestComponent(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
 		return juce::ValueTree{
 			"Component",
@@ -98,7 +97,7 @@ namespace jiveGui
 				{"id", "trunk"},
 				{"align-items", "centre"},
 				{"justify-content", "centre"},
-				{"width", "100%"},
+				{"width", "90%"},
 				{"height", "10%"},
 				{
 					"style",
@@ -112,7 +111,7 @@ namespace jiveGui
 			}
 		};
 	}
-	
+
 	[[nodiscard]] inline auto getGround(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
 		juce::Image filmstripKnob = imageCollection.at(ImageIds::mainKnobFilmstrip);
@@ -122,7 +121,7 @@ namespace jiveGui
 				{"id", "ground"},
 				{"flex-direction", "row"},
 				{"justify-content", "centre"},
-				{"width", "100%"},
+				{"width", "90%"},
 				{"height", "20%"},
 				{
 					"style",
@@ -160,9 +159,11 @@ namespace jiveGui
 				},
 			},
 			{
-				getCrown(imageCollection),
-				getSky(imageCollection),
+				getBuilderComponent(imageCollection),
+				getForestComponent(imageCollection),
+				//getInfoComponent(imageCollection),
 				getGround(imageCollection),
+				//getSideBar(imageCollection),
 			}
 		};
 	}

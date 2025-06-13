@@ -233,6 +233,7 @@ void LSystemProcessor::generateNotesPool(std::vector<std::vector<AnalogUserInput
 {
     DBG("Generating notes pool ===========================================================");
     std::string genString = generatedLString.toString().toStdString();
+    DBG("Generated L String: " << generatedLString);
     juce::Array<juce::var> notesPlus;
     for (char c : genString)
     {

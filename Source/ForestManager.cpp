@@ -52,7 +52,7 @@ namespace Forest
 	void ForestManager::configureTreeSlider(juce::Slider* slider)
 	{
 		forestSlider = slider;
-		forestSlider->setValue(1); // Sets default value.
+		// forestSlider->setValue(1); // Sets default value.
 		forestSlider->addListener(this);
 	}
 

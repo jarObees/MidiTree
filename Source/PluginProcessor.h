@@ -116,7 +116,8 @@ private:
     juce::UndoManager undoManager;
 
     void attachNonAutoParamsToNonAutoApvts(jive::GuiItem*);
-    // 
+    void attachParamsToApvts(jive::GuiItem*);
+    void configureComponents(jive::GuiItem*);
     int countChildren(const juce::ValueTree&);
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MidiArpeggiatorAudioProcessor)

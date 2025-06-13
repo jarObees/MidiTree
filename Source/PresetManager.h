@@ -34,7 +34,7 @@ namespace Preset
 		juce::StringArray getAllPresets() const;
 
 		juce::AudioProcessorValueTreeState& apvts;
-		juce::Value currentPreset;
+		juce::Value currentPresetName;
 
 		juce::Button* saveButton;
 		juce::ComboBox* comboBox;

@@ -141,7 +141,7 @@ namespace jiveGui
 
 		// MAIN COMPONENT =================================================================
 		// Children: n InputRows;
-		[[nodiscard]] inline juce::ValueTree getAnalogUserInput()
+		[[nodiscard]] inline juce::ValueTree getAnalogUserInput(juce::Image octavesTest)
 		{
 			DBG("Getting analog user input");
 			juce::ValueTree slots

@@ -15,6 +15,7 @@ namespace jiveGui
 					: rowNum(rowNum), columnNum(columnNum)
 				{
 					id = rowColIdMaker(IdPrefix::octavesInput, rowNum, columnNum);
+					bgImage = juce::ImageCache::getFromMemory(BinaryData::OCTAVES_0_png, BinaryData::OCTAVES_0_pngSize); // Set to base image.
 				}
 				
 				juce::ValueTree initialise()
@@ -29,12 +30,20 @@ namespace jiveGui
 							{"align-content", "centre"},
 							{"justify-content", "centre"},
 							{"flex-grow", 1},
-																			{
-					"style",
-						new jive::Object{
-							{"background", jive::toVar(colors::darkGray)},
-						}
-					}
+							{
+								"style",
+									new jive::Object{
+										{"background", jive::toVar(colors::darkGray)},
+									}
+							}
+						},
+						{
+							juce::ValueTree{
+								"Image",
+								{
+									{"source", jive::toVar(bgImage)},
+								}
+							},
 						},
 					};
 				}
@@ -45,9 +54,28 @@ namespace jiveGui
 						juce::NormalisableRange<double> range(0.0f, 2.0f, 1.0f);
 						stripSlider->setNormalisableRange(range);
 						onValueChange = std::make_unique<jive::Event>(item.state, "on-change");
+						imageSource = std::make_unique<jive::Property<juce::Image>>(item.state.getChild(0), "source");
 						onValueChange->onTrigger = [this, stripSlider]()
 							{
 								DBG("Octave Input Changed! Value: " << stripSlider->getValue());
+								switch (int(stripSlider->getValue()))
+								{
+								case 0:
+									DBG("Case 0");
+									imageSource->
+										set(juce::ImageCache::getFromMemory(BinaryData::OCTAVES_0_png, BinaryData::OCTAVES_0_pngSize));
+									break;
+								case 1:
+									DBG("Case 1");
+									imageSource->
+										set(juce::ImageCache::getFromMemory(BinaryData::OCTAVES_1_png, BinaryData::OCTAVES_1_pngSize));
+									break;
+								case 2:
+									DBG("Case 2");
+									imageSource->
+										set(juce::ImageCache::getFromMemory(BinaryData::OCTAVES_3_png, BinaryData::OCTAVES_3_pngSize));
+									break;
+								}
 							};
 						stripSlider->setValue(0); // Set default value to 0.
 						onValueChange->trigger();
@@ -56,11 +84,14 @@ namespace jiveGui
 						jassertfalse;
 				}
 			private:
+				juce::Image bgImage;
 				juce::String id;
 				const int rowNum, columnNum;
 				std::unique_ptr<jive::Event> onValueChange;
+				std::unique_ptr<jive::Property<juce::Image>> imageSource;
 			};
 
+			// IF WE HAVE AN AXIOM CLASS =============================================================================================
 			class AxiomSelectorView : public jive::View
 			{
 			public:

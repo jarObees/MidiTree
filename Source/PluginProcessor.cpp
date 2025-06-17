@@ -263,8 +263,11 @@ std::unordered_map<std::string, juce::Image> MidiArpeggiatorAudioProcessor::getI
                                                                          BinaryData::knobTestWhite_pngSize);
     juce::Image horiSliderWhiteFilmstrip = juce::ImageFileFormat::loadFrom(BinaryData::_128_HORISLIDER_FILMSTRIP_png, 
                                                                            BinaryData::_128_HORISLIDER_FILMSTRIP_pngSize);
+    juce::Image bgOctaves1 = juce::ImageFileFormat::loadFrom(BinaryData::OCTAVES_0_png,
+                                                            BinaryData::OCTAVES_0_pngSize);
 	imageCollection[jiveGui::ImageIds::mainKnobFilmstrip] = knobTestWhiteFilmstrip;
 	imageCollection[jiveGui::ImageIds::horiKnobFilmstrip] = horiSliderWhiteFilmstrip;
+    imageCollection[jiveGui::ImageIds::octavesBackground1] = bgOctaves1;
 	return imageCollection;
 }
 juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()

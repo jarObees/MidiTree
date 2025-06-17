@@ -19,6 +19,7 @@ namespace jiveGui
 	{
 		juce::Image filmstripKnob = imageCollection.at(ImageIds::mainKnobFilmstrip);
 		juce::Image filmstripKnobHori = imageCollection.at(ImageIds::horiKnobFilmstrip);
+		juce::Image octavesTest = imageCollection.at(ImageIds::octavesBackground1);
 		return juce::ValueTree{
 			"Component",
 			{
@@ -55,7 +56,7 @@ namespace jiveGui
 						},
 					},
 					{
-						jiveGui::AnalogUserInput::getAnalogUserInput(),
+						jiveGui::AnalogUserInput::getAnalogUserInput(octavesTest),
 						/// TODO: ADD TEXT
 						///TODO: ADD RESET BUTTON
 					},

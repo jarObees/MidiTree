@@ -29,6 +29,11 @@
               file="Source/FilmstripKnobView.h"/>
       </GROUP>
       <GROUP id="{4F6AE0DC-7317-E987-87C8-0634CB03A0F6}" name="Assets">
+        <FILE id="STcxyq" name="NW_OFF.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/NW_OFF.png"/>
+        <FILE id="Ks1eRD" name="NW_ON.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/NW_ON.png"/>
+        <FILE id="nOXB07" name="OCTAVES_0.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/OCTAVES_0.png"/>
+        <FILE id="hyvFCJ" name="OCTAVES_1.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/OCTAVES_1.png"/>
+        <FILE id="LlGRa8" name="OCTAVES_3.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/OCTAVES_3.png"/>
         <FILE id="pCuRGP" name="Images.h" compile="0" resource="0" file="Source/Images.h"/>
         <FILE id="Owy5vy" name="128_HORISLIDER_FILMSTRIP.png" compile="0" resource="1"
               file="../../../Duhzine/VSTPLUGIN/128_HORISLIDER_FILMSTRIP.png"/>

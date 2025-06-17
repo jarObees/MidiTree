@@ -46,6 +46,7 @@ namespace jiveGui
 	{
 		const std::string mainKnobFilmstrip{ "mainKnobFilmstrip" };
 		const std::string horiKnobFilmstrip{ "horiKnobFilmstrip" };
+		const std::string octavesBackground1{ "octback1" };
 	}
 }
 

@@ -23,57 +23,60 @@ namespace jiveGui
 				juce::ValueTree initialise() final
 				{
 					return juce::ValueTree{
-						"Slider",
+						"Component",
 						{
-							{"id", id},
+							{"display", "block"},
 							{"width", "100%"},
 							{"height", "50%"},
-							{"max", 12},
-							{"min", 0},
-							{"interval", "1"},
-							{"orientation", "vertical"},
-							{"align-content", "centre"},
-							{"justify-content", "centre"},
-							{
-							"style",
-								new jive::Object{
-									{"background", jive::toVar(jiveGui::colors::white)},
-								}
-							}
 						},
 						{
 							juce::ValueTree
 							{
-								"Image",
+								"Slider",
 								{
-									{"source", jive::toVar(bgImage)},
+									{"id", id},
 									{"width", "100%"},
 									{"height", "100%"},
-									// {"opacity", 0.0f},
+									{"max", 12},
+									{"min", 0},
+									{"interval", "1"},
+									{"orientation", "vertical"},
+									{"align-content", "centre"},
+									{"justify-content", "centre"},
 								},
-								//{
-								//	juce::ValueTree
-								//	{
-								//		"Text",
-								//		{
-								//			{"always-on-top", true},
-								//			{"text", jive::toVar(text)},
-								//			{"justification", juce::Justification::centred},
-								//			{"align-content", "centre"},
-								//			{"justify-content", "centre"},
-								//			{
-								//			"style",
-								//				new jive::Object
-								//					{
-								//						{"background", jive::toVar(jiveGui::colors::debug_secondary)},
-								//						{ "foreground", "#000000"},
-								//						{ "font-size", 20 },
-								//						{ "letter-spacing", 1 },
-								//					},
-								//			},
-								//		},
-								//	},
-								//}
+								{
+									juce::ValueTree
+									{
+										"Image",
+										{
+											{"source", jive::toVar(bgImage)},
+											{"width", "100%"},
+											{"height", "100%"},
+										},
+									},
+								},
+							},
+							juce::ValueTree
+							{
+								"Text",
+								{
+									{"width", "100%"},
+									{"height", "100%"},
+									{"text", jive::toVar(text)},
+									{"justification", juce::Justification::centred},
+									{"align-content", "centre"},
+									{"justify-content", "centre"},
+									{
+									"style",
+										new jive::Object
+											{
+												//{"background", jive::toVar(jiveGui::colors::debug_secondary)},
+												{ "foreground", "#000000"},
+												{ "font-size", 20 },
+												{ "letter-spacing", 1 },
+											},
+									},
+								},
 							},
 						},
 					};
@@ -81,44 +84,45 @@ namespace jiveGui
 
 				void setup(jive::GuiItem& item) final
 				{
-					if (auto* stripSlider = dynamic_cast<juce::Slider*>(item.getComponent().get()))
-					{
-						auto* textLabelThing = item.getChildren().getFirst()->getComponent().get();
-						textLabelThing->setInterceptsMouseClicks(false, false);
-						// Makes the slider invisible. (Can't just change the alpha, since this affects it's children (the text) as well).
-						stripSlider->setColour(juce::Slider::backgroundColourId, juce::Colours::transparentBlack);
-						stripSlider->setColour(juce::Slider::trackColourId, juce::Colours::transparentBlack);
-						stripSlider->setColour(juce::Slider::thumbColourId, juce::Colours::transparentBlack);
-						//stripSlider->setOpaque(false);
-						onValueChange = std::make_unique<jive::Event>(item.state, "on-change");
-						imageSource = std::make_unique<jive::Property<juce::Image>>(item.state.getChild(0), "source");
-						// = std::make_unique<jive::Property<juce::String>>(item.state.getChild(0).getChild(0), "text");
-						onValueChange->onTrigger = [this, stripSlider]()
-						{
+					onValueChange = std::make_unique<jive::Event>(item.getChildren().getFirst()->state, "on-change");
+					imageSource = std::make_unique<jive::Property<juce::Image>>(item.state.getChild(0).getChild(0), "source");
+					textProperty = std::make_unique<jive::Property<juce::String>>(item.state.getChild(1), "text");
+					jassert(imageSource != nullptr);
+					jassert(onValueChange != nullptr);
 
-							DBG("Note Wheel changed! Value: " << stripSlider->getValue());
-							int index = static_cast<int>(stripSlider->getValue());
-							DBG("Setting text to: " << intervals[index]);
-							//textProperty->set(intervals[index]);
-							if (stripSlider->getValue() == 0)
-								imageSource->set(juce::ImageCache::getFromMemory(BinaryData::NW_OFF_png, BinaryData::NW_OFF_pngSize));
-							else
-								imageSource->set(juce::ImageCache::getFromMemory(BinaryData::NW_ON_png, BinaryData::NW_ON_pngSize));
-						};
-						stripSlider->setValue(0); // Set default value to 0.
-						onValueChange->trigger();
-					}
-					else
-						jassertfalse;
+					auto* stripSlider = dynamic_cast<juce::Slider*>(item.getChildren().getFirst()->getComponent().get());
+					auto* textLabelThing = item.getChildren().getLast()->getComponent().get();
+					textLabelThing->setInterceptsMouseClicks(false, false);
+					jassert(textLabelThing != nullptr);
+					jassert(stripSlider != nullptr);
+
+					// Makes the slider invisible. (Can't just change the alpha, since this affects it's children (the text) as well).
+					stripSlider->setColour(juce::Slider::backgroundColourId, juce::Colours::transparentBlack);
+					stripSlider->setColour(juce::Slider::trackColourId, juce::Colours::transparentBlack);
+					stripSlider->setColour(juce::Slider::thumbColourId, juce::Colours::transparentBlack);
+					onValueChange->onTrigger = [this, stripSlider]()
+					{
+						DBG("Note Wheel changed! Value: " << stripSlider->getValue());
+						int index = static_cast<int>(stripSlider->getValue());
+						DBG("Setting text to: " << intervals[index]);
+						textProperty->set(intervals[index]);
+						if (stripSlider->getValue() == 0)
+							imageSource->set(juce::ImageCache::getFromMemory(BinaryData::NW_OFF_png, BinaryData::NW_OFF_pngSize));
+						else
+							imageSource->set(juce::ImageCache::getFromMemory(BinaryData::NW_ON_png, BinaryData::NW_ON_pngSize));
+					};
+					//stripSlider->setValue(0); // Set default value to 0.
+					onValueChange->trigger();
 				}
 
 			private:
 				juce::String id;
 				const int rowNum, columnNum;
 				juce::String text;
+				juce::Image bgImage;
+
 				std::unique_ptr<jive::Event> onValueChange;
 				std::unique_ptr<jive::Property<juce::String>> textProperty;
-				juce::Image bgImage;
 				std::unique_ptr<jive::Property<juce::Image>> imageSource;
 			};
 		}

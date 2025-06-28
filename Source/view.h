@@ -17,7 +17,7 @@ namespace jiveGui
 	// MAIN COMPONENTS ==========================================================
 	[[nodiscard]] inline auto getBuilderComponent(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
-		juce::Image filmstripKnob = imageCollection.at(ImageIds::mainKnobFilmstrip);
+		juce::Image filmstripKnob = juce::ImageCache::getFromMemory(BinaryData::filmstripKnob_ornate_png, BinaryData::filmstripKnob_ornate_pngSize);
 		juce::Image filmstripKnobHori = imageCollection.at(ImageIds::horiKnobFilmstrip);
 		juce::Image octavesTest = imageCollection.at(ImageIds::octavesBackground1);
 		return juce::ValueTree{

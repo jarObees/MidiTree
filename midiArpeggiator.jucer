@@ -29,6 +29,8 @@
               file="Source/FilmstripKnobView.h"/>
       </GROUP>
       <GROUP id="{4F6AE0DC-7317-E987-87C8-0634CB03A0F6}" name="Assets">
+        <FILE id="DHkrD1" name="filmstripKnob_ornate.png" compile="0" resource="1"
+              file="../../../Duhzine/VSTPLUGIN/knobMans/filmstripKnob_ornate.png"/>
         <FILE id="q3aPuB" name="AUI_SIDEBAR.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AUI_SIDEBAR.png"/>
         <FILE id="WmJwT5" name="IBB_ASCENDING.png" compile="0" resource="1"
               file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/IBB_ASCENDING.png"/>

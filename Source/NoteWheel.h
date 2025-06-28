@@ -17,6 +17,7 @@ namespace jiveGui
 					: rowNum(rowNum), columnNum(columnNum)
 				{
 					id = rowColIdMaker(IdPrefix::noteWheel, rowNum, columnNum);
+					bgImage = juce::ImageCache::getFromMemory(BinaryData::NW_OFF_png, BinaryData::NW_ON_pngSize); // Set to base image.
 				}
 
 				juce::ValueTree initialise() final
@@ -33,32 +34,48 @@ namespace jiveGui
 							{"orientation", "vertical"},
 							{"align-content", "centre"},
 							{"justify-content", "centre"},
-																			{
-					"style",
-						new jive::Object{
-							{"background", jive::toVar(jiveGui::colors::white)},
-						}
-					}
+							{
+							"style",
+								new jive::Object{
+									{"background", jive::toVar(jiveGui::colors::white)},
+								}
+							}
 						},
 						{
 							juce::ValueTree
 							{
-								"Text",
+								"Image",
 								{
-									{"text", jive::toVar(text)},
-									{"justification", juce::Justification::centred},
-									{
-									"style",
-										new jive::Object
-											{
-												{ "foreground", "#000000"},
-												{ "font-size", 20 },
-												{ "letter-spacing", 1 },
-											},
-									},
+									{"source", jive::toVar(bgImage)},
+									{"width", "100%"},
+									{"height", "100%"},
+									// {"opacity", 0.0f},
 								},
-							}
-						}
+								//{
+								//	juce::ValueTree
+								//	{
+								//		"Text",
+								//		{
+								//			{"always-on-top", true},
+								//			{"text", jive::toVar(text)},
+								//			{"justification", juce::Justification::centred},
+								//			{"align-content", "centre"},
+								//			{"justify-content", "centre"},
+								//			{
+								//			"style",
+								//				new jive::Object
+								//					{
+								//						{"background", jive::toVar(jiveGui::colors::debug_secondary)},
+								//						{ "foreground", "#000000"},
+								//						{ "font-size", 20 },
+								//						{ "letter-spacing", 1 },
+								//					},
+								//			},
+								//		},
+								//	},
+								//}
+							},
+						},
 					};
 				}
 
@@ -72,14 +89,21 @@ namespace jiveGui
 						stripSlider->setColour(juce::Slider::backgroundColourId, juce::Colours::transparentBlack);
 						stripSlider->setColour(juce::Slider::trackColourId, juce::Colours::transparentBlack);
 						stripSlider->setColour(juce::Slider::thumbColourId, juce::Colours::transparentBlack);
-						stripSlider->setOpaque(false);
+						//stripSlider->setOpaque(false);
 						onValueChange = std::make_unique<jive::Event>(item.state, "on-change");
-						textProperty = std::make_unique<jive::Property<juce::String>>(item.state.getChild(0), "text");
+						imageSource = std::make_unique<jive::Property<juce::Image>>(item.state.getChild(0), "source");
+						// = std::make_unique<jive::Property<juce::String>>(item.state.getChild(0).getChild(0), "text");
 						onValueChange->onTrigger = [this, stripSlider]()
 						{
+
 							DBG("Note Wheel changed! Value: " << stripSlider->getValue());
 							int index = static_cast<int>(stripSlider->getValue());
-							textProperty->set(intervals[index]);
+							DBG("Setting text to: " << intervals[index]);
+							//textProperty->set(intervals[index]);
+							if (stripSlider->getValue() == 0)
+								imageSource->set(juce::ImageCache::getFromMemory(BinaryData::NW_OFF_png, BinaryData::NW_OFF_pngSize));
+							else
+								imageSource->set(juce::ImageCache::getFromMemory(BinaryData::NW_ON_png, BinaryData::NW_ON_pngSize));
 						};
 						stripSlider->setValue(0); // Set default value to 0.
 						onValueChange->trigger();
@@ -94,6 +118,8 @@ namespace jiveGui
 				juce::String text;
 				std::unique_ptr<jive::Event> onValueChange;
 				std::unique_ptr<jive::Property<juce::String>> textProperty;
+				juce::Image bgImage;
+				std::unique_ptr<jive::Property<juce::Image>> imageSource;
 			};
 		}
 	}

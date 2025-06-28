@@ -67,22 +67,34 @@ namespace jiveGui
 				{
 					"Component",
 					{
-						{"align-items", "centre"},
-						{"height", "100%"},
-						{"padding", "10px"},
+						{"display", "block"},
 						{"width", "20%"},
-						{
-							"style",
-								new jive::Object
-								{
-									{ "background", jive::toVar(colors::crown_secondary)},
-								},
-						},
+						{"height", "100%"},
 					},
 					{
-						jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, StringIds::generationsKnob),
-						jive::makeView<SaveButton>(20, 40, filmstripKnob, "grow!", StringIds::growButton),
-						///TODO: ADD "MIDI TREE" TEXT.
+						juce::ValueTree
+						{
+							"Image",
+							{
+								{"source", jive::toVar(juce::ImageCache::getFromMemory(BinaryData::AUI_SIDEBAR_png, BinaryData::AUI_SIDEBAR_pngSize))},
+								{"width", "100%"},
+								{"height", "100%"},
+							}
+						},
+						juce::ValueTree
+						{
+							"Component",
+							{
+								{"width", "100%"},
+								{"height", "100%"},
+								{"align-items", "centre"},
+								{"flex-direction", "column"},
+							},
+							{
+								jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, StringIds::generationsKnob),
+								jive::makeView<SaveButton>(20, 40, filmstripKnob, "grow!", StringIds::growButton),
+							}
+						},
 					},
 				},
 			}

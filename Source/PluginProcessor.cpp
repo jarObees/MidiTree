@@ -297,6 +297,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             }
             else
                 jassertfalse;
+            ///NOTE: CURRENTLY EVERYTHING IS DETACHED ============================================================================================
             //attachParamsToApvts(editor.get());
             //attachNonAutoParamsToNonAutoApvts(editor.get());
             // configureComponents(editor.get());

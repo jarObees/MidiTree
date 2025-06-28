@@ -19,8 +19,8 @@
               file="Source/ComponentGetter.h"/>
         <FILE id="qPBQOs" name="Ids.h" compile="0" resource="0" file="Source/Ids.h"/>
         <FILE id="nxoI6Q" name="Colors.h" compile="0" resource="0" file="Source/Colors.h"/>
-        <FILE id="K3ilcR" name="SaveButtonView.h" compile="0" resource="0"
-              file="Source/SaveButtonView.h"/>
+        <FILE id="K3ilcR" name="ButtonImageText.h" compile="0" resource="0"
+              file="Source/ButtonImageText.h"/>
         <FILE id="OluRou" name="Button.h" compile="0" resource="0" file="Source/Button.h"/>
         <FILE id="vU4EUM" name="TextEditorView.h" compile="0" resource="0"
               file="Source/TextEditorView.h"/>
@@ -29,6 +29,7 @@
               file="Source/FilmstripKnobView.h"/>
       </GROUP>
       <GROUP id="{4F6AE0DC-7317-E987-87C8-0634CB03A0F6}" name="Assets">
+        <FILE id="yDa7zF" name="button_grow.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/button_grow.png"/>
         <FILE id="DHkrD1" name="filmstripKnob_ornate.png" compile="0" resource="1"
               file="../../../Duhzine/VSTPLUGIN/knobMans/filmstripKnob_ornate.png"/>
         <FILE id="q3aPuB" name="AUI_SIDEBAR.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AUI_SIDEBAR.png"/>

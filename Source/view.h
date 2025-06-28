@@ -91,8 +91,13 @@ namespace jiveGui
 								{"flex-direction", "column"},
 							},
 							{
-								jive::makeView<FilmstripKnobView>(64, 64, filmstripKnob, StringIds::generationsKnob),
-								jive::makeView<ButtonImageText>(20, 40, filmstripKnob, "grow!", StringIds::growButton),
+								jive::makeView<FilmstripKnobView>(64, 64, 
+																  filmstripKnob, 
+																  StringIds::generationsKnob),
+								jive::makeView<ButtonImageText>(64, 64, 
+																juce::ImageCache::getFromMemory(BinaryData::button_grow_png, BinaryData::button_grow_pngSize), 
+																"grow!", 
+																StringIds::growButton),
 							}
 						},
 					},

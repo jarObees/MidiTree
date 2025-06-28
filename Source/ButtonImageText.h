@@ -7,12 +7,14 @@ namespace jiveGui
 	public:
 		ButtonImageText(int rawWidth, int rawHeight, juce::Image rawImage, std::string rawText, juce::String rawId)
 			: width(rawWidth), height(rawHeight), imageSource(rawImage), text(rawText), id(rawId)
-		{}
+		{
+			mainImage = std::make_unique<juce::DrawableImage>(imageSource);
+		}
 
 		juce::ValueTree initialise() final
 		{
 			return juce::ValueTree{
-				"Button",
+				"DrawableButton",
 				{
 					{"id", id},
 					{"width", width},
@@ -36,14 +38,26 @@ namespace jiveGui
 				},
 			};
 		}
+		std::unique_ptr<juce::Component> createComponent(const juce::ValueTree& tree) final
+		{
+			if (tree.getType().toString() == "DrawableButton")
+				return std::make_unique<juce::DrawableButton>("butTing", juce::DrawableButton::ButtonStyle::ImageRaw);
+			else
+			{
+				return nullptr;
+			}
+		}
 		void setup(jive::GuiItem& item) final
 		{
 			// We confirm access to the slider itself.
-			if (auto* button = dynamic_cast<juce::Button*>(item.getComponent().get()))
+			if (auto* button = dynamic_cast<juce::DrawableButton*>(item.getComponent().get()))
 			{
 				// Defucks the image component.
 				auto* imageComponent = item.getChildren().getFirst()->getComponent().get();
 				imageComponent->setInterceptsMouseClicks(false, false);
+
+				button->setImages(mainImage.get()); // But if I use this, I get THE error.
+
 			}
 			else
 			{
@@ -51,6 +65,7 @@ namespace jiveGui
 			}
 		}
 	private:
+		std::unique_ptr<juce::DrawableImage> mainImage;
 		std::unique_ptr<jive::Event> onClick;
 		int width;
 		int height;

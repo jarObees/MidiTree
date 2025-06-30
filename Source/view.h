@@ -10,6 +10,7 @@
 #include "ButtonImageText.h"
 #include "ComponentGetter.h"
 #include "AnalogUserInput.h"
+#include "ComboBoxImageView.h"
 
 namespace jiveGui
 {
@@ -201,7 +202,7 @@ namespace jiveGui
 			{
 				getMidiVelocityKnob(imageCollection),
 				getNoteRateKnob(imageCollection),
-				jive::makeView<ComboBoxView>(80, 20, StringIds::noteTypeComboBox), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
+				jive::makeView<ImageComboBoxView>(32, 32, StringIds::noteTypeComboBox), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
 			}
 		};
 	}

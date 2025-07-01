@@ -20,21 +20,6 @@ namespace jiveGui
 					{"width", width},
 					{"height", height},
 					{"justify-content", "centre"},
-					{
-						"style",
-							new jive::Object
-							{
-								{ "background", jive::toVar(jiveGui::colors::ground_tertiary)},
-							},
-					},
-				},
-				{
-					juce::ValueTree{
-						"Text",
-						{
-							{"text", jive::toVar(text)},
-						}
-					},
 				},
 			};
 		}
@@ -42,21 +27,13 @@ namespace jiveGui
 		{
 			if (tree.getType().toString() == "DrawableButton")
 				return std::make_unique<juce::DrawableButton>("butTing", juce::DrawableButton::ButtonStyle::ImageRaw);
-			else
-			{
-				return nullptr;
-			}
 		}
 		void setup(jive::GuiItem& item) final
 		{
 			// We confirm access to the slider itself.
 			if (auto* button = dynamic_cast<juce::DrawableButton*>(item.getComponent().get()))
 			{
-				// Defucks the image component.
-				auto* imageComponent = item.getChildren().getFirst()->getComponent().get();
-				imageComponent->setInterceptsMouseClicks(false, false);
-
-				button->setImages(mainImage.get()); // But if I use this, I get THE error.
+				button->setImages(mainImage.get());
 
 			}
 			else

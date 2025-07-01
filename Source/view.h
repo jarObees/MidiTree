@@ -149,8 +149,8 @@ namespace jiveGui
 				},
 			},
 			{
-				jive::makeView<ButtonImageText>(20, 40, filmstripKnob, "save", StringIds::saveButton),
-				jive::makeView<ComboBoxView>(40, 10, StringIds::presetComboBox),
+				jive::makeView<ButtonImageText>(64, 32, filmstripKnob, "save", StringIds::saveButton),
+				jive::makeView<ComboBoxView>(64, 64, StringIds::presetComboBox),
 			}
 		};
 	}

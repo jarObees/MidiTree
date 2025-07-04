@@ -79,14 +79,16 @@ namespace jiveGui
 						{
 						case TreeState::ACTIVE:
 							imageSource->set(juce::ImageCache::getFromMemory(BinaryData::TreeOn_png,
-											BinaryData::TreeOff_pngSize));
+																			 BinaryData::TreeOff_pngSize));
 							break;
 
 						case TreeState::UNLOADED:
 							imageSource->set(juce::ImageCache::getFromMemory(BinaryData::TreeOff_png,
-																				BinaryData::TreeOff_pngSize));
+																			 BinaryData::TreeOff_pngSize));
 							break;
 						case TreeState::LOADED:
+							imageSource->set(juce::ImageCache::getFromMemory(BinaryData::TreeLoaded_png,
+																			 BinaryData::TreeLoaded_pngSize));
 							break;
 						}
 					};

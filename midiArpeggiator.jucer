@@ -47,6 +47,7 @@
         <FILE id="DHkrD1" name="filmstripKnob_ornate.png" compile="0" resource="1"
               file="../../../Duhzine/VSTPLUGIN/knobMans/filmstripKnob_ornate.png"/>
         <FILE id="HUOlWe" name="TreeOn.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeOn.png"/>
+        <FILE id="AzzPXe" name="TreeLoaded.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeLoaded.png"/>
         <FILE id="t9hxy5" name="TreeOff.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeOff.png"/>
         <FILE id="q3aPuB" name="AUI_SIDEBAR.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AUI_SIDEBAR.png"/>
         <FILE id="WmJwT5" name="IBB_ASCENDING.png" compile="0" resource="1"

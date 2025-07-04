@@ -402,6 +402,10 @@ void MidiArpeggiatorAudioProcessor::configureComponents(jive::GuiItem* editor)
         jassertfalse;
 }
 
+/// <summary>
+/// UNCOMMENT
+/// </summary>
+/// <param name="editor"></param>
 void MidiArpeggiatorAudioProcessor::attachParamsToApvts(jive::GuiItem* editor)
 {
     jive::findItemWithID(*editor, jiveGui::StringIds::noteTypeComboBox)
@@ -414,8 +418,8 @@ void MidiArpeggiatorAudioProcessor::attachParamsToApvts(jive::GuiItem* editor)
         ->attachToParameter(apvts.getParameter("vel"), &undoManager);
     jive::findItemWithID(*editor, jiveGui::StringIds::midiVelocityKnobText)
         ->attachToParameter(apvts.getParameter("vel"), &undoManager);
-    jive::findItemWithID(*editor, jiveGui::StringIds::forestSlider)
-        ->attachToParameter(apvts.getParameter("forest"), &undoManager);
+    //jive::findItemWithID(*editor, jiveGui::StringIds::forestSlider)
+    //    ->attachToParameter(apvts.getParameter("forest"), &undoManager);
     jive::findItemWithID(*editor, jiveGui::StringIds::generationsKnob)
         ->attachToParameter(apvts.getParameter("gens"), &undoManager);
 }

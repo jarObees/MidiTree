@@ -11,6 +11,7 @@
 #include "ComponentGetter.h"
 #include "AnalogUserInput.h"
 #include "ComboBoxImageView.h"
+#include "Forest.h"
 
 namespace jiveGui
 {
@@ -114,18 +115,20 @@ namespace jiveGui
 		{
 			"Component",
 			{
+				{"display", "block"},
 				{"width", "80%"},
 				{"height", "100%"},
-				{
-					"style",
-						new jive::Object
-						{
-							{ "background", jive::toVar(colors::debug_tertiary)},
-						},
-				},
 			},
 			{
-				jive::makeView<FilmstripKnobView>(224, 32, filmstripKnobHori, StringIds::forestSlider, true),
+				//juce::ValueTree
+				//{
+				//	"Image",
+				//	{
+				//		{"width", "100%"},
+				//		{"height", "100%"},
+				//	}
+				//},
+				ForestUI::Forest{}(),
 			}
 		};
 	}

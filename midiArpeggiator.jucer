@@ -14,6 +14,10 @@
               file="Source/AnalogUserInput.h"/>
         <FILE id="VvAbtz" name="NoteWheel.h" compile="0" resource="0" file="Source/NoteWheel.h"/>
       </GROUP>
+      <GROUP id="{3B5A649D-EF8C-E86A-32BD-C09533D2DB94}" name="ForestUI">
+        <FILE id="nn4BF9" name="Forest.h" compile="0" resource="0" file="Source/Forest.h"/>
+        <FILE id="YEY2DU" name="Tree.h" compile="0" resource="0" file="Source/Tree.h"/>
+      </GROUP>
       <GROUP id="{483EDA95-BB1B-8D9C-B965-108436522E99}" name="Components">
         <FILE id="TygFYk" name="ComponentGetter.h" compile="0" resource="0"
               file="Source/ComponentGetter.h"/>
@@ -42,6 +46,8 @@
         <FILE id="yDa7zF" name="button_grow.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/button_grow.png"/>
         <FILE id="DHkrD1" name="filmstripKnob_ornate.png" compile="0" resource="1"
               file="../../../Duhzine/VSTPLUGIN/knobMans/filmstripKnob_ornate.png"/>
+        <FILE id="HUOlWe" name="TreeOn.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeOn.png"/>
+        <FILE id="t9hxy5" name="TreeOff.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeOff.png"/>
         <FILE id="q3aPuB" name="AUI_SIDEBAR.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AUI_SIDEBAR.png"/>
         <FILE id="WmJwT5" name="IBB_ASCENDING.png" compile="0" resource="1"
               file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/IBB_ASCENDING.png"/>

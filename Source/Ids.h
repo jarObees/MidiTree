@@ -30,6 +30,7 @@ namespace jiveGui
 		const juce::String nameTextBox{ "name-textBox" };
 		const juce::String axiomTextBox{ "axiom-textBox" };
 		const juce::String analogUserInput{ "aui" };
+		const juce::String forestTree{ "tre" };
 	}
 	namespace IdPrefix // Should only be two characters
 	{

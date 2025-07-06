@@ -392,6 +392,16 @@ void MidiArpeggiatorAudioProcessor::configureComponents(jive::GuiItem* editor)
     }
     else
         jassertfalse;
+
+    std::vector<juce::Component*> trees;
+    for (int i = 0; i < forestManager.maxNumTrees; ++i)
+    {
+        auto* treeComponent = jive::findItemWithID(*editor, jiveGui::ForestUI::treeIdMaker(i))
+            ->getComponent().get();
+        trees.push_back(treeComponent);
+    }
+    forestManager.configureForestTrees(trees);
+
     if (auto* forestButton = dynamic_cast<juce::Button*>
         (jive::findItemWithID(*editor, jiveGui::StringIds::plantButton)
          ->getComponent().get()))
@@ -402,10 +412,6 @@ void MidiArpeggiatorAudioProcessor::configureComponents(jive::GuiItem* editor)
         jassertfalse;
 }
 
-/// <summary>
-/// UNCOMMENT
-/// </summary>
-/// <param name="editor"></param>
 void MidiArpeggiatorAudioProcessor::attachParamsToApvts(jive::GuiItem* editor)
 {
     jive::findItemWithID(*editor, jiveGui::StringIds::noteTypeComboBox)
@@ -418,8 +424,8 @@ void MidiArpeggiatorAudioProcessor::attachParamsToApvts(jive::GuiItem* editor)
         ->attachToParameter(apvts.getParameter("vel"), &undoManager);
     jive::findItemWithID(*editor, jiveGui::StringIds::midiVelocityKnobText)
         ->attachToParameter(apvts.getParameter("vel"), &undoManager);
-    //jive::findItemWithID(*editor, jiveGui::StringIds::forestSlider)
-    //    ->attachToParameter(apvts.getParameter("forest"), &undoManager);
+    jive::findItemWithID(*editor, jiveGui::StringIds::forestSlider)
+        ->attachToParameter(apvts.getParameter("forest"), &undoManager);
     jive::findItemWithID(*editor, jiveGui::StringIds::generationsKnob)
         ->attachToParameter(apvts.getParameter("gens"), &undoManager);
 }

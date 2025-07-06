@@ -49,6 +49,15 @@ namespace jiveGui
 		const std::string horiKnobFilmstrip{ "horiKnobFilmstrip" };
 		const std::string octavesBackground1{ "octback1" };
 	}
+
+	namespace ForestUI
+	{
+		// Makes a unique id: treeIDPrefix + [tree number]
+		[[nodisacrd]] inline const juce::String treeIdMaker(const int treeNum)
+		{
+			return StringIds::forestTree + static_cast<juce::String>(treeNum);
+		}
+	}
 }
 
 // All ID's for properties should be stored here.

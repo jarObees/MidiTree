@@ -55,8 +55,11 @@ namespace jiveGui
 
 			juce::ValueTree getForestSlider() const
 			{
-				// jive::makeView<FilmstripKnobView>(224, 32, )
-				return juce::ValueTree{};
+				return jive::makeView<FilmstripKnobView>(224,
+												  32,
+												  juce::ImageCache::getFromMemory(BinaryData::_128_HORISLIDER_FILMSTRIP_png,
+																				  BinaryData::_128_HORISLIDER_FILMSTRIP_pngSize),
+												  StringIds::forestSlider, true);
 			}
 		};
 	}

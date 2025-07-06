@@ -33,7 +33,7 @@ namespace jiveGui
 			TreeComponentView(int treeNum)
 				: treeNum(treeNum)
 			{
-				id = StringIds::forestTree + static_cast<juce::String>(treeNum);
+				id = treeIdMaker(treeNum);
 			}
 
 			juce::ValueTree initialise()
@@ -96,7 +96,6 @@ namespace jiveGui
 				}
 			}
 		private:
-			bool enabled;
 			std::unique_ptr<jive::Property<bool>> enabledProperty;
 			std::unique_ptr<jive::Property<juce::Image>> imageSource;
 			std::unique_ptr<jive::Event> onStateChange;

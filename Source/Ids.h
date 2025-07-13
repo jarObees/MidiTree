@@ -31,6 +31,7 @@ namespace jiveGui
 		const juce::String axiomTextBox{ "axiom-textBox" };
 		const juce::String analogUserInput{ "aui" };
 		const juce::String forestTree{ "tre" };
+		const juce::String forestBypassButton{ "fbb" };
 	}
 	namespace IdPrefix // Should only be two characters
 	{
@@ -55,6 +56,7 @@ namespace jiveGui
 		// Makes a unique id: treeIDPrefix + [tree number]
 		[[nodisacrd]] inline const juce::String treeIdMaker(const int treeNum)
 		{
+			DBG("Making tree string: " << StringIds::forestTree + static_cast<juce::String>(treeNum));
 			return StringIds::forestTree + static_cast<juce::String>(treeNum);
 		}
 	}

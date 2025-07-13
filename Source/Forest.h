@@ -31,6 +31,17 @@ namespace jiveGui
 					{
 						getTreeRow(),
 						getForestSlider(),
+						// Temporary Plant Button
+						jive::makeView<ButtonImageText>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
+																								BinaryData::button_grow_pngSize), 
+																								"", 
+																								StringIds::plantButton),
+						// Temporary bypass Button
+						jive::makeView<ButtonImageText>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
+																								BinaryData::button_grow_pngSize),
+																								"",
+																								StringIds::forestBypassButton),
+
 					}
 				};
 			}
@@ -48,7 +59,7 @@ namespace jiveGui
 
 				for (int i = 0; i < 7; ++i)
 				{
-					treeRow.addChild(jive::makeView<TreeComponentView>(7), -1, nullptr);
+					treeRow.addChild(jive::makeView<TreeComponentView>(i), -1, nullptr);
 				}
 				return treeRow;
 			}

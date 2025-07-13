@@ -300,7 +300,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             ///NOTE: CURRENTLY EVERYTHING IS DETACHED ============================================================================================
             attachParamsToApvts(editor.get());
             //attachNonAutoParamsToNonAutoApvts(editor.get());
-            // configureComponents(editor.get());
+            configureComponents(editor.get());
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
         }
     }
@@ -398,6 +398,7 @@ void MidiArpeggiatorAudioProcessor::configureComponents(jive::GuiItem* editor)
     {
         auto* treeComponent = jive::findItemWithID(*editor, jiveGui::ForestUI::treeIdMaker(i))
             ->getComponent().get();
+        jassert(treeComponent != nullptr);
         trees.push_back(treeComponent);
     }
     forestManager.configureForestTrees(trees);

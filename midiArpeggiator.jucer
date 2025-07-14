@@ -14,6 +14,9 @@
               file="Source/AnalogUserInput.h"/>
         <FILE id="VvAbtz" name="NoteWheel.h" compile="0" resource="0" file="Source/NoteWheel.h"/>
       </GROUP>
+      <GROUP id="{0D8B97F0-9B81-6780-587C-99E8E4C257D7}" name="InfoUI">
+        <FILE id="guZGpV" name="InfoTab.h" compile="0" resource="0" file="Source/InfoTab.h"/>
+      </GROUP>
       <GROUP id="{3B5A649D-EF8C-E86A-32BD-C09533D2DB94}" name="ForestUI">
         <FILE id="nn4BF9" name="Forest.h" compile="0" resource="0" file="Source/Forest.h"/>
         <FILE id="YEY2DU" name="Tree.h" compile="0" resource="0" file="Source/Tree.h"/>

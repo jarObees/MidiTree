@@ -12,6 +12,7 @@
 #include "AnalogUserInput.h"
 #include "ComboBoxImageView.h"
 #include "Forest.h"
+#include "InfoTab.h"
 
 namespace jiveGui
 {
@@ -257,27 +258,7 @@ namespace jiveGui
 
 	[[nodiscard]] inline auto getInfoComponent(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
-		return juce::ValueTree{
-			"Component",
-			{
-				{"id", "info"},
-				{"align-items", "centre"},
-				{"justify-content", "centre"},
-				{"flex-direction", "row"},
-				{"width", "100%"},
-				{"height", "8%"},
-				{
-					"style",
-						new jive::Object{
-							{ "background", jive::toVar(colors::debug_secondary)},
-						},
-				},
-			},
-			{
-				getInfoLeft(imageCollection),
-				getInfoRight(imageCollection),
-			}
-		};
+		return jiveGui::InfoTabUI::InfoTab{}();
 	}
 
 	// TOP LEVEL VIEW =========================================================

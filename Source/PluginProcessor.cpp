@@ -393,11 +393,12 @@ void MidiArpeggiatorAudioProcessor::configureComponents(jive::GuiItem* editor)
     else
         jassertfalse;
 
-    std::vector<juce::Component*> trees;
+    std::vector<jiveGui::ForestUI::TreeComponent*> trees;
     for (int i = 0; i < forestManager.maxNumTrees; ++i)
     {
-        auto* treeComponent = jive::findItemWithID(*editor, jiveGui::ForestUI::treeIdMaker(i))
-            ->getComponent().get();
+        auto* treeComponent = dynamic_cast<jiveGui::ForestUI::TreeComponent*>
+            (jive::findItemWithID(*editor, jiveGui::ForestUI::treeIdMaker(i))
+            ->getComponent().get());
         jassert(treeComponent != nullptr);
         trees.push_back(treeComponent);
     }

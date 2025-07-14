@@ -1,6 +1,6 @@
 #pragma once
 #include <JuceHeader.h>
-
+#include "Tree.h"
 namespace Preset { class PresetManager; }
 
 namespace Forest
@@ -18,7 +18,7 @@ namespace Forest
 		ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager&, juce::Array<int>& currentNotesPool);
 		void configureTreeSlider(juce::Slider* slider);
 		void configureForestButton(juce::Button* button);
-		void configureForestTrees(std::vector<juce::Component*>);
+		void configureForestTrees(std::vector<jiveGui::ForestUI::TreeComponent*>);
 		void buttonClicked(juce::Button* button) override;
 		void sliderValueChanged(juce::Slider* slider) override;
 		void valueTreeRedirected(juce::ValueTree& changedTree) override;
@@ -37,7 +37,7 @@ namespace Forest
 		// Slider will be indexing across this vector.
 		// First pair value is the midiTree name, second is the notesPool.
 		std::vector<std::pair<juce::String, juce::Array<int>>> forestDataSlots;
-		std::vector<juce::Component*> forestTrees;
+		std::vector<jiveGui::ForestUI::TreeComponent*> forestTrees;
 		juce::Slider* forestSlider = nullptr;
 		juce::Button* forestButton = nullptr;
 

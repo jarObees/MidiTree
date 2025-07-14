@@ -31,10 +31,8 @@ namespace Forest
 		forestSlider = slider;
 		forestSlider->addListener(this);
 	}
-	void ForestManager::configureForestTrees(std::vector<juce::Component*> trees)
+	void ForestManager::configureForestTrees(std::vector<jiveGui::ForestUI::TreeComponent*> trees)
 	{
-		for (auto* tree : trees)
-			jassert(tree != nullptr);
 		forestTrees = trees;
 	}
 
@@ -78,6 +76,12 @@ namespace Forest
 			{
 				currentNotesPool = notesPool;
 			}
+			// Update UI
+			auto* activeTree = forestTrees[currentForestIndex];
+			jassert(activeTree != nullptr);
+			for (auto* tree : forestTrees)	// Turn off all trees
+				tree->setActiveState(false);
+			activeTree->setActiveState(true); // Then only turn on active tree.
 		}
 	}
 	void ForestManager::buttonClicked(juce::Button* button)

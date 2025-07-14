@@ -1,33 +1,42 @@
 #pragma once
+#include "Ids.h"
 
+
+//TODO: Figure out how to make ur own lil listener guy.
 namespace jiveGui
 {
 	namespace ForestUI
 	{
-		enum TreeState
-		{
-			ACTIVE,
-			LOADED,
-			UNLOADED,
-		};
-
-		class TreeComponent : public juce::Component
+		class TreeComponent : public juce::Component,
+			private juce::ChangeBroadcaster
 		{
 		public:
-			TreeComponent()
-			{
-				currentState = TreeState::UNLOADED;
+			TreeComponent() : active(false), loaded(false) {}
+			
+			bool getActiveState() const { return active; }
+			bool getLoadedState() const { return loaded; }
+			
+			void setLoadedState(bool newState) 
+			{ 
+				DBG("Setting loaded state...");
+				if (loaded != newState)
+					sendChangeMessage(); // Notifies any listeners.
 			}
-			TreeState getTreeState() const { return currentState; } 
-			void setTreeState(TreeState newState)
+			void setActiveState(bool newState)
 			{
-				currentState = newState;
+				DBG("Setting active state...");
+				if (active != newState)
+					sendChangeMessage();
 			}
+			void addChangeListener(juce::ChangeListener * listener) { juce::ChangeBroadcaster::addChangeListener(listener); }
+			void removeChangeListener(juce::ChangeListener* listener) { juce::ChangeBroadcaster::removeChangeListener(listener); }
 		private:
-			TreeState currentState;
+			bool active, loaded;
 		};
 
-		class TreeComponentView : public jive::View
+		class TreeComponentView : public jive::View,
+				private TreeComponent,
+			private juce::ChangeListener
 		{
 		public:
 			TreeComponentView(int treeNum)
@@ -44,6 +53,8 @@ namespace jiveGui
 						{"id", id},
 						{"width", 20},
 						{"height", 20},
+						{"active", jive::toVar(false)},
+						{"loaded", jive::toVar(false)},
 					},
 					{
 						juce::ValueTree
@@ -70,33 +81,46 @@ namespace jiveGui
 			void setup(jive::GuiItem& item) final
 			{
 				imageSource = std::make_unique<jive::Property<juce::Image>>(item.getChildren().getFirst()->state, "source");
+				activeProp = std::make_unique<jive::Property<bool>>(item.state, "active");
+				loadedProp = std::make_unique<jive::Property<bool>>(item.state, "loaded");
 				onStateChange = std::make_unique<jive::Event>(item.state, "on-change");
 				if (auto* main = dynamic_cast<TreeComponent*>(item.getComponent().get()))
 				{
+					// Setup listener stuff.
+					main->addChangeListener(this);
+					activeProp->set(main->getActiveState());
+					loadedProp->set(main->getLoadedState());
+
+					// Dynamic image here.
 					onStateChange->onTrigger = [this, main]()
 					{
-						switch (main->getTreeState())
+						DBG("State change detected!");
+						if (main->getActiveState())
 						{
-						case TreeState::ACTIVE:
 							imageSource->set(juce::ImageCache::getFromMemory(BinaryData::TreeOn_png,
-																			 BinaryData::TreeOff_pngSize));
-							break;
-
-						case TreeState::UNLOADED:
+																			 BinaryData::TreeOn_pngSize));
+						}
+						else if (!main->getActiveState() && !main->getLoadedState())
+						{
 							imageSource->set(juce::ImageCache::getFromMemory(BinaryData::TreeOff_png,
 																			 BinaryData::TreeOff_pngSize));
-							break;
-						case TreeState::LOADED:
-							imageSource->set(juce::ImageCache::getFromMemory(BinaryData::TreeLoaded_png,
-																			 BinaryData::TreeLoaded_pngSize));
-							break;
 						}
 					};
 					onStateChange->trigger();
 				}
 			}
 		private:
-			std::unique_ptr<jive::Property<bool>> enabledProperty;
+			void changeListenerCallback(juce::ChangeBroadcaster* source) override
+			{
+				DBG("Change Callback detected!");
+				if (auto* treeComponent = dynamic_cast<TreeComponent*>(source))
+				{
+					activeProp->set(treeComponent->getActiveState());
+					loadedProp->set(treeComponent->getLoadedState());
+				}
+			}
+			std::unique_ptr<jive::Property<bool>> activeProp;
+			std::unique_ptr<jive::Property<bool>> loadedProp;
 			std::unique_ptr<jive::Property<juce::Image>> imageSource;
 			std::unique_ptr<jive::Event> onStateChange;
 			juce::Image imageToShow;

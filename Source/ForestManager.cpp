@@ -78,6 +78,7 @@ namespace Forest
 			}
 			// Update UI
 			auto* activeTree = forestTrees[currentForestIndex];
+			DBG("Active Tree is # " << currentForestIndex);
 			jassert(activeTree != nullptr);
 			for (auto* tree : forestTrees)	// Turn off all trees
 				tree->setActiveState(false);

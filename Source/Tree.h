@@ -98,13 +98,19 @@ namespace jiveGui
 					// Dynamic image here.
 					onStateChange->onTrigger = [this, main]()
 					{
-						if (main->getActiveState())
+						if (main->getActiveState() && main->getLoadedState())
 						{
-							DBG("Setting tree: " << id << "to ON");
+							DBG("Setting tree: " << id << "to ON AND ACTIVE");
 							imageSource->set(juce::ImageCache::getFromMemory(BinaryData::TreeOn_png,
 																			 BinaryData::TreeOn_pngSize));
 						}
-						else if (!main->getActiveState() && !main->getLoadedState())
+						else if (main->getLoadedState())
+						{
+							DBG("Setting tree: " << id << "to LOADED BUT INACTIVE");
+							imageSource->set(juce::ImageCache::getFromMemory(BinaryData::TreeLoaded_png,
+																			 BinaryData::TreeLoaded_pngSize));
+						}
+						else
 						{
 							DBG("Setting tree: " << id << "to OFF");
 							imageSource->set(juce::ImageCache::getFromMemory(BinaryData::TreeOff_png,

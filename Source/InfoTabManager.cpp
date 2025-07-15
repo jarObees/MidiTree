@@ -7,6 +7,9 @@ namespace InfoTabManager
 		
 		// TEST
 		textItem->state.setProperty("style", defaultStyle, nullptr);
-		textItem->state.setProperty("text", "BUTT SEX", nullptr);
+		textItem->state.setProperty("text", "BUTT", nullptr);
+		juce::var textVar = textItem->state.getProperty("text");
+		jassert(!textVar.isVoid());
+		textVar = "bunghole";
 	}
 }

@@ -44,7 +44,9 @@
               file="Source/FilmstripKnobView.h"/>
       </GROUP>
       <GROUP id="{4F6AE0DC-7317-E987-87C8-0634CB03A0F6}" name="Assets">
-        <GROUP id="{AFD85D26-86B9-2ABC-0D36-ED6989B193A2}" name="New Group"/>
+        <GROUP id="{AFD85D26-86B9-2ABC-0D36-ED6989B193A2}" name="Fonts">
+          <FILE id="AyYkmL" name="PERTIBD.TTF" compile="0" resource="1" file="../../../FUN/PERTIBD.TTF"/>
+        </GROUP>
         <FILE id="ihtyey" name="InfoTabLeft.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/InfoTabLeft.png"/>
         <FILE id="rcqxcV" name="NoteSelectorBase.png" compile="0" resource="1"
               file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/NoteSelectorBase.png"/>

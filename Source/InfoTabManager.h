@@ -8,10 +8,11 @@ namespace InfoTabManager
 	public:
 		void connectInfoTab(jive::GuiItem*);
 	private:
-		jive::GuiItem* textItem;
+		jive::GuiItem* textItem = nullptr;
 		static constexpr auto defaultStyle = R"(
 			{
-				"foreground" : "red",
+				"font-family" : "Perpetua Titling MT",
+				"foreground" : "white",
 				"font-size" : 20,
 				"letter-spacing" : 1,
 			}

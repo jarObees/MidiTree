@@ -25,6 +25,8 @@ MidiArpeggiatorAudioProcessor::MidiArpeggiatorAudioProcessor()
     )
 #endif
 {
+    coolFont = juce::Typeface::createSystemTypefaceFor(BinaryData::PERTIBD_TTF, BinaryData::PERTIBD_TTFSize);
+    DBG("FONT NAME: " << coolFont->getName());
     DBG("Finished Constructing MAIN Audio Processor");
 }
 

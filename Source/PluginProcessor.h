@@ -91,6 +91,7 @@ public:
     Preset::PresetManager presetManager{ apvts };
     Forest::ForestManager forestManager{ apvts, presetManager, currentNotesPool };
     LSystemStuff::LSystemManager lSystemManager{ apvts, presetManager, currentNotesPool };
+    juce::Typeface::Ptr coolFont;
 private:
     int time;
     static inline const std::unordered_map<std::string, float> noteRateMap = 

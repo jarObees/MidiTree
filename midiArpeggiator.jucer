@@ -38,6 +38,7 @@
               file="Source/FilmstripKnobView.h"/>
       </GROUP>
       <GROUP id="{4F6AE0DC-7317-E987-87C8-0634CB03A0F6}" name="Assets">
+        <FILE id="ihtyey" name="InfoTabLeft.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/InfoTabLeft.png"/>
         <FILE id="rcqxcV" name="NoteSelectorBase.png" compile="0" resource="1"
               file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/NoteSelectorBase.png"/>
         <FILE id="crx3di" name="NoteSelectorDotted.png" compile="0" resource="1"

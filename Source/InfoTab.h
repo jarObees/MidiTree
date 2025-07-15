@@ -4,9 +4,15 @@ namespace jiveGui
 {
 	namespace InfoTabUI
 	{
+
 		class InfoTab
 		{
 		public:
+			InfoTab()
+			{
+				text = "TEST TEXT";
+			}
+
 			[[nodiscard]] auto operator()() const
 			{
 				return juce::ValueTree {
@@ -40,6 +46,7 @@ namespace jiveGui
 					{
 						{"width", "80%"},
 						{"height", "100%"},
+						{"display", "block"},
 						{
 							"style",
 								new jive::Object
@@ -49,8 +56,39 @@ namespace jiveGui
 						},
 					},
 					{
-						///TODO: ADD DYNAMIC NAME TEXT.
-						///TODO: ADD DYNAMIC GEN NOTES TEXT.
+						juce::ValueTree
+						{
+							"Image",
+							{
+								{"width", "100%"},
+								{"height", "100%"},
+								{"source", jive::toVar(juce::ImageCache::getFromMemory(BinaryData::InfoTabLeft_png,
+																					   BinaryData::InfoTabLeft_pngSize))}
+							}
+						},
+						juce::ValueTree
+						{
+							"Text",
+							{
+								{"width", "100%"},
+								{"height", "100%"},
+								{"text", jive::toVar(text)},
+								{"justification", juce::Justification::centred},
+								{"align-content", "centre"},
+								{"justify-content", "centre"},
+								{
+								"style",
+									new jive::Object
+										{
+											//{"background", jive::toVar(jiveGui::colors::debug_secondary)},
+											{ "foreground", "#FFFFFF"},
+											{ "font-size", 20 },
+											{ "letter-spacing", 1 },
+										},
+								},
+							},
+						},
+
 					}
 				};
 			}
@@ -75,6 +113,7 @@ namespace jiveGui
 					}
 				};
 			}
+			juce::String text;
 		};
 	}
 }

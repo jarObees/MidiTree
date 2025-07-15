@@ -36,6 +36,8 @@ namespace jiveGui
 			}
 			void addChangeListener(juce::ChangeListener * listener) { juce::ChangeBroadcaster::addChangeListener(listener); }
 			void removeChangeListener(juce::ChangeListener* listener) { juce::ChangeBroadcaster::removeChangeListener(listener); }
+			int idNum;
+
 		private:
 			bool active, loaded;
 		};
@@ -90,21 +92,22 @@ namespace jiveGui
 				imageSource = std::make_unique<jive::Property<juce::Image>>(item.getChildren().getFirst()->state, "source");
 				activeProp = std::make_unique<jive::Property<bool>>(item.state, "active");
 				loadedProp = std::make_unique<jive::Property<bool>>(item.state, "loaded");
-				if (auto* main = dynamic_cast<TreeComponent*>(item.getComponent().get()))
+				if (auto* mainTreeComponent = dynamic_cast<TreeComponent*>(item.getComponent().get()))
 				{
 					// Setup listener stuff.
-					main->addChangeListener(this);
+					mainTreeComponent->idNum = treeNum;
+					mainTreeComponent->addChangeListener(this);
 
 					// Dynamic image here.
-					onStateChange->onTrigger = [this, main]()
+					onStateChange->onTrigger = [this, mainTreeComponent]()
 					{
-						if (main->getActiveState() && main->getLoadedState())
+						if (mainTreeComponent->getActiveState() && mainTreeComponent->getLoadedState())
 						{
 							DBG("Setting tree: " << id << "to ON AND ACTIVE");
 							imageSource->set(juce::ImageCache::getFromMemory(BinaryData::TreeOn_png,
 																			 BinaryData::TreeOn_pngSize));
 						}
-						else if (main->getLoadedState())
+						else if (mainTreeComponent->getLoadedState())
 						{
 							DBG("Setting tree: " << id << "to LOADED BUT INACTIVE");
 							imageSource->set(juce::ImageCache::getFromMemory(BinaryData::TreeLoaded_png,
@@ -117,8 +120,8 @@ namespace jiveGui
 																			 BinaryData::TreeOff_pngSize));
 						}
 					};
-					activeProp->set(main->getActiveState());
-					loadedProp->set(main->getLoadedState());
+					activeProp->set(mainTreeComponent->getActiveState());
+					loadedProp->set(mainTreeComponent->getLoadedState());
 					onStateChange->trigger();
 				}
 			}

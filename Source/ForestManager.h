@@ -12,7 +12,7 @@ namespace Forest
 	}
 
 	class ForestManager
-		: public juce::Slider::Listener, juce::Button::Listener, juce::ValueTree::Listener
+		: public juce::Slider::Listener, juce::Button::Listener, juce::ValueTree::Listener, juce::MouseListener
 	{
 	public:
 		ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager&, juce::Array<int>& currentNotesPool);
@@ -22,6 +22,8 @@ namespace Forest
 		void buttonClicked(juce::Button* button) override;
 		void sliderValueChanged(juce::Slider* slider) override;
 		void valueTreeRedirected(juce::ValueTree& changedTree) override;
+		void mouseEnter(const juce::MouseEvent& event) override;
+		void mouseExit(const juce::MouseEvent& event) override;
 		const int maxNumTrees;
 
 	private:

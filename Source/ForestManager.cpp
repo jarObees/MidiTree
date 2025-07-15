@@ -34,6 +34,10 @@ namespace Forest
 	void ForestManager::configureForestTrees(std::vector<jiveGui::ForestUI::TreeComponent*> trees)
 	{
 		forestTrees = trees;
+		for (jiveGui::ForestUI::TreeComponent* tree : forestTrees)
+		{
+			tree->addMouseListener(this, false);
+		}
 	}
 
 	// Planting is the only place where we should interact with the PresetManager.
@@ -91,6 +95,24 @@ namespace Forest
 		{
 			plantTree();
 		}
+	}
+
+	// Used for sending messages to InfoTabManager
+	void ForestManager::mouseEnter(const juce::MouseEvent& event)
+	{
+		//if (auto* tree = dynamic_cast<jiveGui::ForestUI::TreeComponent*>(event.eventComponent))
+		//{
+		//	if (tree->getLoadedState())
+		//}
+	}
+
+	void ForestManager::mouseExit(const juce::MouseEvent& event)
+	{
+		//if (auto* tree = dynamic_cast<jiveGui::ForestUI::TreeComponent*>(event.eventComponent))
+		//{
+		//	tree->setActiveState(false);
+		//	DBG("Mouse exited tree #" << tree->getIndex());
+		//}
 	}
 	void ForestManager::valueTreeRedirected(juce::ValueTree& changedTree)
 	{

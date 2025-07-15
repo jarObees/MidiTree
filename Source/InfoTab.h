@@ -75,11 +75,11 @@ namespace jiveGui
 							{
 								{"id", InfoTabUI::textComponentID},
 								{"width", "100%"},
+								{"x", "5%"},
+								{"y", "6%"},
 								{"height", "100%"},
 								{"text", jive::toVar(text)},
-								{"justification", juce::Justification::centred},
-								{"align-content", "centre"},
-								{"justify-content", "centre"},
+								{"justification", "centred-left"},
 								{
 								"style",
 									new jive::Object

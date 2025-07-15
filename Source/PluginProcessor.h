@@ -15,6 +15,7 @@
 #include "PresetManager.h"
 #include "ForestManager.h"
 #include "LSystemManager.h"
+#include "InfoTabManager.h"
 #include "DummyAudioProcessor.h"
 #include <chrono>
 
@@ -86,6 +87,7 @@ public:
     static const inline juce::StringArray comboBoxNoteTypes{"Quarter", "Dotted", "Triplet"};
     juce::Array<int> currentNotesPool; // DO NOT MODIFY IN PROCESS BLOCK.
 
+    InfoTabManager::InfoTabManager infoTabManager{};
     Preset::PresetManager presetManager{ apvts };
     Forest::ForestManager forestManager{ apvts, presetManager, currentNotesPool };
     LSystemStuff::LSystemManager lSystemManager{ apvts, presetManager, currentNotesPool };

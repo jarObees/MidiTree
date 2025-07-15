@@ -60,6 +60,11 @@ namespace jiveGui
 			return StringIds::forestTree + static_cast<juce::String>(treeNum);
 		}
 	}
+
+	namespace InfoTabUI
+	{
+		const juce::String textComponentID{ "itt" };
+	}
 }
 
 // All ID's for properties should be stored here.

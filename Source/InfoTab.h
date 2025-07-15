@@ -1,4 +1,5 @@
 #pragma once
+#include "Ids.h"
 
 namespace jiveGui
 {
@@ -37,6 +38,7 @@ namespace jiveGui
 					}
 				};
 			}
+			juce::String text;
 		private:
 			[[nodiscard]] juce::ValueTree getInfoLeft() const
 			{
@@ -63,13 +65,15 @@ namespace jiveGui
 								{"width", "100%"},
 								{"height", "100%"},
 								{"source", jive::toVar(juce::ImageCache::getFromMemory(BinaryData::InfoTabLeft_png,
-																					   BinaryData::InfoTabLeft_pngSize))}
+																					   BinaryData::InfoTabLeft_pngSize))
+								}
 							}
 						},
 						juce::ValueTree
 						{
 							"Text",
 							{
+								{"id", InfoTabUI::textComponentID},
 								{"width", "100%"},
 								{"height", "100%"},
 								{"text", jive::toVar(text)},
@@ -113,7 +117,6 @@ namespace jiveGui
 					}
 				};
 			}
-			juce::String text;
 		};
 	}
 }

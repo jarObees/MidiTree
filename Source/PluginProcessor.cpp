@@ -297,6 +297,9 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             }
             else
                 jassertfalse;
+            auto textValueTree = jive::findItemWithID(*editor, jiveGui::InfoTabUI::textComponentID);
+            infoTabManager.connectInfoTab(textValueTree);
+
             ///NOTE: CURRENTLY EVERYTHING IS DETACHED ============================================================================================
             attachParamsToApvts(editor.get());
             //attachNonAutoParamsToNonAutoApvts(editor.get());

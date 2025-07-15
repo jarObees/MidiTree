@@ -112,7 +112,9 @@ namespace Forest
 		DBG("Mouse entered tree component");
 		if (auto* tree = event.eventComponent->findParentComponentOfClass<jiveGui::ForestUI::TreeComponent>())
 		{
+			juce::String treeSlotNum = juce::String(tree->idNum);
 			auto treeData = forestDataSlots[tree->idNum];
+
 			if (tree->getLoadedState())
 			{
 				juce::String treeName = treeData.first;
@@ -120,11 +122,13 @@ namespace Forest
 				for (int num : treeData.second)
 					ss << num;
 				juce::String lString = ss.str();
-				infoTabManager->setDoubleLineMessage("Loaded Tree: " + treeName, "String: " + lString);
+				infoTabManager->setDoubleLineMessage("Tree Slot " + treeSlotNum + ": " + treeName, 
+													 "String: " + lString);
 			}
 			else
 			{
-				infoTabManager->setDoubleLineMessage("Loaded Tree: No Tree Loaded!", "String: ---");
+				infoTabManager->setDoubleLineMessage("Tree Slot " + treeSlotNum + ": [Empty!]",
+													 "String: ---");
 			}
 		}
 		else

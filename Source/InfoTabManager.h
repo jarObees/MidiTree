@@ -8,7 +8,7 @@ namespace InfoTabManager
 	public:
 		void connectInfoTab(jive::GuiItem*);
 		void setSingleLineMessage(juce::String);
-		void setDoubleLineMessage(juce::String, juce::String);
+		void setDoubleLineMessage(juce::String line1, juce::String line2);
 		void setDefaultState();
 
 	private:
@@ -19,6 +19,7 @@ namespace InfoTabManager
 				"foreground" : "white",
 				"font-size" : 20,
 				"letter-spacing" : 1,
+				"font-weight" : "bold",
 			}
 		)";
 
@@ -26,8 +27,9 @@ namespace InfoTabManager
 			{
 				"font-family" : "Perpetua Titling MT",
 				"foreground" : "white",
-				"font-size" : 15,
+				"font-size" : 11,
 				"letter-spacing" : 1,
+				"font-weight" : "bold",
 			}
 		)";
 	};

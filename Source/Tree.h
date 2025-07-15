@@ -63,6 +63,7 @@ namespace jiveGui
 						{"height", 20},
 						{"active", jive::toVar(false)},
 						{"loaded", jive::toVar(false)},
+						{"always-on-top", true},
 					},
 					{
 						juce::ValueTree

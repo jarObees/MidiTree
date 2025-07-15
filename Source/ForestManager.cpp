@@ -1,12 +1,21 @@
 #include <JuceHeader.h>
 #include "ForestManager.h"
 #include "PresetManager.h"
+#include "InfoTabManager.h"
+#include "Tree.h"
 #include "Ids.h"
 
 namespace Forest
 {
-	ForestManager::ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager, juce::Array<int>& _currentNotesPool)
-		: apvts(_apvts), presetManager(_presetManager), maxNumTrees(int(_apvts.getParameter("forest")->getNormalisableRange().end)), currentNotesPool(_currentNotesPool)
+	ForestManager::ForestManager(juce::AudioProcessorValueTreeState& _apvts, 
+								 Preset::PresetManager& _presetManager, 
+								 juce::Array<int>& _currentNotesPool, 
+								 InfoTabManager::InfoTabManager* _infoTabManager)
+		: apvts(_apvts), 
+		presetManager(_presetManager), 
+		maxNumTrees(int(_apvts.getParameter("forest")->getNormalisableRange().end)), 
+		currentNotesPool(_currentNotesPool), 
+		infoTabManager(_infoTabManager)
 	{
 		for (auto* tree : forestTrees)
 			tree = nullptr;
@@ -36,7 +45,7 @@ namespace Forest
 		forestTrees = trees;
 		for (jiveGui::ForestUI::TreeComponent* tree : forestTrees)
 		{
-			tree->addMouseListener(this, false);
+			tree->addMouseListener(this, true);
 		}
 	}
 
@@ -100,19 +109,32 @@ namespace Forest
 	// Used for sending messages to InfoTabManager
 	void ForestManager::mouseEnter(const juce::MouseEvent& event)
 	{
-		//if (auto* tree = dynamic_cast<jiveGui::ForestUI::TreeComponent*>(event.eventComponent))
-		//{
-		//	if (tree->getLoadedState())
-		//}
+		DBG("Mouse entered tree component");
+		if (auto* tree = event.eventComponent->findParentComponentOfClass<jiveGui::ForestUI::TreeComponent>())
+		{
+			auto treeData = forestDataSlots[tree->idNum];
+			if (tree->getLoadedState())
+			{
+				juce::String treeName = treeData.first;
+				std::stringstream ss;
+				for (int num : treeData.second)
+					ss << num;
+				juce::String lString = ss.str();
+				infoTabManager->setDoubleLineMessage("Loaded Tree: " + treeName, "String: " + lString);
+			}
+			else
+			{
+				infoTabManager->setDoubleLineMessage("Loaded Tree: No Tree Loaded!", "String: ---");
+			}
+		}
+		else
+			jassertfalse;
 	}
 
 	void ForestManager::mouseExit(const juce::MouseEvent& event)
 	{
-		//if (auto* tree = dynamic_cast<jiveGui::ForestUI::TreeComponent*>(event.eventComponent))
-		//{
-		//	tree->setActiveState(false);
-		//	DBG("Mouse exited tree #" << tree->getIndex());
-		//}
+		DBG("Mouse exited tree component");
+		infoTabManager->setDefaultState();
 	}
 	void ForestManager::valueTreeRedirected(juce::ValueTree& changedTree)
 	{

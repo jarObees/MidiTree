@@ -328,12 +328,11 @@ void MidiArpeggiatorAudioProcessor::attachNonAutoParamsToNonAutoApvts(jive::GuiI
             jive::findItemWithID(*editor, jiveNoteWheelId)
                 ->attachToParameter(nonAutoApvts.getParameter(dummyNoteWheelId), &undoManager);
 
-			//const auto directionId = jiveGui::rowColIdMaker(jiveGui::IdPrefix::directionInput, row, col);
-			//const auto dummyDirectionId = jiveGui::rowColIdMaker(dummyApvtsParamPrefix::directionParam, row, col);
-			//DBG("Attaching " << directionId << "to " << dummyDirectionId);
-   //         auto* thing = dynamic_cast<jive::Button*>(jive::findItemWithID(*editor, directionId));
-   //         jassert(thing != nullptr);
-			//thing->attachToParameter(nonAutoApvts.getParameter(dummyDirectionId), &undoManager);
+            const auto jiveDirectionId = jiveGui::rowColIdMaker(jiveGui::IdPrefix::directionInput, row, col);
+            const auto dummyDirectionId = jiveGui::rowColIdMaker(dummyApvtsParamPrefix::directionParam, row, col);
+            DBG("Attaching " << jiveDirectionId << "to " << dummyDirectionId);
+            jive::findItemWithID(*editor, jiveDirectionId)
+                ->attachToParameter(nonAutoApvts.getParameter(dummyDirectionId), &undoManager);
 
 			const auto octavesId = jiveGui::rowColIdMaker(jiveGui::IdPrefix::octavesInput, row, col);
 			const auto dummyOctavesId = jiveGui::rowColIdMaker(dummyApvtsParamPrefix::octavesParam, row, col);

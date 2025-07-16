@@ -12,47 +12,76 @@ namespace jiveGui
 					: rowNum(rowNum), columnNum(columnNum)
 				{
 					id = rowColIdMaker(IdPrefix::directionInput, rowNum, columnNum);
-				}
-
-				std::unique_ptr<juce::Component> createComponent(const juce::ValueTree& tree) final
-				{
-					if (tree.getType().toString() == "DrawableButton")
-						return std::make_unique<juce::DrawableButton>("butTing2", juce::DrawableButton::ButtonStyle::ImageRaw);
+					baseImage = juce::ImageCache::getFromMemory(BinaryData::IBB_ASCENDING_png, BinaryData::IBB_ASCENDING_pngSize);
 				}
 
 				juce::ValueTree initialise()
 				{
 					return juce::ValueTree{
-						"DrawableButton",
+						"Component",
 						{
-							{"id", id},
 							{"width", "100%"},
 							{"height", "25%"},
-							{"align-content", "centre"},
-							{"justify-content", "centre"},
+							{"display", "block"},
 						},
+						{
+							juce::ValueTree
+							{
+								"Image",
+								{
+									{"width", "100%"},
+									{"height", "100%"},
+									{"source", jive::toVar(baseImage)},
+								}
+							},
+							juce::ValueTree
+							{
+								"Button",
+								{
+									{"id", id},
+									{"width", "100%"},
+									{"height", "100%"},
+								},
+							},
+						}
 					};
 				}
+
 				void setup(jive::GuiItem& item) final
 				{
-					if (auto* buttonTing = dynamic_cast<juce::DrawableButton*>(item.getComponent().get()))
+
+					imageSource = std::make_unique<jive::Property<juce::Image>>(item.state.getChild(0), "source");
+					jassert(imageSource != nullptr);
+
+					if (auto* buttonTing = dynamic_cast<juce::Button*>(item.getChildren().getLast()->getComponent().get()))
 					{
-						offImage = std::make_unique<juce::DrawableImage>
-							(juce::ImageCache::getFromMemory(BinaryData::IBB_DESCENDING_png, 
-															 BinaryData::IBB_DESCENDING_pngSize));
-						onImage = std::make_unique<juce::DrawableImage>
-							(juce::ImageCache::getFromMemory(BinaryData::IBB_ASCENDING_png,
-															 BinaryData::IBB_ASCENDING_pngSize));
-						buttonTing->setImages(onImage.get(), nullptr, nullptr, nullptr, offImage.get());
 						buttonTing->setToggleable(true);
 						buttonTing->setClickingTogglesState(true);
+						buttonTing->setMouseCursor(juce::MouseCursor::PointingHandCursor);
+						buttonTing->onClick = [this, buttonTing]()
+							{
+								setImage(buttonTing);
+							};
+						setImage(buttonTing);
 					}
 					else
 						jassertfalse;
 				}
 			private:
-				std::unique_ptr<juce::DrawableImage> onImage;
-				std::unique_ptr<juce::DrawableImage> offImage;
+				void setImage(juce::Button* button)
+				{
+					DBG("Click detected!");
+					if (button->getToggleState())
+					{
+						imageSource->set(juce::ImageCache::getFromMemory(BinaryData::IBB_DESCENDING_png, BinaryData::IBB_DESCENDING_pngSize)); // This doesn't work.
+					}
+					else
+					{
+						imageSource->set(juce::ImageCache::getFromMemory(BinaryData::IBB_ASCENDING_png, BinaryData::IBB_ASCENDING_pngSize));
+					}
+				}
+				juce::Image baseImage;
+				std::unique_ptr<jive::Property<juce::Image>> imageSource;
 				juce::String id;
 				const int rowNum, columnNum;
 				std::unique_ptr<jive::Event> onValueChange;

@@ -32,12 +32,12 @@ namespace jiveGui
 						getTreeRow(),
 						getForestSlider(),
 						// Temporary Plant Button
-						jive::makeView<ButtonImageText>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
+						jive::makeView<DrawableButton>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
 																								BinaryData::button_grow_pngSize), 
 																								"", 
 																								StringIds::plantButton),
 						// Temporary bypass Button
-						jive::makeView<ButtonImageText>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
+						jive::makeView<DrawableButton>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
 																								BinaryData::button_grow_pngSize),
 																								"",
 																								StringIds::forestBypassButton),

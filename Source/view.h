@@ -97,7 +97,7 @@ namespace jiveGui
 								jive::makeView<FilmstripKnobView>(64, 64, 
 																  filmstripKnob, 
 																  StringIds::generationsKnob),
-								jive::makeView<ButtonImageText>(64, 64, 
+								jive::makeView<DrawableButton>(64, 64, 
 																juce::ImageCache::getFromMemory(BinaryData::button_grow_png, BinaryData::button_grow_pngSize), 
 																"grow!", 
 																StringIds::growButton),
@@ -153,7 +153,7 @@ namespace jiveGui
 				},
 			},
 			{
-				jive::makeView<ButtonImageText>(64, 32, filmstripKnob, "save", StringIds::saveButton),
+				jive::makeView<DrawableButton>(64, 32, filmstripKnob, "save", StringIds::saveButton),
 				jive::makeView<ComboBoxView>(64, 64, StringIds::presetComboBox),
 			}
 		};

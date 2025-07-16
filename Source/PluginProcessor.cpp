@@ -304,7 +304,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 
             ///NOTE: CURRENTLY EVERYTHING IS DETACHED ============================================================================================
             attachParamsToApvts(editor.get());
-            //attachNonAutoParamsToNonAutoApvts(editor.get());
+            attachNonAutoParamsToNonAutoApvts(editor.get());
             configureComponents(editor.get());
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
         }
@@ -328,11 +328,12 @@ void MidiArpeggiatorAudioProcessor::attachNonAutoParamsToNonAutoApvts(jive::GuiI
             jive::findItemWithID(*editor, jiveNoteWheelId)
                 ->attachToParameter(nonAutoApvts.getParameter(dummyNoteWheelId), &undoManager);
 
-			const auto directionId = jiveGui::rowColIdMaker(jiveGui::IdPrefix::directionInput, row, col);
-			const auto dummyDirectionId = jiveGui::rowColIdMaker(dummyApvtsParamPrefix::directionParam, row, col);
-			DBG("Attaching " << directionId << "to " << dummyDirectionId);
-			jive::findItemWithID(*editor, directionId)
-				->attachToParameter(nonAutoApvts.getParameter(dummyDirectionId), &undoManager);
+			//const auto directionId = jiveGui::rowColIdMaker(jiveGui::IdPrefix::directionInput, row, col);
+			//const auto dummyDirectionId = jiveGui::rowColIdMaker(dummyApvtsParamPrefix::directionParam, row, col);
+			//DBG("Attaching " << directionId << "to " << dummyDirectionId);
+   //         auto* thing = dynamic_cast<jive::Button*>(jive::findItemWithID(*editor, directionId));
+   //         jassert(thing != nullptr);
+			//thing->attachToParameter(nonAutoApvts.getParameter(dummyDirectionId), &undoManager);
 
 			const auto octavesId = jiveGui::rowColIdMaker(jiveGui::IdPrefix::octavesInput, row, col);
 			const auto dummyOctavesId = jiveGui::rowColIdMaker(dummyApvtsParamPrefix::octavesParam, row, col);

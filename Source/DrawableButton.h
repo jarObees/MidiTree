@@ -2,10 +2,10 @@
 
 namespace jiveGui
 {
-	class DrawableButton : public jive::View
+	class ButtonImageText : public jive::View
 	{
 	public:
-		DrawableButton(int rawWidth, int rawHeight, juce::Image rawImage, std::string rawText, juce::String rawId)
+		ButtonImageText(int rawWidth, int rawHeight, juce::Image rawImage, std::string rawText, juce::String rawId)
 			: width(rawWidth), height(rawHeight), imageSource(rawImage), text(rawText), id(rawId)
 		{
 			mainImage = std::make_unique<juce::DrawableImage>(imageSource);

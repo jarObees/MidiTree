@@ -93,7 +93,7 @@ public:
     InfoTabManager::InfoTabManager infoTabManager{};
     Preset::PresetManager presetManager{ apvts, &activeTree};
     Forest::ForestManager forestManager{ apvts, presetManager, &activeTree, &infoTabManager};
-    LSystemStuff::LSystemManager lSystemManager{ apvts, presetManager, currentNotesPool };
+    LSystemStuff::LSystemManager lSystemManager{ apvts, presetManager, &activeTree };
     juce::Typeface::Ptr coolFont;
 private:
     int time;

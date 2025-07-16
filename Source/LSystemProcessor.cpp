@@ -4,20 +4,12 @@
 using namespace AnalogUserInput;
 // Map containing illegal strings as keys, and their corrosponding legal string as values.
 // // For use in correcting lsys variables and rulesets.
-LSystemProcessor::LSystemProcessor(juce::Slider*& generationsKnob, 
-                                   juce::Value& _rulesetUserInput, 
-                                   juce::Value& _axiomUserInput, 
-                                   juce::Value& _generatedLString,
-                                   juce::Value& _notesPool,
-                                   juce::Component*& analogUserInputComponent)
-    : rulesetUserInput(_rulesetUserInput), 
-    axiomUserInput(_axiomUserInput), 
-    generatedLString(_generatedLString), 
-    generationsKnob(generationsKnob), 
-    notesPool(_notesPool),
-    analogUserInputComponent(analogUserInputComponent)
+LSystemProcessor::LSystemProcessor(juce::Slider*& _generationsKnob,
+                                   Tree::MidiTree*& _activeTree,
+                                   juce::Component*& _analogUserInputComponent)
+    : generationsKnob(generationsKnob), activeTree(_activeTree), analogUserInputComponent(analogUserInputComponent)
 {
-        
+
 }
 
 /// TODO: Refactor to use the current state of the UI. 
@@ -48,6 +40,7 @@ void LSystemProcessor::growLSystem()
     }
     generateLString(axiomChar, ruleMap);
     generateNotesPool(analogUserInputBlockDataSet);
+    activeTree->notesPool = generatedNotesPool;
 }
 
 char LSystemProcessor::getAxiomCharFromBDS(std::vector<std::vector<AnalogUserInputBlockData>>& analogUserInputBlockDataSet) const
@@ -58,7 +51,6 @@ char LSystemProcessor::getAxiomCharFromBDS(std::vector<std::vector<AnalogUserInp
         {
             if (blockData.axiom == true)
             {
-                axiomUserInput = juce::String(std::string{ blockData.axiom });
                 return blockData.lSysChar;
             }
         }
@@ -66,6 +58,7 @@ char LSystemProcessor::getAxiomCharFromBDS(std::vector<std::vector<AnalogUserInp
     return '\0';
 }
 
+// Makes a 2D vector of AUIBD in order to manipulate and analyze data in a simple(ish) way.
 std::vector<std::vector<AnalogUserInputBlockData>> LSystemProcessor::makeAnalogUIBlockDataSet()
 {
     jassert(analogUserInputComponent != nullptr);
@@ -195,6 +188,7 @@ void LSystemProcessor::setBlockDataSetLSysChars(std::vector<std::vector<AnalogUs
     }
 }
 
+// Ret
 void LSystemProcessor::generateLString(char& axiomChar, std::unordered_map<std::string, std::string>& ruleMap)
 {
     DBG("GENERATING L STRING ===============================================");
@@ -224,7 +218,7 @@ void LSystemProcessor::generateLString(char& axiomChar, std::unordered_map<std::
         genString = std::move(nextGen.str());
     }
     generatedLString = juce::String(genString);
-    DBG("Generated L String: " << generatedLString.getValue().toString());
+    DBG("Generated L String: " << generatedLString.toStdString());
 }
 
 // Converts the generated string into a vector<int> representing the interval in half steps from the root note (axiom).
@@ -232,9 +226,9 @@ void LSystemProcessor::generateLString(char& axiomChar, std::unordered_map<std::
 void LSystemProcessor::generateNotesPool(std::vector<std::vector<AnalogUserInputBlockData>>& analogUserInputBlockDataSet)
 {
     DBG("Generating notes pool ===========================================================");
-    std::string genString = generatedLString.toString().toStdString();
+    std::string genString = generatedLString.toStdString();
     DBG("Generated L String: " << generatedLString);
-    juce::Array<juce::var> notesPlus;
+    juce::Array<int> notesPlus;
     for (char c : genString)
     {
         bool found = false;
@@ -258,9 +252,9 @@ void LSystemProcessor::generateNotesPool(std::vector<std::vector<AnalogUserInput
     DBG("Notes Pool Generated:");
     for (auto& varTing : notesPlus)
     {
-        DBG(varTing.toString());
+        DBG(juce::String(varTing));
     }
-    notesPool = notesPlus;
+    generatedNotesPool = notesPlus;
 }
 
 // Generates ruleset map from ruleset set.

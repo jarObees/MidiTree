@@ -2,7 +2,7 @@
 #include <JuceHeader.h>
 #include "LSystemProcessor.h"
 #include "PresetManager.h"
-
+#include "TreeData.h"
 // 
 namespace LSystemStuff
 {
@@ -11,7 +11,7 @@ namespace LSystemStuff
 		: public juce::TextEditor::Listener, juce::Button::Listener, juce::ValueTree::Listener, juce::Slider::Listener
 	{
 	public:
-		LSystemManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager, juce::Array<int>& curentNotesPool);
+		LSystemManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager, Tree::MidiTree* _activeTree);
 		void configureGensKnob(juce::Slider* gensKnob);
 		void configureGrowButton(juce::Button* button);
 		void configureAnalogUserInput(juce::Component* analogUserInputComponent, const int numBlockRows, const int numBlockColumns);
@@ -25,7 +25,8 @@ namespace LSystemStuff
 		void buttonClicked(juce::Button* button) override;
 		void sliderValueChanged(juce::Slider* slider) override;
 		void setCurrentNotesPool();
-			
+		
+		Tree::MidiTree* activeTree;
 		// Values are used to keep non-auto params connceted to apvts as var properties of the apvts.
 		juce::Value axiomInputValue; //juce::String
 		juce::Value rulesetInputValue; //juce::String

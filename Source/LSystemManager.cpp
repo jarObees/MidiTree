@@ -6,15 +6,15 @@
 // Implement the next layer of stuff. 
 // Now the actual shit that handles the growth logic for the l system shit.
 
-LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager, juce::Array<int>& _currenNotesPool)
-	: apvts(_apvts), presetManager(_presetManager), currentNotesPool(_currenNotesPool)
+LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager, Tree::MidiTree* _activeTree)
+	: apvts(_apvts), presetManager(_presetManager), activeTree(_activeTree), currentNotesPool(activeTree->notesPool)
 {
 	axiomInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userAxiomStringProperty, nullptr));
 	rulesetInputValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetStringProperty, nullptr));
 	generatedStringValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
 	notesPoolValue.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
 
-	lSystemProcessor = std::make_unique<LSystemProcessor>(gensKnob, rulesetInputValue, axiomInputValue, generatedStringValue, notesPoolValue, analogUserInputComponent);
+	lSystemProcessor = std::make_unique<LSystemProcessor>(gensKnob, activeTree, analogUserInputComponent);
 	DBG("default ruleset is: " << rulesetInputValue.getValue());
 
 	apvts.state.addListener(this);
@@ -125,11 +125,12 @@ void LSystemStuff::LSystemManager::configureGensKnob(juce::Slider* knob)
 void LSystemStuff::LSystemManager::setCurrentNotesPool()
 {
 	DBG("Setting current notes pool");
-	if (!currentNotesPool.isEmpty())
+	if (!activeTree->notesPool.isEmpty())
 	{
-		DBG("Current Notes Pool Size: " << currentNotesPool.size());
-		currentNotesPool.clear();
+		DBG("Current Notes Pool Size: " << activeTree->notesPool.size());
+		activeTree->notesPool.clear();
 	}
+	///TODO: FIX THIS PART BELOW
 	juce::Array<juce::var> notesPoolTemp = *notesPoolValue.getValue().getArray(); // Should not be a nullptr, assuming generateNotesPool() succeeds.
 	for (auto& item : notesPoolTemp)
 	{

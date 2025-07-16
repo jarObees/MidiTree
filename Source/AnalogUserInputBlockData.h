@@ -1,7 +1,7 @@
 #pragma once
-// This class will holds data from each input block and is to be used in the LSystemManager.
 namespace AnalogUserInput
 {
+	// This class holds data from each input block and is to be used in the LSystemManager.
 	class AnalogUserInputBlockData
 	{
 	private:

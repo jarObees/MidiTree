@@ -10,6 +10,7 @@
 // Testing the thing out so that it actually copies it over.
 #include <JuceHeader.h>
 #include <juce_data_structures/juce_data_structures.h>
+#include "TreeData.h"
 #include "View.h"
 #include "LSystemProcessor.h"
 #include "PresetManager.h"
@@ -17,6 +18,7 @@
 #include "LSystemManager.h"
 #include "InfoTabManager.h"
 #include "DummyAudioProcessor.h"
+
 #include <chrono>
 
 //==============================================================================
@@ -85,11 +87,12 @@ public:
     int midiAxiom; // Value representing the initial midi input by user. Should be set to -1 if no user input.
     
     static const inline juce::StringArray comboBoxNoteTypes{"Quarter", "Dotted", "Triplet"};
+    Tree::MidiTree activeTree;
     juce::Array<int> currentNotesPool; // DO NOT MODIFY IN PROCESS BLOCK.
-
+ 
     InfoTabManager::InfoTabManager infoTabManager{};
-    Preset::PresetManager presetManager{ apvts };
-    Forest::ForestManager forestManager{ apvts, presetManager, currentNotesPool, &infoTabManager};
+    Preset::PresetManager presetManager{ apvts, &activeTree};
+    Forest::ForestManager forestManager{ apvts, presetManager, &activeTree, &infoTabManager};
     LSystemStuff::LSystemManager lSystemManager{ apvts, presetManager, currentNotesPool };
     juce::Typeface::Ptr coolFont;
 private:

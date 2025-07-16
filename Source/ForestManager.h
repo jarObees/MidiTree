@@ -1,6 +1,9 @@
 #pragma once
 #include <JuceHeader.h>
 #include "Tree.h"
+#include "TreeData.h"
+
+// FINISH IMPLEMENTING ACTIVETREE
 namespace Preset { class PresetManager; }
 namespace InfoTabManager { class InfoTabManager; }
 
@@ -16,7 +19,7 @@ namespace Forest
 		: public juce::Slider::Listener, juce::Button::Listener, juce::ValueTree::Listener, juce::MouseListener
 	{
 	public:
-		ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager&, juce::Array<int>& currentNotesPool, InfoTabManager::InfoTabManager*);
+		ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager&, Tree::MidiTree*, InfoTabManager::InfoTabManager*);
 		void configureTreeSlider(juce::Slider* slider);
 		void configureForestButton(juce::Button* button);
 		void configureForestTrees(std::vector<jiveGui::ForestUI::TreeComponent*>);
@@ -29,17 +32,17 @@ namespace Forest
 
 	private:
 		InfoTabManager::InfoTabManager* infoTabManager;
+		Tree::MidiTree* activeMidiTree;
 		bool bypass;	// Tells plugin to bypass the forest, and just play whatever thing has been immediately loaded.
 		juce::Value generatedLString; // juce::String
 		juce::Value notesPool; // juce::Array<juce::var>
 		juce::Value midiTreeName; // juce::Array<juce::var>
-		juce::Array<int>& currentNotesPool;
 
 		juce::AudioProcessorValueTreeState& apvts;
 		int currentForestIndex;
 
 		// Slider will be indexing across this vector. 
-		std::vector<std::pair<juce::String, juce::Array<int>>> forestDataSlots; // First pair value is the midiTree name, second is the notesPool.
+		std::vector<Tree::MidiTree> forestDataSlots; // First pair value is the midiTree name, second is the notesPool.
 		std::vector<jiveGui::ForestUI::TreeComponent*> forestTrees;
 		juce::Slider* forestSlider = nullptr;
 		juce::Button* forestButton = nullptr;

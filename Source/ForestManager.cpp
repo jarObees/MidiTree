@@ -9,17 +9,17 @@ namespace Forest
 {
 	ForestManager::ForestManager(juce::AudioProcessorValueTreeState& _apvts, 
 								 Preset::PresetManager& _presetManager, 
-								 juce::Array<int>& _currentNotesPool, 
+								 Tree::MidiTree* _activeMidiTree, 
 								 InfoTabManager::InfoTabManager* _infoTabManager)
 		: apvts(_apvts), 
 		presetManager(_presetManager), 
 		maxNumTrees(int(_apvts.getParameter("forest")->getNormalisableRange().end)), 
-		currentNotesPool(_currentNotesPool), 
+		activeMidiTree(_activeMidiTree),
 		infoTabManager(_infoTabManager)
 	{
 		for (auto* tree : forestTrees)
 			tree = nullptr;
-
+		
 		forestDataSlots.assign(maxNumTrees, { "", {} });
 		generatedLString.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
 		notesPool.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
@@ -60,8 +60,8 @@ namespace Forest
 			{
 				DBG("WE PLANTING IN THIS HOE!");
 				auto& dataSlot = forestDataSlots[currentForestIndex];
-				dataSlot.first = midiTreeName.getValue();
-				dataSlot.second = currentNotesPool;
+				dataSlot.name = midiTreeName.getValue();
+				dataSlot.notesPool = activeMidiTree->notesPool;
 			}
 			else
 			{
@@ -83,11 +83,11 @@ namespace Forest
 		if (forestSlider == slider)
 		{
 			currentForestIndex = forestSlider->getValue() - 1;
-			DBG("Current tree: " << forestDataSlots[currentForestIndex].first);
-			auto notesPool = forestDataSlots[currentForestIndex].second;
+			DBG("Current tree: " << forestDataSlots[currentForestIndex].name);
+			auto notesPool = forestDataSlots[currentForestIndex].notesPool;
 			if (!notesPool.isEmpty())
 			{
-				currentNotesPool = notesPool;
+				activeMidiTree->notesPool = notesPool;
 			}
 			// Update UI
 			auto* activeTree = forestTrees[currentForestIndex];
@@ -117,9 +117,9 @@ namespace Forest
 
 			if (tree->getLoadedState())
 			{
-				juce::String treeName = treeData.first;
+				juce::String treeName = treeData.name;
 				std::stringstream ss;
-				for (int num : treeData.second)
+				for (int num : treeData.notesPool)
 					ss << num;
 				juce::String lString = ss.str();
 				infoTabManager->setDoubleLineMessage("Tree Slot " + treeSlotNum + ": " + treeName, 

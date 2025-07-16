@@ -2,7 +2,6 @@
 #include "Ids.h"
 
 
-//TODO: Figure out how to make ur own lil listener guy.
 namespace jiveGui
 {
 	namespace ForestUI

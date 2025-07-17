@@ -15,8 +15,9 @@ namespace jiveGui
 				AxiomSelectorView(int rowNum, int columnNum)
 					: rowNum(rowNum), columnNum(columnNum)
 				{
+					DBG("Making an AxiomSelecta!");
 					id = idRowColMaker(IdPrefix::axiom, rowNum, columnNum);
-					bgImage = juce::ImageCache::getFromMemory(BinaryData::NW_OFF_png, BinaryData::NW_ON_pngSize); /// TODO: MAKE NEW IMAGE FOR THIS.
+					bgImage = juce::Image();
 				}
 
 				juce::ValueTree initialise() final
@@ -25,16 +26,15 @@ namespace jiveGui
 					{
 						"Component",
 						{
-							{"id", id},
 							{"display", "block"},
 							{"width", "100%"},
 							{"height", "100%"},
-							{
-							"style",
-								new jive::Object{
-									{"background", jive::toVar(colors::red)},
-								}
-							},
+									//							{
+									//"style",
+									//	new jive::Object{
+									//		{"background", jive::toVar(colors::debug_secondary)},
+									//	}
+									//},
 						},
 						{
 							juce::ValueTree
@@ -50,9 +50,13 @@ namespace jiveGui
 							{
 								"Button",
 								{
+									{"id", id},
+									{"width", "100%"},
+									{"height", "20%"},
 									{"centre-x", "50%"},
 									{"radio-group", RADIOGROUPNUM},
 									{"toggleable", true},
+									{"always-on-top", true},
 								}
 							}
 						}
@@ -62,6 +66,33 @@ namespace jiveGui
 
 				void setup(jive::GuiItem& item) final
 				{
+					auto* imageComponent = dynamic_cast<juce::Component*>(item.getChildren().getFirst()->getComponent().get());
+					jassert(imageComponent != nullptr);
+					imageComponent->setInterceptsMouseClicks(false, false);
+					
+					auto* parentComponent = item.getComponent().get();
+					jassert(parentComponent != nullptr);
+					parentComponent->setInterceptsMouseClicks(false, true);
+
+					auto* button = dynamic_cast<juce::Button*>(item.getChildren().getLast()->getComponent().get());
+					button->setMouseCursor(juce::MouseCursor::PointingHandCursor);
+					jassert(button != nullptr);
+					button->onClick = [this, button]()
+						{
+							DBG("AXIOM BUTTON CLICKED!");
+							if (button->getToggleState())
+							{
+								DBG("Button is on.");
+								imageSource->set(juce::ImageCache::getFromMemory(BinaryData::AxiomSelectorOn_png,
+																				 BinaryData::AxiomSelectorOn_pngSize));
+							}
+							else
+							{
+								DBG("Button off.");
+								imageSource->set(juce::Image());
+							}
+						};
+					
 					DBG("Setting up the axiom selector...");
 					imageSource = std::make_unique<jive::Property<juce::Image>>(item.state.getChild(0), "source");
 					jassert(imageSource != nullptr);

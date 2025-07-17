@@ -87,6 +87,7 @@ namespace jiveGui
 									},
 								},
 							},
+							// jive::makeView<AxiomSelecta::AxiomSelectorView>(rowNum, columnNum),
 						},
 					};
 					if (isAxiom)
@@ -107,7 +108,7 @@ namespace jiveGui
 					jassert(onValueChange != nullptr);
 
 					auto* stripSlider = dynamic_cast<juce::Slider*>(item.getChildren().getFirst()->getComponent().get());
-					auto* textLabelThing = item.getChildren().getLast()->getComponent().get();
+					auto* textLabelThing = item.getChildren()[1]->getComponent().get();
 					textLabelThing->setInterceptsMouseClicks(false, false);
 					jassert(textLabelThing != nullptr);
 					jassert(stripSlider != nullptr);

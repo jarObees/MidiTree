@@ -14,7 +14,7 @@ namespace jiveGui
 				OctavesInputView(int rowNum, int columnNum)
 					: rowNum(rowNum), columnNum(columnNum)
 				{
-					id = rowColIdMaker(IdPrefix::octavesInput, rowNum, columnNum);
+					id = idRowColMaker(IdPrefix::octavesInput, rowNum, columnNum);
 					bgImage = juce::ImageCache::getFromMemory(BinaryData::OCTAVES_0_png, BinaryData::OCTAVES_0_pngSize); // Set to base image.
 				}
 				
@@ -98,7 +98,7 @@ namespace jiveGui
 				AxiomSelectorView(int rowNum, int columnNum)
 					: rowNum(rowNum), columnNum(columnNum)
 				{
-					id = rowColIdMaker(IdPrefix::inputBlockAxiom, rowNum, columnNum);
+					id = idRowColMaker(IdPrefix::inputBlockAxiom, rowNum, columnNum);
 				}
 
 				juce::ValueTree initialise()

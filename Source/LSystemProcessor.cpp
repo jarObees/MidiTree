@@ -7,7 +7,7 @@ using namespace AnalogUserInput;
 LSystemProcessor::LSystemProcessor(juce::Slider*& _generationsKnob,
                                    Tree::MidiTree*& _activeTree,
                                    juce::Component*& _analogUserInputComponent)
-    : generationsKnob(generationsKnob), activeTree(_activeTree), analogUserInputComponent(analogUserInputComponent)
+    : generationsKnob(_generationsKnob), activeTree(_activeTree), analogUserInputComponent(_analogUserInputComponent)
 {
 
 }

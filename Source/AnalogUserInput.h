@@ -27,7 +27,7 @@ namespace jiveGui
 		//TODO: Fix how the axiom is displayed along with octaves here.
 		[[nodiscard]] inline auto getInputBlockTop(int rowNum, int columnNum)
 		{
-			const juce::String id = rowColIdMaker(IdPrefix::inputBlockTop, rowNum, columnNum);
+			const juce::String id = idRowColMaker(IdPrefix::inputBlockTop, rowNum, columnNum);
 			juce::ValueTree rootComponent
 			{
 				"Component",
@@ -60,7 +60,7 @@ namespace jiveGui
 		// Children order: BlockTop, noteWheel, BlockBottom
 		[[nodiscard]] inline auto getInputBlock(int rowNum, int columnNum)
 		{
-			const juce::String id = rowColIdMaker(IdPrefix::inputBlock, rowNum, columnNum);
+			const juce::String id = idRowColMaker(IdPrefix::inputBlock, rowNum, columnNum);
 			return juce::ValueTree
 			{
 				"Component",
@@ -109,7 +109,7 @@ namespace jiveGui
 		// Children  (in order) = inputBlock, inputBlockSpacer, n inputBlocks
 		[[nodiscard]] inline auto getInputRow(int rowNum)
 		{
-			const juce::String idTing = rowColIdMaker(IdPrefix::inputRow, rowNum, 0); // Id: "irx0"
+			const juce::String idTing = idRowColMaker(IdPrefix::inputRow, rowNum, 0); // Id: "irx0"
 			juce::ValueTree row
 			{
 				"Component",

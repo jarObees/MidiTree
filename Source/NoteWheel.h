@@ -9,6 +9,7 @@ namespace jiveGui
 		{
 			static const inline std::vector intervals{ "-", "1", "b2", "2", "b3", "3", "4", "b5", "5", "b6", "6", "b7", "7" };
 			
+			// Contains both NoteWheel and AxiomSelector Component
 			class NoteWheelView
 				: public jive::View
 			{
@@ -16,7 +17,7 @@ namespace jiveGui
 				NoteWheelView(int rowNum, int columnNum)
 					: rowNum(rowNum), columnNum(columnNum)
 				{
-					id = rowColIdMaker(IdPrefix::noteWheel, rowNum, columnNum);
+					id = idRowColMaker(IdPrefix::noteWheel, rowNum, columnNum);
 					bgImage = juce::ImageCache::getFromMemory(BinaryData::NW_OFF_png, BinaryData::NW_ON_pngSize); // Set to base image.
 				}
 

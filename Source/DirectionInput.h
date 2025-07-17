@@ -11,7 +11,7 @@ namespace jiveGui
 				DirectionInputView(int rowNum, int columnNum)
 					: rowNum(rowNum), columnNum(columnNum)
 				{
-					id = rowColIdMaker(IdPrefix::directionInput, rowNum, columnNum);
+					id = idRowColMaker(IdPrefix::directionInput, rowNum, columnNum);
 					baseImage = juce::ImageCache::getFromMemory(BinaryData::IBB_ASCENDING_png, BinaryData::IBB_ASCENDING_pngSize);
 				}
 

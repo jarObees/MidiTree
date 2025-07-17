@@ -302,7 +302,6 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             auto textValueTree = jive::findItemWithID(*editor, jiveGui::InfoTabUI::textComponentID);
             infoTabManager.connectInfoTab(textValueTree);
 
-            ///NOTE: CURRENTLY EVERYTHING IS DETACHED ============================================================================================
             attachParamsToApvts(editor.get());
             attachNonAutoParamsToNonAutoApvts(editor.get());
             configureComponents(editor.get());
@@ -322,20 +321,20 @@ void MidiArpeggiatorAudioProcessor::attachNonAutoParamsToNonAutoApvts(jive::GuiI
         for (int col = -1; col < jiveGui::AnalogUserInput::NUMBLOCKCOLUMNS; col++)
         {
             // Attach Note Wheel
-            const auto jiveNoteWheelId = jiveGui::rowColIdMaker(jiveGui::IdPrefix::noteWheel, row, col);
-            const auto dummyNoteWheelId = jiveGui::rowColIdMaker(dummyApvtsParamPrefix::noteWheelParam, row, col);
+            const auto jiveNoteWheelId = jiveGui::idRowColMaker(jiveGui::IdPrefix::noteWheel, row, col);
+            const auto dummyNoteWheelId = jiveGui::idRowColMaker(dummyApvtsParamPrefix::noteWheelParam, row, col);
             DBG("Attaching " << jiveNoteWheelId << "to " << dummyNoteWheelId);
             jive::findItemWithID(*editor, jiveNoteWheelId)
                 ->attachToParameter(nonAutoApvts.getParameter(dummyNoteWheelId), &undoManager);
 
-            const auto jiveDirectionId = jiveGui::rowColIdMaker(jiveGui::IdPrefix::directionInput, row, col);
-            const auto dummyDirectionId = jiveGui::rowColIdMaker(dummyApvtsParamPrefix::directionParam, row, col);
+            const auto jiveDirectionId = jiveGui::idRowColMaker(jiveGui::IdPrefix::directionInput, row, col);
+            const auto dummyDirectionId = jiveGui::idRowColMaker(dummyApvtsParamPrefix::directionParam, row, col);
             DBG("Attaching " << jiveDirectionId << "to " << dummyDirectionId);
             jive::findItemWithID(*editor, jiveDirectionId)
                 ->attachToParameter(nonAutoApvts.getParameter(dummyDirectionId), &undoManager);
 
-			const auto octavesId = jiveGui::rowColIdMaker(jiveGui::IdPrefix::octavesInput, row, col);
-			const auto dummyOctavesId = jiveGui::rowColIdMaker(dummyApvtsParamPrefix::octavesParam, row, col);
+			const auto octavesId = jiveGui::idRowColMaker(jiveGui::IdPrefix::octavesInput, row, col);
+			const auto dummyOctavesId = jiveGui::idRowColMaker(dummyApvtsParamPrefix::octavesParam, row, col);
 			DBG("Attaching " << octavesId << "to " << dummyOctavesId);
 			jive::findItemWithID(*editor, octavesId)
 				->attachToParameter(nonAutoApvts.getParameter(dummyOctavesId), &undoManager);
@@ -526,7 +525,7 @@ MidiArpeggiatorAudioProcessor::createNonAutoParamaterLayout(int numRows, int num
         for (int columnNum = -1; columnNum < numColumns; ++columnNum) // Start at -1 to account for axiom, which is at column -1. Sorry in advance.
         {
             // Note Wheel Param
-            params.add(std::make_unique<juce::AudioParameterInt>(jiveGui::rowColIdMaker(dummyApvtsParamPrefix::noteWheelParam, 
+            params.add(std::make_unique<juce::AudioParameterInt>(jiveGui::idRowColMaker(dummyApvtsParamPrefix::noteWheelParam, 
                                                                                         rowNum, 
                                                                                         columnNum), 
                                                                  "Note Wheel", 
@@ -534,13 +533,13 @@ MidiArpeggiatorAudioProcessor::createNonAutoParamaterLayout(int numRows, int num
                                                                  12,
                                                                  0)); // Displays "-"
             // Direction Param
-			params.add(std::make_unique<juce::AudioParameterBool>(jiveGui::rowColIdMaker(dummyApvtsParamPrefix::directionParam,
+			params.add(std::make_unique<juce::AudioParameterBool>(jiveGui::idRowColMaker(dummyApvtsParamPrefix::directionParam,
 																						rowNum,
 																						columnNum),
 																 "Direction",
 																 1));
 			// Octave Param
-			params.add(std::make_unique<juce::AudioParameterInt>(jiveGui::rowColIdMaker(dummyApvtsParamPrefix::octavesParam,
+			params.add(std::make_unique<juce::AudioParameterInt>(jiveGui::idRowColMaker(dummyApvtsParamPrefix::octavesParam,
 																						rowNum,
 																						columnNum),
 																 "Octaves",

@@ -5,6 +5,7 @@ namespace jiveGui
 	class DrawableButton : public jive::View
 	{
 	public:
+		// Note: Non-automatable with ->attachToParamater 
 		DrawableButton(int rawWidth, int rawHeight, juce::Image rawImage, std::string rawText, juce::String rawId)
 			: width(rawWidth), height(rawHeight), imageSource(rawImage), text(rawText), id(rawId)
 		{

@@ -43,6 +43,7 @@ namespace jiveGui
 		const juce::String octavesInput{ "oi" };
 		const juce::String directionInput{ "di" };
 		const juce::String inputRow{ "ir" };
+		const juce::String axiom{ "ai" };
 	}
 	namespace ImageIds
 	{

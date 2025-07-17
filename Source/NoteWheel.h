@@ -1,5 +1,6 @@
 #pragma once
 #include "Colors.h"
+#include "AxiomSelector.h"
 
 namespace jiveGui
 {
@@ -9,7 +10,7 @@ namespace jiveGui
 		{
 			static const inline std::vector intervals{ "-", "1", "b2", "2", "b3", "3", "4", "b5", "5", "b6", "6", "b7", "7" };
 			
-			// Contains both NoteWheel and AxiomSelector Component
+			// Note: Contains both NoteWheel and AxiomSelector Component
 			class NoteWheelView
 				: public jive::View
 			{
@@ -17,13 +18,20 @@ namespace jiveGui
 				NoteWheelView(int rowNum, int columnNum)
 					: rowNum(rowNum), columnNum(columnNum)
 				{
+					if (columnNum == -1)
+					{
+						DBG("NW belongs to axiom.");
+						isAxiom = true;
+					}
+					else
+						isAxiom = false;
 					id = idRowColMaker(IdPrefix::noteWheel, rowNum, columnNum);
 					bgImage = juce::ImageCache::getFromMemory(BinaryData::NW_OFF_png, BinaryData::NW_ON_pngSize); // Set to base image.
 				}
 
 				juce::ValueTree initialise() final
 				{
-					return juce::ValueTree{
+					juce::ValueTree mainValueTree = {
 						"Component",
 						{
 							{"display", "block"},
@@ -81,10 +89,17 @@ namespace jiveGui
 							},
 						},
 					};
+					if (isAxiom)
+					{
+						DBG("initialise() detected isAxiom...");
+						mainValueTree.addChild(jive::makeView<AxiomSelecta::AxiomSelectorView>(rowNum, columnNum), -1, nullptr);
+					}
+					return mainValueTree;
 				}
 
 				void setup(jive::GuiItem& item) final
 				{
+
 					onValueChange = std::make_unique<jive::Event>(item.getChildren().getFirst()->state, "on-change");
 					imageSource = std::make_unique<jive::Property<juce::Image>>(item.state.getChild(0).getChild(0), "source");
 					textProperty = std::make_unique<jive::Property<juce::String>>(item.state.getChild(1), "text");
@@ -117,6 +132,8 @@ namespace jiveGui
 				}
 
 			private:
+
+				bool isAxiom;
 				juce::String id;
 				const int rowNum, columnNum;
 				juce::String text;

@@ -13,6 +13,7 @@
     </GROUP>
     <GROUP id="{364A534D-7CD2-809C-2196-30E80E3205D4}" name="GUI">
       <GROUP id="{7C7EFBE3-6AFF-60FE-E083-ED5532D19A06}" name="AnalogUserInput">
+        <FILE id="Y5JmWW" name="AxiomSelector.h" compile="0" resource="0" file="Source/AxiomSelector.h"/>
         <FILE id="MgFAPL" name="InputBlockTop.h" compile="0" resource="0" file="Source/InputBlockTop.h"/>
         <FILE id="yrudeo" name="DirectionInput.h" compile="0" resource="0"
               file="Source/DirectionInput.h"/>

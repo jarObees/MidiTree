@@ -24,7 +24,8 @@ namespace jiveGui
 			return jive::makeView<NoteWheel::NoteWheelView>(rowNum, columnNum);
 		}
 
-		//TODO: Fix how the axiom is displayed along with octaves here.
+		//TODO: Fix how the 
+		// is displayed along with octaves here.
 		[[nodiscard]] inline auto getInputBlockTop(int rowNum, int columnNum)
 		{
 			const juce::String id = idRowColMaker(IdPrefix::inputBlockTop, rowNum, columnNum);
@@ -40,13 +41,6 @@ namespace jiveGui
 					{"justify-content", "centre"},
 				},
 			};
-
-			if (columnNum == -1)
-			{
-				DBG("BUILDING WITH AXIOM");
-				auto axiomView = jive::makeView<InputBlockTop::AxiomSelectorView>(rowNum, columnNum); // Add this as a child 
-				rootComponent.addChild(axiomView, -1, nullptr);
-			}
 
 				DBG("BUILDING OCTAVES THING");
 				rootComponent.addChild(jive::makeView<InputBlockTop::OctavesInputView>(rowNum, columnNum),

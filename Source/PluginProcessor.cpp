@@ -313,6 +313,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 }
 
 // Used for ensuring non-auto params are get/set properly.
+// Each non-automatable component needs a unique jiveGui id, as well as a unique apvtsId.
 void MidiArpeggiatorAudioProcessor::attachNonAutoParamsToNonAutoApvts(jive::GuiItem* editor)
 {
     // Loop through all combos of row/col
@@ -327,17 +328,23 @@ void MidiArpeggiatorAudioProcessor::attachNonAutoParamsToNonAutoApvts(jive::GuiI
             jive::findItemWithID(*editor, jiveNoteWheelId)
                 ->attachToParameter(nonAutoApvts.getParameter(dummyNoteWheelId), &undoManager);
 
+            // Attach direction button
             const auto jiveDirectionId = jiveGui::idRowColMaker(jiveGui::IdPrefix::directionInput, row, col);
             const auto dummyDirectionId = jiveGui::idRowColMaker(dummyApvtsParamPrefix::directionParam, row, col);
             DBG("Attaching " << jiveDirectionId << "to " << dummyDirectionId);
             jive::findItemWithID(*editor, jiveDirectionId)
                 ->attachToParameter(nonAutoApvts.getParameter(dummyDirectionId), &undoManager);
 
+            // Attach Octaves Slider
 			const auto octavesId = jiveGui::idRowColMaker(jiveGui::IdPrefix::octavesInput, row, col);
 			const auto dummyOctavesId = jiveGui::idRowColMaker(dummyApvtsParamPrefix::octavesParam, row, col);
 			DBG("Attaching " << octavesId << "to " << dummyOctavesId);
 			jive::findItemWithID(*editor, octavesId)
 				->attachToParameter(nonAutoApvts.getParameter(dummyOctavesId), &undoManager);
+
+            // Attach Axiom Button
+			const auto axiomId = jiveGui::idRowColMaker(jiveGui::IdPrefix::axiomToggle, row, col);
+			const auto dummyAxiomId = jiveGui::idRowColMaker(dummyApvtsParamPrefix::axiomToggleParam, row, col);
         }
     }
 }
@@ -524,6 +531,16 @@ MidiArpeggiatorAudioProcessor::createNonAutoParamaterLayout(int numRows, int num
     {
         for (int columnNum = -1; columnNum < numColumns; ++columnNum) // Start at -1 to account for axiom, which is at column -1. Sorry in advance.
         {
+            // Axiom
+            if (columnNum == -1)
+            {
+                params.add(std::make_unique<juce::AudioParameterBool>(jiveGui::idRowColMaker(dummyApvtsParamPrefix::axiomToggleParam,
+                                                                                             rowNum,
+                                                                                             columnNum),
+                                                                      "Axiom", 
+                                                                      false));
+            }
+
             // Note Wheel Param
             params.add(std::make_unique<juce::AudioParameterInt>(jiveGui::idRowColMaker(dummyApvtsParamPrefix::noteWheelParam, 
                                                                                         rowNum, 

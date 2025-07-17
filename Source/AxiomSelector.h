@@ -7,7 +7,7 @@ namespace jiveGui
 		namespace AxiomSelecta
 		{
 			const int RADIOGROUPNUM = 1;
-			// This component is for use within the note wheel, hencethe width and height being at 100%
+			// This component is for use within the note wheel, hence the width and height being at 100%
 			class AxiomSelectorView
 				: public jive::View
 			{
@@ -16,7 +16,7 @@ namespace jiveGui
 					: rowNum(rowNum), columnNum(columnNum)
 				{
 					DBG("Making an AxiomSelecta!");
-					id = idRowColMaker(IdPrefix::axiom, rowNum, columnNum);
+					id = idRowColMaker(IdPrefix::axiomToggle, rowNum, columnNum);
 					bgImage = juce::Image();
 				}
 
@@ -54,7 +54,7 @@ namespace jiveGui
 									{"width", "100%"},
 									{"height", "20%"},
 									{"centre-x", "50%"},
-									{"radio-group", RADIOGROUPNUM},
+									{"radio-group", RADIOGROUPNUM},		// Radio group is useless right now. Proper configuration is in a manager.
 									{"toggleable", true},
 									{"always-on-top", true},
 								}

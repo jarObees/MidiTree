@@ -43,7 +43,7 @@ namespace jiveGui
 		const juce::String octavesInput{ "oi" };
 		const juce::String directionInput{ "di" };
 		const juce::String inputRow{ "ir" };
-		const juce::String axiom{ "ai" };
+		const juce::String axiomToggle{ "ai" };
 	}
 	namespace ImageIds
 	{
@@ -84,6 +84,7 @@ namespace dummyApvtsParamPrefix
 	const juce::String noteWheelParam{ "dnw" };
 	const juce::String octavesParam{ "doi" };
 	const juce::String directionParam{ "ddi" };
+	const juce::String axiomToggleParam{ "dai" };
 }
 
 namespace PluginTag

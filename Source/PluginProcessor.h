@@ -84,8 +84,7 @@ public:
 
 
     float noteRate; // Contains float value of note fraction. (E.g 1/4 is stored as 0.25f)
-    int midi
-        ; // Value representing the initial midi input by user. Should be set to -1 if no user input.
+    int midiAxiom; // Value representing the initial midi input by user. Should be set to -1 if no user input.
     
     static const inline juce::StringArray comboBoxNoteTypes{"Quarter", "Dotted", "Triplet"};
     Tree::MidiTree activeTree;

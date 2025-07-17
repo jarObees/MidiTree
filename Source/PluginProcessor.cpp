@@ -169,86 +169,86 @@ void MidiArpeggiatorAudioProcessor::getAutomatableParams()
 
 void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
- //   buffer.clear();
- //   // currentNotesPool = { 0, 4, 7 };
- //   return;
- //   if (activeTree.notesPool.isEmpty())
- //   {
- //       DBG("Notes pool empty, bypassing...");
- //       midiMessages.clear();
- //       return;
- //   }
+    buffer.clear();
+    // currentNotesPool = { 0, 4, 7 };
+    return;
+    if (activeTree.notesPool.isEmpty())
+    {
+        DBG("Notes pool empty, bypassing...");
+        midiMessages.clear();
+        return;
+    }
 
-	//DBG("Processing Block ==============");
- //   getAutomatableParams();
+ DBG("Processing Block ==============");
+    getAutomatableParams();
 
- //   auto* playHead = getPlayHead();
- //   if (playHead != nullptr)
- //   {
- //       const int samplesPerBlock = buffer.getNumSamples();
+    auto* playHead = getPlayHead();
+    if (playHead != nullptr)
+    {
+        const int samplesPerBlock = buffer.getNumSamples();
 
- //       // Sample Position
- //       auto posInfoOpt = playHead->getPosition();
- //       auto bpm = *posInfoOpt->getBpm();
- //       const double secondsPerQuarterNote = 60.0 / bpm;
- //       const double secondsPerDottedNote = secondsPerQuarterNote + (secondsPerQuarterNote / 2);
- //       const double samplesPerQuarter = sampRate * secondsPerQuarterNote;
- //       const double samplesPerDotted = sampRate * secondsPerDottedNote;
+        // Sample Position
+        auto posInfoOpt = playHead->getPosition();
+        auto bpm = *posInfoOpt->getBpm();
+        const double secondsPerQuarterNote = 60.0 / bpm;
+        const double secondsPerDottedNote = secondsPerQuarterNote + (secondsPerQuarterNote / 2);
+        const double samplesPerQuarter = sampRate * secondsPerQuarterNote;
+        const double samplesPerDotted = sampRate * secondsPerDottedNote;
 
- //       const int samplesPerNote = (int(noteType) == 0) ? static_cast<int> (std::ceil(samplesPerQuarter * noteRate))
- //           : static_cast<int> (std::ceil(samplesPerDotted * noteRate));
- //       // Checks for user midi input.
- //       int midiLocalPos;
- //       for (const auto& meta : midiMessages)
- //       {
- //           // Sets midiAxiom to note that was played.
- //           const auto currentMessage = meta.getMessage();
- //           if (currentMessage.isNoteOn() && !isMidiHeldDown)
- //           {
- //               DBG("Note On: " << currentMessage.getNoteNumber() << " at time: " << currentMessage.getTimeStamp());
- //               notesPoolIndex = 0; // Resets the note to first note in notePool, so that each midi triggers a new stream of lsys notes.
- //               midiAxiom = currentMessage.getNoteNumber();
- //               midiLocalPos = currentMessage.getTimeStamp();
- //               isFirstNote = true;
- //               isMidiHeldDown = true;
- //               time = -midiLocalPos;
- //           }
+        const int samplesPerNote = (int(noteType) == 0) ? static_cast<int> (std::ceil(samplesPerQuarter * noteRate))
+            : static_cast<int> (std::ceil(samplesPerDotted * noteRate));
+        // Checks for user midi input.
+        int midiLocalPos;
+        for (const auto& meta : midiMessages)
+        {
+            // Sets midiAxiom to note that was played.
+            const auto currentMessage = meta.getMessage();
+            if (currentMessage.isNoteOn() && !isMidiHeldDown)
+            {
+                DBG("Note On: " << currentMessage.getNoteNumber() << " at time: " << currentMessage.getTimeStamp());
+                notesPoolIndex = 0; // Resets the note to first note in notePool, so that each midi triggers a new stream of lsys notes.
+                midiAxiom = currentMessage.getNoteNumber();
+                midiLocalPos = currentMessage.getTimeStamp();
+                isFirstNote = true;
+                isMidiHeldDown = true;
+                time = -midiLocalPos;
+            }
 
- //           else if (currentMessage.isNoteOff())
- //           {
- //               DBG("Note Off: " << currentMessage.getNoteNumber() << " at time: " << currentMessage.getTimeStamp());
- //               isMidiHeldDown = false;
- //           }
- //       }
- //       midiMessages.clear();
+            else if (currentMessage.isNoteOff())
+            {
+                DBG("Note Off: " << currentMessage.getNoteNumber() << " at time: " << currentMessage.getTimeStamp());
+                isMidiHeldDown = false;
+            }
+        }
+        midiMessages.clear();
 
- //       DBG("Time: " << time << "| samplesPerBlock " << samplesPerBlock << "| SUM: " << (time + samplesPerBlock));
- //       DBG("Samples Per Note: " << samplesPerNote);
- //       if ((time + samplesPerBlock) >= samplesPerNote || isFirstNote)
- //       {
- //           auto offset = isFirstNote ? midiLocalPos :
- //               juce::jmax(0, juce::jmin((int)(samplesPerNote - time), samplesPerBlock - 1));
+        DBG("Time: " << time << "| samplesPerBlock " << samplesPerBlock << "| SUM: " << (time + samplesPerBlock));
+        DBG("Samples Per Note: " << samplesPerNote);
+        if ((time + samplesPerBlock) >= samplesPerNote || isFirstNote)
+        {
+            auto offset = isFirstNote ? midiLocalPos :
+                juce::jmax(0, juce::jmin((int)(samplesPerNote - time), samplesPerBlock - 1));
 
- //           if (lastNoteValue > 0)
- //           {
- //               DBG("Turning off " << lastNoteValue << " at " << offset);
- //               midiMessages.addEvent(juce::MidiMessage::noteOff(1, lastNoteValue), offset);
- //               lastNoteValue = -1;
- //           }
+            if (lastNoteValue > 0)
+            {
+                DBG("Turning off " << lastNoteValue << " at " << offset);
+                midiMessages.addEvent(juce::MidiMessage::noteOff(1, lastNoteValue), offset);
+                lastNoteValue = -1;
+            }
 
- //           if (isMidiHeldDown) // Keep playing if MIDI note is held down.
- //           {
- //               auto midiNoteToPlay = activeTree.notesPool[notesPoolIndex] + midiAxiom;
- //               DBG("Turning on: " << midiNoteToPlay << "at" << offset << " with velocity: " << velParam);
- //               notesPoolIndex = (notesPoolIndex + 1) % activeTree.notesPool.size();
- //               lastNoteValue = midiNoteToPlay;
- //               midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)velParam), offset);
- //           }
- //       }
+            if (isMidiHeldDown) // Keep playing if MIDI note is held down.
+            {
+                auto midiNoteToPlay = activeTree.notesPool[notesPoolIndex] + midiAxiom;
+                DBG("Turning on: " << midiNoteToPlay << "at" << offset << " with velocity: " << velParam);
+                notesPoolIndex = (notesPoolIndex + 1) % activeTree.notesPool.size();
+                lastNoteValue = midiNoteToPlay;
+                midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)velParam), offset);
+            }
+        }
 
- //       time = (time + samplesPerBlock) % samplesPerNote;
- //       isFirstNote = false;
- //   }
+        time = (time + samplesPerBlock) % samplesPerNote;
+        isFirstNote = false;
+    }
 }
 
 //==============================================================================

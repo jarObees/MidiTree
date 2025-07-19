@@ -48,14 +48,6 @@ void LSystemStuff::LSystemManager::configureNoteWheel(juce::Component* noteWheel
 	jassert(noteWheel != nullptr);
 }
 
-//TODO: Troubleshoot why this no working currently.
-void LSystemStuff::LSystemManager::connectAxiomButton(juce::Component* axiomButtonComponent)
-{
-	DBG("Connected an AXIOM to the lsysmanager");
-	juce::Button* axiomButton = dynamic_cast<juce::Button*>(axiomButtonComponent);
-	axiomSelectorButtonGroup.push_back(axiomButton);
-	axiomButton->addListener(this);
-}
 // analoguserInputComponent is the topmost parent component for all the different input blocks.
 void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* analogUserInputComponent, 
 															const int numBlockRows, 
@@ -133,23 +125,6 @@ void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)
 		lSystemProcessor->growLSystem();
 		return;
 	}
-	// We must manually toggle one button from the group. And make sure that after each setToggleState() the GUI is updated.
-	// Triggers before GUI is updated.
-	// axiomSelectorButtonGroup holds pointers to all of the button components we want.
-	//for (auto* axiomButton : axiomSelectorButtonGroup)
-	//{
-	//	if (button == axiomButton)
-	//	{
-	//		DBG("Toggling an AXIOM BUTTON!");
-	//		axiomButton->setToggleState(true, false);
-	//	}
-	//	else
-	//	{
-	//		DBG("Toggling off AXIOM BUTTON");
-	//		axiomButton->setToggleState(false, false);
-	//	}
-	//}
-	//DBG("End button click manager stuf...");
 }
 
 

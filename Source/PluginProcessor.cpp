@@ -350,10 +350,6 @@ void MidiArpeggiatorAudioProcessor::attachNonAutoParamsToNonAutoApvts(jive::GuiI
                 DBG("Attaching " << axiomId << "to " << dummyAxiomId);
                 auto* guiItem = jive::findItemWithID(*editor, axiomId);
                 guiItem->attachToParameter(nonAutoApvts.getParameter(dummyAxiomId), &undoManager);
-                
-                // AND ALSO CONNECT TO LSYSMANAGER IK IT'S MESSY IM SORRY OK?
-                auto* axiomSelectorComponent = guiItem->getComponent().get();
-                lSystemManager.connectAxiomButton(axiomSelectorComponent);
             }
         }
     }

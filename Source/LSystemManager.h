@@ -19,7 +19,6 @@ namespace LSystemStuff
 		void configureInputBlockTop(juce::Component* octaveBlockTopComponent);
 		void configureInputBlockBot(juce::Component* inputBlockBottomComponent);
 		void configureNoteWheel(juce::Component* noteWheelComponent);
-		void connectAxiomButton(juce::Component* axiomButton);
 		juce::Value selectedAxiomId;
 
 	private:

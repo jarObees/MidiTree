@@ -35,12 +35,6 @@ namespace jiveGui
 							{"display", "block"},
 							{"width", "100%"},
 							{"height", "100%"},
-									//							{
-									//"style",
-									//	new jive::Object{
-									//		{"background", jive::toVar(colors::debug_secondary)},
-									//	}
-									//},
 						},
 						{
 							juce::ValueTree
@@ -73,10 +67,15 @@ namespace jiveGui
 
 				void setup(jive::GuiItem& item) final
 				{
+					DBG("Setting up the axiom selector...");
 					analogUserInput = findAncestorWithIdPrefix(&item);
 					jassert(analogUserInput != nullptr);
+
 					activeAxiomId = std::make_unique<jive::Property<juce::String>>(analogUserInput->state, StringIds::activeAxiom);
 					jassert(activeAxiomId != nullptr);
+
+					imageSource = std::make_unique<jive::Property<juce::Image>>(item.state.getChild(0), "source");
+					jassert(imageSource != nullptr);
 
 					DBG("Connected activeAxiomId to shared value. Current activeAxiomId = " << activeAxiomId->get());
 
@@ -89,9 +88,9 @@ namespace jiveGui
 					parentComponent->setInterceptsMouseClicks(false, true);
 
 					auto* button = dynamic_cast<juce::Button*>(item.getChildren().getLast()->getComponent().get());
+					jassert(button != nullptr);
 					button->setMouseCursor(juce::MouseCursor::PointingHandCursor);
 
-					jassert(button != nullptr);
 					activeAxiomId->onValueChange = [this, button]()
 						{
 							DBG("Change detected in: " << button->getComponentID());
@@ -113,10 +112,6 @@ namespace jiveGui
 							DBG("New      ACTIVEAXIOM: " << id);
 							activeAxiomId->set(id);
 						};
-					
-					DBG("Setting up the axiom selector...");
-					imageSource = std::make_unique<jive::Property<juce::Image>>(item.state.getChild(0), "source");
-					jassert(imageSource != nullptr);
 				};
 
 			private:
@@ -146,7 +141,6 @@ namespace jiveGui
 				juce::Image bgImage;
 				std::unique_ptr<jive::Property<juce::Image>> imageSource;
 				std::unique_ptr<jive::Property<juce::String>> activeAxiomId;
-				std::unique_ptr<jive::Event> onButtonClicked;
 			};
 
 		}

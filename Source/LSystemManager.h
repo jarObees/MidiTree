@@ -19,17 +19,20 @@ namespace LSystemStuff
 		void configureInputBlockTop(juce::Component* octaveBlockTopComponent);
 		void configureInputBlockBot(juce::Component* inputBlockBottomComponent);
 		void configureNoteWheel(juce::Component* noteWheelComponent);
+		void connectAxiomButton(juce::Component* axiomButton);
+		juce::Value selectedAxiomId;
+
 	private:
 		void buttonClicked(juce::Button* button) override;
 		void sliderValueChanged(juce::Slider* slider) override;
 		
 		Tree::MidiTree* activeTree;
-
 		juce::TextEditor* axiomInputEditor = nullptr;
 		juce::TextEditor* rulesetInputEditor = nullptr;
 		juce::Button* growButton = nullptr;
 		juce::Slider* gensKnob = nullptr;
 		juce::Component* analogUserInputComponent = nullptr;
+		std::vector<juce::Button*> axiomSelectorButtonGroup;
 		juce::AudioProcessorValueTreeState& apvts;
 		Preset::PresetManager& presetManager;
 		std::unique_ptr<LSystemProcessor> lSystemProcessor;

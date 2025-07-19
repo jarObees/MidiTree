@@ -9,10 +9,6 @@ namespace jiveGui
 {
 	namespace AnalogUserInput
 	{
-		const int NUMBLOCKCOLUMNS = 8;	// Recall: Cols start at -1.
-		const int NUMBLOCKROWS = 5;
-		const int BLOCKHEIGHT = 75;
-		const int BLOCKWIDTH = 25;
 
 		[[nodiscard]] inline auto getInputBlockBottom(int rowNum, int columnNum)
 		{
@@ -138,7 +134,7 @@ namespace jiveGui
 		[[nodiscard]] inline juce::ValueTree getAnalogUserInput(juce::Image octavesTest)
 		{
 			DBG("Getting analog user input");
-			juce::ValueTree slots
+			juce::ValueTree mainAnalogUserInput
 			{
 				"Component",
 				{
@@ -158,12 +154,13 @@ namespace jiveGui
 					},
 				},
 			};
+			mainAnalogUserInput.setProperty(StringIds::activeAxiom, "", nullptr);		// For use in AxiomSelector to know what button is active.
 			// Adds each row of blocks to the bigger AnalogUserInput component.
 			for (int i = 0; i < NUMBLOCKROWS; ++i)
 			{
-				slots.addChild(getInputRow(i), -1, nullptr);
+				mainAnalogUserInput.addChild(getInputRow(i), -1, nullptr);
 			}
-			return slots;
+			return mainAnalogUserInput;
 		}
 	}
 }

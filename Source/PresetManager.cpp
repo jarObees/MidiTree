@@ -239,7 +239,7 @@ namespace Preset
 		return presets;
 	}
 
-	// Whenever value tree is copied, this function isc alled.
+	// Whenever value tree is copied, this function is called (in this case when we get/set plugin state).
 	void PresetManager::valueTreeRedirected(juce::ValueTree& changedValueTree)
 	{
 		DBG("Value Tree Redirected");

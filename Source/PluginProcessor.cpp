@@ -313,7 +313,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 }
 
 // Used for ensuring non-auto params are get/set properly.
-// Each non-automatable component needs a unique jiveGui id, as well as a unique apvtsId.
+// Each non-automatable component needs a unique jiveGui id, as well as a unique apvtsId
 void MidiArpeggiatorAudioProcessor::attachNonAutoParamsToNonAutoApvts(jive::GuiItem* editor)
 {
     // Loop through all combos of row/col
@@ -343,8 +343,18 @@ void MidiArpeggiatorAudioProcessor::attachNonAutoParamsToNonAutoApvts(jive::GuiI
 				->attachToParameter(nonAutoApvts.getParameter(dummyOctavesId), &undoManager);
 
             // Attach Axiom Button
-			const auto axiomId = jiveGui::idRowColMaker(jiveGui::IdPrefix::axiomToggle, row, col);
-			const auto dummyAxiomId = jiveGui::idRowColMaker(dummyApvtsParamPrefix::axiomToggleParam, row, col);
+            if (col == -1)
+            {
+                const auto axiomId = jiveGui::idRowColMaker(jiveGui::IdPrefix::axiomToggle, row, col);
+                const auto dummyAxiomId = jiveGui::idRowColMaker(dummyApvtsParamPrefix::axiomToggleParam, row, col);
+                DBG("Attaching " << axiomId << "to " << dummyAxiomId);
+                auto* guiItem = jive::findItemWithID(*editor, axiomId);
+                guiItem->attachToParameter(nonAutoApvts.getParameter(dummyAxiomId), &undoManager);
+                
+                // AND ALSO CONNECT TO LSYSMANAGER IK IT'S MESSY IM SORRY OK?
+                auto* axiomSelectorComponent = guiItem->getComponent().get();
+                lSystemManager.connectAxiomButton(axiomSelectorComponent);
+            }
         }
     }
 }
@@ -386,6 +396,7 @@ void MidiArpeggiatorAudioProcessor::configureComponents(jive::GuiItem* editor)
     }
     else
         jassertfalse;
+    // Generations Knob ===================================================================================
     if (auto* gensKnob = dynamic_cast<juce::Slider*>
         (jive::findItemWithID(*editor, jiveGui::StringIds::generationsKnob)
          ->getComponent().get()))

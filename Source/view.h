@@ -94,7 +94,7 @@ namespace jiveGui
 								{"flex-direction", "column"},
 							},
 							{
-								jive::makeView<FilmstripKnobView>(64, 64, 
+								jive::makeView<SquareFilmStripKnobView>(64, 64, 
 																  filmstripKnob, 
 																  StringIds::generationsKnob),
 								jive::makeView<DrawableButton>(64, 64, 

@@ -18,7 +18,7 @@ namespace jiveGui
 				{"flex-direction", "column"},
 			},
 			{
-				jive::makeView<FilmstripKnobView>(64, 64, imageCollection[ImageIds::mainKnobFilmstrip], StringIds::midiVelocityKnob),
+				jive::makeView<SquareFilmStripKnobView>(64, 64, imageCollection[ImageIds::mainKnobFilmstrip], StringIds::midiVelocityKnob),
 				juce::ValueTree
 				{
 					"Text",
@@ -69,7 +69,7 @@ namespace jiveGui
 				{"flex-direction", "column"},
 			},
 			{
-				jive::makeView<FilmstripKnobView>(64, 64, imageCollection[ImageIds::mainKnobFilmstrip], StringIds::noteRateKnob),
+				jive::makeView<SquareFilmStripKnobView>(64, 64, imageCollection[ImageIds::mainKnobFilmstrip], StringIds::noteRateKnob),
 				juce::ValueTree
 				{
 					"Text",

@@ -57,6 +57,10 @@
               file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/NoteSelectorDotted.png"/>
         <FILE id="evIUQM" name="NoteSelectorQuarter.png" compile="0" resource="1"
               file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/NoteSelectorQuarter.png"/>
+        <FILE id="Gwhox5" name="horiKnob7O_ornate.png" compile="0" resource="1"
+              file="../../../Duhzine/VSTPLUGIN/knobMans/horiKnob7O_ornate.png"/>
+        <FILE id="Cs8yGY" name="horiKnobA2_ornate.png" compile="0" resource="1"
+              file="../../../Duhzine/VSTPLUGIN/knobMans/horiKnobA2_ornate.png"/>
         <FILE id="fy5pQQ" name="NoteSelectorTriplet.png" compile="0" resource="1"
               file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/NoteSelectorTriplet.png"/>
         <FILE id="yDa7zF" name="button_grow.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/button_grow.png"/>

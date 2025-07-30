@@ -20,6 +20,7 @@ namespace jiveGui
 						{"centre-y", "50%"},
 						{"justify-content", "space-between"},
 						{"align-content", "space-between"},
+						{"justify-items", "centre"},
 						{
 							"style",
 								new jive::Object
@@ -66,11 +67,11 @@ namespace jiveGui
 
 			juce::ValueTree getForestSlider() const
 			{
-				return jive::makeView<FilmstripKnobView>(224,
+				return jive::makeView<HorizontalFilmstripKnobView>(152,
 												  32,
-												  juce::ImageCache::getFromMemory(BinaryData::_128_HORISLIDER_FILMSTRIP_png,
-																				  BinaryData::_128_HORISLIDER_FILMSTRIP_pngSize),
-												  StringIds::forestSlider, true);
+												  juce::ImageCache::getFromMemory(BinaryData::horiKnob7O_ornate_png,
+																				  BinaryData::horiKnob7O_ornate_pngSize),
+												  StringIds::forestSlider, 7, true);
 			}
 		};
 	}

@@ -3,14 +3,15 @@
 // Args: (int width, int height, juce::Image filmstrip, std::string id, bool isSlider=false)
 namespace jiveGui
 {
-	class FilmstripKnobView : public jive::View
+	class BaseFilmStripKnobView : 
+		public jive::View
 	{
 	public:
-		FilmstripKnobView(int rawWidth, int rawheight, juce::Image rawTing2, juce::String rawId, bool rawIsSlider = false)
+		BaseFilmStripKnobView(int rawWidth, int rawheight, juce::Image rawTing2, juce::String rawId, bool rawIsSlider = false)
 			: width(rawWidth), height(rawheight), rawFilmstripImage(rawTing2), sliderId(rawId), isSlider(rawIsSlider)
 		{
 			sideLength = rawFilmstripImage.getWidth();
-			numFrames = rawFilmstripImage.getHeight() / sideLength;
+			numFrames = getNumOfFrames();
 		}
 
 		juce::ValueTree initialise() final
@@ -47,16 +48,7 @@ namespace jiveGui
 				filmstripSource = std::make_unique<jive::Property<juce::Image>>(item.state.getChild(0), "source"); // We can interact with the "source" property of "Image" through this.
 				// When it detects a value change, it displays the appropriate cropped portion of the filmstrip image.
 				onValueChange->onTrigger = [this, stripSlider]() {
-					std::size_t imageNumber = static_cast<std::size_t>
-						(0.5 + (stripSlider->getValue() 
-								- stripSlider->getMinimum()) 
-								/ (stripSlider->getMaximum() 
-								- stripSlider->getMinimum()) 
-								* (numFrames - 1));
-					juce::Rectangle<int> clippedArea(0, imageNumber * sideLength, sideLength, sideLength);
-					juce::Image croppedImage = rawFilmstripImage.getClippedImage(clippedArea);
-					filmstripSource->set(croppedImage);
-					DBG(sliderId << "filmstrip value: " << stripSlider->getValue());
+					this->updateFilmstrip(stripSlider);
 					};
 			}
 			else
@@ -65,7 +57,26 @@ namespace jiveGui
 			}
 		}
 
-	private:
+	protected:
+		virtual int getNumOfFrames()
+		{
+			return rawFilmstripImage.getHeight() / sideLength;
+		}
+
+		virtual void updateFilmstrip(juce::Slider* stripSlider)
+		{
+			std::size_t imageNumber = static_cast<std::size_t>
+				(0.5 + (stripSlider->getValue()
+						- stripSlider->getMinimum())
+				 / (stripSlider->getMaximum()
+					- stripSlider->getMinimum())
+				 * (numFrames - 1));
+			juce::Rectangle<int> clippedArea(0, imageNumber * sideLength, sideLength, sideLength);
+			juce::Image croppedImage = rawFilmstripImage.getClippedImage(clippedArea);
+			filmstripSource->set(croppedImage);
+			DBG(sliderId << "filmstrip value: " << stripSlider->getValue());
+		}
+
 		bool isSlider;
 		int width, height;
 		juce::String sliderId;
@@ -73,5 +84,52 @@ namespace jiveGui
 		juce::Image rawFilmstripImage;
 		std::unique_ptr<jive::Event> onValueChange;
 		std::unique_ptr<jive::Property<juce::Image>> filmstripSource;
+	};
+	class SquareFilmStripKnobView : 
+		public BaseFilmStripKnobView
+	{
+	public:
+		SquareFilmStripKnobView(int rawWidth, int rawheight, juce::Image rawTing2, juce::String rawId, bool rawIsSlider = false)
+			: BaseFilmStripKnobView(rawWidth, rawheight, rawTing2, rawId, rawIsSlider)
+		{
+			sideLength = rawFilmstripImage.getWidth();
+			numFrames = getNumOfFrames();
+		}
+	};
+
+	class HorizontalFilmstripKnobView
+		: public BaseFilmStripKnobView
+	{
+	public:
+		HorizontalFilmstripKnobView(int rawWidth, 
+									int rawheight, 
+									juce::Image rawTing2, 
+									juce::String rawId, 
+									int numOfFrames, 
+									bool rawIsSlider = true)
+			: BaseFilmStripKnobView(rawWidth, rawheight, rawTing2, rawId, rawIsSlider),
+			numFrames(numOfFrames)
+		{
+			DBG("Made Horizontal filmstrip knob");
+			sideLength = rawFilmstripImage.getWidth();
+			stripHeight = rawFilmstripImage.getHeight() / numFrames;
+		}
+	protected:
+		int numFrames;
+		int stripHeight;
+		void updateFilmstrip(juce::Slider* stripSlider) override
+		{
+			std::size_t imageNumber = static_cast<std::size_t>
+				(0.5 + (stripSlider->getValue()
+						- stripSlider->getMinimum())
+				 / (stripSlider->getMaximum()
+					- stripSlider->getMinimum())
+				 * (numFrames - 1));
+			juce::Rectangle<int> clippedArea(0, imageNumber * stripHeight, sideLength, stripHeight);
+			juce::Image croppedImage = rawFilmstripImage.getClippedImage(clippedArea);
+			filmstripSource->set(croppedImage);
+			DBG(sliderId << "filmstrip value: " << stripSlider->getValue());
+		}
+
 	};
 }

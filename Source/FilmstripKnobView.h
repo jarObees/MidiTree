@@ -3,6 +3,20 @@
 // Args: (int width, int height, juce::Image filmstrip, std::string id, bool isSlider=false)
 namespace jiveGui
 {
+	struct InvisibleLookAndFeel : public juce::LookAndFeel_V4
+	{
+		void drawRotarySlider(juce::Graphics&, int, int, int, int, float, float, float, juce::Slider&) override
+		{
+			// Draw nothing
+			DBG("Drawing Nothing...");
+		}
+		void drawLinearSlider(juce::Graphics&, int, int, int, int, float, float, float, juce::Slider::SliderStyle, juce::Slider&) override
+		{
+			DBG("Drawing nothing for a linear one...");
+		}
+
+	};
+
 	class BaseFilmStripKnobView : 
 		public jive::View
 	{
@@ -41,6 +55,7 @@ namespace jiveGui
 			// We confirm access to the slider itself.
 			if (auto* stripSlider = dynamic_cast<juce::Slider*>(item.getComponent().get()))
 			{
+				stripSlider->setLookAndFeel(&laf);
 				// Defucks the image component.
 				auto* imageComponent = item.getChildren().getFirst()->getComponent().get();
 				imageComponent->setInterceptsMouseClicks(false, false);
@@ -76,7 +91,7 @@ namespace jiveGui
 			filmstripSource->set(croppedImage);
 			DBG(sliderId << "filmstrip value: " << stripSlider->getValue());
 		}
-
+		InvisibleLookAndFeel laf;
 		bool isSlider;
 		int width, height;
 		juce::String sliderId;

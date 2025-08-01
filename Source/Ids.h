@@ -32,6 +32,7 @@ namespace jiveGui
 		const juce::String analogUserInput{ "aui" };
 		const juce::String forestTree{ "tre" };
 		const juce::String forestBypassButton{ "fbb" };
+		const juce::String forestResetButton{ "frb" };
 		const juce::String activeAxiom{ "aa" };
 	}
 	namespace IdPrefix // Should only be two characters

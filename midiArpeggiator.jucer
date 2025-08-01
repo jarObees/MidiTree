@@ -51,6 +51,7 @@
         <GROUP id="{AFD85D26-86B9-2ABC-0D36-ED6989B193A2}" name="Fonts">
           <FILE id="AyYkmL" name="PERTIBD.TTF" compile="0" resource="1" file="../../../FUN/PERTIBD.TTF"/>
         </GROUP>
+        <FILE id="V2E5TX" name="ResetButton.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/ResetButton.png"/>
         <FILE id="VzGoip" name="AxiomSelectorOn.png" compile="0" resource="1"
               file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AxiomSelectorOn.png"/>
         <FILE id="ihtyey" name="InfoTabLeft.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/InfoTabLeft.png"/>

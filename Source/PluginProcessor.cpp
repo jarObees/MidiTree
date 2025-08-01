@@ -303,8 +303,8 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             infoTabManager.connectInfoTab(textValueTree);
 
             attachParamsToApvts(editor.get());
-            attachNonAutoParamsToNonAutoApvts(editor.get());
-            configureComponents(editor.get());
+            //attachNonAutoParamsToNonAutoApvts(editor.get());
+            //configureComponents(editor.get());
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
         }
     }

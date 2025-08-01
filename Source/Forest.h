@@ -14,13 +14,16 @@ namespace jiveGui
 				{
 					"Component",
 					{
+						{"display", "flex"},
+						{"flex-direction", "column"},
 						{"width", "90%"},
 						{"height", "90%"},
 						{"centre-x", "50%"},
 						{"centre-y", "50%"},
-						{"justify-content", "space-between"},
-						{"align-content", "space-between"},
+						{"justify-content", "centre"},
+						{"align-content", "centre"},
 						{"justify-items", "centre"},
+						{"align-items", "centre"},
 						{
 							"style",
 								new jive::Object
@@ -37,11 +40,11 @@ namespace jiveGui
 																								BinaryData::button_grow_pngSize), 
 																								"", 
 																								StringIds::plantButton),
-						// Temporary bypass Button
-						jive::makeView<DrawableButton>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
-																								BinaryData::button_grow_pngSize),
-																								"",
-																								StringIds::forestBypassButton),
+						//// Temporary bypass Button
+						//jive::makeView<DrawableButton>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
+						//																		BinaryData::button_grow_pngSize),
+						//																		"",
+						//																		StringIds::forestBypassButton),
 
 					}
 				};
@@ -53,11 +56,18 @@ namespace jiveGui
 				{
 					"Component",
 					{
+						{"width", "100%"},
 						{"flex-direction", "row"},
 						{"justify-content", "space-between"},
+												{
+							"style",
+								new jive::Object
+								{
+									{ "background", jive::toVar(jiveGui::colors::debug_secondary)},
+								},
+						},
 					},
 				};
-
 				for (int i = 0; i < 7; ++i)
 				{
 					treeRow.addChild(jive::makeView<TreeComponentView>(i), -1, nullptr);
@@ -67,10 +77,10 @@ namespace jiveGui
 
 			juce::ValueTree getForestSlider() const
 			{
-				return jive::makeView<HorizontalFilmstripKnobView>(152,
+				return jive::makeView<HorizontalFilmstripKnobView>(252,
 												  32,
-												  juce::ImageCache::getFromMemory(BinaryData::horiKnob7O_ornate_png,
-																				  BinaryData::horiKnob7O_ornate_pngSize),
+												  juce::ImageCache::getFromMemory(BinaryData::horiKnob7O_ornate_v2_png,
+																				  BinaryData::horiKnob7O_ornate_v2_pngSize),
 												  StringIds::forestSlider, 7, true);
 			}
 		};

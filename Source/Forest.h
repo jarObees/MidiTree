@@ -20,7 +20,7 @@ namespace jiveGui
 						{"height", "90%"},
 						{"centre-x", "50%"},
 						{"centre-y", "50%"},
-						{"justify-content", "centre"},
+						{"justify-content", "space-between"},
 						{"align-content", "centre"},
 						{"justify-items", "centre"},
 						{"align-items", "centre"},
@@ -35,25 +35,44 @@ namespace jiveGui
 					{
 						getTreeRow(),
 						getForestSlider(),
-						//// Temporary Plant Button
-						//jive::makeView<DrawableButton>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
-						//																		BinaryData::button_grow_pngSize), 
-						//																		"", 
-						//																		StringIds::plantButton),
-						//// Temporary bypass Button
-						jive::makeView<DrawableToggleButton>(32, 32, 
-															 juce::ImageCache::getFromMemory(BinaryData::green_32_32_png, BinaryData::green_32_32_pngSize),
-															 juce::ImageCache::getFromMemory(BinaryData::red_32_32_png, BinaryData::red_32_32_pngSize),
-															 StringIds::forestBypassButton),
-						jive::makeView<DrawableButton>(16, 16, 
-													   juce::ImageCache::getFromMemory(BinaryData::ResetButton_png, BinaryData::ResetButton_pngSize), 
-													   "",
-													   StringIds::forestResetButton),
-
+						getBottomRow(),
 					}
 				};
 			}
 		private:
+			juce::ValueTree getBottomRow() const
+			{
+				juce::ValueTree bottomTray
+				{
+					"Component",
+					{
+						{"width", "100%"},
+						{"flex-direction", "row"},
+						{"justify-content", "space-between"},
+						{"align-items", "centre"},
+						{
+							"style",
+								new jive::Object
+								{
+									{ "background", jive::toVar(jiveGui::colors::debug_secondary)},
+								},
+						},
+					},
+				};
+				bottomTray.addChild(jive::makeView<DrawableButton>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
+																										   BinaryData::button_grow_pngSize),
+																   "",
+																   StringIds::plantButton), -1, nullptr);
+				bottomTray.addChild(jive::makeView<DrawableToggleButton>(32, 32,
+																		 juce::ImageCache::getFromMemory(BinaryData::green_32_32_png, BinaryData::green_32_32_pngSize),
+																		 juce::ImageCache::getFromMemory(BinaryData::red_32_32_png, BinaryData::red_32_32_pngSize),
+																		 StringIds::forestBypassButton), -1, nullptr);
+				bottomTray.addChild(jive::makeView<DrawableButton>(16, 16,
+																   juce::ImageCache::getFromMemory(BinaryData::ResetButton_png, BinaryData::ResetButton_pngSize),
+																   "",
+																   StringIds::forestResetButton), -1, nullptr);
+				return bottomTray;
+			}
 			juce::ValueTree getTreeRow() const // Returns row of the little tree guys.
 			{
 				juce::ValueTree treeRow

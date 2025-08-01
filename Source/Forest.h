@@ -35,16 +35,16 @@ namespace jiveGui
 					{
 						getTreeRow(),
 						getForestSlider(),
-						// Temporary Plant Button
-						jive::makeView<DrawableButton>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
-																								BinaryData::button_grow_pngSize), 
-																								"", 
-																								StringIds::plantButton),
-						//// Temporary bypass Button
+						//// Temporary Plant Button
 						//jive::makeView<DrawableButton>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
-						//																		BinaryData::button_grow_pngSize),
-						//																		"",
-						//																		StringIds::forestBypassButton),
+						//																		BinaryData::button_grow_pngSize), 
+						//																		"", 
+						//																		StringIds::plantButton),
+						//// Temporary bypass Button
+						jive::makeView<DrawableToggleButton>(32, 32, 
+															 juce::ImageCache::getFromMemory(BinaryData::green_32_32_png, BinaryData::green_32_32_pngSize),
+															 juce::ImageCache::getFromMemory(BinaryData::red_32_32_png, BinaryData::red_32_32_pngSize),
+															 StringIds::forestBypassButton),
 
 					}
 				};

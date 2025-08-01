@@ -6,7 +6,7 @@
 #include "ComboBoxView.h"
 #include "FilmstripKnobView.h"
 #include "TextEditorView.h"
-#include "Button.h"
+#include "DrawableToggleButton.h"
 #include "ButtonImageText.h"
 #include "ComponentGetter.h"
 #include "AnalogUserInput.h"

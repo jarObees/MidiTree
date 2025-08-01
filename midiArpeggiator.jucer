@@ -29,13 +29,14 @@
         <FILE id="YEY2DU" name="Tree.h" compile="0" resource="0" file="Source/Tree.h"/>
       </GROUP>
       <GROUP id="{483EDA95-BB1B-8D9C-B965-108436522E99}" name="Components">
+        <FILE id="wGRnu1" name="DrawableToggleButton.h" compile="0" resource="0"
+              file="Source/DrawableToggleButton.h"/>
         <FILE id="TygFYk" name="ComponentGetter.h" compile="0" resource="0"
               file="Source/ComponentGetter.h"/>
         <FILE id="qPBQOs" name="Ids.h" compile="0" resource="0" file="Source/Ids.h"/>
         <FILE id="nxoI6Q" name="Colors.h" compile="0" resource="0" file="Source/Colors.h"/>
         <FILE id="K3ilcR" name="ButtonImageText.h" compile="0" resource="0"
               file="Source/ButtonImageText.h"/>
-        <FILE id="OluRou" name="Button.h" compile="0" resource="0" file="Source/Button.h"/>
         <FILE id="vU4EUM" name="TextEditorView.h" compile="0" resource="0"
               file="Source/TextEditorView.h"/>
         <FILE id="BL748c" name="ComboBoxImageView.h" compile="0" resource="0"
@@ -45,6 +46,8 @@
               file="Source/FilmstripKnobView.h"/>
       </GROUP>
       <GROUP id="{4F6AE0DC-7317-E987-87C8-0634CB03A0F6}" name="Assets">
+        <FILE id="NXUYMO" name="green_32_32.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/green_32_32.png"/>
+        <FILE id="eHaccP" name="red_32_32.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/red_32_32.png"/>
         <GROUP id="{AFD85D26-86B9-2ABC-0D36-ED6989B193A2}" name="Fonts">
           <FILE id="AyYkmL" name="PERTIBD.TTF" compile="0" resource="1" file="../../../FUN/PERTIBD.TTF"/>
         </GROUP>

@@ -31,8 +31,8 @@ namespace Forest
 
 	void ForestManager::configurePlantButtonForest(juce::Button* button)
 	{
-		forestButton = button;
-		forestButton->addListener(this);
+		plantButton = button;
+		plantButton->addListener(this);
 	}
 
 	void ForestManager::configureTreeSlider(juce::Slider* slider)
@@ -65,6 +65,12 @@ namespace Forest
 		bypassState = newState;
 	}
 
+	void ForestManager::configureForestResetButton(juce::Button* _resetButton)
+	{
+		resetButton = _resetButton;
+		resetButton->addListener(this);
+		jassert(resetButton != nullptr);
+	}
 	// Planting is the only place where we should interact with the PresetManager.
 	void ForestManager::plantTree()
 	{
@@ -116,9 +122,23 @@ namespace Forest
 	}
 	void ForestManager::buttonClicked(juce::Button* button)
 	{
-		if (forestButton = button)
+		DBG("Forest Manager: Button Clicked!");
+		if (plantButton->getComponentID() == button->getComponentID())
 		{
 			plantTree();
+		}
+		else if (resetButton->getComponentID() == button->getComponentID())
+		{
+			resetForestSlots();
+		}
+	}
+
+	void ForestManager::resetForestSlots()
+	{
+		DBG("Resetting all forest slots...");
+		for (auto tree : forestDataSlots)
+		{
+			tree = Tree::MidiTree{};
 		}
 	}
 

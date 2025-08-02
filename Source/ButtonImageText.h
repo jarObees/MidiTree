@@ -35,7 +35,10 @@ namespace jiveGui
 			if (auto* button = dynamic_cast<juce::DrawableButton*>(item.getComponent().get()))
 			{
 				button->setImages(mainImage.get());
-
+				button->onClick = [this, button]()
+					{
+						DBG(button->getComponentID() << " was clicked.");
+					};
 			}
 			else
 			{

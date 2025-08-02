@@ -24,6 +24,7 @@ namespace Forest
 		void configurePlantButtonForest(juce::Button* button);
 		void configureForestTrees(std::vector<jiveGui::ForestUI::TreeComponent*>);
 		void configureForestBypassButton(juce::Button*);
+		void configureForestResetButton(juce::Button*);
 
 		void buttonClicked(juce::Button* button) override;
 		void sliderValueChanged(juce::Slider* slider) override;
@@ -46,14 +47,16 @@ namespace Forest
 		int currentForestIndex;
 
 		// Slider will be indexing across this vector. 
-		std::vector<Tree::MidiTree> forestDataSlots; // First pair value is the midiTree name, second is the notesPool.
+		std::vector<Tree::MidiTree> forestDataSlots;
 		std::vector<jiveGui::ForestUI::TreeComponent*> forestTrees;
 		juce::Slider* forestSlider = nullptr;
-		juce::Button* forestButton = nullptr;
+		juce::Button* plantButton = nullptr;
 		juce::Button* bypassButton = nullptr;
+		juce::Button* resetButton = nullptr;
 
 		Preset::PresetManager& presetManager;
 
 		void plantTree();
+		void resetForestSlots();
 	};
 }

@@ -438,6 +438,14 @@ void MidiArpeggiatorAudioProcessor::configureComponents(jive::GuiItem* editor)
 	}
 	else
 		jassertfalse;
+	if (auto* resetButton = dynamic_cast<juce::Button*>
+		(jive::findItemWithID(*editor, jiveGui::StringIds::forestResetButton)
+		 ->getComponent().get()))
+	{
+		forestManager.configureForestResetButton(resetButton);
+	}
+	else
+		jassertfalse;
 }
 
 void MidiArpeggiatorAudioProcessor::attachParamsToApvts(jive::GuiItem* editor)

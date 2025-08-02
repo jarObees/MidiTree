@@ -21,19 +21,23 @@ namespace Forest
 	public:
 		ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager&, Tree::MidiTree*, InfoTabManager::InfoTabManager*);
 		void configureTreeSlider(juce::Slider* slider);
-		void configureForestButton(juce::Button* button);
+		void configurePlantButtonForest(juce::Button* button);
 		void configureForestTrees(std::vector<jiveGui::ForestUI::TreeComponent*>);
+		void configureForestBypassButton(juce::Button*);
+
 		void buttonClicked(juce::Button* button) override;
 		void sliderValueChanged(juce::Slider* slider) override;
 		void valueTreeRedirected(juce::ValueTree& changedTree) override;
 		void mouseEnter(const juce::MouseEvent& event) override;
 		void mouseExit(const juce::MouseEvent& event) override;
 		const int maxNumTrees;
+		bool isBypass() const;
+		void setBypass(bool);
 
 	private:
 		InfoTabManager::InfoTabManager* infoTabManager;
 		Tree::MidiTree* activeMidiTree;
-		bool bypass;	// Tells plugin to bypass the forest, and just play whatever thing has been immediately loaded.
+		bool bypassState;	// Tells plugin to bypass the forest, and just play whatever thing has been immediately loaded. TODO: Should this be automatable?
 		juce::Value generatedLString; // juce::String
 		juce::Value notesPool; // juce::Array<juce::var>
 		juce::Value midiTreeName; // juce::Array<juce::var>
@@ -46,6 +50,7 @@ namespace Forest
 		std::vector<jiveGui::ForestUI::TreeComponent*> forestTrees;
 		juce::Slider* forestSlider = nullptr;
 		juce::Button* forestButton = nullptr;
+		juce::Button* bypassButton = nullptr;
 
 		Preset::PresetManager& presetManager;
 

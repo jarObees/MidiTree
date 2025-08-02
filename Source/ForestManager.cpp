@@ -25,11 +25,11 @@ namespace Forest
 		notesPool.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
 		midiTreeName.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
 		apvts.state.addListener(this);
-		bypass = true;
+		bypassState = true;
 		DBG("Linked genLString/notesPool to property value");
 	}
 
-	void ForestManager::configureForestButton(juce::Button* button)
+	void ForestManager::configurePlantButtonForest(juce::Button* button)
 	{
 		forestButton = button;
 		forestButton->addListener(this);
@@ -47,6 +47,22 @@ namespace Forest
 		{
 			tree->addMouseListener(this, true);
 		}
+	}
+
+	void ForestManager::configureForestBypassButton(juce::Button* _bypassButton)
+	{
+		bypassButton = _bypassButton;
+		jassert(bypassButton != nullptr);
+	}
+
+	bool ForestManager::isBypass() const
+	{
+		return bypassState;
+	}
+
+	void ForestManager::setBypass(bool newState)
+	{
+		bypassState = newState;
 	}
 
 	// Planting is the only place where we should interact with the PresetManager.

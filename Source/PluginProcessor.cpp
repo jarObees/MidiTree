@@ -304,7 +304,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
 
             attachParamsToApvts(editor.get());
             //attachNonAutoParamsToNonAutoApvts(editor.get());
-            //configureComponents(editor.get());
+            configureComponents(editor.get());
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
         }
     }
@@ -422,14 +422,22 @@ void MidiArpeggiatorAudioProcessor::configureComponents(jive::GuiItem* editor)
     }
     forestManager.configureForestTrees(trees);
 
-    if (auto* forestButton = dynamic_cast<juce::Button*>
+    if (auto* forestPlantButton = dynamic_cast<juce::Button*>
         (jive::findItemWithID(*editor, jiveGui::StringIds::plantButton)
          ->getComponent().get()))
     {
-        forestManager.configureForestButton(forestButton);
+        forestManager.configurePlantButtonForest(forestPlantButton);
     }
     else
         jassertfalse;
+	if (auto* bypassButton = dynamic_cast<juce::Button*>
+		(jive::findItemWithID(*editor, jiveGui::StringIds::forestBypassButton)
+		 ->getComponent().get()))
+	{
+		forestManager.configureForestBypassButton(bypassButton);
+	}
+	else
+		jassertfalse;
 }
 
 void MidiArpeggiatorAudioProcessor::attachParamsToApvts(jive::GuiItem* editor)

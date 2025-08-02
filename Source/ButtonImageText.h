@@ -34,6 +34,7 @@ namespace jiveGui
 			// We confirm access to the slider itself.
 			if (auto* button = dynamic_cast<juce::DrawableButton*>(item.getComponent().get()))
 			{
+				button->setMouseCursor(juce::MouseCursor::PointingHandCursor);
 				button->setImages(mainImage.get());
 				button->onClick = [this, button]()
 					{

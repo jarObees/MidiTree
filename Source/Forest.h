@@ -17,20 +17,13 @@ namespace jiveGui
 						{"display", "flex"},
 						{"flex-direction", "column"},
 						{"width", "90%"},
-						{"height", "90%"},
+						{"height", "72%"},
 						{"centre-x", "50%"},
 						{"centre-y", "50%"},
 						{"justify-content", "space-between"},
 						{"align-content", "centre"},
 						{"justify-items", "centre"},
 						{"align-items", "centre"},
-						{
-							"style",
-								new jive::Object
-								{
-									{ "background", jive::toVar(jiveGui::colors::ground_tertiary)},
-								},
-						},
 					},
 					{
 						getTreeRow(),
@@ -50,13 +43,6 @@ namespace jiveGui
 						{"flex-direction", "row"},
 						{"justify-content", "space-between"},
 						{"align-items", "centre"},
-						{
-							"style",
-								new jive::Object
-								{
-									{ "background", jive::toVar(jiveGui::colors::debug_secondary)},
-								},
-						},
 					},
 				};
 				bottomTray.addChild(jive::makeView<DrawableButton>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
@@ -82,13 +68,6 @@ namespace jiveGui
 						{"width", "100%"},
 						{"flex-direction", "row"},
 						{"justify-content", "space-between"},
-												{
-							"style",
-								new jive::Object
-								{
-									{ "background", jive::toVar(jiveGui::colors::debug_secondary)},
-								},
-						},
 					},
 				};
 				for (int i = 0; i < 7; ++i)

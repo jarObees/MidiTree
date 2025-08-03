@@ -46,50 +46,56 @@
               file="Source/FilmstripKnobView.h"/>
       </GROUP>
       <GROUP id="{4F6AE0DC-7317-E987-87C8-0634CB03A0F6}" name="Assets">
-        <FILE id="NXUYMO" name="green_32_32.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/green_32_32.png"/>
-        <FILE id="eHaccP" name="red_32_32.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/red_32_32.png"/>
         <GROUP id="{AFD85D26-86B9-2ABC-0D36-ED6989B193A2}" name="Fonts">
           <FILE id="AyYkmL" name="PERTIBD.TTF" compile="0" resource="1" file="../../../FUN/PERTIBD.TTF"/>
         </GROUP>
-        <FILE id="V2E5TX" name="ResetButton.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/ResetButton.png"/>
-        <FILE id="VzGoip" name="AxiomSelectorOn.png" compile="0" resource="1"
-              file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AxiomSelectorOn.png"/>
-        <FILE id="ihtyey" name="InfoTabLeft.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/InfoTabLeft.png"/>
-        <FILE id="rcqxcV" name="NoteSelectorBase.png" compile="0" resource="1"
-              file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/NoteSelectorBase.png"/>
-        <FILE id="crx3di" name="NoteSelectorDotted.png" compile="0" resource="1"
-              file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/NoteSelectorDotted.png"/>
-        <FILE id="evIUQM" name="NoteSelectorQuarter.png" compile="0" resource="1"
-              file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/NoteSelectorQuarter.png"/>
-        <FILE id="Gwhox5" name="horiKnob7O_ornate.png" compile="0" resource="1"
-              file="../../../Duhzine/VSTPLUGIN/knobMans/horiKnob7O_ornate.png"/>
-        <FILE id="BpFY4T" name="horiKnob7O_ornate_v2.png" compile="0" resource="1"
-              file="../../../Duhzine/VSTPLUGIN/knobMans/horiKnob7O_ornate_v2.png"/>
-        <FILE id="Cs8yGY" name="horiKnobA2_ornate.png" compile="0" resource="1"
-              file="../../../Duhzine/VSTPLUGIN/knobMans/horiKnobA2_ornate.png"/>
-        <FILE id="fy5pQQ" name="NoteSelectorTriplet.png" compile="0" resource="1"
-              file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/NoteSelectorTriplet.png"/>
-        <FILE id="yDa7zF" name="button_grow.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/button_grow.png"/>
-        <FILE id="DHkrD1" name="filmstripKnob_ornate.png" compile="0" resource="1"
-              file="../../../Duhzine/VSTPLUGIN/knobMans/filmstripKnob_ornate.png"/>
-        <FILE id="HUOlWe" name="TreeOn.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeOn.png"/>
-        <FILE id="AzzPXe" name="TreeLoaded.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeLoaded.png"/>
-        <FILE id="t9hxy5" name="TreeOff.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeOff.png"/>
-        <FILE id="q3aPuB" name="AUI_SIDEBAR.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AUI_SIDEBAR.png"/>
-        <FILE id="WmJwT5" name="IBB_ASCENDING.png" compile="0" resource="1"
-              file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/IBB_ASCENDING.png"/>
-        <FILE id="jP5zdc" name="IBB_DESCENDING.png" compile="0" resource="1"
-              file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/IBB_DESCENDING.png"/>
-        <FILE id="rxmB3N" name="NW_OFF.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/NW_OFF.png"/>
-        <FILE id="eLCY0d" name="NW_ON.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/NW_ON.png"/>
-        <FILE id="nOXB07" name="OCTAVES_0.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/OCTAVES_0.png"/>
-        <FILE id="hyvFCJ" name="OCTAVES_1.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/OCTAVES_1.png"/>
-        <FILE id="LlGRa8" name="OCTAVES_3.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/OCTAVES_3.png"/>
+        <GROUP id="{62C50326-9474-8506-DEB8-F34E26513BCE}" name="Images">
+          <FILE id="SAUGEp" name="ForestMainBG.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/ForestMainBG.png"/>
+          <FILE id="V2E5TX" name="ResetButton.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/ResetButton.png"/>
+          <FILE id="VzGoip" name="AxiomSelectorOn.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AxiomSelectorOn.png"/>
+          <FILE id="ihtyey" name="InfoTabLeft.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/InfoTabLeft.png"/>
+          <FILE id="rcqxcV" name="NoteSelectorBase.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/NoteSelectorBase.png"/>
+          <FILE id="crx3di" name="NoteSelectorDotted.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/NoteSelectorDotted.png"/>
+          <FILE id="evIUQM" name="NoteSelectorQuarter.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/NoteSelectorQuarter.png"/>
+          <FILE id="Gwhox5" name="horiKnob7O_ornate.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/knobMans/horiKnob7O_ornate.png"/>
+          <FILE id="BpFY4T" name="horiKnob7O_ornate_v2.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/knobMans/horiKnob7O_ornate_v2.png"/>
+          <FILE id="Cs8yGY" name="horiKnobA2_ornate.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/knobMans/horiKnobA2_ornate.png"/>
+          <FILE id="fy5pQQ" name="NoteSelectorTriplet.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/NoteSelectorTriplet.png"/>
+          <FILE id="yDa7zF" name="button_grow.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/button_grow.png"/>
+          <FILE id="DHkrD1" name="filmstripKnob_ornate.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/knobMans/filmstripKnob_ornate.png"/>
+          <FILE id="GXmMDe" name="MainTreeOff.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/MainTreeOff.png"/>
+          <FILE id="JMrKhy" name="MainTreeOn.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/MainTreeOn.png"/>
+          <FILE id="HUOlWe" name="TreeOn.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeOn.png"/>
+          <FILE id="AzzPXe" name="TreeLoaded.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeLoaded.png"/>
+          <FILE id="t9hxy5" name="TreeOff.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeOff.png"/>
+          <FILE id="q3aPuB" name="AUI_SIDEBAR.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AUI_SIDEBAR.png"/>
+          <FILE id="WmJwT5" name="IBB_ASCENDING.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/IBB_ASCENDING.png"/>
+          <FILE id="jP5zdc" name="IBB_DESCENDING.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/IBB_DESCENDING.png"/>
+          <FILE id="rxmB3N" name="NW_OFF.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/NW_OFF.png"/>
+          <FILE id="eLCY0d" name="NW_ON.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/NW_ON.png"/>
+          <FILE id="nOXB07" name="OCTAVES_0.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/OCTAVES_0.png"/>
+          <FILE id="hyvFCJ" name="OCTAVES_1.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/OCTAVES_1.png"/>
+          <FILE id="LlGRa8" name="OCTAVES_3.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/OCTAVES_3.png"/>
+          <FILE id="NXUYMO" name="green_32_32.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/green_32_32.png"/>
+          <FILE id="eHaccP" name="red_32_32.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/red_32_32.png"/>
+          <FILE id="Owy5vy" name="128_HORISLIDER_FILMSTRIP.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/128_HORISLIDER_FILMSTRIP.png"/>
+          <FILE id="UaQApk" name="knobTestWhite.png" compile="0" resource="1"
+                file="../../KnobMan/knobTestWhite.png"/>
+        </GROUP>
         <FILE id="pCuRGP" name="Images.h" compile="0" resource="0" file="Source/Images.h"/>
-        <FILE id="Owy5vy" name="128_HORISLIDER_FILMSTRIP.png" compile="0" resource="1"
-              file="../../../Duhzine/VSTPLUGIN/128_HORISLIDER_FILMSTRIP.png"/>
-        <FILE id="UaQApk" name="knobTestWhite.png" compile="0" resource="1"
-              file="../../KnobMan/knobTestWhite.png"/>
       </GROUP>
       <FILE id="rsk38a" name="View.h" compile="0" resource="0" file="Source/View.h"/>
     </GROUP>

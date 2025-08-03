@@ -84,7 +84,6 @@ namespace jiveGui
 								"style",
 									new jive::Object
 										{
-											//{"background", jive::toVar(jiveGui::colors::debug_secondary)},
 											{ "foreground", "#FFFFFF"},
 											{ "font-size", 20 },
 											{ "letter-spacing", 1 },
@@ -113,7 +112,11 @@ namespace jiveGui
 						},
 					},
 					{
-						///TODO: ADD DYNAMIC ACTIVE IMAGE. bool state image that indicates whether the thing is active or not.
+						jive::makeView<DrawableToggleButton>(64, 64, 
+															 juce::ImageCache::getFromMemory(BinaryData::MainTreeOn_png, BinaryData::MainTreeOn_pngSize),
+															 juce::ImageCache::getFromMemory(BinaryData::MainTreeOff_png, BinaryData::MainTreeOff_pngSize),
+															 StringIds::activeTree,
+															 false),
 					}
 				};
 			}

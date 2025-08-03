@@ -121,14 +121,15 @@ namespace jiveGui
 				{"height", "100%"},
 			},
 			{
-				//juce::ValueTree
-				//{
-				//	"Image",
-				//	{
-				//		{"width", "100%"},
-				//		{"height", "100%"},
-				//	}
-				//},
+				juce::ValueTree
+				{
+					"Image",
+					{
+						{"source", jive::toVar(juce::ImageCache::getFromMemory(BinaryData::ForestMainBG_png, BinaryData::ForestMainBG_pngSize))},
+						{"width", "100%"},
+						{"height", "100%"},
+					}
+				},
 				ForestUI::Forest{}(),
 			}
 		};

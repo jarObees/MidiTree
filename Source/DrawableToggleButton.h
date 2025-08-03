@@ -6,8 +6,8 @@ namespace jiveGui
 	{
 	public:
 		// Note: Non-automatable with ->attachToParamater 
-		DrawableToggleButton(int rawWidth, int rawHeight, juce::Image onImage, juce::Image offImage, juce::String rawId)
-			: width(rawWidth), height(rawHeight), onImageSource(onImage), offImageSource(offImage), id(rawId)
+		DrawableToggleButton(int rawWidth, int rawHeight, juce::Image onImage, juce::Image offImage, juce::String rawId, bool clickable = true)
+			: width(rawWidth), height(rawHeight), onImageSource(onImage), offImageSource(offImage), id(rawId), isClickable(clickable)
 		{
 			onImageDrawable = std::make_unique<juce::DrawableImage>(onImageSource);
 			offImageDrawable = std::make_unique<juce::DrawableImage>(offImageSource);
@@ -35,14 +35,23 @@ namespace jiveGui
 			// We confirm access to the slider itself.
 			if (auto* button = dynamic_cast<juce::DrawableButton*>(item.getComponent().get()))
 			{
-				button->setToggleable(true);
-				button->setClickingTogglesState(true);
 				button->setImages(offImageDrawable.get(), nullptr, nullptr, nullptr, onImageDrawable.get());
-				button->onClick = [this, button]()
-					{
-						DBG("Toggle Button Clicked.");
-						DBG("Current toggle state: " << (button->getToggleState() ? "true" : "false"));
-					};
+				button->setToggleable(true);
+				if (isClickable)
+				{
+					button->setClickingTogglesState(true);
+					button->setMouseCursor(juce::MouseCursor::PointingHandCursor);
+					button->onClick = [this, button]()
+						{
+							DBG("Toggle Button Clicked.");
+							DBG("Current toggle state: " << (button->getToggleState() ? "true" : "false"));
+						};
+				}
+				else
+				{
+					button->setClickingTogglesState(false);
+					button->setMouseCursor(juce::MouseCursor::NormalCursor);
+				}
 			}
 			else
 			{
@@ -50,6 +59,7 @@ namespace jiveGui
 			}
 		}
 	private:
+		bool isClickable;
 		std::unique_ptr<juce::DrawableImage> onImageDrawable;
 		std::unique_ptr <juce::DrawableImage> offImageDrawable;
 		int width;

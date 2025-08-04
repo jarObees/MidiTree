@@ -9,12 +9,12 @@ namespace Forest
 {
 	ForestManager::ForestManager(juce::AudioProcessorValueTreeState& _apvts, 
 								 Preset::PresetManager& _presetManager, 
-								 Tree::MidiTree* _activeMidiTree, 
+								 Tree::ActiveTreeManager* _activeTreeManager, 
 								 InfoTabManager::InfoTabManager* _infoTabManager)
 		: apvts(_apvts), 
 		presetManager(_presetManager), 
 		maxNumTrees(int(_apvts.getParameter("forest")->getNormalisableRange().end)), 
-		activeMidiTree(_activeMidiTree),
+		activeTreeManager(_activeTreeManager),
 		infoTabManager(_infoTabManager)
 	{
 		for (auto* tree : forestTrees)
@@ -83,7 +83,7 @@ namespace Forest
 				DBG("WE PLANTING IN THIS HOE!");
 				auto& dataSlot = forestDataSlots[currentForestIndex];
 				dataSlot.name = midiTreeName.getValue();
-				dataSlot.notesPool = activeMidiTree->notesPool;
+				dataSlot.notesPool = activeTreeManager->getActiveTree()->notesPool;
 			}
 			else
 			{
@@ -109,7 +109,7 @@ namespace Forest
 			auto notesPool = forestDataSlots[currentForestIndex].notesPool;
 			if (!notesPool.isEmpty())
 			{
-				activeMidiTree->notesPool = notesPool;
+				activeTreeManager->getActiveTree()->notesPool = notesPool;
 			}
 			// Update UI
 			auto* activeTree = forestTrees[currentForestIndex];

@@ -2,6 +2,7 @@
 #include <JuceHeader.h>
 #include "Tree.h"
 #include "TreeData.h"
+#include "ActiveTreeManager.h"
 
 // FINISH IMPLEMENTING ACTIVETREE
 namespace Preset { class PresetManager; }
@@ -19,7 +20,7 @@ namespace Forest
 		: public juce::Slider::Listener, juce::Button::Listener, juce::ValueTree::Listener, juce::MouseListener
 	{
 	public:
-		ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager&, Tree::MidiTree*, InfoTabManager::InfoTabManager*);
+		ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager&, Tree::ActiveTreeManager*, InfoTabManager::InfoTabManager*);
 		void configureTreeSlider(juce::Slider* slider);
 		void configurePlantButtonForest(juce::Button* button);
 		void configureForestTrees(std::vector<jiveGui::ForestUI::TreeComponent*>);
@@ -37,7 +38,7 @@ namespace Forest
 
 	private:
 		InfoTabManager::InfoTabManager* infoTabManager;
-		Tree::MidiTree* activeMidiTree;
+		Tree::ActiveTreeManager* activeTreeManager;
 		bool bypassState;	// Tells plugin to bypass the forest, and just play whatever thing has been immediately loaded. TODO: Should this be automatable?
 		juce::Value generatedLString; // juce::String
 		juce::Value notesPool; // juce::Array<juce::var>

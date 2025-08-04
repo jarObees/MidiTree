@@ -12,7 +12,8 @@ namespace Tree
 			: activeTree(std::make_shared<MidiTree>()) 
 		{};
 
-		void setActiveTree(std::shared_ptr<MidiTree> newTree)
+		// You can pass in a new MidiTree to be set as the new activeTree.
+		void swapActiveTree(std::shared_ptr<MidiTree> newTree)
 		{
 			if (newTree)
 			{
@@ -22,6 +23,7 @@ namespace Tree
 			else
 				jassertfalse;
 		}
+		// Returns the current activeTree. Usually so you can modify the MidiTree.
 		std::shared_ptr<MidiTree> getActiveTree() const
 		{
 			return activeTree;

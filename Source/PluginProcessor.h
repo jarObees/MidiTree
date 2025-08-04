@@ -93,7 +93,7 @@ public:
  
     InfoTabManager::InfoTabManager infoTabManager{};
     Preset::PresetManager presetManager{ apvts, activeTreeManager};
-    Forest::ForestManager forestManager{ apvts, presetManager, &activeTree, &infoTabManager};
+    Forest::ForestManager forestManager{ apvts, presetManager, &activeTreeManager, &infoTabManager};
     LSystemStuff::LSystemManager lSystemManager{ apvts, presetManager, &activeTree };
     juce::Typeface::Ptr coolFont;
 private:

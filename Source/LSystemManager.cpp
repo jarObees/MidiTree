@@ -6,10 +6,10 @@
 // Implement the next layer of stuff. 
 // Now the actual shit that handles the growth logic for the l system shit.
 
-LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager, Tree::MidiTree* _activeTree)
-	: apvts(_apvts), presetManager(_presetManager), activeTree(_activeTree)
+LSystemStuff::LSystemManager::LSystemManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager, Tree::ActiveTreeManager* _activeTreeManager)
+	: apvts(_apvts), presetManager(_presetManager), activeTreeManager(_activeTreeManager)
 {
-	lSystemProcessor = std::make_unique<LSystemProcessor>(gensKnob, activeTree, analogUserInputComponent);
+	lSystemProcessor = std::make_unique<LSystemProcessor>(gensKnob, _activeTreeManager, analogUserInputComponent);
 	selectedAxiomId.setValue("");
 }
 

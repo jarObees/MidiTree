@@ -5,6 +5,8 @@
 #include "LSystem.h"
 #include "AnalogUserInputBlockData.h"
 #include "TreeData.h"
+#include "ActiveTreeManager.h"
+
 using namespace AnalogUserInput;
 
 // This class is where the actual calculations for the L-System are made.
@@ -12,14 +14,14 @@ class LSystemProcessor
 {
 public:
     LSystemProcessor(juce::Slider*& _generationsKnob,
-                     Tree::MidiTree*& _activeTree,
+                     Tree::ActiveTreeManager* _activeTree,
                      juce::Component*& _analogUserInputComponent);
     
     void growLSystem();
 
 private:
 	juce::Component*& analogUserInputComponent;
-    Tree::MidiTree*& activeTree;
+    Tree::ActiveTreeManager* activeTreeManager;
     juce::Slider*& generationsKnob; // Warning: this could be a nullptr at class's construction, so make sure to jassert that it isn't when we need it.
     int generationsNum;
 

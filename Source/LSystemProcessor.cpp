@@ -5,9 +5,9 @@ using namespace AnalogUserInput;
 // Map containing illegal strings as keys, and their corrosponding legal string as values.
 // // For use in correcting lsys variables and rulesets.
 LSystemProcessor::LSystemProcessor(juce::Slider*& _generationsKnob,
-                                   Tree::MidiTree*& _activeTree,
+                                   Tree::ActiveTreeManager* _activeTreeManager,
                                    juce::Component*& _analogUserInputComponent)
-    : generationsKnob(_generationsKnob), activeTree(_activeTree), analogUserInputComponent(_analogUserInputComponent)
+    : generationsKnob(_generationsKnob), activeTreeManager(_activeTreeManager), analogUserInputComponent(_analogUserInputComponent)
 {
 
 }
@@ -37,7 +37,7 @@ void LSystemProcessor::growLSystem()
     }
     generateLString(axiomChar, ruleMap);
     generateNotesPool(analogUserInputBlockDataSet);
-    activeTree->notesPool = generatedNotesPool;
+    activeTreeManager->getActiveTree()->notesPool = generatedNotesPool;
 }
 
 char LSystemProcessor::getAxiomCharFromBDS(std::vector<std::vector<AnalogUserInputBlockData>>& analogUserInputBlockDataSet) const

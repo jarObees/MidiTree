@@ -172,7 +172,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
     buffer.clear();
     // currentNotesPool = { 0, 4, 7 };
     return;
-    if (activeTree.notesPool.isEmpty())
+    if (activeTreeManager.getActiveTree()->notesPool.isEmpty())
     {
         DBG("Notes pool empty, bypassing...");
         midiMessages.clear();
@@ -238,9 +238,9 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
 
             if (isMidiHeldDown) // Keep playing if MIDI note is held down.
             {
-                auto midiNoteToPlay = activeTree.notesPool[notesPoolIndex] + midiAxiom;
+                auto midiNoteToPlay = activeTreeManager.getActiveTree()->notesPool[notesPoolIndex] + midiAxiom;
                 DBG("Turning on: " << midiNoteToPlay << "at" << offset << " with velocity: " << velParam);
-                notesPoolIndex = (notesPoolIndex + 1) % activeTree.notesPool.size();
+                notesPoolIndex = (notesPoolIndex + 1) % activeTreeManager.getActiveTree()->notesPool.size();
                 lastNoteValue = midiNoteToPlay;
                 midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)velParam), offset);
             }

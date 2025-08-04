@@ -12,7 +12,7 @@ namespace LSystemStuff
 		: public juce::Button::Listener, juce::Slider::Listener
 	{
 	public:
-		LSystemManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager, Tree::MidiTree* _activeTree);
+		LSystemManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager, Tree::ActiveTreeManager* _activeTree);
 		void configureGensKnob(juce::Slider* gensKnob);
 		void configureGrowButton(juce::Button* button);
 		void configureAnalogUserInput(juce::Component* analogUserInputComponent, const int numBlockRows, const int numBlockColumns);
@@ -26,6 +26,7 @@ namespace LSystemStuff
 		void sliderValueChanged(juce::Slider* slider) override;
 		
 		Tree::MidiTree* activeTree;
+		Tree::ActiveTreeManager* activeTreeManager;
 		juce::TextEditor* axiomInputEditor = nullptr;
 		juce::TextEditor* rulesetInputEditor = nullptr;
 		juce::Button* growButton = nullptr;

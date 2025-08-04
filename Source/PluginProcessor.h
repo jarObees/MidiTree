@@ -87,14 +87,13 @@ public:
     int midiAxiom; // Value representing the initial midi input by user. Should be set to -1 if no user input.
     
     static const inline juce::StringArray comboBoxNoteTypes{"Quarter", "Dotted", "Triplet"};
-    Tree::MidiTree activeTree;
     Tree::ActiveTreeManager activeTreeManager;
     juce::Array<int> currentNotesPool; // DO NOT MODIFY IN PROCESS BLOCK.
  
     InfoTabManager::InfoTabManager infoTabManager{};
     Preset::PresetManager presetManager{ apvts, activeTreeManager};
     Forest::ForestManager forestManager{ apvts, presetManager, &activeTreeManager, &infoTabManager};
-    LSystemStuff::LSystemManager lSystemManager{ apvts, presetManager, &activeTree };
+    LSystemStuff::LSystemManager lSystemManager{ apvts, presetManager, &activeTreeManager };
     juce::Typeface::Ptr coolFont;
 private:
     int time;

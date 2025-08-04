@@ -14,8 +14,11 @@ namespace InfoTabManager
 		void setSingleLineMessage(juce::String);
 		void setDoubleLineMessage(juce::String line1, juce::String line2);
 		void setDefaultState();
-		void onActiveTreeChanged(std::shared_ptr<Tree::MidiTree>) override;
 	private:
+		Tree::ActiveTreeManager* activeTreeManager;
+		void updateActiveTreeShower();
+		void onActiveTreeChanged(std::shared_ptr<Tree::MidiTree>) override;
+		juce::DrawableButton* treeShower = nullptr;
 		jive::GuiItem* textItem = nullptr;
 		static constexpr auto singleLineStyle = R"(
 			{

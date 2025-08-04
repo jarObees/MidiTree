@@ -3,13 +3,24 @@ namespace InfoTabManager
 {
 	InfoTabManager::InfoTabManager(Tree::ActiveTreeManager* _activeTreeManager)
 	{
-		_activeTreeManager->addListener(this);
+		activeTreeManager = _activeTreeManager;
+		activeTreeManager->addListener(this);
 	}
 
 	void InfoTabManager::onActiveTreeChanged(std::shared_ptr <Tree::MidiTree>)
 	{
 		DBG("Active Tree Changed!");
+		updateActiveTreeShower();
+	}
 
+	void InfoTabManager::updateActiveTreeShower()
+	{
+		if (activeTreeManager->hasValidTree())
+		{
+			treeShower->setToggleState(true, true);
+		}
+		else
+			treeShower->setToggleState(false, true);
 	}
 
 	void InfoTabManager::connectInfoTab(jive::GuiItem* item)
@@ -21,8 +32,7 @@ namespace InfoTabManager
 	{
 		auto* activeTreeShower = dynamic_cast<juce::DrawableButton*>(item->getComponent().get());
 		jassert(activeTreeShower != nullptr);
-
-
+		treeShower = activeTreeShower;
 	}
 	// Default message when no other message is displayed.
 	void InfoTabManager::setDefaultState()

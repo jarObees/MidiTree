@@ -45,11 +45,13 @@ namespace Tree
 
 		void setNotesPool(juce::Array<int> newNotesPool)
 		{
+			DBG("Setting new notesPool...");
 			activeTree->notesPool = newNotesPool;
 			sendNotification();
 		}
 		void setTreeName(juce::String newName)
 		{
+			DBG("Setting New TreeName");
 			activeTree->name = newName;
 			sendNotification();
 		}
@@ -60,6 +62,15 @@ namespace Tree
 		juce::String getTreeName() const
 		{
 			return activeTree->name;
+		}
+		bool hasValidTree()
+		{
+			if (!activeTree->notesPool.isEmpty() && activeTree->name != Tree::MidiTree{}.name)
+			{
+				return true;
+			}
+			else
+				return false;
 		}
 
 		void addListener(ActiveTreeListener* listener)

@@ -88,10 +88,11 @@ public:
     
     static const inline juce::StringArray comboBoxNoteTypes{"Quarter", "Dotted", "Triplet"};
     Tree::MidiTree activeTree;
+    Tree::ActiveTreeManager activeTreeManager;
     juce::Array<int> currentNotesPool; // DO NOT MODIFY IN PROCESS BLOCK.
  
     InfoTabManager::InfoTabManager infoTabManager{};
-    Preset::PresetManager presetManager{ apvts, &activeTree};
+    Preset::PresetManager presetManager{ apvts, activeTreeManager};
     Forest::ForestManager forestManager{ apvts, presetManager, &activeTree, &infoTabManager};
     LSystemStuff::LSystemManager lSystemManager{ apvts, presetManager, &activeTree };
     juce::Typeface::Ptr coolFont;

@@ -10,8 +10,8 @@ namespace Preset
 	};
 	const juce::String PresetManager::presetExtension{ "preset" };
 
-	PresetManager::PresetManager(juce::AudioProcessorValueTreeState& _apvts, Tree::MidiTree* _activeTree)
-		: apvts(_apvts), activeTree(_activeTree)
+	PresetManager::PresetManager(juce::AudioProcessorValueTreeState& _apvts, Tree::ActiveTreeManager& _activeTreeManager)
+		: apvts(_apvts), activeTreeManager(_activeTreeManager)
 	{
 		if (!defaultDirectory.exists())
 		{

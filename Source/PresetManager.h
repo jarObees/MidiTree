@@ -1,6 +1,7 @@
 #pragma once
 #include <JuceHeader.h>
 #include "TreeData.h"
+#include "ActiveTreeManager.h"
 
 namespace Preset
 {
@@ -16,7 +17,7 @@ namespace Preset
 		static const juce::File defaultDirectory;
 		static const juce::String presetExtension;
 
-		PresetManager(juce::AudioProcessorValueTreeState& apvts, Tree::MidiTree* _activeTree);
+		PresetManager(juce::AudioProcessorValueTreeState& apvts, Tree::ActiveTreeManager& activeTreeManager);
 		
 		void savePreset(const juce::String& presetName);
 		void loadPreset(const juce::String& presetName);
@@ -33,7 +34,7 @@ namespace Preset
 		bool isModified; // Will basically only be false at construction, and when preset is loaded/saved.
 
 	private:
-		Tree::MidiTree* activeTree;
+		Tree::ActiveTreeManager activeTreeManager;	//TODO: Currently unused here.
 		juce::StringArray getAllPresets() const;
 
 		juce::AudioProcessorValueTreeState& apvts;

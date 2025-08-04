@@ -172,7 +172,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
     buffer.clear();
     // currentNotesPool = { 0, 4, 7 };
     return;
-    if (activeTreeManager.getActiveTree()->notesPool.isEmpty())
+    if (activeTreeManager.getNotesPool().isEmpty())
     {
         DBG("Notes pool empty, bypassing...");
         midiMessages.clear();
@@ -238,9 +238,9 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
 
             if (isMidiHeldDown) // Keep playing if MIDI note is held down.
             {
-                auto midiNoteToPlay = activeTreeManager.getActiveTree()->notesPool[notesPoolIndex] + midiAxiom;
+                auto midiNoteToPlay = activeTreeManager.getNotesPool()[notesPoolIndex] + midiAxiom;
                 DBG("Turning on: " << midiNoteToPlay << "at" << offset << " with velocity: " << velParam);
-                notesPoolIndex = (notesPoolIndex + 1) % activeTreeManager.getActiveTree()->notesPool.size();
+                notesPoolIndex = (notesPoolIndex + 1) % activeTreeManager.getNotesPool().size();
                 lastNoteValue = midiNoteToPlay;
                 midiMessages.addEvent(juce::MidiMessage::noteOn(1, midiNoteToPlay, (juce::uint8)velParam), offset);
             }
@@ -301,7 +301,7 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
                 jassertfalse;
             auto textValueTree = jive::findItemWithID(*editor, jiveGui::InfoTabUI::textComponentID);
             infoTabManager.connectInfoTab(textValueTree);
-
+            infoTabManager.connectActiveTreeShower(jive::findItemWithID(*editor, jiveGui::StringIds::activeTreeShower));
             attachParamsToApvts(editor.get());
             //attachNonAutoParamsToNonAutoApvts(editor.get());
             configureComponents(editor.get());

@@ -115,7 +115,7 @@ namespace jiveGui
 						jive::makeView<DrawableToggleButton>(64, 64, 
 															 juce::ImageCache::getFromMemory(BinaryData::MainTreeOn_png, BinaryData::MainTreeOn_pngSize),
 															 juce::ImageCache::getFromMemory(BinaryData::MainTreeOff_png, BinaryData::MainTreeOff_pngSize),
-															 StringIds::activeTree,
+															 StringIds::activeTreeShower,
 															 false),
 					}
 				};

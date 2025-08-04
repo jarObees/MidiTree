@@ -2,11 +2,28 @@
 #include "TreeData.h"
 namespace Tree
 {
+	class ActiveTreeListener
+	{
+	public:
+		virtual void onActiveTreeChanged(std::shared_ptr<MidiTree> newTree) = 0;
+		virtual ~ActiveTreeListener() = default;
+	};
+
 	// This class holds the active tree data that is currently being used to generate notes in real-time.
 	class ActiveTreeManager
 	{
 	private:
 		std::shared_ptr<MidiTree> activeTree;
+		std::vector<ActiveTreeListener*> listeners;
+		void sendNotification()
+		{
+			for (auto* listener : listeners)
+			{
+				DBG("Sending notification...");
+				if (listener)
+					listener->onActiveTreeChanged(activeTree);
+			}
+		}
 	public:
 		ActiveTreeManager() 
 			: activeTree(std::make_shared<MidiTree>()) 
@@ -22,11 +39,42 @@ namespace Tree
 			}
 			else
 				jassertfalse;
+			sendNotification();
 		}
 		// Returns the current activeTree. Usually so you can modify the MidiTree.
 		std::shared_ptr<MidiTree> getActiveTree() const
 		{
 			return activeTree;
+		}
+
+		void setNotesPool(juce::Array<int> newNotesPool)
+		{
+			activeTree->notesPool = newNotesPool;
+			sendNotification();
+		}
+		void setTreeName(juce::String newName)
+		{
+			activeTree->name = newName;
+			sendNotification();
+		}
+		juce::Array<int> getNotesPool() const
+		{
+			return activeTree->notesPool;
+		}
+		juce::String getTreeName() const
+		{
+			return activeTree->name;
+		}
+
+		void addListener(ActiveTreeListener* listener)
+		{
+			DBG("Adding Listener...");
+			listeners.push_back(listener);
+		}
+		void removeListener(ActiveTreeListener* listenerToBeRemoved)
+		{
+			DBG("Removing Listener...");
+			std::erase(listeners, listenerToBeRemoved);
 		}
 	};
 }

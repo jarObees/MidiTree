@@ -6,10 +6,16 @@ namespace InfoTabManager
 		textItem = item;
 		setDefaultState();
 	}
+	void InfoTabManager::connectActiveTreeShower(jive::GuiItem* item)
+	{
+		auto* activeTreeShower = dynamic_cast<juce::DrawableButton*>(item->getComponent().get());
+		jassert(activeTreeShower != nullptr);
+
+
+	}
 	// Default message when no other message is displayed.
 	void InfoTabManager::setDefaultState()
 	{
-		/// TODO: ADD CHECK IF TREE IS LOADED FIRST
 		setSingleLineMessage("No Tree Loaded!");
 	}
 

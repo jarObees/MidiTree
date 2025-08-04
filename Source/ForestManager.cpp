@@ -83,7 +83,7 @@ namespace Forest
 				DBG("WE PLANTING IN THIS HOE!");
 				auto& dataSlot = forestDataSlots[currentForestIndex];
 				dataSlot.name = midiTreeName.getValue();
-				dataSlot.notesPool = activeTreeManager->getActiveTree()->notesPool;
+				dataSlot.notesPool = activeTreeManager->getNotesPool();
 			}
 			else
 			{
@@ -109,7 +109,7 @@ namespace Forest
 			auto notesPool = forestDataSlots[currentForestIndex].notesPool;
 			if (!notesPool.isEmpty())
 			{
-				activeTreeManager->getActiveTree()->notesPool = notesPool;
+				activeTreeManager->setNotesPool(notesPool);
 			}
 			// Update UI
 			auto* activeTree = forestTrees[currentForestIndex];

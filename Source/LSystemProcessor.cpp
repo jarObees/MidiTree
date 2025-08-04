@@ -37,7 +37,7 @@ void LSystemProcessor::growLSystem()
     }
     generateLString(axiomChar, ruleMap);
     generateNotesPool(analogUserInputBlockDataSet);
-    activeTreeManager->getActiveTree()->notesPool = generatedNotesPool;
+    activeTreeManager->setNotesPool(generatedNotesPool);
 }
 
 char LSystemProcessor::getAxiomCharFromBDS(std::vector<std::vector<AnalogUserInputBlockData>>& analogUserInputBlockDataSet) const

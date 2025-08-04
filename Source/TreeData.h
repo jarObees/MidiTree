@@ -3,10 +3,9 @@
 
 namespace Tree
 {
-	// ALWAYS INSTANTIATE BOTH VARIABLES
 	struct MidiTree
 	{
-		juce::String name = "[Unsaved Tree]";
+		juce::String name = "[Unknown Tree]";
 		juce::Array<int> notesPool;
 	};
 }

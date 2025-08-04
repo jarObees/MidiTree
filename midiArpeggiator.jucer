@@ -101,6 +101,8 @@
     </GROUP>
     <GROUP id="{968718A0-7025-4E85-0A48-8A9854BC5E9F}" name="Source">
       <GROUP id="{AF06FDC2-6789-9BAD-8AF1-AD53118CB4D8}" name="LSystemStuff">
+        <FILE id="joa86f" name="ActiveTreeManager.h" compile="0" resource="0"
+              file="Source/ActiveTreeManager.h"/>
         <FILE id="QMxHnm" name="TreeData.h" compile="0" resource="0" file="Source/TreeData.h"/>
         <FILE id="Ya5Nv1" name="AnalogUserInputBlockData.h" compile="0" resource="0"
               file="Source/AnalogUserInputBlockData.h"/>

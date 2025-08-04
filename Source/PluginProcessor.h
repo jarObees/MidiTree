@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include <juce_data_structures/juce_data_structures.h>
 #include "TreeData.h"
+#include "ActiveTreeManager.h"
 #include "View.h"
 #include "LSystemProcessor.h"
 #include "PresetManager.h"
@@ -18,7 +19,6 @@
 #include "LSystemManager.h"
 #include "InfoTabManager.h"
 #include "DummyAudioProcessor.h"
-
 #include <chrono>
 
 //==============================================================================

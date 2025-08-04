@@ -1,17 +1,20 @@
 #pragma once
 #include <JuceHeader.h>
+#include "ActiveTreeManager.h"
 
 namespace InfoTabManager
 {
 	class InfoTabManager
+		: public Tree::ActiveTreeListener
 	{
 	public:
+		InfoTabManager(Tree::ActiveTreeManager*);
 		void connectInfoTab(jive::GuiItem*);
 		void connectActiveTreeShower(jive::GuiItem*);
 		void setSingleLineMessage(juce::String);
 		void setDoubleLineMessage(juce::String line1, juce::String line2);
 		void setDefaultState();
-
+		void onActiveTreeChanged(std::shared_ptr<Tree::MidiTree>) override;
 	private:
 		jive::GuiItem* textItem = nullptr;
 		static constexpr auto singleLineStyle = R"(

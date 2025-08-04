@@ -2,6 +2,7 @@
 #include "TreeData.h"
 namespace Tree
 {
+	// Is this overkill? Maybe. But I'm learning so whatever.
 	class ActiveTreeListener
 	{
 	public:
@@ -40,11 +41,6 @@ namespace Tree
 			else
 				jassertfalse;
 			sendNotification();
-		}
-		// Returns the current activeTree. Usually so you can modify the MidiTree.
-		std::shared_ptr<MidiTree> getActiveTree() const
-		{
-			return activeTree;
 		}
 
 		void setNotesPool(juce::Array<int> newNotesPool)

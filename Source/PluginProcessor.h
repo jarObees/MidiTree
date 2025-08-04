@@ -90,7 +90,7 @@ public:
     Tree::ActiveTreeManager activeTreeManager;
     juce::Array<int> currentNotesPool; // DO NOT MODIFY IN PROCESS BLOCK.
  
-    InfoTabManager::InfoTabManager infoTabManager{};
+    InfoTabManager::InfoTabManager infoTabManager{&activeTreeManager};
     Preset::PresetManager presetManager{ apvts, activeTreeManager};
     Forest::ForestManager forestManager{ apvts, presetManager, &activeTreeManager, &infoTabManager};
     LSystemStuff::LSystemManager lSystemManager{ apvts, presetManager, &activeTreeManager };

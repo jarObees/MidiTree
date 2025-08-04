@@ -1,6 +1,17 @@
 #include "InfoTabManager.h"
 namespace InfoTabManager
 {
+	InfoTabManager::InfoTabManager(Tree::ActiveTreeManager* _activeTreeManager)
+	{
+		_activeTreeManager->addListener(this);
+	}
+
+	void InfoTabManager::onActiveTreeChanged(std::shared_ptr <Tree::MidiTree>)
+	{
+		DBG("Active Tree Changed!");
+
+	}
+
 	void InfoTabManager::connectInfoTab(jive::GuiItem* item)
 	{
 		textItem = item;

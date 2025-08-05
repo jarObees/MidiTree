@@ -15,12 +15,16 @@ namespace InfoTabManager
 
 	void InfoTabManager::updateActiveTreeShower()
 	{
-		if (activeTreeManager->hasValidTree())
+		if (!activeTreeManager->getNotesPool().isEmpty())
 		{
+			DBG("Setting tree shower to ACTIVE");
 			treeShower->setToggleState(true, true);
 		}
 		else
+		{
+			DBG("Setting tree shower to INACTIVE");
 			treeShower->setToggleState(false, true);
+		}
 	}
 
 	void InfoTabManager::connectInfoTab(jive::GuiItem* item)

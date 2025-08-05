@@ -63,15 +63,6 @@ namespace Tree
 		{
 			return activeTree->name;
 		}
-		bool hasValidTree()
-		{
-			if (!activeTree->notesPool.isEmpty() && activeTree->name != Tree::MidiTree{}.name)
-			{
-				return true;
-			}
-			else
-				return false;
-		}
 
 		void addListener(ActiveTreeListener* listener)
 		{

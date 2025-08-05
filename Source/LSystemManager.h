@@ -13,6 +13,7 @@ namespace LSystemStuff
 	{
 	public:
 		LSystemManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager& _presetManager, Tree::ActiveTreeManager* _activeTree);
+		void connectToJiveEditor(jive::GuiItem*);
 		void configureGensKnob(juce::Slider* gensKnob);
 		void configureGrowButton(juce::Button* button);
 		void configureAnalogUserInput(juce::Component* analogUserInputComponent, const int numBlockRows, const int numBlockColumns);
@@ -24,8 +25,7 @@ namespace LSystemStuff
 	private:
 		void buttonClicked(juce::Button* button) override;
 		void sliderValueChanged(juce::Slider* slider) override;
-		
-		Tree::MidiTree* activeTree;
+		jive::GuiItem* mainEditor = nullptr;
 		Tree::ActiveTreeManager* activeTreeManager;
 		juce::TextEditor* axiomInputEditor = nullptr;
 		juce::TextEditor* rulesetInputEditor = nullptr;

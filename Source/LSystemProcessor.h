@@ -18,8 +18,9 @@ public:
                      juce::Component*& _analogUserInputComponent);
     
     void growLSystem();
-
+    void connectWithEditor(jive::GuiItem*);
 private:
+	jive::GuiItem* mainEditor = nullptr;
 	juce::Component*& analogUserInputComponent;
     Tree::ActiveTreeManager* activeTreeManager;
     juce::Slider*& generationsKnob; // Warning: this could be a nullptr at class's construction, so make sure to jassert that it isn't when we need it.

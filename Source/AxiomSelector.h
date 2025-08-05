@@ -11,9 +11,7 @@ namespace jiveGui
 
 		namespace AxiomSelecta
 		{
-			const int RADIOGROUPNUM = 1;
 			// This component is for use within the note wheel, hence the width and height being at 100%
-
 			class AxiomSelectorView
 				: public jive::View
 			{
@@ -41,7 +39,6 @@ namespace jiveGui
 							{
 								"Image",
 								{
-									{"id", "axiomImage"},
 									{"source", jive::toVar(bgImage)},
 									{"width", "100%"},
 									{"height", "100%"},
@@ -83,14 +80,15 @@ namespace jiveGui
 					jassert(imageComponent != nullptr);
 					imageComponent->setInterceptsMouseClicks(false, false);
 					
-					auto* parentComponent = item.getComponent().get();
-					jassert(parentComponent != nullptr);
-					parentComponent->setInterceptsMouseClicks(false, true);
+					auto* parentBlockComponent = item.getComponent().get();
+					jassert(parentBlockComponent != nullptr);
+					parentBlockComponent->setInterceptsMouseClicks(false, true);
 
 					auto* button = dynamic_cast<juce::Button*>(item.getChildren().getLast()->getComponent().get());
 					jassert(button != nullptr);
 					button->setMouseCursor(juce::MouseCursor::PointingHandCursor);
 
+					// After a button is clicked, each AxiomSelector executes this lambda.
 					activeAxiomId->onValueChange = [this, button]()
 						{
 							DBG("Change detected in: " << button->getComponentID());
@@ -99,11 +97,13 @@ namespace jiveGui
 								DBG("Setting: " << id << "to ON");
 								imageSource->set(juce::ImageCache::getFromMemory(BinaryData::AxiomSelectorOn_png,
 																				 BinaryData::AxiomSelectorOn_pngSize));
+								button->setToggleState(true, false);
 							}
 							else
 							{
 								DBG("Setting: " << id << "to OFF");
 								imageSource->set(juce::Image{});
+								button->setToggleState(false, false);
 							}
 						};
 					button->onClick = [this, button]()

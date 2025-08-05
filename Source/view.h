@@ -185,7 +185,6 @@ namespace jiveGui
 			}
 		};
 	}
-
 	[[nodiscard]] inline auto getGround(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
 		juce::Image filmstripKnob = imageCollection.at(ImageIds::mainKnobFilmstrip);

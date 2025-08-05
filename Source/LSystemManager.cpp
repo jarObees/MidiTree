@@ -48,6 +48,13 @@ void LSystemStuff::LSystemManager::configureNoteWheel(juce::Component* noteWheel
 	jassert(noteWheel != nullptr);
 }
 
+void LSystemStuff::LSystemManager::connectToJiveEditor(jive::GuiItem* _editor)
+{
+	jassert(mainEditor != _editor);
+
+	mainEditor = _editor;
+	lSystemProcessor->connectWithEditor(mainEditor);
+}
 // analoguserInputComponent is the topmost parent component for all the different input blocks.
 void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* analogUserInputComponent, 
 															const int numBlockRows, 
@@ -119,7 +126,6 @@ void LSystemStuff::LSystemManager::configureGensKnob(juce::Slider* knob)
 void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)
 {
 	DBG("button click detected in LSYSMANAGER");
-	DBG("Current Notes Pool Size: " << activeTree->notesPool.size());
 	if (button == growButton)
 	{
 		lSystemProcessor->growLSystem();

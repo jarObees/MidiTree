@@ -8,11 +8,10 @@ namespace jiveGui
 		void drawRotarySlider(juce::Graphics&, int, int, int, int, float, float, float, juce::Slider&) override
 		{
 			// Draw nothing
-			DBG("Drawing Nothing...");
 		}
 		void drawLinearSlider(juce::Graphics&, int, int, int, int, float, float, float, juce::Slider::SliderStyle, juce::Slider&) override
 		{
-			DBG("Drawing nothing for a linear one...");
+			// Draw nothing
 		}
 
 	};

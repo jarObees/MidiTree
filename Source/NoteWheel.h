@@ -87,7 +87,6 @@ namespace jiveGui
 									},
 								},
 							},
-							// jive::makeView<AxiomSelecta::AxiomSelectorView>(rowNum, columnNum),
 						},
 					};
 					if (isAxiom)

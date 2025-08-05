@@ -299,11 +299,11 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             }
             else
                 jassertfalse;
-            auto textValueTree = jive::findItemWithID(*editor, jiveGui::InfoTabUI::textComponentID);
-            infoTabManager.connectInfoTab(textValueTree);
+            infoTabManager.connectInfoTab(jive::findItemWithID(*editor, jiveGui::InfoTabUI::textComponentID));
             infoTabManager.connectActiveTreeShower(jive::findItemWithID(*editor, jiveGui::StringIds::activeTreeShower));
+			lSystemManager.connectToJiveEditor(editor.get());
             attachParamsToApvts(editor.get());
-            //attachNonAutoParamsToNonAutoApvts(editor.get());
+            attachNonAutoParamsToNonAutoApvts(editor.get());
             configureComponents(editor.get());
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
         }

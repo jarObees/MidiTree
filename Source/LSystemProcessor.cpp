@@ -12,6 +12,11 @@ LSystemProcessor::LSystemProcessor(juce::Slider*& _generationsKnob,
 
 }
 
+void LSystemProcessor::connectWithEditor(jive::GuiItem* editor)
+{
+	mainEditor = editor;
+	jassert(mainEditor != nullptr);
+}
 
 void LSystemProcessor::growLSystem()
 {
@@ -55,90 +60,60 @@ char LSystemProcessor::getAxiomCharFromBDS(std::vector<std::vector<AnalogUserInp
     return '\0';
 }
 
-// Makes a 2D vector of AUIBD in order to manipulate and analyze data in a simple(ish) way.
+// Makes a 2D vector of AUI Block Data in order to manipulate and analyze data in a simple(ish) way.
 std::vector<std::vector<AnalogUserInputBlockData>> LSystemProcessor::makeAnalogUIBlockDataSet()
 {
     jassert(analogUserInputComponent != nullptr);
+	jassert(mainEditor != nullptr);
     std::vector<std::vector<AnalogUserInputBlockData>> analogUserInputBlockDataSet;
-    for (auto* child : analogUserInputComponent->getChildren())
+
+    // Loop through all combos of row/col
+    for (int row = 0; row < jiveGui::AnalogUserInput::NUMBLOCKROWS; row++)
     {
-        // Access Rows
-        if (child->getComponentID().startsWith(jiveGui::IdPrefix::inputRow))
+        std::vector<AnalogUserInputBlockData> rowData;
+        for (int col = -1; col < jiveGui::AnalogUserInput::NUMBLOCKCOLUMNS; col++)
         {
-            std::vector<AnalogUserInputBlockData> blockRow;
-            DBG("Accessed row...");
-            DBG("row child num: " << child->getNumChildComponents());
-            for (auto* rowChild : child->getChildren())
+            AnalogUserInputBlockData blockData;
+
+            // Find NW Value
+            const auto jiveNoteWheelId = jiveGui::idRowColMaker(jiveGui::IdPrefix::noteWheel, row, col);
+            auto* noteWheel = dynamic_cast<juce::Slider*>(jive::findItemWithID(*mainEditor, jiveNoteWheelId)->getComponent().get());
+            jassert(noteWheel != nullptr);
+            blockData.noteWheelNum = noteWheel->getValue();
+            if (blockData.noteWheelNum == 0)                // If it's empty, then no need to store data.
+                continue;
+
+            // Find Octaves Value
+			const auto jiveOctavesId = jiveGui::idRowColMaker(jiveGui::IdPrefix::octavesInput, row, col);
+			auto* octavesInput = dynamic_cast<juce::Slider*>(jive::findItemWithID(*mainEditor, jiveOctavesId)->getComponent().get());
+			jassert(octavesInput != nullptr);
+			blockData.octave = octavesInput->getValue();
+
+            // Find Direction
+			const auto jiveDirectionId = jiveGui::idRowColMaker(jiveGui::IdPrefix::directionInput, row, col);
+			auto* directionInput = dynamic_cast<juce::Button*>(jive::findItemWithID(*mainEditor, jiveDirectionId)->getComponent().get());
+			jassert(directionInput != nullptr);
+            blockData.ascending = directionInput->getToggleState();
+
+            // Find if axiom
+            if (col == -1)
             {
-                if (rowChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlock)) //======================= Within InputBlock
-                {
-                    DBG("Accessing inputBlock =====");
-                    DBG("ib child num: " << rowChild->getNumChildComponents());
-                    AnalogUserInputBlockData inputBlockData;
-                    for (auto* blockChild : rowChild->getChildren())
-                    {
-                        if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockTop))
-                        {
-                            DBG("> InputBlockTOP");
-                            DBG("ibt child num: " << blockChild->getNumChildComponents());
-                            const auto inputBlockChildren = blockChild->getChildren();
-                            for (auto* child : inputBlockChildren)
-                            {
-                                if (child->getComponentID().startsWith(jiveGui::IdPrefix::octavesInput))
-                                {
-                                    juce::Slider* octavesInput = dynamic_cast<juce::Slider*>(child);
-                                    jassert(octavesInput != nullptr);
-                                    inputBlockData.octave = octavesInput->getValue();
-                                    DBG("oi child num: " << child->getNumChildComponents());
-                                    DBG(">> Octaves Input: " << inputBlockData.octave);
-                                }
-                                if (child->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockAxiom))
-                                {
-                                    juce::Button* axiomInput = dynamic_cast<juce::Button*>(child);
-                                    jassert(axiomInput != nullptr);
-                                    inputBlockData.axiom = axiomInput->getToggleState();
-                                }
-                                juce::String dbgButtonState = (inputBlockData.axiom == false) ? "false" : "true";
-                                DBG(">> Axiom: " << dbgButtonState);
-                            }
-                        }
-                        else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::noteWheel))
-                        {
-                            DBG("> NoteWheel");
-                            // Found note wheel.
-                            juce::Slider* noteWheelInput = dynamic_cast<juce::Slider*>(blockChild);
-                            jassert(noteWheelInput != nullptr);
-                            inputBlockData.noteWheelNum = noteWheelInput->getValue();
-                            DBG("nw child num: " << blockChild->getNumChildComponents());
-                            DBG(">> Notewheel Num: " << inputBlockData.noteWheelNum);
-                        }
-                        else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockBottom))
-                        {
-                            DBG("> InputBlockBOT");
-                            const auto inputBlockChildren = blockChild->getChildren();
-                            for (auto* child : inputBlockChildren)
-                            {
-                                if (child->getComponentID().startsWith(jiveGui::IdPrefix::directionInput))
-                                {
-                                    juce::Slider* directionInput = dynamic_cast<juce::Slider*>(child);
-                                    jassert(directionInput != nullptr);
-                                    inputBlockData.ascending = (directionInput->getValue() == 0) ? true : false;
-                                    juce::String dbgDirection = (inputBlockData.ascending == true) ? "Ascending" : "Descending";
-                                    DBG(">> Direction: " << dbgDirection);
-                                    DBG("ibb child num: " << blockChild->getNumChildComponents());
-                                }
-                            }
-                        }
-                    }
-                    if (inputBlockData.noteWheelNum != 0)       // Only pushes stuff that has an actual value.
-                        blockRow.push_back(inputBlockData);
-                }
+                const auto jiveAxiomId = jiveGui::idRowColMaker(jiveGui::IdPrefix::axiomToggle, row, col);
+                auto* axiomInput = dynamic_cast<juce::Button*>(jive::findItemWithID(*mainEditor, jiveAxiomId)->getComponent().get());
+                jassert(axiomInput != nullptr);
+                blockData.axiom = axiomInput->getToggleState();
             }
-            if (blockRow.size() > 1)
-                analogUserInputBlockDataSet.push_back(blockRow);
-            else
-                DBG("Weird aa blockRow. Ignoring...");
+
+            DBG("Data Block:: Octaves = " << blockData.octave 
+                << "| NW =" << blockData.noteWheelNum 
+                << "Ascending? = " << (blockData.ascending ? "true" : "false")
+                << "Axiom? =" << (blockData.axiom ? "true" : "false"));
+            rowData.push_back(blockData);
         }
+        if (rowData.size() > 1)
+            analogUserInputBlockDataSet.push_back(rowData);
+        else
+            DBG("Incomplete row. Skipping...");
     }
 	setBlockDataSetLSysChars(analogUserInputBlockDataSet);
     return analogUserInputBlockDataSet;

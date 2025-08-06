@@ -19,6 +19,7 @@ namespace InfoTabManager
 		{
 			DBG("Setting tree shower to ACTIVE");
 			treeShower->setToggleState(true, true);
+			setDefaultState();
 		}
 		else
 		{
@@ -38,19 +39,21 @@ namespace InfoTabManager
 		jassert(activeTreeShower != nullptr);
 		treeShower = activeTreeShower;
 	}
-	// Default message when no other message is displayed.
+	// Default message should simply display the active tree.
 	void InfoTabManager::setDefaultState()
 	{
-		setSingleLineMessage("No Tree Loaded!");
+		juce::String upperLine = "Tree: " + activeTreeManager->getTreeName();
+		juce::String lowerLine = "String: " + activeTreeManager->getNotesPoolAsNumString();
+		sendDoubleLineMessage(upperLine, lowerLine);
 	}
 
-	void InfoTabManager::setSingleLineMessage(juce::String text)
+	void InfoTabManager::sendSingleLineMessage(juce::String text)
 	{
 		textItem->state.setProperty("text", text, nullptr);
 		textItem->state.setProperty("style", singleLineStyle, nullptr);
 	}
 
-	void InfoTabManager::setDoubleLineMessage(juce::String line1, juce::String line2)
+	void InfoTabManager::sendDoubleLineMessage(juce::String line1, juce::String line2)
 	{
 		juce::String totalString = line1 + '\n' + line2;
 		textItem->state.setProperty("text", totalString, nullptr);

@@ -59,6 +59,22 @@ namespace Tree
 		{
 			return activeTree->notesPool;
 		}
+
+		juce::String getNotesPoolAsNumString() const
+		{
+			if (activeTree->notesPool.isEmpty())
+			{
+				return "---";
+			}
+
+			juce::String finalString;
+			for (int note : activeTree->notesPool)
+			{
+				finalString += juce::String(note) + ",";
+			}
+			return finalString.trimCharactersAtEnd(",");
+		}
+
 		juce::String getTreeName() const
 		{
 			return activeTree->name;

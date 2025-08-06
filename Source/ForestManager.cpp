@@ -158,12 +158,12 @@ namespace Forest
 				for (int num : treeData.notesPool)
 					ss << num;
 				juce::String lString = ss.str();
-				infoTabManager->setDoubleLineMessage("Tree Slot " + treeSlotNum + ": " + treeName, 
+				infoTabManager->sendDoubleLineMessage("Tree Slot " + treeSlotNum + ": " + treeName, 
 													 "String: " + lString);
 			}
 			else
 			{
-				infoTabManager->setDoubleLineMessage("Tree Slot " + treeSlotNum + ": [Empty!]",
+				infoTabManager->sendDoubleLineMessage("Tree Slot " + treeSlotNum + ": [Empty!]",
 													 "String: ---");
 			}
 		}

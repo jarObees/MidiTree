@@ -154,7 +154,7 @@ namespace jiveGui
 				},
 			},
 			{
-				jive::makeView<DrawableButton>(64, 32, filmstripKnob, "save", StringIds::saveButton),
+				jive::makeView<DrawableButton>(64, 32, filmstripKnob, StringIds::saveButton),
 				jive::makeView<ComboBoxView>(64, 64, StringIds::presetComboBox),
 			}
 		};
@@ -188,25 +188,50 @@ namespace jiveGui
 	[[nodiscard]] inline auto getGround(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
 		juce::Image filmstripKnob = imageCollection.at(ImageIds::mainKnobFilmstrip);
-		return juce::ValueTree{
+		return juce::ValueTree
+		{
 			"Component",
 			{
-				{"id", "ground"},
-				{"flex-direction", "row"},
-				{"justify-content", "centre"},
+				{"display", "block"},
 				{"width", "100%"},
 				{"height", "13%"},
-				{
-					"style",
-						new jive::Object{
-							{ "background", jive::toVar(colors::ground_primary)},
+										{
+							"style",
+								new jive::Object
+								{
+									{ "background", jive::toVar(colors::crown_highlight)},
+								},
 						},
-				},
 			},
 			{
-				getMidiVelocityKnob(imageCollection),
-				getNoteRateKnob(imageCollection),
-				jive::makeView<ImageComboBoxView>(32, 32, StringIds::noteTypeComboBox), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
+				juce::ValueTree
+				{
+					"Image",
+					{
+						{"source", jive::toVar(juce::ImageCache::getFromMemory(BinaryData::GroundBottomBG_png, BinaryData::GroundBottomBG_pngSize))},
+						{"width", "100%"},
+						{"height", "100%"},
+					}
+				},
+				juce::ValueTree
+				{
+					"Component",
+					{
+						{"id", "ground"},
+						{"flex-direction", "row"},
+						{"justify-content", "centre"},
+						{"centre-x", "50%"},
+						{"centre-y", "50%"},
+						{"width", "100%"},
+						{"height", "13%"},
+					},
+					{
+						///TODO: UNFUCK THIS.
+						//getMidiVelocityKnob(imageCollection),
+						//getNoteRateKnob(imageCollection),
+						//jive::makeView<ImageComboBoxView>(32, 32, StringIds::noteTypeComboBox), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
+					}
+				},
 			}
 		};
 	}

@@ -47,7 +47,6 @@ namespace jiveGui
 				};
 				bottomTray.addChild(jive::makeView<DrawableButton>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
 																										   BinaryData::button_grow_pngSize),
-																   "",
 																   StringIds::plantButton), -1, nullptr);
 				bottomTray.addChild(jive::makeView<DrawableToggleButton>(32, 32,
 																		 juce::ImageCache::getFromMemory(BinaryData::green_32_32_png, BinaryData::green_32_32_pngSize),
@@ -55,7 +54,6 @@ namespace jiveGui
 																		 StringIds::forestBypassButton), -1, nullptr);
 				bottomTray.addChild(jive::makeView<DrawableButton>(16, 16,
 																   juce::ImageCache::getFromMemory(BinaryData::ResetButton_png, BinaryData::ResetButton_pngSize),
-																   "",
 																   StringIds::forestResetButton), -1, nullptr);
 				return bottomTray;
 			}

@@ -6,8 +6,8 @@ namespace jiveGui
 	{
 	public:
 		// Note: Non-automatable with ->attachToParamater 
-		DrawableButton(int rawWidth, int rawHeight, juce::Image rawImage, std::string rawText, juce::String rawId)
-			: width(rawWidth), height(rawHeight), imageSource(rawImage), text(rawText), id(rawId)
+		DrawableButton(int rawWidth, int rawHeight, juce::Image rawImage, juce::String rawId)
+			: width(rawWidth), height(rawHeight), imageSource(rawImage), id(rawId)
 		{
 			mainImage = std::make_unique<juce::DrawableImage>(imageSource);
 		}
@@ -53,6 +53,5 @@ namespace jiveGui
 		int height;
 		juce::Image imageSource;
 		juce::String id;
-		juce::String text;
 	};
 }

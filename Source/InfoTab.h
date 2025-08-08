@@ -103,6 +103,8 @@ namespace jiveGui
 					{
 						{"width", "20%"},
 						{"height", "100%"},
+						{"align-content", "centre"},
+						{"justify-content", "centre"},
 						{
 							"style",
 								new jive::Object
@@ -112,7 +114,7 @@ namespace jiveGui
 						},
 					},
 					{
-						jive::makeView<DrawableToggleButton>(64, 64, 
+						jive::makeView<DrawableToggleButton>(70, 70, 
 															 juce::ImageCache::getFromMemory(BinaryData::MainTreeOn_png, BinaryData::MainTreeOn_pngSize),
 															 juce::ImageCache::getFromMemory(BinaryData::MainTreeOff_png, BinaryData::MainTreeOff_pngSize),
 															 StringIds::activeTreeShower,

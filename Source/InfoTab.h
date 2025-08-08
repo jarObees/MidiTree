@@ -24,7 +24,7 @@ namespace jiveGui
 						{"justify-content", "centre"},
 						{"flex-direction", "row"},
 						{"width", "100%"},
-						{"height", "8%"},
+						{"height", "10%"},
 						{
 							"style",
 								new jive::Object{

@@ -195,7 +195,7 @@ namespace jiveGui
 				{"flex-direction", "row"},
 				{"justify-content", "centre"},
 				{"width", "100%"},
-				{"height", "15%"},
+				{"height", "13%"},
 				{
 					"style",
 						new jive::Object{
@@ -207,51 +207,6 @@ namespace jiveGui
 				getMidiVelocityKnob(imageCollection),
 				getNoteRateKnob(imageCollection),
 				jive::makeView<ImageComboBoxView>(32, 32, StringIds::noteTypeComboBox), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
-			}
-		};
-	}
-	[[nodiscard]] inline auto getInfoLeft(std::unordered_map<std::string, juce::Image>& imageCollection)
-	{
-		return juce::ValueTree
-		{
-			"Component",
-			{
-				{"width", "80%"},
-				{"height", "100%"},
-				{
-					"style",
-						new jive::Object
-						{
-							{ "background", jive::toVar(colors::crown_highlight)},
-						},
-				},
-			},
-			{
-				///TODO: ADD DYNAMIC NAME TEXT.
-				///TODO: ADD DYNAMIC GEN NOTES TEXT.
-			}
-		};
-	}
-
-	[[nodiscard]] inline auto getInfoRight(std::unordered_map<std::string, juce::Image>& imageCollection)
-	{
-		juce::Image filmstripKnob = imageCollection.at(ImageIds::mainKnobFilmstrip);
-		return juce::ValueTree
-		{
-			"Component",
-			{
-				{"width", "20%"},
-				{"height", "100%"},
-				{
-					"style",
-						new jive::Object
-						{
-							{ "background", jive::toVar(colors::crown_secondary)},
-						},
-				},
-			},
-			{
-				///TODO: ADD DYNAMIC ACTIVE IMAGE. bool state image that indicates whether the thing is active or not.
 			}
 		};
 	}

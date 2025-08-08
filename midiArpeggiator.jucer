@@ -50,6 +50,18 @@
           <FILE id="AyYkmL" name="PERTIBD.TTF" compile="0" resource="1" file="../../../FUN/PERTIBD.TTF"/>
         </GROUP>
         <GROUP id="{62C50326-9474-8506-DEB8-F34E26513BCE}" name="Images">
+          <FILE id="UQLRin" name="SeedbankButtonHover.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/SeedbankButtonHover.png"/>
+          <FILE id="UNNO9A" name="SeedbankButtonNormal.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/SeedbankButtonNormal.png"/>
+          <FILE id="s00n5X" name="SeedbankButtonPressed.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/SeedbankButtonPressed.png"/>
+          <FILE id="WTHXSt" name="SaveButtnoPressed.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/SaveButtnoPressed.png"/>
+          <FILE id="ojEnAk" name="SaveButtonHover.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/SaveButtonHover.png"/>
+          <FILE id="nI95XB" name="SaveButtonNormal.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/SaveButtonNormal.png"/>
           <FILE id="yrmnks" name="GroundBottomBG.png" compile="0" resource="1"
                 file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/GroundBottomBG.png"/>
           <FILE id="SAUGEp" name="ForestMainBG.png" compile="0" resource="1"

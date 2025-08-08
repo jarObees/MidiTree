@@ -12,11 +12,12 @@ namespace jiveGui
 					   juce::String rawId, 
 					   juce::Image _hoverImage = juce::Image{}, 
 					   juce::Image _pressedImage = juce::Image{})
-			: width(rawWidth), height(rawHeight), imageSource(rawImage), id(rawId)
+			: width(rawWidth), height(rawHeight), imageSource(rawImage), id(rawId),
+			hoverImageSource(_hoverImage), pressedImageSource(_pressedImage)
 		{
 			mainImage = std::make_unique<juce::DrawableImage>(imageSource);
-			hoverImage = std::make_unique<juce::DrawableImage>(_hoverImage);
-			pressedImage = std::make_unique<juce::DrawableImage>(_pressedImage);
+			hoverImage = std::make_unique<juce::DrawableImage>(hoverImageSource);
+			pressedImage = std::make_unique<juce::DrawableImage>(pressedImageSource);
 		}
 
 		juce::ValueTree initialise() final
@@ -42,7 +43,7 @@ namespace jiveGui
 			if (auto* button = dynamic_cast<juce::DrawableButton*>(item.getComponent().get()))
 			{
 				button->setMouseCursor(juce::MouseCursor::PointingHandCursor);
-				button->setImages(mainImage.get(), hoverImage.get(), pressedImage.get());
+				button->setImages(mainImage.get());
 				button->onClick = [this, button]()
 					{
 						DBG(button->getComponentID() << " was clicked.");
@@ -61,6 +62,8 @@ namespace jiveGui
 		int width;
 		int height;
 		juce::Image imageSource;
+		juce::Image hoverImageSource;
+		juce::Image pressedImageSource;
 		juce::String id;
 	};
 }

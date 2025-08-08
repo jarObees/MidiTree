@@ -45,14 +45,18 @@ namespace jiveGui
 						{"align-items", "centre"},
 					},
 				};
-				bottomTray.addChild(jive::makeView<DrawableButton>(32, 32, juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
-																										   BinaryData::button_grow_pngSize),
+				bottomTray.addChild(jive::makeView<DrawableButton>(32, 
+																   32, 
+																   juce::ImageCache::getFromMemory(BinaryData::button_grow_png,
+																								   BinaryData::button_grow_pngSize),
 																   StringIds::plantButton), -1, nullptr);
-				bottomTray.addChild(jive::makeView<DrawableToggleButton>(32, 32,
+				bottomTray.addChild(jive::makeView<DrawableToggleButton>(32, 
+																		 32,
 																		 juce::ImageCache::getFromMemory(BinaryData::green_32_32_png, BinaryData::green_32_32_pngSize),
 																		 juce::ImageCache::getFromMemory(BinaryData::red_32_32_png, BinaryData::red_32_32_pngSize),
 																		 StringIds::forestBypassButton), -1, nullptr);
-				bottomTray.addChild(jive::makeView<DrawableButton>(16, 16,
+				bottomTray.addChild(jive::makeView<DrawableButton>(16, 
+																   16,
 																   juce::ImageCache::getFromMemory(BinaryData::ResetButton_png, BinaryData::ResetButton_pngSize),
 																   StringIds::forestResetButton), -1, nullptr);
 				return bottomTray;

@@ -6,10 +6,17 @@ namespace jiveGui
 	{
 	public:
 		// Note: Non-automatable with ->attachToParamater 
-		DrawableButton(int rawWidth, int rawHeight, juce::Image rawImage, juce::String rawId)
+		DrawableButton(int rawWidth, 
+					   int rawHeight, 
+					   juce::Image rawImage, 
+					   juce::String rawId, 
+					   juce::Image _hoverImage = juce::Image{}, 
+					   juce::Image _pressedImage = juce::Image{})
 			: width(rawWidth), height(rawHeight), imageSource(rawImage), id(rawId)
 		{
 			mainImage = std::make_unique<juce::DrawableImage>(imageSource);
+			hoverImage = std::make_unique<juce::DrawableImage>(_hoverImage);
+			pressedImage = std::make_unique<juce::DrawableImage>(_pressedImage);
 		}
 
 		juce::ValueTree initialise() final
@@ -35,7 +42,7 @@ namespace jiveGui
 			if (auto* button = dynamic_cast<juce::DrawableButton*>(item.getComponent().get()))
 			{
 				button->setMouseCursor(juce::MouseCursor::PointingHandCursor);
-				button->setImages(mainImage.get());
+				button->setImages(mainImage.get(), hoverImage.get(), pressedImage.get());
 				button->onClick = [this, button]()
 					{
 						DBG(button->getComponentID() << " was clicked.");
@@ -48,6 +55,8 @@ namespace jiveGui
 		}
 	private:
 		std::unique_ptr<juce::DrawableImage> mainImage;
+		std::unique_ptr<juce::DrawableImage> hoverImage;
+		std::unique_ptr<juce::DrawableImage> pressedImage;
 		std::unique_ptr<jive::Event> onClick;
 		int width;
 		int height;

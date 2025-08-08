@@ -155,8 +155,10 @@ namespace jiveGui
 			{
 				jive::makeView<DrawableButton>(64, 
 											   32, 
-											   filmstripKnob, 
-											   StringIds::saveButton),
+											   juce::ImageCache::getFromMemory(BinaryData::SaveButtonNormal_png, BinaryData::SaveButtonNormal_pngSize),
+											   StringIds::saveButton, 
+											   juce::ImageCache::getFromMemory(BinaryData::SaveButtonHover_png,BinaryData::SaveButtonHover_pngSize),
+											   juce::ImageCache::getFromMemory(BinaryData::SaveButtnoPressed_png, BinaryData::SaveButtnoPressed_pngSize)),
 				jive::makeView<ComboBoxView>(64, 64, StringIds::presetComboBox),
 			}
 		};

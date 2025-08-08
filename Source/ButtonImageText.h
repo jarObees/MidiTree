@@ -16,8 +16,15 @@ namespace jiveGui
 			hoverImageSource(_hoverImage), pressedImageSource(_pressedImage)
 		{
 			mainImage = std::make_unique<juce::DrawableImage>(imageSource);
-			hoverImage = std::make_unique<juce::DrawableImage>(hoverImageSource);
-			pressedImage = std::make_unique<juce::DrawableImage>(pressedImageSource);
+			if (_hoverImage.isNull())
+				hoverImage.reset();
+			else
+				hoverImage = std::make_unique<juce::DrawableImage>(hoverImageSource);
+
+			if (_pressedImage.isNull())
+				pressedImage.reset();
+			else
+				pressedImage = std::make_unique<juce::DrawableImage>(pressedImageSource);
 		}
 
 		juce::ValueTree initialise() final
@@ -43,7 +50,7 @@ namespace jiveGui
 			if (auto* button = dynamic_cast<juce::DrawableButton*>(item.getComponent().get()))
 			{
 				button->setMouseCursor(juce::MouseCursor::PointingHandCursor);
-				button->setImages(mainImage.get());
+				button->setImages(mainImage.get(), hoverImage.get(), pressedImage.get()); ///TODO: Figure out why it disappears.
 				button->onClick = [this, button]()
 					{
 						DBG(button->getComponentID() << " was clicked.");

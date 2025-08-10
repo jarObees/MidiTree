@@ -289,16 +289,16 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             
             viewInterpreter.listenTo(*editor);
 			//// Attaches/Configures automatable parameters. ========================================================
-   //         if (auto* comboBoxTingy = dynamic_cast<juce::ComboBox*>(jive::findItemWithID(*editor, jiveGui::StringIds::noteTypeComboBox)
-   //                                                                 ->getComponent().get()))
-   //         {
-   //             comboBoxTingy->addItem(comboBoxNoteTypes[0], 1);
-   //             comboBoxTingy->addItem(comboBoxNoteTypes[1], 2);
-   //             comboBoxTingy->addItem(comboBoxNoteTypes[2], 3);
+            if (auto* comboBoxTingy = dynamic_cast<juce::ComboBox*>(jive::findItemWithID(*editor, jiveGui::StringIds::noteTypeComboBox)
+                                                                    ->getComponent().get()))
+            {
+                comboBoxTingy->addItem(comboBoxNoteTypes[0], 1);
+                comboBoxTingy->addItem(comboBoxNoteTypes[1], 2);
+                comboBoxTingy->addItem(comboBoxNoteTypes[2], 3);
 
-   //         }
-   //         else
-   //             jassertfalse;
+            }
+            else
+                jassertfalse;
             infoTabManager.connectInfoTab(jive::findItemWithID(*editor, jiveGui::InfoTabUI::textComponentID));
             infoTabManager.connectActiveTreeShower(jive::findItemWithID(*editor, jiveGui::StringIds::activeTreeShower));
 			lSystemManager.connectToJiveEditor(editor.get());

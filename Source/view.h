@@ -191,7 +191,12 @@ namespace jiveGui
 	}
 	[[nodiscard]] inline auto getGround(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
-		juce::Image filmstripKnob = imageCollection.at(ImageIds::mainKnobFilmstrip);
+		std::vector<juce::Image> orderedNotetypeImageCollection;
+		orderedNotetypeImageCollection.push_back(juce::ImageCache::getFromMemory(BinaryData::NoteSelectorBase_png, BinaryData::NoteSelectorBase_pngSize));
+		orderedNotetypeImageCollection.push_back(juce::ImageCache::getFromMemory(BinaryData::NoteSelectorQuarter_png, BinaryData::NoteSelectorQuarter_pngSize));
+		orderedNotetypeImageCollection.push_back(juce::ImageCache::getFromMemory(BinaryData::NoteSelectorDotted_png, BinaryData::NoteSelectorDotted_pngSize));
+		orderedNotetypeImageCollection.push_back(juce::ImageCache::getFromMemory(BinaryData::NoteSelectorTriplet_png, BinaryData::NoteSelectorTriplet_pngSize));
+
 		return juce::ValueTree
 		{
 			"Component",
@@ -224,16 +229,21 @@ namespace jiveGui
 						{"id", "ground"},
 						{"flex-direction", "row"},
 						{"justify-content", "centre"},
+						{"align-items", "centre"},
 						{"centre-x", "50%"},
 						{"centre-y", "50%"},
 						{"width", "100%"},
-						{"height", "13%"},
+						{"height", "100%"},
 					},
 					{
-						///TODO: UNFUCK THIS.
-						//getMidiVelocityKnob(imageCollection),
-						//getNoteRateKnob(imageCollection),
-						//jive::makeView<ImageComboBoxView>(32, 32, StringIds::noteTypeComboBox), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
+						jive::makeView<ImageComboBoxView>(32, 
+														  32, 
+														  StringIds::noteTypeComboBox, 
+														  juce::ImageCache::getFromMemory(BinaryData::NoteSelectorBase_png, 
+																						  BinaryData::NoteSelectorBase_pngSize),
+														  orderedNotetypeImageCollection), // TODO: Attach to Params in createEditor() in PluginProcessor.cpp
+						getMidiVelocityKnob(imageCollection),
+						getNoteRateKnob(imageCollection),
 					}
 				},
 			}

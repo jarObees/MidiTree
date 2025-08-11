@@ -21,7 +21,6 @@ namespace jiveGui
 			mouseDownImage(_downImage),
 			dynamicImageOptions(_dynamicImageOptions)
 		{
-
 		}
 
 		juce::ValueTree initialise() final
@@ -70,11 +69,14 @@ namespace jiveGui
 			auto comboBoxGuiItem = item.getChildren().getFirst();
 			if (auto* comboBox = dynamic_cast<juce::ComboBox*>(comboBoxGuiItem->getComponent().get()))
 			{
+				///TODO: FIX THING BEING BLANK IF NOTHING IS SELECTED. WE SHOULDN'T REALLY HAVE A BASE IMAGE IN SOME CASES (AKA SOMETHING IS ALWAHYS SELECTED).
+				comboBox->setMouseCursor(juce::MouseCursor::PointingHandCursor);
 				comboBox->setVisible(true);
 				comboBox->addMouseListener(this, true);
 				onValueChange = std::make_unique<jive::Event>(comboBoxGuiItem->state, "on-change");
 				imageSource = std::make_unique<jive::Property<juce::Image>>(item.getChildren().getLast()->state, "source");
-
+				if (comboBox->getSelectedId() > 0 && comboBox->getSelectedId() <= dynamicImageOptions.size())
+					uniqueItemImage = dynamicImageOptions[comboBox->getSelectedId()];
 				onValueChange->onTrigger = [this, comboBox]()
 				{
 						int itemId = comboBox->getSelectedId();
@@ -114,7 +116,10 @@ namespace jiveGui
 		void mouseExit(const juce::MouseEvent& event) override
 		{
 			DBG("mouse exit combo box");
-			imageSource->set(uniqueItemImage);
+			if (dynamicImageOptions.size() > 0)
+				imageSource->set(uniqueItemImage);
+			else
+				imageSource->set(baseImage);
 		}
 
 		std::unique_ptr<jive::Event> onValueChange;

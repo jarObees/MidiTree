@@ -137,6 +137,7 @@ namespace jiveGui
 	[[nodiscard]] inline auto getForestRight(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
 		juce::Image filmstripKnob = imageCollection.at(ImageIds::mainKnobFilmstrip);
+		std::vector<juce::Image> blankVector;
 		return juce::ValueTree
 		{
 			"Component",
@@ -153,13 +154,17 @@ namespace jiveGui
 				},
 			},
 			{
-				jive::makeView<DrawableButton>(64, 
-											   32, 
+				jive::makeView<DrawableButton>(64,
+											   32,
 											   juce::ImageCache::getFromMemory(BinaryData::SaveButtonNormal_png, BinaryData::SaveButtonNormal_pngSize),
-											   StringIds::saveButton, 
+											   StringIds::saveButton,
 											   juce::ImageCache::getFromMemory(BinaryData::SaveButtonHover_png,BinaryData::SaveButtonHover_pngSize),
 											   juce::ImageCache::getFromMemory(BinaryData::SaveButtnoPressed_png, BinaryData::SaveButtnoPressed_pngSize)),
-				jive::makeView<ComboBoxView>(64, 64, StringIds::presetComboBox),
+				jive::makeView<ImageComboBoxView>(64, 64, StringIds::presetComboBox,
+												  juce::ImageCache::getFromMemory(BinaryData::SeedbankButtonNormal_png, BinaryData::SeedbankButtonNormal_pngSize),
+												  blankVector,
+												  juce::ImageCache::getFromMemory(BinaryData::SeedbankButtonHover_png, BinaryData::SeedbankButtonHover_pngSize),
+												  juce::ImageCache::getFromMemory(BinaryData::SeedbankButtonPressed_png, BinaryData::SaveButtnoPressed_pngSize)),
 			}
 		};
 	}

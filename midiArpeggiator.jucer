@@ -66,6 +66,8 @@
                 file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/GroundBottomBG.png"/>
           <FILE id="SAUGEp" name="ForestMainBG.png" compile="0" resource="1"
                 file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/ForestMainBG.png"/>
+          <FILE id="cZn79d" name="ForestRightBG.png" compile="0" resource="1"
+                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/ForestRightBG.png"/>
           <FILE id="V2E5TX" name="ResetButton.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/ResetButton.png"/>
           <FILE id="VzGoip" name="AxiomSelectorOn.png" compile="0" resource="1"
                 file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AxiomSelectorOn.png"/>

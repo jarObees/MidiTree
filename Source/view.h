@@ -142,29 +142,44 @@ namespace jiveGui
 		{
 			"Component",
 			{
+				{"display", "block"},
 				{"width", "20%"},
 				{"height", "100%"},
-				{"flex-direction", "column"},
-				{
-					"style",
-						new jive::Object
-						{
-							{ "background", jive::toVar(colors::debug_primary)},
-						},
-				},
 			},
 			{
-				jive::makeView<DrawableButton>(64,
-											   32,
-											   juce::ImageCache::getFromMemory(BinaryData::SaveButtonNormal_png, BinaryData::SaveButtonNormal_pngSize),
-											   StringIds::saveButton,
-											   juce::ImageCache::getFromMemory(BinaryData::SaveButtonHover_png,BinaryData::SaveButtonHover_pngSize),
-											   juce::ImageCache::getFromMemory(BinaryData::SaveButtnoPressed_png, BinaryData::SaveButtnoPressed_pngSize)),
-				jive::makeView<ImageComboBoxView>(64, 64, StringIds::presetComboBox,
-												  juce::ImageCache::getFromMemory(BinaryData::SeedbankButtonNormal_png, BinaryData::SeedbankButtonNormal_pngSize),
-												  blankVector,
-												  juce::ImageCache::getFromMemory(BinaryData::SeedbankButtonHover_png, BinaryData::SeedbankButtonHover_pngSize),
-												  juce::ImageCache::getFromMemory(BinaryData::SeedbankButtonPressed_png, BinaryData::SaveButtnoPressed_pngSize)),
+				juce::ValueTree
+				{
+					"Image",
+					{
+						{"source", jive::toVar(juce::ImageCache::getFromMemory(BinaryData::ForestRightBG_png, BinaryData::ForestRightBG_pngSize))},
+						{"width", "100%"},
+						{"height", "100%"},
+					}
+				},
+				juce::ValueTree
+				{
+					"Component",
+					{
+						{"width", "100%"},
+						{"height", "100%"},
+						{"flex-direction", "column"},
+						{"justify-content", "space-around"},
+						{"align-items", "centre"},
+					},
+					{
+						jive::makeView<DrawableButton>(64,
+													   32,
+													   juce::ImageCache::getFromMemory(BinaryData::SaveButtonNormal_png, BinaryData::SaveButtonNormal_pngSize),
+													   StringIds::saveButton,
+													   juce::ImageCache::getFromMemory(BinaryData::SaveButtonHover_png,BinaryData::SaveButtonHover_pngSize),
+													   juce::ImageCache::getFromMemory(BinaryData::SaveButtnoPressed_png, BinaryData::SaveButtnoPressed_pngSize)),
+						jive::makeView<ImageComboBoxView>(64, 64, StringIds::presetComboBox,
+														  juce::ImageCache::getFromMemory(BinaryData::SeedbankButtonNormal_png, BinaryData::SeedbankButtonNormal_pngSize),
+														  blankVector,
+														  juce::ImageCache::getFromMemory(BinaryData::SeedbankButtonHover_png, BinaryData::SeedbankButtonHover_pngSize),
+														  juce::ImageCache::getFromMemory(BinaryData::SeedbankButtonPressed_png, BinaryData::SaveButtnoPressed_pngSize)),
+					}
+				}
 			}
 		};
 	}

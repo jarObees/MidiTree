@@ -50,6 +50,19 @@
           <FILE id="AyYkmL" name="PERTIBD.TTF" compile="0" resource="1" file="../../../FUN/PERTIBD.TTF"/>
         </GROUP>
         <GROUP id="{62C50326-9474-8506-DEB8-F34E26513BCE}" name="Images">
+          <GROUP id="{2C32E0B5-BB5E-565C-D3BD-233FD945E192}" name="Forest">
+            <FILE id="HUOlWe" name="TreeOn.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeOn.png"/>
+            <FILE id="AzzPXe" name="TreeLoaded.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeLoaded.png"/>
+            <FILE id="t9hxy5" name="TreeOff.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeOff.png"/>
+            <FILE id="SAUGEp" name="ForestMainBG.png" compile="0" resource="1"
+                  file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/ForestMainBG.png"/>
+            <FILE id="cZn79d" name="ForestRightBG.png" compile="0" resource="1"
+                  file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/ForestRightBG.png"/>
+            <FILE id="f8D8vJ" name="ForestBypassOff.png" compile="0" resource="1"
+                  file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/ForestBypassOff.png"/>
+            <FILE id="LgLM6m" name="ForestBypassOn.png" compile="0" resource="1"
+                  file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/ForestBypassOn.png"/>
+          </GROUP>
           <FILE id="NW7vc9" name="AUISpacerBG.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AUISpacerBG.png"/>
           <FILE id="e3pKV3" name="AUIMainBG.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AUIMainBG.png"/>
           <FILE id="UQLRin" name="SeedbankButtonHover.png" compile="0" resource="1"
@@ -66,10 +79,6 @@
                 file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/SaveButtonNormal.png"/>
           <FILE id="yrmnks" name="GroundBottomBG.png" compile="0" resource="1"
                 file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/GroundBottomBG.png"/>
-          <FILE id="SAUGEp" name="ForestMainBG.png" compile="0" resource="1"
-                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/ForestMainBG.png"/>
-          <FILE id="cZn79d" name="ForestRightBG.png" compile="0" resource="1"
-                file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/ForestRightBG.png"/>
           <FILE id="V2E5TX" name="ResetButton.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/ResetButton.png"/>
           <FILE id="VzGoip" name="AxiomSelectorOn.png" compile="0" resource="1"
                 file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AxiomSelectorOn.png"/>
@@ -93,9 +102,6 @@
                 file="../../../Duhzine/VSTPLUGIN/knobMans/filmstripKnob_ornate.png"/>
           <FILE id="GXmMDe" name="MainTreeOff.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/MainTreeOff.png"/>
           <FILE id="JMrKhy" name="MainTreeOn.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/MainTreeOn.png"/>
-          <FILE id="HUOlWe" name="TreeOn.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeOn.png"/>
-          <FILE id="AzzPXe" name="TreeLoaded.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeLoaded.png"/>
-          <FILE id="t9hxy5" name="TreeOff.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/TreeOff.png"/>
           <FILE id="q3aPuB" name="AUI_SIDEBAR.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AUI_SIDEBAR.png"/>
           <FILE id="WmJwT5" name="IBB_ASCENDING.png" compile="0" resource="1"
                 file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/IBB_ASCENDING.png"/>

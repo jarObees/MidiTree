@@ -146,6 +146,7 @@ void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)
 void LSystemStuff::LSystemManager::resetAUI()
 {
 	DBG("Resetting AUI");
+	///TODO: GO THROUGH AND RESET ALL THE AUI NON AUTO PARAMS. 
 }
 
 

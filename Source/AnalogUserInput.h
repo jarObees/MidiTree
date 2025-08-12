@@ -84,14 +84,18 @@ namespace jiveGui
 					{"width", BLOCKWIDTH},
 					{"height", "100%" },
 					{"flex-direction", "column"},
-					{
-						"style",
-							new jive::Object
-							{
-								{ "background", jive::toVar(colors::white)},
-							},
-					},
 				},
+				{
+					juce::ValueTree
+					{
+						"Image",
+						{
+							{"width", "100%"},
+							{"height", "100%"},
+							{"source", jive::toVar(juce::ImageCache::getFromMemory(BinaryData::AUISpacerBG_png, BinaryData::AUISpacerBG_pngSize))}
+						}
+					},	
+				}
 			};
 		}
 

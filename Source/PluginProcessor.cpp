@@ -302,9 +302,9 @@ juce::AudioProcessorEditor* MidiArpeggiatorAudioProcessor::createEditor()
             infoTabManager.connectInfoTab(jive::findItemWithID(*editor, jiveGui::InfoTabUI::textComponentID));
             infoTabManager.connectActiveTreeShower(jive::findItemWithID(*editor, jiveGui::StringIds::activeTreeShower));
 			lSystemManager.connectToJiveEditor(editor.get());
-            //attachParamsToApvts(editor.get());
-            //attachNonAutoParamsToNonAutoApvts(editor.get());
-            //configureComponents(editor.get());
+            attachParamsToApvts(editor.get());
+            attachNonAutoParamsToNonAutoApvts(editor.get());
+            configureComponents(editor.get());
             return dynamic_cast<juce::AudioProcessorEditor*>(editor.release());
         }
     }
@@ -358,6 +358,15 @@ void MidiArpeggiatorAudioProcessor::attachNonAutoParamsToNonAutoApvts(jive::GuiI
 // Links and sets up non-automatable parameters.
 void MidiArpeggiatorAudioProcessor::configureComponents(jive::GuiItem* editor)
 {
+	if (auto* resetButtonTingy = dynamic_cast<juce::Button*>
+		(jive::findItemWithID(*editor, jiveGui::StringIds::analogUserInputResetButton)
+		 ->getComponent().get()))
+	{
+		lSystemManager.configureAUIResetButton(resetButtonTingy);
+	}
+    \
+	else
+		jassertfalse;
     if (auto* saveButtonTingy = dynamic_cast<juce::Button*>(jive::findItemWithID(*editor, jiveGui::StringIds::saveButton)
                                                             ->getComponent().get()))
     {

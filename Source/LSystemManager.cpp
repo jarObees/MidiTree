@@ -55,6 +55,13 @@ void LSystemStuff::LSystemManager::connectToJiveEditor(jive::GuiItem* _editor)
 	mainEditor = _editor;
 	lSystemProcessor->connectWithEditor(mainEditor);
 }
+
+void LSystemStuff::LSystemManager::configureAUIResetButton(juce::Component* component)
+{
+	juce::Button* button = dynamic_cast<juce::Button*>(component);
+	resetButton = button;
+	resetButton->addListener(this);
+}
 // analoguserInputComponent is the topmost parent component for all the different input blocks.
 void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* analogUserInputComponent, 
 															const int numBlockRows, 
@@ -129,8 +136,16 @@ void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)
 	if (button == growButton)
 	{
 		lSystemProcessor->growLSystem();
-		return;
 	}
+	else if (button = resetButton)
+	{
+		resetAUI();
+	}
+}
+
+void LSystemStuff::LSystemManager::resetAUI()
+{
+	DBG("Resetting AUI");
 }
 
 

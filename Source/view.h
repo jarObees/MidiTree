@@ -65,7 +65,21 @@ namespace jiveGui
 							},
 							{
 								jiveGui::AnalogUserInput::getAnalogUserInput(octavesTest),
-								///TODO: ADD RESET BUTTON
+								juce::ValueTree
+								{
+									"Component",
+									{
+										{"display", "flex"},
+										{"width", "100%"},
+										{"height", "20"},
+										{"justify-content", "flex-start"},
+									},
+									{
+										jive::makeView<DrawableButton>(16, 16,
+																		juce::ImageCache::getFromMemory(BinaryData::ResetButton_png, BinaryData::ResetButton_pngSize),
+																		StringIds::analogUserInputResetButton),
+									}
+								}
 							},
 						}
 					}

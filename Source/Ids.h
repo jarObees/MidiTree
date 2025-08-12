@@ -30,6 +30,7 @@ namespace jiveGui
 		const juce::String nameTextBox{ "name-textBox" };
 		const juce::String axiomTextBox{ "axiom-textBox" };
 		const juce::String analogUserInput{ "aui" };
+		const juce::String analogUserInputResetButton("aur");
 		const juce::String forestTree{ "tre" };
 		const juce::String forestBypassButton{ "fbb" };
 		const juce::String forestResetButton{ "frb" };

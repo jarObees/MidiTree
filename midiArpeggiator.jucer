@@ -51,6 +51,7 @@
         </GROUP>
         <GROUP id="{62C50326-9474-8506-DEB8-F34E26513BCE}" name="Images">
           <FILE id="NW7vc9" name="AUISpacerBG.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AUISpacerBG.png"/>
+          <FILE id="e3pKV3" name="AUIMainBG.png" compile="0" resource="1" file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/AUIMainBG.png"/>
           <FILE id="UQLRin" name="SeedbankButtonHover.png" compile="0" resource="1"
                 file="../../../Duhzine/VSTPLUGIN/MIDITREE_FILES/images/images/images/SeedbankButtonHover.png"/>
           <FILE id="UNNO9A" name="SeedbankButtonNormal.png" compile="0" resource="1"

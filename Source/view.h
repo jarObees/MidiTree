@@ -32,12 +32,6 @@ namespace jiveGui
 				{"flex-direction", "row"},
 				{"width", "100%"},
 				{"height", "60%"},
-				{
-					"style",
-						new jive::Object{
-							{ "background", jive::toVar(colors::crown_primary)},
-						},
-				},
 			},
 			// LEFT CONTAINER
 			{
@@ -45,24 +39,36 @@ namespace jiveGui
 				{
 					"Component",
 					{
-						{"align-items", "centre"},
-						{"flex-direction", "column"},
+						{"display", "block"},
 						{"height", "100%"},
-						{"padding", "10px"},
 						{"width", "80%"},
-						{
-							"style",
-								new jive::Object
-								{
-									{ "background", jive::toVar(colors::crown_highlight)},
-								},
-						},
 					},
 					{
-						jiveGui::AnalogUserInput::getAnalogUserInput(octavesTest),
-						/// TODO: ADD TEXT
-						///TODO: ADD RESET BUTTON
-					},
+						juce::ValueTree
+						{
+							"Image",
+							{
+								{"source", jive::toVar(juce::ImageCache::getFromMemory(BinaryData::AUIMainBG_png, BinaryData::AUIMainBG_pngSize))},
+								{"width", "100%"},
+								{"height", "100%"},
+							}
+						},
+						juce::ValueTree
+						{
+							"Component",
+							{
+								{"align-items", "centre"},
+								{"flex-direction", "column"},
+								{"height", "100%"},
+								{"padding", "10px"},
+								{"width", "100%"},
+							},
+							{
+								jiveGui::AnalogUserInput::getAnalogUserInput(octavesTest),
+								///TODO: ADD RESET BUTTON
+							},
+						}
+					}
 				},
 
 				// RIGHT CONTAINER

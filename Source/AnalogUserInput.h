@@ -113,13 +113,6 @@ namespace jiveGui
 					{"justify-content", "space-between"},
 					{"width", "100%"},
 					{"height", BLOCKHEIGHT},
-					{
-						"style",
-							new jive::Object
-							{
-								{ "background", jive::toVar(colors::debug_secondary)},
-							},
-					},
 				},
 			};
 
@@ -149,13 +142,6 @@ namespace jiveGui
 					{"justify-content", "space-between"},
 					{"width", "100%"},
 					{"height", "95%"},
-					{
-						"style",
-							new jive::Object
-							{
-								{ "background", jive::toVar(colors::debug_primary)},
-							},
-					},
 				},
 			};
 			mainAnalogUserInput.setProperty(StringIds::activeAxiom, "", nullptr);		// For use in AxiomSelector to know what button is active.

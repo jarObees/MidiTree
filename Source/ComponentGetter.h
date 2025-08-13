@@ -16,6 +16,7 @@ namespace jiveGui
 				{"align-items", "centre"},
 				{"justify-content", "centre"},
 				{"flex-direction", "column"},
+
 			},
 			{
 				{
@@ -40,6 +41,84 @@ namespace jiveGui
 														64, 
 														juce::ImageCache::getFromMemory(BinaryData::filmstripKnob_ornate_png, BinaryData::filmstripKnob_ornate_pngSize), 
 														StringIds::midiVelocityKnob),
+			}
+		};
+	}
+
+	[[noexcept]] inline auto getGenerationsKnob()
+	{
+		return juce::ValueTree
+		{
+			"Component",
+			{
+				{"align-items", "centre"},
+				{"justify-content", "centre"},
+				{"flex-direction", "column"},
+				{"padding", "10"},
+
+			},
+			{
+				{
+					juce::ValueTree
+					{
+						"Text",
+						{
+							{"text", "Gens"},
+							{
+								"style",
+									new jive::Object
+										{
+											{ "background", "rgba(255, 255, 255, 0.7)"},
+											{ "foreground", "#000000" },
+											{ "font-size", 9 },
+											{ "letter-spacing", 0 },
+										},
+							},
+						}
+					},
+				},
+				jive::makeView<SquareFilmStripKnobView>(64,
+														64,
+														juce::ImageCache::getFromMemory(BinaryData::filmstripKnob_ornate_png, BinaryData::filmstripKnob_ornate_pngSize),
+														StringIds::generationsKnob),
+			}
+		};
+	}
+
+	[[noexcept]] inline auto getGrowButton()
+	{
+		return juce::ValueTree
+		{
+			"Component",
+			{
+				{"align-items", "centre"},
+				{"justify-content", "centre"},
+				{"flex-direction", "column"},
+				{"padding", "10 10"},
+			},
+			{
+				{
+					juce::ValueTree
+					{
+						"Text",
+						{
+							{"text", "Grow"},
+							{
+								"style",
+									new jive::Object
+										{
+											{ "background", "rgba(255, 255, 255, 0.7)"},
+											{ "foreground", "#000000" },
+											{ "font-size", 9 },
+											{ "letter-spacing", 0 },
+										},
+							},
+						}
+					},
+				},
+				jive::makeView<DrawableButton>(64, 64,
+												juce::ImageCache::getFromMemory(BinaryData::button_grow_png, BinaryData::button_grow_pngSize),
+												StringIds::growButton),
 			}
 		};
 	}

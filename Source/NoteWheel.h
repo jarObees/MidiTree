@@ -75,7 +75,7 @@ namespace jiveGui
 									{"justification", juce::Justification::centred},
 									{"align-content", "centre"},
 									{"justify-content", "centre"},
-									{
+									{ 
 									"style",
 										new jive::Object
 											{

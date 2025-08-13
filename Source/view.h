@@ -244,13 +244,6 @@ namespace jiveGui
 				{"display", "block"},
 				{"width", "100%"},
 				{"height", "13%"},
-										{
-							"style",
-								new jive::Object
-								{
-									{ "background", jive::toVar(colors::crown_highlight)},
-								},
-						},
 			},
 			{
 				juce::ValueTree
@@ -268,7 +261,7 @@ namespace jiveGui
 					{
 						{"id", "ground"},
 						{"flex-direction", "row"},
-						{"justify-content", "centre"},
+						{"justify-content", "space-around"},
 						{"align-items", "centre"},
 						{"centre-x", "50%"},
 						{"centre-y", "50%"},
@@ -310,6 +303,7 @@ namespace jiveGui
 				{
 					"style",
 					new jive::Object{
+						{"font-family", "Perpetua Titling MT"},
 						{ "background", "#000000" },
 						{ "foreground", "#FFFFFF"},
 					},

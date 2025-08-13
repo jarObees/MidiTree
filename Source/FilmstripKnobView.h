@@ -54,6 +54,7 @@ namespace jiveGui
 			// We confirm access to the slider itself.
 			if (auto* stripSlider = dynamic_cast<juce::Slider*>(item.getComponent().get()))
 			{
+				stripSlider->setPopupDisplayEnabled(true, true, nullptr);
 				stripSlider->setLookAndFeel(&laf);
 				// Defucks the image component.
 				auto* imageComponent = item.getChildren().getFirst()->getComponent().get();

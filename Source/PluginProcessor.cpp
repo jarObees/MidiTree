@@ -463,11 +463,7 @@ void MidiArpeggiatorAudioProcessor::attachParamsToApvts(jive::GuiItem* editor)
         ->attachToParameter(apvts.getParameter("noteType"), &undoManager);
     jive::findItemWithID(*editor, jiveGui::StringIds::noteRateKnob)
         ->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
-    jive::findItemWithID(*editor, jiveGui::StringIds::noteRateKnobText)
-        ->attachToParameter(apvts.getParameter("noteRate"), &undoManager);
     jive::findItemWithID(*editor, jiveGui::StringIds::midiVelocityKnob)
-        ->attachToParameter(apvts.getParameter("vel"), &undoManager);
-    jive::findItemWithID(*editor, jiveGui::StringIds::midiVelocityKnobText)
         ->attachToParameter(apvts.getParameter("vel"), &undoManager);
     jive::findItemWithID(*editor, jiveGui::StringIds::forestSlider)
         ->attachToParameter(apvts.getParameter("forest"), &undoManager);

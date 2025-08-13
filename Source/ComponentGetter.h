@@ -18,30 +18,12 @@ namespace jiveGui
 				{"flex-direction", "column"},
 			},
 			{
-				jive::makeView<SquareFilmStripKnobView>(64, 64, imageCollection[ImageIds::mainKnobFilmstrip], StringIds::midiVelocityKnob),
-				juce::ValueTree
-				{
-					"Text",
-					{
-						{"id", StringIds::midiVelocityKnobText},
-						{"flex-direction", "column"},
-						{
-						"style",
-							new jive::Object
-								{
-									{ "foreground", "#FFFFFF" },
-									{ "font-size", 20 },
-									{ "letter-spacing", 1.5 },
-								},
-						},
-					},	
-				},
 				{
 					juce::ValueTree
 					{
 						"Text",
 						{
-							{"text", "velocity"},
+							{"text", "Velocity"},
 							{
 								"style",
 									new jive::Object
@@ -53,7 +35,11 @@ namespace jiveGui
 							},
 						}
 					},
-				}
+				},
+				jive::makeView<SquareFilmStripKnobView>(64, 
+														64, 
+														juce::ImageCache::getFromMemory(BinaryData::filmstripKnob_ornate_png, BinaryData::filmstripKnob_ornate_pngSize), 
+														StringIds::midiVelocityKnob),
 			}
 		};
 	}
@@ -69,42 +55,26 @@ namespace jiveGui
 				{"flex-direction", "column"},
 			},
 			{
-				jive::makeView<SquareFilmStripKnobView>(64, 64, imageCollection[ImageIds::mainKnobFilmstrip], StringIds::noteRateKnob),
 				juce::ValueTree
 				{
 					"Text",
 					{
-						{"id", StringIds::noteRateKnobText},
-						{"flex-direction", "column"},
+						{"text", "Note Rate"},
 						{
-						"style",
-							new jive::Object
-								{
-									{ "foreground", "#FFFFFF" },
-									{ "font-size", 20 },
-									{ "letter-spacing", 1.5 },
-								},
+							"style",
+								new jive::Object
+									{
+										{ "foreground", "#FFFFFF" },
+										{ "font-size", 10 },
+										{ "letter-spacing", 1.5 },
+									},
 						},
-					},
+					}
 				},
-				{
-					juce::ValueTree
-					{
-						"Text",
-						{
-							{"text", "Note Rate"},
-							{
-								"style",
-									new jive::Object
-										{
-											{ "foreground", "#FFFFFF" },
-											{ "font-size", 10 },
-											{ "letter-spacing", 1.5 },
-										},
-							},
-						}
-					},
-				}
+				jive::makeView<SquareFilmStripKnobView>(64, 
+														64, 
+														juce::ImageCache::getFromMemory(BinaryData::filmstripKnob_ornate_png, BinaryData::filmstripKnob_ornate_pngSize), 
+														StringIds::noteRateKnob),
 			}
 		};
 	}

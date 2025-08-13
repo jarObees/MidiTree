@@ -411,6 +411,14 @@ void MidiArpeggiatorAudioProcessor::configureComponents(jive::GuiItem* editor)
     else
         jassertfalse;
     // Forest Manager ========================================================================================
+    if (auto* forestResetButton = dynamic_cast<juce::Button*>
+        (jive::findItemWithID(*editor, jiveGui::StringIds::forestResetButton)
+         ->getComponent().get()))
+    {
+        forestManager.configureForestResetButton(forestResetButton);
+    }
+    else
+        jassertfalse;
     if (auto* forestSlider = dynamic_cast<juce::Slider*>
         (jive::findItemWithID(*editor, jiveGui::StringIds::forestSlider)
          ->getComponent().get()))

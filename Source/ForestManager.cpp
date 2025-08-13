@@ -129,7 +129,13 @@ namespace Forest
 		}
 		else if (resetButton->getComponentID() == button->getComponentID())
 		{
+			DBG("Reset button clicked");
 			resetForestSlots();
+		}
+		else if (bypassButton->getComponentID() == button->getComponentID())
+		{
+			DBG("Setting bypass to" << (button->getToggleState() ? "true" : "false"));
+			setBypass(button->getToggleState());
 		}
 	}
 

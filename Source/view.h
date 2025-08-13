@@ -291,7 +291,6 @@ namespace jiveGui
 	// TOP LEVEL VIEW =========================================================
 	[[nodiscard]] inline auto getView(std::unordered_map<std::string, juce::Image>& imageCollection)
 	{
-		//TODO: PASS IN THE IMAGES TO THE COMPONENTS.
 		return juce::ValueTree{
 			"Editor",
 			{

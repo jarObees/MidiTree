@@ -80,9 +80,10 @@ namespace jiveGui
 										new jive::Object
 											{
 												//{"background", jive::toVar(jiveGui::colors::debug_secondary)},
+												{"font-family", "Khamila"},
 												{ "foreground", "#000000"},
 												{ "font-size", 20 },
-												{ "letter-spacing", 1 },
+												{ "letter-spacing", 0 },
 											},
 									},
 								},

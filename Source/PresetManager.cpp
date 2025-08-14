@@ -24,50 +24,48 @@ namespace Preset
 
 		// Adds a listener to update the comboBox in realtime.l
 		apvts.state.addListener(this);
-		currentPresetName.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
-		DBG("RULESET IN PRESET MANAGER CONSTRUCTION" << (apvts.state.getPropertyAsValue(apvtsPropIds::userRulesetStringProperty, nullptr)));
-		DBG("Set the current preset");
 		isModified = false;
 	}
 
 	// Copies state of apvts and savesit to file.
+	// Most importantly, used to save/load active tree data.
+	// IMPORTANT: Any changes here, insure that everything can be undone using load. Both are intrinsically linked.
 	void PresetManager::savePreset(const juce::String& presetName)
-	{
+		{
 		DBG("Saving preset: " << presetName);
 		if (presetName.isEmpty())
 			return;
-
-		currentPresetName.setValue(presetName);
-		
-		
+		DBG("Previous name: " << activeTreeManager.getTreeName());
+		activeTreeManager.setTreeName(presetName);
+		DBG("Tree name set. Checking notesPool" << activeTreeManager.getNotesPoolAsNumString());
 		std::unique_ptr<juce::XmlElement> xml;
 
 		// In order to put notesPool in xml, we must convert our juce::Array<int> var into a readable xml, since we can't store those for xml.
 		// We will then read this back to normal later within the loadPreset().
-		if (!apvts.state.getProperty(apvtsPropIds::notesPoolVectorStringProperty).isVoid())
+		if (!activeTreeManager.getNotesPool().isEmpty())
 		{
 			DBG("fixing the notes pool stuff...");
 			auto apvtsCopy = apvts.copyState();
-			juce::Array<juce::var> notesPoolArray = *apvtsCopy.getProperty(apvtsPropIds::notesPoolVectorStringProperty).getArray();
+			juce::Array<int> notesPoolArray = activeTreeManager.getNotesPool();
+			
+			/// FOR DEBUGGING PURPOSES.
 			DBG("Confirming notes pool: ");
 			for (auto element : notesPoolArray)
 			{
-				DBG("NOTE: " << element.toString());
+				DBG("NOTE: " << juce::String(element));
 			}
 
 			// Create a new XML element that holds all the juce::Array data.
-			juce::XmlElement arrayXml("arrayXml");
-			for (auto& item : notesPoolArray) // Grabs each var (which is an int) from the notes pool, and converts it to an xml element.
+			juce::XmlElement notesPoolArrayXML("arrayXml");
+			for (auto& noteNum : notesPoolArray) // Converts each int to an xml element.
 			{
-				jassert(item.isInt());
-				int newTing = item.toString().getIntValue();
-				auto* element = new juce::XmlElement("NoteElement");
-				element->setAttribute("value", newTing);
-				arrayXml.addChildElement(element);
+				auto* noteNumElement = new juce::XmlElement("NoteElement");
+				noteNumElement->setAttribute("value", noteNum);
+				notesPoolArrayXML.addChildElement(noteNumElement);
 			}
 
-			const juce::String serializedArray = arrayXml.createDocument("");
-			apvtsCopy.setProperty("serializedArray", serializedArray, nullptr);
+			const juce::String serializedNotesPoolArray = notesPoolArrayXML.createDocument("");
+			apvtsCopy.setProperty("serializedArray", serializedNotesPoolArray, nullptr);
 			apvtsCopy.removeProperty(apvtsPropIds::notesPoolVectorStringProperty, nullptr); // Removes buggy property, once everything else has worked.
 			xml = apvtsCopy.createXml();
 		}
@@ -78,6 +76,7 @@ namespace Preset
 		}
 
 		const auto presetFile = defaultDirectory.getChildFile(presetName + "." + presetExtension);
+		DBG("apvts before saving: " << apvts.state.getProperty("serializedArray").toString());
 		if (!xml->writeToFile(presetFile, ""))
 		{
 			jassertfalse;
@@ -103,12 +102,11 @@ namespace Preset
 		juce::XmlDocument xmlDoc{ presetFile };
 
 		// DEFUCKER
-		//TODO: Double check that this thing is working how I want it to work.
 		auto fuckedValueTree = juce::ValueTree::fromXml(*xmlDoc.getDocumentElement());
 		juce::String serializedArray = fuckedValueTree.getProperty("serializedArray").toString();
 		std::unique_ptr<juce::XmlElement> arrayXml = juce::parseXML(serializedArray);
 		jassert(arrayXml != nullptr);
-		juce::Array<juce::var> restoredArray;
+		juce::Array<int> restoredArray;
 		for (auto child : arrayXml.get()->getChildIterator())
 		{
 			if (child->hasTagName("NoteElement"))
@@ -117,8 +115,12 @@ namespace Preset
 				restoredArray.add((child->getStringAttribute("value")).getIntValue());
 			}
 		}
-		fuckedValueTree.setProperty(apvtsPropIds::notesPoolVectorStringProperty, restoredArray, nullptr);
-
+		// fuckedValueTree.setProperty(apvtsPropIds::notesPoolVectorStringProperty, restoredArray, nullptr);
+		activeTreeManager.setNotesPool(restoredArray);
+		activeTreeManager.setTreeName(presetName);
+		Tree::MidiTree newActiveTree{ presetName, restoredArray };
+		DBG("Active Tree Name: " << activeTreeManager.getTreeName());
+		DBG("Active NotesPool: " << activeTreeManager.getNotesPoolAsNumString());
 		apvts.replaceState(fuckedValueTree);
 		DBG("Notes Pool is: ");
 		auto arrayThing = apvts.state.getProperty(apvtsPropIds::notesPoolVectorStringProperty);
@@ -131,7 +133,6 @@ namespace Preset
 				DBG("Note: " << element.toString());
 			}
 		}
-		currentPresetName.setValue(presetName);
 	}
 
 	void PresetManager::deletePreset(const juce::String& presetName)
@@ -152,7 +153,7 @@ namespace Preset
 			jassertfalse;
 			return;
 		}
-		currentPresetName.setValue("");
+		activeTreeManager.setTreeName("");
 	}
 
 	void PresetManager::configureComboBoxComponent(juce::ComboBox* _comboBox)
@@ -175,6 +176,7 @@ namespace Preset
 	// General buttonClicked override for any related button.
 	void PresetManager::buttonClicked(juce::Button* button)
 	{
+		DBG("Button Clicked in Preset Manager: Notes Pool : " << activeTreeManager.getNotesPoolAsNumString());
 		DBG("Save button clicked");
 		
 		// Opens up a file picker window for the user to save.
@@ -222,7 +224,7 @@ namespace Preset
 		comboBox->clear(juce::dontSendNotification);
 		const auto allPresets = getAllPresets();
 		comboBox->addItemList(allPresets, 1);
-		comboBox->setSelectedItemIndex(allPresets.indexOf(currentPresetName.toString()), juce::dontSendNotification);
+		comboBox->setSelectedItemIndex(allPresets.indexOf(activeTreeManager.getTreeName(), juce::dontSendNotification));
 	}
 
 	// Helper to loadPresetList()
@@ -243,6 +245,5 @@ namespace Preset
 	void PresetManager::valueTreeRedirected(juce::ValueTree& changedValueTree)
 	{
 		DBG("Value Tree Redirected");
-		currentPresetName.referTo(changedValueTree.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
 	}
 }

@@ -21,9 +21,10 @@ namespace Forest
 			tree = nullptr;
 		
 		forestDataSlots.assign(maxNumTrees, { "", {} });
-		generatedLString.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
-		notesPool.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
-		midiTreeName.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
+		///TODO: See if we can delete this later (obsolete)
+		//generatedLString.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
+		//notesPool.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
+		//midiTreeName.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
 		apvts.state.addListener(this);
 		bypassState = true;
 		DBG("Linked genLString/notesPool to property value");
@@ -180,12 +181,14 @@ namespace Forest
 	void ForestManager::mouseExit(const juce::MouseEvent& event)
 	{
 		DBG("Mouse exited tree component");
-		infoTabManager->setDefaultState();
+		DBG("Active Tree Notes Pool" << activeTreeManager->getNotesPoolAsNumString());
+		infoTabManager->setActiveTreeDisplay();
 	}
 	void ForestManager::valueTreeRedirected(juce::ValueTree& changedTree)
 	{
-		generatedLString.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
-		notesPool.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
-		midiTreeName.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
+		///TODO: See if we can delete this later (obsolete)
+		//generatedLString.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
+		//notesPool.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
+		//midiTreeName.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
 	}
 }

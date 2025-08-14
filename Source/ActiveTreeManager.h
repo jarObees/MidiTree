@@ -2,7 +2,8 @@
 #include "TreeData.h"
 namespace Tree
 {
-	// Is this overkill? Maybe. But I'm learning so whatever.
+	// Derive from this class to do stuff whenever anything in the tree changes.
+	// In this case, I'm using it for the infoTab display to be updated accordingly.
 	class ActiveTreeListener
 	{
 	public:

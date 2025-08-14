@@ -19,7 +19,7 @@ namespace InfoTabManager
 		{
 			DBG("Setting tree shower to ACTIVE");
 			treeShower->setToggleState(true, true);
-			setDefaultState();
+			setActiveTreeDisplay();
 		}
 		else
 		{
@@ -31,7 +31,7 @@ namespace InfoTabManager
 	void InfoTabManager::connectInfoTab(jive::GuiItem* item)
 	{
 		textItem = item;
-		setDefaultState();
+		setActiveTreeDisplay();
 	}
 	void InfoTabManager::connectActiveTreeShower(jive::GuiItem* item)
 	{
@@ -40,7 +40,7 @@ namespace InfoTabManager
 		treeShower = activeTreeShower;
 	}
 	// Default message should simply display the active tree.
-	void InfoTabManager::setDefaultState()
+	void InfoTabManager::setActiveTreeDisplay()
 	{
 		juce::String upperLine = "Tree: " + activeTreeManager->getTreeName();
 		juce::String lowerLine = "String: " + activeTreeManager->getNotesPoolAsNumString();

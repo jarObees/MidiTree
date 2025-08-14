@@ -13,7 +13,7 @@ namespace InfoTabManager
 		void connectActiveTreeShower(jive::GuiItem*);
 		void sendSingleLineMessage(juce::String);
 		void sendDoubleLineMessage(juce::String line1, juce::String line2);
-		void setDefaultState();
+		void setActiveTreeDisplay();
 	private:
 		Tree::ActiveTreeManager* activeTreeManager;
 		void updateActiveTreeShower();

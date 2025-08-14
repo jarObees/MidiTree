@@ -26,6 +26,7 @@ namespace Tree
 					listener->onActiveTreeChanged(activeTree);
 			}
 		}
+
 	public:
 		ActiveTreeManager() 
 			: activeTree(std::make_shared<MidiTree>()) 
@@ -76,6 +77,17 @@ namespace Tree
 			return finalString.trimCharactersAtEnd(",");
 		}
 
+		bool hasSavedTree() const
+		{
+			if (activeTree->name != UNSAVEDTREENAME &&
+				activeTree->name != INITTREENAME)
+			{
+				return true;
+			}
+			else
+				return false;
+		}
+
 		juce::String getTreeName() const
 		{
 			return activeTree->name;
@@ -91,5 +103,7 @@ namespace Tree
 			DBG("Removing Listener...");
 			std::erase(listeners, listenerToBeRemoved);
 		}
+		const juce::String UNSAVEDTREENAME = "Unnamed Tree";
+		const juce::String INITTREENAME = Tree::MidiTree{}.name;
 	};
 }

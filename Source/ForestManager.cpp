@@ -77,25 +77,26 @@ namespace Forest
 	{
 		DBG("Attempting to plant =======================================================");
 
-		if (!generatedLString.getValue().isVoid()) // Guarantees that midiTree is valid and has been saved.
+		if (!activeTreeManager->getNotesPool().isEmpty())
 		{
-			if (!presetManager.isModified)
+			if (activeTreeManager->hasSavedTree())
 			{
 				DBG("WE PLANTING IN THIS HOE!");
 				auto& dataSlot = forestDataSlots[currentForestIndex];
 				dataSlot.name = midiTreeName.getValue();
 				dataSlot.notesPool = activeTreeManager->getNotesPool();
+				// bypassButton->setToggleState(false);
 			}
 			else
 			{
-				DBG("Preset manager is currently modified!");
+				DBG("Must plant the tree first!");
 				return;
 			}
 
 		}
 		else
 		{
-			DBG("generatedLString is void!");
+			DBG("Empty Notes Pool!");
 			return;
 		}
 	}

@@ -43,7 +43,7 @@ void LSystemProcessor::growLSystem()
     generateLString(axiomChar, ruleMap);
     generateNotesPool(analogUserInputBlockDataSet);
     activeTreeManager->setNotesPool(generatedNotesPool);
-    activeTreeManager->setTreeName("Unnamed Tree");
+    activeTreeManager->setTreeName(activeTreeManager->UNSAVEDTREENAME);
     DBG("Finshed Growing L System...");
     DBG("Current Tree Name: " << activeTreeManager->getTreeName());
     DBG("Current Notes Pool: " << activeTreeManager->getNotesPoolAsNumString());

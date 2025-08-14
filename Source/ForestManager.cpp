@@ -17,7 +17,7 @@ namespace Forest
 		activeTreeManager(_activeTreeManager),
 		infoTabManager(_infoTabManager)
 	{
-		for (auto* tree : forestTrees)
+		for (auto* tree : forestTreesUI)
 			tree = nullptr;
 		
 		forestDataSlots.assign(maxNumTrees, { "", {} });
@@ -43,8 +43,8 @@ namespace Forest
 	}
 	void ForestManager::configureForestTrees(std::vector<jiveGui::ForestUI::TreeComponent*> trees)
 	{
-		forestTrees = trees;
-		for (jiveGui::ForestUI::TreeComponent* tree : forestTrees)
+		forestTreesUI = trees;
+		for (jiveGui::ForestUI::TreeComponent* tree : forestTreesUI)
 		{
 			tree->addMouseListener(this, true);
 		}
@@ -73,6 +73,7 @@ namespace Forest
 		jassert(resetButton != nullptr);
 	}
 	// Planting is the only place where we should interact with the PresetManager.
+	// 
 	void ForestManager::plantTree()
 	{
 		DBG("Attempting to plant =======================================================");
@@ -83,9 +84,13 @@ namespace Forest
 			{
 				DBG("WE PLANTING IN THIS HOE!");
 				auto& dataSlot = forestDataSlots[currentForestIndex];
-				dataSlot.name = midiTreeName.getValue();
+				dataSlot.name = activeTreeManager->getTreeName();
 				dataSlot.notesPool = activeTreeManager->getNotesPool();
-				// bypassButton->setToggleState(false);
+				
+				auto& selectedTreeDisplay = forestTreesUI[currentForestIndex];
+				selectedTreeDisplay->setLoadedState(true);
+				selectedTreeDisplay->setActiveState(true);
+				bypassButton->setToggleState(false, true); // Maybe shouldn't send notification?
 			}
 			else
 			{
@@ -107,21 +112,29 @@ namespace Forest
 		if (forestSlider == slider)
 		{
 			currentForestIndex = forestSlider->getValue() - 1;
-			DBG("Current tree: " << forestDataSlots[currentForestIndex].name);
-			auto notesPool = forestDataSlots[currentForestIndex].notesPool;
-			if (!notesPool.isEmpty())
+			auto currentSlottedTree = forestDataSlots[currentForestIndex];
+			DBG("Current tree: " << currentSlottedTree.name);
+			if (!currentSlottedTree.notesPool.isEmpty())
 			{
-				activeTreeManager->setNotesPool(notesPool);
+				// Sets selected slottedTree to activeTree
+				activeTreeManager->setNotesPool(currentSlottedTree.notesPool);
+				activeTreeManager->setTreeName(currentSlottedTree.name);
 			}
-			// Update UI
-			auto* activeTree = forestTrees[currentForestIndex];
-			DBG("Active Tree is # " << currentForestIndex);
-			jassert(activeTree != nullptr);
-			for (auto* tree : forestTrees)	// Turn off all trees
-				tree->setActiveState(false);
-			activeTree->setActiveState(true); // Then only turn on active tree.
+
+			updateTreeSlotsUI();
 		}
 	}
+
+	void ForestManager::updateTreeSlotsUI()
+	{
+		auto* activeTree = forestTreesUI[currentForestIndex];
+		DBG("Active Tree is # " << currentForestIndex);
+		jassert(activeTree != nullptr);
+		for (auto* tree : forestTreesUI)	// Turn off all trees
+			tree->setActiveState(false);
+		activeTree->setActiveState(true); // Then only turn on active tree.
+	}
+
 	void ForestManager::buttonClicked(juce::Button* button)
 	{
 		DBG("Forest Manager: Button Clicked!");

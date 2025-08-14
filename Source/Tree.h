@@ -15,6 +15,7 @@ namespace jiveGui
 			bool getActiveState() const { return active; }
 			bool getLoadedState() const { return loaded; }
 			
+			// This indicates that a tree is loaded into this slot.
 			void setLoadedState(bool newState) // For use in ForestManager
 			{ 
 				if (loaded != newState)
@@ -24,6 +25,7 @@ namespace jiveGui
 				}
 				DBG("Setting loadState to " << (newState ? "true" : "false"));
 			}
+			// This indicates that the tree is currently also the activeTree in activeTreeManager.
 			void setActiveState(bool newState) // For use in ForestManager
 			{
 				if (active != newState)

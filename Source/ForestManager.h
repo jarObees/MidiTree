@@ -49,7 +49,7 @@ namespace Forest
 
 		// Slider will be indexing across this vector. 
 		std::vector<Tree::MidiTree> forestDataSlots;
-		std::vector<jiveGui::ForestUI::TreeComponent*> forestTrees;
+		std::vector<jiveGui::ForestUI::TreeComponent*> forestTreesUI;
 		juce::Slider* forestSlider = nullptr;
 		juce::Button* plantButton = nullptr;
 		juce::Button* bypassButton = nullptr;
@@ -59,5 +59,6 @@ namespace Forest
 
 		void plantTree();
 		void resetForestSlots();
+		void updateTreeSlotsUI();
 	};
 }

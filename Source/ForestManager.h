@@ -17,7 +17,7 @@ namespace Forest
 	}
 
 	class ForestManager
-		: public juce::Slider::Listener, juce::Button::Listener, juce::ValueTree::Listener, juce::MouseListener
+		: public juce::Slider::Listener, juce::Button::Listener, juce::ValueTree::Listener, juce::MouseListener, juce::Timer
 	{
 	public:
 		ForestManager(juce::AudioProcessorValueTreeState& _apvts, Preset::PresetManager&, Tree::ActiveTreeManager*, InfoTabManager::InfoTabManager*);
@@ -56,9 +56,15 @@ namespace Forest
 		juce::Button* resetButton = nullptr;
 
 		Preset::PresetManager& presetManager;
-
+		static const int RESETBUTTONHOLDMS = 1500;
 		void plantTree();
-		void resetForestSlots();
+		void resetAllForestSlots();
+		void resetSelectedForestSlot();
 		void updateTreeSlotsUI();
+		void timerCallback() override;
+
+		void mouseDown(const juce::MouseEvent& event);
+		void mouseUp(const juce::MouseEvent& event);
+
 	};
 }

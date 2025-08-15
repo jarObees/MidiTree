@@ -17,14 +17,11 @@ namespace Forest
 		activeTreeManager(_activeTreeManager),
 		infoTabManager(_infoTabManager)
 	{
+
 		for (auto* tree : forestTreesUI)
 			tree = nullptr;
 		
 		forestDataSlots.assign(maxNumTrees, { "", {} });
-		///TODO: See if we can delete this later (obsolete)
-		//generatedLString.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::generatedLsysStringProperty, nullptr));
-		//notesPool.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::notesPoolVectorStringProperty, nullptr));
-		//midiTreeName.referTo(apvts.state.getPropertyAsValue(apvtsPropIds::presetNameProperty, nullptr));
 		apvts.state.addListener(this);
 		bypassState = true;
 		DBG("Linked genLString/notesPool to property value");
@@ -70,6 +67,7 @@ namespace Forest
 	{
 		resetButton = _resetButton;
 		resetButton->addListener(this);
+		resetButton->addMouseListener(this, true);
 		jassert(resetButton != nullptr);
 	}
 	// Planting is the only place where we should interact with the PresetManager.
@@ -145,7 +143,7 @@ namespace Forest
 		else if (resetButton->getComponentID() == button->getComponentID())
 		{
 			DBG("Reset button clicked");
-			resetForestSlots();
+			resetSelectedForestSlot();
 		}
 		else if (bypassButton->getComponentID() == button->getComponentID())
 		{
@@ -154,13 +152,50 @@ namespace Forest
 		}
 	}
 
-	void ForestManager::resetForestSlots()
+	void ForestManager::resetSelectedForestSlot()
+	{
+		auto& displayTree = forestTreesUI[currentForestIndex];
+		auto& dataTree = forestDataSlots[currentForestIndex];
+		displayTree->setActiveState(false);
+		displayTree->setLoadedState(false);
+		dataTree = Tree::MidiTree{};
+	}
+
+	void ForestManager::resetAllForestSlots()
 	{
 		DBG("Resetting all forest slots...");
-		for (auto tree : forestDataSlots)
+		int i = 0;
+		for (auto& tree : forestDataSlots)
 		{
+			auto& displayTree = forestTreesUI[i];
+			displayTree->setActiveState(false);
+			displayTree->setLoadedState(false);
 			tree = Tree::MidiTree{};
+			i++;
 		}
+	}
+
+	void ForestManager::mouseDown(const juce::MouseEvent& event)
+	{
+		if (event.eventComponent == resetButton)
+		{
+			startTimer(RESETBUTTONHOLDMS);
+		}
+	}
+
+	void ForestManager::mouseUp(const juce::MouseEvent& event)
+	{
+		if (event.eventComponent == resetButton)
+		{
+			stopTimer();
+		}
+	}
+
+	// Once  you click and hold 
+	void ForestManager::timerCallback()
+	{
+		DBG("Timer Callback Triggered!");
+		resetAllForestSlots();
 	}
 
 	// Used for sending messages to InfoTabManager
@@ -188,8 +223,6 @@ namespace Forest
 													 "String: ---");
 			}
 		}
-		else
-			jassertfalse;
 	}
 
 	void ForestManager::mouseExit(const juce::MouseEvent& event)

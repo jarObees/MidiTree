@@ -63,6 +63,7 @@ void LSystemStuff::LSystemManager::configureAUIResetButton(juce::Component* comp
 	resetButton->addListener(this);
 }
 
+///TODO: DO WE EVEN NEED THIS SHIT??
 // analoguserInputComponent is the topmost parent component for all the different input blocks.
 void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* analogUserInputComponent, 
 															const int numBlockRows, 
@@ -71,34 +72,6 @@ void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* ana
 	DBG("Configuring Analog User Input");
 	jassert(analogUserInputComponent != nullptr);
 	this->analogUserInputComponent = analogUserInputComponent;
-	for (int row = 0; row < jiveGui::AnalogUserInput::NUMBLOCKROWS; row++)
-	{
-		std::vector<AnalogUserInputBlockData> rowData;
-		for (int col = -1; col < jiveGui::AnalogUserInput::NUMBLOCKCOLUMNS; col++)
-		{
-			const auto jiveNoteWheelId = jiveGui::idRowColMaker(jiveGui::IdPrefix::noteWheel, row, col);
-			auto* noteWheel = dynamic_cast<juce::Slider*>(jive::findItemWithID(*mainEditor, jiveNoteWheelId)->getComponent().get());
-			configureNoteWheel(noteWheel);
-
-			// Find Octaves
-			const auto jiveOctavesId = jiveGui::idRowColMaker(jiveGui::IdPrefix::octavesInput, row, col);
-			auto* octavesInput = dynamic_cast<juce::Slider*>(jive::findItemWithID(*mainEditor, jiveOctavesId)->getComponent().get());
-			jassert(octavesInput != nullptr);
-
-			// Find Direction
-			const auto jiveDirectionId = jiveGui::idRowColMaker(jiveGui::IdPrefix::directionInput, row, col);
-			auto* directionInput = dynamic_cast<juce::Button*>(jive::findItemWithID(*mainEditor, jiveDirectionId)->getComponent().get());
-			jassert(directionInput != nullptr);
-
-			// Find if axiom
-			if (col == -1)
-			{
-				const auto jiveAxiomId = jiveGui::idRowColMaker(jiveGui::IdPrefix::axiomToggle, row, col);
-				auto* axiomInput = dynamic_cast<juce::Button*>(jive::findItemWithID(*mainEditor, jiveAxiomId)->getComponent().get());
-				jassert(axiomInput != nullptr);
-			}
-		}
-	}
 }
 
 void LSystemStuff::LSystemManager::configureGrowButton(juce::Button* button)
@@ -132,7 +105,38 @@ void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)
 void LSystemStuff::LSystemManager::resetAUI()
 {
 	DBG("Resetting AUI");
-	// Go through each of the note wheel stuff and all that and set em all to their defaults.
+	for (int row = 0; row < jiveGui::AnalogUserInput::NUMBLOCKROWS; row++)
+	{
+		for (int col = -1; col < jiveGui::AnalogUserInput::NUMBLOCKCOLUMNS; col++)
+		{
+			// NoteWheel
+			const auto jiveNoteWheelId = jiveGui::idRowColMaker(jiveGui::IdPrefix::noteWheel, row, col);
+			auto* noteWheel = dynamic_cast<juce::Slider*>(jive::findItemWithID(*mainEditor, jiveNoteWheelId)->getComponent().get());
+			noteWheel->setValue(0);
+
+			// Find Octaves
+			const auto jiveOctavesId = jiveGui::idRowColMaker(jiveGui::IdPrefix::octavesInput, row, col);
+			auto* octavesInput = dynamic_cast<juce::Slider*>(jive::findItemWithID(*mainEditor, jiveOctavesId)->getComponent().get());
+			jassert(octavesInput != nullptr);
+			octavesInput->setValue(0);
+
+			// Find Direction
+			const auto jiveDirectionId = jiveGui::idRowColMaker(jiveGui::IdPrefix::directionInput, row, col);
+			auto* directionInput = dynamic_cast<juce::Button*>(jive::findItemWithID(*mainEditor, jiveDirectionId)->getComponent().get());
+			jassert(directionInput != nullptr);
+			directionInput->setToggleState(true, true);
+
+			// Find if axiom
+			///TODO: Currently axiom is not reset.
+			if (col == -1)
+			{
+				const auto jiveAxiomId = jiveGui::idRowColMaker(jiveGui::IdPrefix::axiomToggle, row, col);
+				auto* axiomInput = dynamic_cast<juce::Button*>(jive::findItemWithID(*mainEditor, jiveAxiomId)->getComponent().get());
+				jassert(axiomInput != nullptr);
+				
+			}
+		}
+	}
 }
 
 void LSystemStuff::LSystemManager::sliderValueChanged(juce::Slider* slider)

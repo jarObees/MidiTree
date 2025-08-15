@@ -563,6 +563,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout
 MidiArpeggiatorAudioProcessor::createNonAutoParamaterLayout(int numRows, int numColumns)
 {
     juce::AudioProcessorValueTreeState::ParameterLayout params;
+    bool firstAxiom = true; // Simply used to set the first axiom as true and the rest false. Currently not working for some reason.
     for (int rowNum = 0; rowNum < numRows; ++rowNum)
     {
         for (int columnNum = -1; columnNum < numColumns; ++columnNum) // Start at -1 to account for axiom, which is at column -1. Sorry in advance.
@@ -574,7 +575,8 @@ MidiArpeggiatorAudioProcessor::createNonAutoParamaterLayout(int numRows, int num
                                                                                              rowNum,
                                                                                              columnNum),
                                                                       "Axiom", 
-                                                                      false));
+                                                                      firstAxiom));
+                firstAxiom = false;
             }
 
             // Note Wheel Param

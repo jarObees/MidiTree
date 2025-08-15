@@ -112,8 +112,12 @@ namespace jiveGui
 							DBG("New      ACTIVEAXIOM: " << id);
 							activeAxiomId->set(id);
 						};
+					if (instanceCount.get() == 0)
+					{
+						button->triggerClick();
+						instanceCount = instanceCount.get() + 1;
+					}
 				};
-
 			private:
 				jive::GuiItem* findAncestorWithIdPrefix(jive::GuiItem* item)
 				{
@@ -133,7 +137,7 @@ namespace jiveGui
 					DBG("Found jack...");
 					return nullptr; // Not found
 				}
-
+				inline static juce::ThreadLocalValue<int> instanceCount;
 				std::vector<juce::Button*> axiomButtonsGroup;
 				jive::GuiItem* analogUserInput = nullptr;
 				juce::String id;

@@ -1,6 +1,7 @@
 #pragma once
 #include <JuceHeader.h>
 #include "LSystemProcessor.h"
+#include "AnalogUserInputBlockData.h"
 #include "PresetManager.h"
 #include "TreeData.h"
 

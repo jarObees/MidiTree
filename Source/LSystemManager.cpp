@@ -1,7 +1,7 @@
 #include "LSystemManager.h"
 #include "Ids.h"
 #include "PresetManager.h"
-#include "AnalogUserInputBlockData.h"
+#include "AxiomSelector.h"
 
 // Implement the next layer of stuff. 
 // Now the actual shit that handles the growth logic for the l system shit.
@@ -62,6 +62,7 @@ void LSystemStuff::LSystemManager::configureAUIResetButton(juce::Component* comp
 	resetButton = button;
 	resetButton->addListener(this);
 }
+
 // analoguserInputComponent is the topmost parent component for all the different input blocks.
 void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* analogUserInputComponent, 
 															const int numBlockRows, 
@@ -70,46 +71,31 @@ void LSystemStuff::LSystemManager::configureAnalogUserInput(juce::Component* ana
 	DBG("Configuring Analog User Input");
 	jassert(analogUserInputComponent != nullptr);
 	this->analogUserInputComponent = analogUserInputComponent;
-	for (auto* child : analogUserInputComponent->getChildren())
-	{	
-		// Access Rows
-		if (child->getComponentID().startsWith(jiveGui::IdPrefix::inputRow))
+	for (int row = 0; row < jiveGui::AnalogUserInput::NUMBLOCKROWS; row++)
+	{
+		std::vector<AnalogUserInputBlockData> rowData;
+		for (int col = -1; col < jiveGui::AnalogUserInput::NUMBLOCKCOLUMNS; col++)
 		{
-			DBG("Accessed row...");
-			DBG("Row child num: " << child->getNumChildComponents());
-			for (auto* rowChild : child->getChildren())
+			const auto jiveNoteWheelId = jiveGui::idRowColMaker(jiveGui::IdPrefix::noteWheel, row, col);
+			auto* noteWheel = dynamic_cast<juce::Slider*>(jive::findItemWithID(*mainEditor, jiveNoteWheelId)->getComponent().get());
+			configureNoteWheel(noteWheel);
+
+			// Find Octaves
+			const auto jiveOctavesId = jiveGui::idRowColMaker(jiveGui::IdPrefix::octavesInput, row, col);
+			auto* octavesInput = dynamic_cast<juce::Slider*>(jive::findItemWithID(*mainEditor, jiveOctavesId)->getComponent().get());
+			jassert(octavesInput != nullptr);
+
+			// Find Direction
+			const auto jiveDirectionId = jiveGui::idRowColMaker(jiveGui::IdPrefix::directionInput, row, col);
+			auto* directionInput = dynamic_cast<juce::Button*>(jive::findItemWithID(*mainEditor, jiveDirectionId)->getComponent().get());
+			jassert(directionInput != nullptr);
+
+			// Find if axiom
+			if (col == -1)
 			{
-				if (rowChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlock))
-				{
-					DBG("Accessing inputBlock...");
-					DBG("inputBlock child num: " << rowChild->getNumChildComponents());
-					AnalogUserInput::AnalogUserInputBlockData inputBlock;
-					for (auto* blockChild : rowChild->getChildren())
-					{
-						DBG("INPUT BLOCKCHILD ID: " << blockChild->getComponentID());
-						if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockTop))
-						{
-							// Found input block top.
-							configureInputBlockTop(blockChild);
-							DBG("Found an input block top!");
-							DBG("ibt child num: " << blockChild->getNumChildComponents());
-						}
-						else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::noteWheel))
-						{
-							// Found note wheel.
-							DBG("Found a note wheel!");
-							DBG("nw child num: " << blockChild->getNumChildComponents());
-							configureNoteWheel(blockChild);
-						}
-						else if (blockChild->getComponentID().startsWith(jiveGui::IdPrefix::inputBlockBottom))
-						{
-							// Found input block bottom.
-							DBG("Found an input block bottom!");
-							DBG("ibb child num: " << blockChild->getNumChildComponents());
-							configureInputBlockBot(blockChild);
-						}
-					}
-				}
+				const auto jiveAxiomId = jiveGui::idRowColMaker(jiveGui::IdPrefix::axiomToggle, row, col);
+				auto* axiomInput = dynamic_cast<juce::Button*>(jive::findItemWithID(*mainEditor, jiveAxiomId)->getComponent().get());
+				jassert(axiomInput != nullptr);
 			}
 		}
 	}
@@ -146,9 +132,8 @@ void LSystemStuff::LSystemManager::buttonClicked(juce::Button* button)
 void LSystemStuff::LSystemManager::resetAUI()
 {
 	DBG("Resetting AUI");
-	///TODO: GO THROUGH AND RESET ALL THE AUI NON AUTO PARAMS. 
+	// Go through each of the note wheel stuff and all that and set em all to their defaults.
 }
-
 
 void LSystemStuff::LSystemManager::sliderValueChanged(juce::Slider* slider)
 {

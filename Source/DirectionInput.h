@@ -73,11 +73,11 @@ namespace jiveGui
 					DBG("Click detected!");
 					if (button->getToggleState())
 					{
-						imageSource->set(juce::ImageCache::getFromMemory(BinaryData::IBB_DESCENDING_png, BinaryData::IBB_DESCENDING_pngSize)); // This doesn't work.
+						imageSource->set(juce::ImageCache::getFromMemory(BinaryData::IBB_ASCENDING_png, BinaryData::IBB_ASCENDING_pngSize));
 					}
 					else
 					{
-						imageSource->set(juce::ImageCache::getFromMemory(BinaryData::IBB_ASCENDING_png, BinaryData::IBB_ASCENDING_pngSize));
+						imageSource->set(juce::ImageCache::getFromMemory(BinaryData::IBB_DESCENDING_png, BinaryData::IBB_DESCENDING_pngSize));
 					}
 				}
 				juce::Image baseImage;

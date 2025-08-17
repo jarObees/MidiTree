@@ -85,7 +85,6 @@ void LSystemStuff::LSystemManager::configureGensKnob(juce::Slider* knob)
 {
 	DBG("configured gens knob");
 	gensKnob = knob;
-	gensKnob->setValue(3);
 	gensKnob->addListener(this);
 }
 

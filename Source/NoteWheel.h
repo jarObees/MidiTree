@@ -128,7 +128,6 @@ namespace jiveGui
 						else
 							imageSource->set(juce::ImageCache::getFromMemory(BinaryData::NW_ON_png, BinaryData::NW_ON_pngSize));
 					};
-					//stripSlider->setValue(0); // Set default value to 0.
 					onValueChange->trigger();
 				}
 

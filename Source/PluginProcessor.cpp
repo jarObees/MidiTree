@@ -170,8 +170,6 @@ void MidiArpeggiatorAudioProcessor::getAutomatableParams()
 void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     buffer.clear();
-    // currentNotesPool = { 0, 4, 7 };
-    return;
     if (activeTreeManager.getNotesPool().isEmpty())
     {
         DBG("Notes pool empty, bypassing...");
@@ -179,7 +177,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
         return;
     }
 
- DBG("Processing Block ==============");
+    DBG("Processing Block ==============");
     getAutomatableParams();
 
     auto* playHead = getPlayHead();
@@ -198,6 +196,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
         const int samplesPerNote = (int(noteType) == 0) ? static_cast<int> (std::ceil(samplesPerQuarter * noteRate))
             : static_cast<int> (std::ceil(samplesPerDotted * noteRate));
         // Checks for user midi input.
+        // Different
         int midiLocalPos;
         for (const auto& meta : midiMessages)
         {
@@ -526,7 +525,7 @@ MidiArpeggiatorAudioProcessor::createParameterLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout params;
     // Global Generation Variables
-    params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 5)); // IGNORE DEFAULT PARAMETER. This is set in appropriate manager class.
+    params.add(std::make_unique<juce::AudioParameterInt>("gens", "Generations", 1, 10, 2)); // IGNORE DEFAULT PARAMETER. This is set in appropriate manager class.
     params.add(std::make_unique<juce::AudioParameterInt>("vel", "Midi Velocity", 1, 127, 100,
                                                          juce::AudioParameterIntAttributes{}
                                                          .withStringFromValueFunction(

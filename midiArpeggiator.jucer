@@ -193,8 +193,8 @@
                        vst3BinaryLocation="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"
                        vst3BinaryLocation_Win32="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"
                        vst3BinaryLocation_x64="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="midiArpeggiator" enablePluginBinaryCopyStep="1"
-                       vst3BinaryLocation_Win32="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"
+        <CONFIGURATION isDebug="0" name="Release" targetName="midiArpeggiatorReleaseBuild"
+                       enablePluginBinaryCopyStep="1" vst3BinaryLocation_Win32="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"
                        vst3BinaryLocation_x64="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

@@ -172,7 +172,7 @@ void MidiArpeggiatorAudioProcessor::processBlock(juce::AudioBuffer<float>& buffe
     buffer.clear();
     if (activeTreeManager.getNotesPool().isEmpty())
     {
-        DBG("Notes pool empty, bypassing...");
+        // DBG("Notes pool empty, bypassing...");
         midiMessages.clear();
         return;
     }

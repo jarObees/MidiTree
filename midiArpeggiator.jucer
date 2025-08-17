@@ -189,12 +189,12 @@
   <EXPORTFORMATS>
     <VS2022 targetFolder="Builds/VisualStudio2022">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="midiArpeggiator" enablePluginBinaryCopyStep="1"
+        <CONFIGURATION isDebug="1" name="Debug" targetName="MidiTree" enablePluginBinaryCopyStep="1"
                        vst3BinaryLocation="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"
                        vst3BinaryLocation_Win32="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"
                        vst3BinaryLocation_x64="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="midiArpeggiatorReleaseBuild"
-                       enablePluginBinaryCopyStep="1" vst3BinaryLocation_Win32="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"
+        <CONFIGURATION isDebug="0" name="Release" targetName="MidiTree" enablePluginBinaryCopyStep="1"
+                       vst3BinaryLocation_Win32="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"
                        vst3BinaryLocation_x64="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

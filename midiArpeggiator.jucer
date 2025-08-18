@@ -4,7 +4,7 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginCharacteristicsValue="pluginProducesMidiOut,pluginWantsMidiIn"
               pluginFormats="buildStandalone,buildVST3" cppLanguageStandard="20"
               defines="JIVE_GUI_ITEMS_HAVE_STYLE_SHEETS=1&#10;" companyName="The Neighbor's Cat"
-              pluginDesc="Generate MIDI by defining your own L-System!">
+              pluginDesc="Generate MIDI by defining your own L-System!" version="0.9.0">
   <MAINGROUP id="tMID8o" name="MidiTree">
     <GROUP id="{698D2672-A9FD-E503-60C1-CFCFEAE1177B}" name="InfoTab">
       <FILE id="pyJI6s" name="InfoTabManager.cpp" compile="1" resource="0"
@@ -194,7 +194,7 @@
                        vst3BinaryLocation="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"
                        vst3BinaryLocation_Win32="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"
                        vst3BinaryLocation_x64="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="MidiTree" enablePluginBinaryCopyStep="1"
+        <CONFIGURATION isDebug="0" name="Release" targetName="MidiTreev0.9.0." enablePluginBinaryCopyStep="1"
                        vst3BinaryLocation_Win32="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"
                        vst3BinaryLocation_x64="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"/>
       </CONFIGURATIONS>

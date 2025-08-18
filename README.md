@@ -38,7 +38,7 @@ Now, unless bypassed, if the slider is over a loaded tree slot, that will be the
 
 # ⚠️ Notes
 - Currently an ALPHA release. Expect bugs and quirks!
-- Report bugs, suggestions or comments to me e-mail:
+- Report bugs, suggestions or comments to my e-mail: josegomezstuffs@gmail.com
 
 # For use in 🅰️bleton
 Ableton is clunky with MIDI FX, idk why so follow these steps and you should be good.

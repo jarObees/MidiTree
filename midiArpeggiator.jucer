@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="uXyLlP" name="midiArpeggiator" projectType="audioplug" useAppConfig="0"
+<JUCERPROJECT id="uXyLlP" name="MidiTree" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginCharacteristicsValue="pluginProducesMidiOut,pluginWantsMidiIn"
               pluginFormats="buildStandalone,buildVST3" cppLanguageStandard="20"
-              defines="JIVE_GUI_ITEMS_HAVE_STYLE_SHEETS=1&#10;" companyName="The Neighbor's Cat">
-  <MAINGROUP id="tMID8o" name="midiArpeggiator">
+              defines="JIVE_GUI_ITEMS_HAVE_STYLE_SHEETS=1&#10;" companyName="The Neighbor's Cat"
+              pluginDesc="Generate MIDI by defining your own L-System!">
+  <MAINGROUP id="tMID8o" name="MidiTree">
     <GROUP id="{698D2672-A9FD-E503-60C1-CFCFEAE1177B}" name="InfoTab">
       <FILE id="pyJI6s" name="InfoTabManager.cpp" compile="1" resource="0"
             file="Source/InfoTabManager.cpp"/>
@@ -187,7 +188,7 @@
   </MODULES>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
-    <VS2022 targetFolder="Builds/VisualStudio2022">
+    <VS2022 targetFolder="Builds/VisualStudio2022" smallIcon="yDa7zF" bigIcon="yDa7zF">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="MidiTree" enablePluginBinaryCopyStep="1"
                        vst3BinaryLocation="C:\Users\werer\Music\Music\VSTPluginShit\THINE OWN"

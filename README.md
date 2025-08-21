@@ -9,10 +9,12 @@ These generated notes are relative to the note input.
 
 # ✨ Features
 - Define your own L-System rules to generate your own note sequence!
-- Supports VST3.
-- The "Forest" helps automate through presets on the fly!
+- Arpeggiates through generated sequence upon note press (the sequence is relative to pressed notes).
+- VST3.
+- Easily Save and Load your own presets.
+- The "Forest" helps automate through your presets on the fly!
 
-# 🤔How to use
+# 🤔IMPORTANT: How to use
 ## Basic Use
 _(0. Familiarize yourself with [L-Systems](https://en.wikipedia.org/wiki/L-system) if unfamiliar)_
 #### 1. Define your rules.
@@ -36,8 +38,8 @@ Now, unless bypassed, if the slider is over a loaded tree slot, that will be the
 - Bundle in fun tree presets.
 - Bundle in a how-to guide that can be opened from the plugin.
 
-# ⚠️ Notes
-- Currently an ALPHA release. Expect bugs and quirks!
+# ⚠️ Warning
+- Currently an ALPHA release. There exist many bugs and quirks, but main features should function.
 - Report bugs, suggestions or comments to my e-mail: josegomezstuffs@gmail.com
 
 # For use in 🅰️bleton

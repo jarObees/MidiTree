@@ -10,7 +10,7 @@ These generated notes are relative to the note input.
 # ✨ Features
 - Define your own L-System rules to generate your own note sequence!
 - Supports VST3.
-- The "Forest" helps manage and automate through presets on the fly!
+- The "Forest" helps automate through presets on the fly!
 
 # 🤔How to use
 ## Basic Use
